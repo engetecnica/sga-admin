@@ -20,6 +20,7 @@ class ConfiguracaoMinhaContaController extends Controller
      */
     public function index()
     {
+
         //
         $usuario_niveis = Niveis::all();
         return view('pages.configuracoes.minhaconta.index', compact('usuario_niveis'));

@@ -164,34 +164,53 @@ class CadastroProdutoAssociarController extends Controller
     public function pesquisar_produto_por_empresa(Request $request)
     {
         $id_empresa = ($request->id_empresa) ?? null;
-
-      //  dd($request->all());
+        $route = ($request->route) ?? null;
 
         if ($id_empresa == false) {
             return "<option value=''>Todos os produtos já foram vinculados ou nenhum produto foi cadastrado.</option>";
         }
 
         /* Produtos - Associados */
-        $produtos = ProdutoAssociar::select('id')->where('id_empresa', $id_empresa)->get()->toArray();
+        if ($route == '/venda/adicionar') {
 
-        if($produtos){
-            foreach($produtos as $produto){
-                $ids[] = $produto['id'];
-                $produtosAll = CadastroProduto::select('titulo', 'id')->whereNotIn('id', $ids)->get()->toArray();
+            $produtos_venda = ProdutoAssociar::select('p.titulo', 'produtos_configuracoes.*')
+            ->where('id_empresa', $id_empresa)
+                ->join('produtos as p', 'p.id', '=', 'produtos_configuracoes.id_produto')
+                ->get()
+                ->toArray();
+
+            /* Se tiver > 0, exibe */
+            if (count($produtos_venda) > 0) {
+                echo "<option value=''>Selecione um Produto</option>";
+                foreach ($produtos_venda as $produto) {
+                    echo "<option value='" . $produto['id'] . "'>" . $produto['titulo'] . "</option>";
+                }
+            } else {
+                return "<option value=''>Não há produto a ser vinculado.</option>";
             }
         } else {
-            $ids = [];
-            $produtosAll = CadastroProduto::select('titulo', 'id')->get()->toArray();
-        }
 
-        /* Se tiver > 0, exibe */
-        if (count($produtosAll) > 0) {
-            echo "<option value=''>Selecione um Produto</option>";
-            foreach ($produtosAll as $produto) {
-                echo "<option value='" . $produto['id'] . "'>" . $produto['titulo'] . "</option>";
+            $produtos = ProdutoAssociar::select('id')->where('id_empresa', $id_empresa)->get()->toArray();
+            if ($produtos) {
+                foreach ($produtos as $produto) {
+                    $ids[] = $produto['id'];
+                    $produtosAll = CadastroProduto::select('titulo', 'id')->whereNotIn('id', $ids)->get()->toArray();
+                }
+            } else {
+                $ids = [];
+                $produtosAll = CadastroProduto::select('titulo', 'id')->get()->toArray();
             }
-        } else {
-            return "<option value=''>Não há produto a ser vinculado.</option>";
+
+            /* Se tiver > 0, exibe */
+            if (count($produtosAll) > 0) {
+                echo "<option value=''>Selecione um Produto</option>";
+                foreach ($produtosAll as $produto) {
+                    echo "<option value='" . $produto['id'] . "'>" . $produto['titulo'] . "</option>";
+                }
+            } else {
+                return "<option value=''>Não há produto a ser vinculado.</option>";
+            }
+            
         }
     }
 

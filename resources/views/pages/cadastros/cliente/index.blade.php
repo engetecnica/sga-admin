@@ -51,7 +51,11 @@
                             <td><span class="badge badge-dark">{{ $v->id }}</span></td>
                             <td>{{ ($v->empresa) ?? '-' }}</td>
                             <td>{{ $v->nome }}</td>
-                            <td>{{ $v->celular }}</td>
+                            <td>
+                                <button class="badge badge-primary">
+                                    <span class="mdi mdi-whatsapp"></span> {{ $v->celular }}
+                                </button>
+                            </td>
                             <td>{{ $v->email }}</td>
                             <td>Nenhuma compra encontrada.</td>
                             <td>{{ $v->status }}</td>
@@ -60,14 +64,7 @@
                                     <button class="badge badge-info" data-toggle="tooltip" data-placement="top" title="Editar"><i class="mdi mdi-pencil"></i> Editar</button>
                                 </a>
 
-                                <a 
-                                    href="javascript:void(0)" 
-                                    class="excluir-padrao" 
-                                    data-id="{{ $v->id }}" 
-                                    data-table="users" 
-                                    data-module="cadastro/cliente" 
-                                    data-redirect="{{ route('modulo') }}"
-                                >
+                                <a href="javascript:void(0)" class="excluir-padrao" data-id="{{ $v->id }}" data-table="users" data-module="cadastro/cliente" data-redirect="{{ route('modulo') }}">
                                     <button class="badge badge-danger" data-toggle="tooltip" data-placement="top" title="Excluir"><i class="mdi mdi-delete"></i> Excluir</button>
                                 </a>
                             </td>

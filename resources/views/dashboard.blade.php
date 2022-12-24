@@ -5,7 +5,8 @@
 	<!-- Required meta tags -->
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<title>Sistema de Gestão de Códigos de Recarga - @if(View::hasSection('title')) @yield('title') @else Dashboard @endif</title>
+	<title>Sistema de Gestão de Códigos de Recarga - @if(View::hasSection('title')) @yield('title') @else Dashboard
+		@endif</title>
 	<!-- plugins:css -->
 	<link rel="stylesheet" href="{{ asset('assets/vendors/mdi/css/materialdesignicons.min.css') }}">
 	<link rel="stylesheet" href="{{ asset('assets/vendors/css/vendor.bundle.base.css') }}">
@@ -260,7 +261,7 @@
 				<!-- content-wrapper ends -->
 				<!-- partial:partials/_footer.html -->
 
-				
+
 				<footer class="footer">
 					<div class="container-fluid d-flex justify-content-between">
 						<span class="text-muted d-block text-center text-sm-start d-sm-inline-block">{{ env('APP_COPY') }}</span>
@@ -275,7 +276,7 @@
 	</div>
 	<!-- container-scroller -->
 
-	
+
 
 	<!-- plugins:js -->
 	<script src="{{ asset('assets/vendors/js/vendor.bundle.base.js') }}"></script>
@@ -299,7 +300,8 @@
 
 	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
 	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
-	<script type="text/javascript" src="//cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.12.1/b-2.2.3/b-html5-2.2.3/b-print-2.2.3/datatables.min.js"></script>
+	<script type="text/javascript" src="//cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.12.1/b-2.2.3/b-html5-2.2.3/b-print-2.2.3/datatables.min.js">
+	</script>
 
 	<script src="//cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
@@ -313,14 +315,52 @@
 	<script>
 		$(document).ready(function() {
 
-
 			BASE_URL = '<?php echo route('admin'); ?>';
+			var route = window.location.pathname;
 
-			$(".consultar-produto-associado").on('click', function(){
-				
+			$(".select2").select2();
 
+			$(".adicionar-linha-venda").click(function() {
+
+				//alert('clicou')
+
+
+				template = $("#linha-venda").clone();
+
+				console.log(template);
+				template.appendTo(".linha-venda");
+
+			})
+
+
+			/* Clone de Registro de Código */
+			$('.clonador').click(function() {
+
+				$clone = $('.box_venda.hide').clone(true);
+				$clone.removeClass('hide');
+				aplicaSelect2();
+				$('#lista_vendas').append($clone);
+
+			});
+
+			function aplicaSelect2() {
+				$('.select2').select2({
+					allowClear: true,
+					width: '100%',
+				});
+			}
+
+			$(document).ready(function() {
+				aplicaSelect2();
+			});
+
+			$('.btn_remove').click(function() {
+				$(this).parents('.box_venda').remove();
+			});
+
+
+			$(".consultar-produto-associado").on('click', function() {
 				let id_produto = $(this).attr('data-id_produto');
-
 				$.ajax({
 						url: "{{ route('produto.associar.pesquisar_empresa_por_produto') }}",
 						type: 'post',
@@ -340,25 +380,19 @@
 					.fail(function(jqXHR, textStatus, msg) {
 						alert(msg);
 					});
-  
-  
 			})
 
 			$("#valor_venda").on('keyup', function() {
-
 				let valor_compra = ($("#valor_compra").val()) ?? 0;
 				let valor_venda = ($("#valor_venda").val()) ?? 0;
 				let lucro_obtido = (valor_venda - valor_compra);
 
-				if(lucro_obtido > 0)
-				{
+				if (lucro_obtido > 0) {
 					$("#lucro_obtido").val(lucro_obtido);
 				} else {
 					$("#lucro_obtido").val('0.00');
 				}
-
 			})
-	
 
 			$('.summernote').summernote({
 				height: 400
@@ -410,7 +444,8 @@
 						type: 'post',
 						data: {
 							"_token": "{{ csrf_token() }}",
-							id_empresa: id_empresa
+							id_empresa: id_empresa,
+							route: route
 						},
 						beforeSend: function() {
 							$(".money").prop("disabled", true);
@@ -434,6 +469,13 @@
 					$(".money").prop("disabled", true);
 					$(".btn-salvar").prop("disabled", true);
 				} else {
+
+
+					if (route == '/venda/adicionar') {
+						$("#id_cliente").prop('disabled', false);
+						$("input[type=date]").prop('disabled', false);
+					}
+
 					$(".money").prop("disabled", false);
 					$(".btn-salvar").prop("disabled", false);
 				}

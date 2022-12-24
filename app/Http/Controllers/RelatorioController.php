@@ -2,23 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CadastroEmpresa;
-use App\Models\CadastroCliente;
-use App\Models\CadastroVenda;
 use App\Models\Relatorio;
-
-use App\Traits\FuncoesAdaptadas;
-
-
 use Illuminate\Http\Request;
 
-class VendaPdvController extends Controller
+class RelatorioController extends Controller
 {
-
-    use FuncoesAdaptadas;
-
-
-
     /**
      * Display a listing of the resource.
      *
@@ -27,15 +15,6 @@ class VendaPdvController extends Controller
     public function index()
     {
         //
-        $relatorio['7_dias'] = Relatorio::RelatorioVendaPeriodo(7);
-        $relatorio['14_dias'] = Relatorio::RelatorioVendaPeriodo(14);
-        $relatorio['30_dias'] = Relatorio::RelatorioVendaPeriodo(30);
-        $relatorio['60_dias'] = Relatorio::RelatorioVendaPeriodo(60);
-        $relatorio['90_dias'] = Relatorio::RelatorioVendaPeriodo(90);
-
-    
-        $vendas = CadastroVenda::ListaVendasUltimas(10);
-        return view('pages.vendas.index', compact('vendas', 'relatorio'));
     }
 
     /**
@@ -46,9 +25,6 @@ class VendaPdvController extends Controller
     public function create()
     {
         //
-        $empresas = CadastroEmpresa::all();
-        $clientes = CadastroCliente::all();
-        return view('pages.vendas.registrar', compact('empresas', 'clientes'));
     }
 
     /**
@@ -65,10 +41,10 @@ class VendaPdvController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Relatorio  $relatorio
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Relatorio $relatorio)
     {
         //
     }
@@ -76,10 +52,10 @@ class VendaPdvController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Relatorio  $relatorio
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Relatorio $relatorio)
     {
         //
     }
@@ -88,10 +64,10 @@ class VendaPdvController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\Relatorio  $relatorio
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Relatorio $relatorio)
     {
         //
     }
@@ -99,10 +75,10 @@ class VendaPdvController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\Relatorio  $relatorio
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Relatorio $relatorio)
     {
         //
     }

@@ -9,4 +9,19 @@ Trait FuncoesAdaptadas
         $expressao = str_replace(",", '.', $expressao);
         return $expressao;
     }
+
+    public function dd(...$data)
+    {
+        foreach ($data as $dt) {
+            echo "<pre>";
+            echo print_r($dt, true);
+            echo "</pre>";
+        }
+        exit;
+    }
+
+    public function importar_cliente_nome($nome){        
+        if(!$nome) return null;
+        return mb_strtoupper(str_replace("+", "", $nome));        
+    }
 }

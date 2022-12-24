@@ -24,7 +24,7 @@ use App\Http\Controllers\CadastroProdutoAssociarController;
 
 /* Anexos */
 use App\Http\Controllers\AnexoController;
-
+use App\Http\Controllers\AppImportarController;
 /* PDV */
 use App\Http\Controllers\VendaPdvController;
 
@@ -123,6 +123,9 @@ Route::group(['middleware' => 'auth'], function () {
     /* Ponto de Venda */
     Route::get('venda/pdv',                                 [VendaPdvController::class, 'index'])->name('venda.pontodevenda');
     Route::get('venda/adicionar',                           [VendaPdvController::class, 'create'])->name('venda.adicionar');
+    Route::get('venda/editar/{id?}',                        [VendaPdvController::class, 'edit'])->name('venda.editar');
+    Route::post('venda/store',                              [VendaPdvController::class, 'store'])->name('venda.store');
+    Route::post('cadastro/produto/update/{id}',             [VendaPdvController::class, 'update'])->name('venda.update');
 
 
     /* 
@@ -154,7 +157,13 @@ Route::group(['middleware' => 'auth'], function () {
     /* Manipulação de Anexos */
     Route::post('anexo/salvar_anexo',                       [AnexoController::class, 'store'])->name('anexo.salvar');
 
+
+
+    /* APP - Retorno dos dados do sistema antigo */
+    Route::get('api/importar_cliente',                      [AppImportarController::class, 'importar_clientes'])->name('importar.cliente');
+    Route::get('api/importar_plano',                       [AppImportarController::class, 'importar_planos'])->name('importar.plano');
+    Route::get('api/importar_venda',                       [AppImportarController::class, 'importar_vendas'])->name('importar.venda');
+
 });
 
 /* Rotas do Site */
-

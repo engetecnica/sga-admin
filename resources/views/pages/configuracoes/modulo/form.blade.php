@@ -42,7 +42,7 @@
                         <select class="form-select" id="id_modulo" name="id_modulo">
                             <option value="">Módulo Principal</option>
                             @foreach($modulos as $modulo)
-                            <option value="{{ $modulo->id }}">{{ $modulo->titulo }}</option>
+                            <option value="{{ $modulo->id }}" @php if(old('nivel', @$store->id_modulo) == $modulo->id) echo "selected"; @endphp >{{ $modulo->titulo }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -52,7 +52,7 @@
                         <input type="text" class="form-control" id="titulo" value="{{ old('titulo', @$store->titulo) }}" name="titulo">
                     </div>
 
-                    
+
                     <div class="col-md-4">
                         <label for="url_amigavel" class="form-label">URL Amigável</label>
                         <input type="text" class="form-control" id="url_amigavel" value="{{ old('url_amigavel', @$store->url_amigavel) }}" name="url_amigavel">
@@ -64,17 +64,17 @@
                     <div class="col-md-4">
                         <label for="posicao" class="form-label">Posição</label>
                         <input type="number" class="form-control" id="posicao" value="{{ old('posicao', @$store->posicao) }}" name="posicao">
-                    </div>                                        
-                    
+                    </div>
+
                     <div class="col-12">
                         <label for="acoes_permitidas" class="form-label">Ações Permitidas</label>
-                        <select class="form-select select2-multiple" id="acoes_permitidas[]" name="acoes_permitidas[]" multiple="multiple" data-placeholder="Selecione as ações do Módulo" >
+                        <select class="form-select select2-multiple" id="acoes_permitidas[]" name="acoes_permitidas[]" multiple="multiple" data-placeholder="Selecione as ações do Módulo">
                             @foreach($acoes_permitidas as $key=>$permitido)
                             @php
-                                $selected = false;
-                                if(isset($store) && $store->tipo_de_acao){
-                                    $selected = (isset($store->tipo_de_acao) && str_contains($store->tipo_de_acao, $permitido)) ? "selected" : false;
-                                }
+                            $selected = false;
+                            if(isset($store) && $store->tipo_de_acao){
+                            $selected = (isset($store->tipo_de_acao) && str_contains($store->tipo_de_acao, $permitido)) ? "selected" : false;
+                            }
                             @endphp
                             <option value="{{ $permitido }}" {{ $selected ?? '' }}>{{ $key }}</option>
                             @endforeach

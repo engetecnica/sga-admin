@@ -39,19 +39,33 @@
 				<button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
 					<span class="mdi mdi-menu"></span>
 				</button>
+
+				@if(Auth::user()->user_level==1 && Auth::user()->id_empresa==0)
 				<div class="search-field d-none d-md-block">
 					<form class="d-flex align-items-center h-100" action="#">
 						<div class="input-group">
 
-							<select class="form-control border-0">
-								<option>Selecione a Empresa</option>
-								<option>André Baill - BLUETV.APP</option>
-								<option>Dhéssica Caroline Rosa - HDTV.BLUE</option>
+							<select class="form-control select2 select-2-width-400" id="selecionar_empresa">
+								<option value="0">Todas as Empresas</option>
+								@foreach($empresas_lista as $empresa)
+
+								@php $selected = ""; @endphp
+								@if(Session::has('empresa'))
+								@if(Session::get('empresa')->id==$empresa->id)
+								@php $selected = "selected"; @endphp
+								@endif
+								@endif
+
+								<option value="{{ $empresa->id }}" {{ $selected }}>{{ $empresa->nome . ' - ' . $empresa->cpf }}</option>
+								@endforeach
 							</select>
 
 						</div>
 					</form>
 				</div>
+				@endif
+
+
 				<ul class="navbar-nav navbar-nav-right">
 					<li class="nav-item nav-profile dropdown">
 						<a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
@@ -212,27 +226,27 @@
 					@foreach($modulos as $module)
 					<li class="nav-item">
 
-						@if(count($module->submodulos) >0)
-						<a class="nav-link" data-bs-toggle="collapse" href="#{{ $module->url_amigavel }}" aria-expanded="false" aria-controls="{{ $module->url_amigavel }}">
-							<span class="menu-title">{{ $module->titulo }}</span>
+						@if(count($module['submodulo']) >0)
+						<a class="nav-link" data-bs-toggle="collapse" href="#{{ $module['url_amigavel'] }}" aria-expanded="false" aria-controls="{{ $module['url_amigavel'] }}">
+							<span class="menu-title">{{ $module['titulo'] }}</span>
 							<i class="menu-arrow"></i>
-							<i class="{{ $module->icone }} menu-icon"></i>
+							<i class="{{ $module['icone'] }} menu-icon"></i>
 						</a>
 						@else
-						<a class="nav-link" href="{{ $module->url_amigavel }}">
-							<span class="menu-title">{{ $module->titulo }}</span>
-							<i class="{{ $module->icone }} menu-icon"></i>
+						<a class="nav-link" href="{{ $module['url_amigavel'] }}">
+							<span class="menu-title">{{ $module['titulo'] }}</span>
+							<i class="{{ $module['icone'] }} menu-icon"></i>
 						</a>
 						@endif
 
-						@if(count($module->submodulos) >0)
-						<div class="collapse" id="{{ $module->url_amigavel }}">
+						@if(count($module['submodulo']) >0)
+						<div class="collapse" id="{{ $module['url_amigavel'] }}">
 							<ul class="nav flex-column sub-menu">
-								@foreach($module->submodulos as $sub)
+								@foreach($module['submodulo'] as $sub)
 								@php
 								$item = Request::segment(1)."/".Request::segment(2);
 								@endphp
-								<li class="nav-item"> <a class="nav-link {{ $item == $sub->url_amigavel ? 'active-submodulo' : '' }}" href="{{ url($sub->url_amigavel) }}">{{ $sub->titulo }}</a></li>
+								<li class="nav-item"> <a class="nav-link {{ $item == $sub['url_amigavel']? 'active-submodulo' : '' }}" href="{{ url($sub['url_amigavel']) }}">{{ $sub['titulo'] }}</a></li>
 								@endforeach
 							</ul>
 						</div>
@@ -320,43 +334,43 @@
 
 			$(".select2").select2();
 
-			$(".adicionar-linha-venda").click(function() {
+			// $(".adicionar-linha-venda").click(function() {
 
-				//alert('clicou')
-
-
-				template = $("#linha-venda").clone();
-
-				console.log(template);
-				template.appendTo(".linha-venda");
-
-			})
+			// 	//alert('clicou')
 
 
-			/* Clone de Registro de Código */
-			$('.clonador').click(function() {
+			// 	template = $("#linha-venda").clone();
 
-				$clone = $('.box_venda.hide').clone(true);
-				$clone.removeClass('hide');
-				aplicaSelect2();
-				$('#lista_vendas').append($clone);
+			// 	console.log(template);
+			// 	template.appendTo(".linha-venda");
 
-			});
+			// })
 
-			function aplicaSelect2() {
-				$('.select2').select2({
-					allowClear: true,
-					width: '100%',
-				});
-			}
 
-			$(document).ready(function() {
-				aplicaSelect2();
-			});
+			// /* Clone de Registro de Código */
+			// $('.clonador').click(function() {
 
-			$('.btn_remove').click(function() {
-				$(this).parents('.box_venda').remove();
-			});
+			// 	$clone = $('.box_venda.hide').clone(true);
+			// 	$clone.removeClass('hide');
+			// 	aplicaSelect2();
+			// 	$('#lista_vendas').append($clone);
+
+			// });
+
+			// function aplicaSelect2() {
+			// 	$('.select2').select2({
+			// 		allowClear: true,
+			// 		width: '100%',
+			// 	});
+			// }
+
+			// $(document).ready(function() {
+			// 	aplicaSelect2();
+			// });
+
+			// $('.btn_remove').click(function() {
+			// 	$(this).parents('.box_venda').remove();
+			// });
 
 
 			$(".consultar-produto-associado").on('click', function() {
@@ -376,6 +390,27 @@
 					})
 					.done(function(msg) {
 						$("#id_produto").html(msg);
+					})
+					.fail(function(jqXHR, textStatus, msg) {
+						alert(msg);
+					});
+			})
+
+
+			$("#selecionar_empresa").on('change', function() {
+				let id_empresa = $(this).val();
+
+				$.ajax({
+						url: "{{ route('api.selecionar_empresa') }}",
+						type: 'post',
+						data: {
+							"_token": "{{ csrf_token() }}",
+							id_empresa: id_empresa,
+							route: route
+						}
+					})
+					.done(function(msg) {
+						window.location.href = route;
 					})
 					.fail(function(jqXHR, textStatus, msg) {
 						alert(msg);

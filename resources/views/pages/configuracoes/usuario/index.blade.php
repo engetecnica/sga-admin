@@ -36,6 +36,7 @@
                         <tr>
                             <th width="8%">ID</th>
                             <th>Tipo de Usuário</th>
+                            <th>Empresa</th>
                             <th>Nome</th>
                             <th>E-mail</th>
                             <th width="10%">Ações</th>
@@ -46,6 +47,7 @@
                         <tr>
                             <td><span class="badge badge-dark">{{ $v->id }}</span></td>
                             <td>{{ $v->nivel }}</td>
+                            <td>Nome da Empresa</td>
                             <td>{{ $v->name }}</td>
                             <td>{{ $v->email }}</td>
                             <td>

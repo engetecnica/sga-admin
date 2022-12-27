@@ -79,12 +79,16 @@ class ConfiguracaoSistemaController extends Controller
         $configuracao->email = $request->email;
         $configuracao->integrador = ($request->integrador) ?? 'Mercado Pago';
 
-        $keys = 
-            [
-                'access_token' => $request->access_token,
-                'client_id' => $request->client_id,
-                'client_secret' => $request->client_secret,
-            ];
+        if(!$configuracao){
+            $keys = [];
+        } else {
+            $keys = 
+                [
+                    'access_token' => $request->access_token,
+                    'client_id' => $request->client_id,
+                    'client_secret' => $request->client_secret,
+                ];
+        }
 
         $configuracao->keys = json_encode($keys);
         $configuracao->pix_nome = $request->pix_nome;

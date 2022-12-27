@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use App\Models\ConfiguracaoModulo;
+use App\Models\CadastroEmpresa;
 
 class ViewServiceProvider extends ServiceProvider
 {
@@ -26,7 +27,7 @@ class ViewServiceProvider extends ServiceProvider
     {
         //
         view()->composer('*', function($view) {
-            $view->with(['modulos' => ConfiguracaoModulo::get_modulos()]);
+            $view->with(['modulos' => ConfiguracaoModulo::get_modulos_permitidos(), 'empresas_lista' => CadastroEmpresa::all()]);
         });
     }
 

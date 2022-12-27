@@ -8,6 +8,9 @@ use App\Models\CadastroCliente;
 use App\Models\CadastroProduto;
 use App\Models\CadastroVenda;
 
+use Illuminate\Support\Facades\Auth;
+use RealRashid\SweetAlert\Facades\Alert;
+
 
 class AppImportarController extends Controller
 {
@@ -104,4 +107,7 @@ class AppImportarController extends Controller
         $this->dd($venda_array);
 
     }
+
+
+
 }

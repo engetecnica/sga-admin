@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ConfiguracaoUsuario;
+use App\Models\CadastroEmpresa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\ConfiguracaoUsuarioNiveis as Niveis;
@@ -40,7 +41,8 @@ class ConfiguracaoUsuarioController extends Controller
     {
         //
         $usuario_niveis = Niveis::all();
-        return view('pages.configuracoes.usuario.form', compact('usuario_niveis'));
+        $empresas = CadastroEmpresa::all();
+        return view('pages.configuracoes.usuario.form', compact('usuario_niveis', 'empresas'));
     }
 
     /**
@@ -56,6 +58,7 @@ class ConfiguracaoUsuarioController extends Controller
         $request->validate(
             [
                 'nome' => 'required',
+                'id_empresa' => 'required',
                 'password' => 'required|min:5',
                 'password_confirm' => 'required|min:5|same:password',
                 'email' => 'required|email|unique:users,email',
@@ -63,6 +66,7 @@ class ConfiguracaoUsuarioController extends Controller
             ], 
             [
                 'nome.required' => 'O nome do usuário deve ser preenchido corretamente',
+                'id_empresa.required' => 'Selecione a empresa para vincular.',
                 'password.required' => 'É necessário digitar uma senha que contenha no mínimo 5 caracteres',
                 'password_confirm.required' => 'A confirmação de senha é necessária',
                 'password_confirm.same' => 'As senhas digitadas não são iguais',
@@ -71,6 +75,7 @@ class ConfiguracaoUsuarioController extends Controller
         );
 
         $user = new ConfiguracaoUsuario();
+        $user->id_empresa = $request->id_empresa;
         $user->name = $request->nome;
         $user->password = Hash::make($request->password);
         $user->email = $request->email;
@@ -103,6 +108,7 @@ class ConfiguracaoUsuarioController extends Controller
 
         $store = ConfiguracaoUsuario::find($id);
         $usuario_niveis = Niveis::all();
+        $empresas = CadastroEmpresa::all();
 
             if(!$id or !$store):  
                 Alert::error('Que Pena!', 'Esse registro não foi encontrado.');
@@ -114,7 +120,7 @@ class ConfiguracaoUsuarioController extends Controller
                 return redirect('configuracao/usuario');  
             endif;
 
-        return view('pages.configuracoes.usuario.form', compact('store', 'usuario_niveis'));
+        return view('pages.configuracoes.usuario.form', compact('store', 'usuario_niveis', 'empresas'));
     }
 
     /**
@@ -130,6 +136,7 @@ class ConfiguracaoUsuarioController extends Controller
         $user->name = $request->nome;
         $user->email = $request->email;
         $user->user_level = $request->nivel;
+        $user->id_empresa = $request->id_empresa;
 
         if(isset($request->password) && isset($request->password_confirm)){
             if($request->password === $request->password_confirm){

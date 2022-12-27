@@ -13,7 +13,16 @@
     <nav aria-label="breadcrumb">
         <ul class="breadcrumb">
             <li class="breadcrumb-item active" aria-current="page">
-                <span></span>Registrar Venda<i class="mdi mdi-check icon-sm text-primary align-middle"></i>
+                <select class="select2 form-control" id="pesquisar_venda">
+                    <option>Pesquisar Venda por Período</option>
+                    <option value="1">Hoje - {{ date("d/m/Y") }}</option>
+                    <option value="7">Últimos 7 dias</option>
+                    <option value="14">Últimos 14 dias</option>
+                    <option value="30">Últimos 30 dias</option>
+                    <option value="60">Últimos 60 dias</option>
+                    <option value="90">Últimos 90 dias</option>
+                    <option value="-1">Personalizado</option>
+                </select>
             </li>
         </ul>
     </nav>
@@ -133,7 +142,7 @@
                     <div class="card-body">
                         <h4 class="card-title mb-4">Últimas Vendas</h4>
                         <div class="table-responsive">
-                            <table class="table table-striped">
+                            <table class="table table-striped" id="lista-simples">
                                 <thead>
 
                                     <tr>

@@ -24,6 +24,7 @@ use App\Http\Controllers\CadastroProdutoAssociarController;
 
 /* Anexos */
 use App\Http\Controllers\AnexoController;
+use App\Http\Controllers\ApiController;
 use App\Http\Controllers\AppImportarController;
 /* PDV */
 use App\Http\Controllers\VendaPdvController;
@@ -161,8 +162,12 @@ Route::group(['middleware' => 'auth'], function () {
 
     /* APP - Retorno dos dados do sistema antigo */
     Route::get('api/importar_cliente',                      [AppImportarController::class, 'importar_clientes'])->name('importar.cliente');
-    Route::get('api/importar_plano',                       [AppImportarController::class, 'importar_planos'])->name('importar.plano');
-    Route::get('api/importar_venda',                       [AppImportarController::class, 'importar_vendas'])->name('importar.venda');
+    Route::get('api/importar_plano',                        [AppImportarController::class, 'importar_planos'])->name('importar.plano');
+    Route::get('api/importar_venda',                        [AppImportarController::class, 'importar_vendas'])->name('importar.venda');
+
+
+    /* API de Controles */
+    Route::post('api/selecionar_empresa',                    [ApiController::class, 'selecionar_empresa'])->name('api.selecionar_empresa');
 
 });
 

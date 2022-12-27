@@ -32,11 +32,11 @@
                     @if(isset($store))
                     <input type="hidden" name="id" value="{{ $store->id }}">
                     @endif
-                    
+
                     <div class="col-12">
                         <label for="nome" class="form-label">Título</label>
                         <input type="text" class="form-control" id="nome" value="{{ isset($store) ? $store->titulo : '' }}" name="nome" placeholder="Tipo de Usuário" required>
-                    </div> 
+                    </div>
                     <div class="col-12">
                         <label for="nivel" class="form-label">Módulos Permitidos</label>
 
@@ -57,141 +57,139 @@
                                         <table class="table table-striped">
 
                                             @php
-                                                $visualizar = false;
-                                                $adicionar = false;
-                                                $editar = false;
-                                                $excluir = false;
-                                                $outros = false;
+                                            $visualizar = false;
+                                            $adicionar = false;
+                                            $editar = false;
+                                            $excluir = false;
+                                            $outros = false;
                                             @endphp
 
                                             @foreach($modulo->submodulos as $submodulo)
-                                                @php
-                                                    $outros = false;
-                                                    $tipo_de_acao = $submodulo->tipo_de_acao;
+                                            @php
+                                            $outros = false;
+                                            $tipo_de_acao = $submodulo->tipo_de_acao;
 
-                                                    $visualizar = (isset($tipo_de_acao) && str_contains($tipo_de_acao, 'view')) ? true : false;
-                                                    $adicionar = (isset($tipo_de_acao) && str_contains($tipo_de_acao, 'add')) ? true : false;
-                                                    $editar = (isset($tipo_de_acao) && str_contains($tipo_de_acao, 'edit')) ? true : false;
-                                                    $excluir = (isset($tipo_de_acao) && str_contains($tipo_de_acao, 'delete')) ? true : false;
-                                                    $outros = (isset($tipo_de_acao) && str_contains($tipo_de_acao, 'other')) ? true : false;
-                                                @endphp
+                                            $visualizar = (isset($tipo_de_acao) && str_contains($tipo_de_acao, 'view')) ? true : false;
+                                            $adicionar = (isset($tipo_de_acao) && str_contains($tipo_de_acao, 'add')) ? true : false;
+                                            $editar = (isset($tipo_de_acao) && str_contains($tipo_de_acao, 'edit')) ? true : false;
+                                            $excluir = (isset($tipo_de_acao) && str_contains($tipo_de_acao, 'delete')) ? true : false;
+                                            $outros = (isset($tipo_de_acao) && str_contains($tipo_de_acao, 'other')) ? true : false;
+                                            @endphp
 
-                                                @php
+                                            @php
 
-                                                    $permissoes = (isset($store)) ? json_decode($store->permissoes) : [];
+                                            $permissoes = (isset($store)) ? json_decode($store->permissoes) : [];
 
-                                                        
-                                                    /* Verificação se existe no banco de dados para marcar */
-                                                        $view_db = false;                                                     
-                                                        $add_db = false;                                                     
-                                                        $edit_db = false;                                                     
-                                                        $delete_db = false;                                                     
-                                                        $other_db = false; 
-                                                        
-                                                        if(isset($permissoes)){
 
-                                                            foreach($permissoes as $key=>$val){
+                                            /* Verificação se existe no banco de dados para marcar */
+                                            $view_db = false;
+                                            $add_db = false;
+                                            $edit_db = false;
+                                            $delete_db = false;
+                                            $other_db = false;
 
-                                                            
-                                                            
-                                                                /* Foreach de verificação simples */
-                                                                foreach($val as $key_val=>$item){
+                                            if(isset($permissoes)){
 
-                                                                    if($key=="view" && $key_val==$submodulo->id){
-                                                                        $view_db = true;
-                                                                    }
+                                            foreach($permissoes as $key=>$val){
 
-                                                                    if($key=="add" && $key_val==$submodulo->id){
-                                                                        $add_db = true;
-                                                                    }
+                                            /* Foreach de verificação simples */
+                                            foreach($val as $key_val=>$item){
 
-                                                                    if($key=="edit" && $key_val==$submodulo->id){
-                                                                        $edit_db = true;
-                                                                    }
+                                            if($key=="view" && $key_val==$submodulo->id){
+                                            $view_db = true;
+                                            }
 
-                                                                    if($key=="delete" && $key_val==$submodulo->id){
-                                                                        $delete_db = true;
-                                                                    }
+                                            if($key=="add" && $key_val==$submodulo->id){
+                                            $add_db = true;
+                                            }
 
-                                                                    if($key=="other" && $key_val==$submodulo->id){
-                                                                        $other_db = true;
-                                                                    }
+                                            if($key=="edit" && $key_val==$submodulo->id){
+                                            $edit_db = true;
+                                            }
 
-                                                                }
+                                            if($key=="delete" && $key_val==$submodulo->id){
+                                            $delete_db = true;
+                                            }
 
-                                                            
-                                                            }
+                                            if($key=="other" && $key_val==$submodulo->id){
+                                            $other_db = true;
+                                            }
 
-                                                        }
+                                            }
 
-                                                @endphp
+
+                                            }
+
+                                            }
+
+                                            @endphp
                                             <tr>
                                                 <td width="30%">{{ $submodulo->titulo }}</td>
                                                 <td width="14%">
-                                                    @php if($visualizar){ @endphp  
+                                                    @php if($visualizar){ @endphp
                                                     <div class="form-check form-check-warning">
                                                         <label class="form-check-label">
-                                                        <input type="checkbox" class="form-check-input" name="permission[view][{{ $submodulo->id }}]" @if($view_db==true) checked @endif> Visualizar <i class="input-helper"></i></label>
+                                                            <input type="checkbox" class="form-check-input" name="permission[{{$modulo->id}}][{{$submodulo->id}}][view]" @if($view_db==true) checked @endif> Visualizar <i class="input-helper"></i></label>
                                                     </div>
                                                     @php } else{ @endphp
                                                     <div class="form-check form-check-warning disabled-text">
                                                         <label class="form-check-label">
-                                                        <input type="checkbox" disabled class="form-check-input"> Visualizar <i class="input-helper"></i></label>
-                                                    </div>                                                            
+                                                            <input type="checkbox" disabled class="form-check-input"> Visualizar <i class="input-helper"></i></label>
+                                                    </div>
                                                     @php } @endphp
                                                 </td>
                                                 <td width="14%">
-                                                    @php if($adicionar==true){ @endphp 
+                                                    @php if($adicionar==true){ @endphp
                                                     <div class="form-check form-check-warning">
                                                         <label class="form-check-label">
-                                                        <input type="checkbox" class="form-check-input" name="permission[add][{{ $submodulo->id }}]" @if($add_db==true) checked @endif> Adicionar <i class="input-helper"></i></label>
+                                                            <input type="checkbox" class="form-check-input" name="permission[{{$modulo->id}}][{{ $submodulo->id }}][add]" @if($add_db==true) checked @endif> Adicionar <i class="input-helper"></i></label>
                                                     </div>
                                                     @php } else{ @endphp
                                                     <div class="form-check form-check-warning disabled-text">
                                                         <label class="form-check-label">
-                                                        <input type="checkbox" disabled class="form-check-input"> Adicionar <i class="input-helper"></i></label>
-                                                    </div>                                                            
+                                                            <input type="checkbox" disabled class="form-check-input"> Adicionar <i class="input-helper"></i></label>
+                                                    </div>
                                                     @php } @endphp
                                                 </td>
                                                 <td width="14%">
-                                                    @php if($editar==true){ @endphp 
+                                                    @php if($editar==true){ @endphp
                                                     <div class="form-check form-check-warning">
                                                         <label class="form-check-label">
-                                                        <input type="checkbox" class="form-check-input" name="permission[edit][{{ $submodulo->id }}]" @if($edit_db==true) checked @endif> Editar <i class="input-helper"></i></label>
+                                                            <input type="checkbox" class="form-check-input" name="permission[{{$modulo->id}}][{{ $submodulo->id }}][edit]" @if($edit_db==true) checked @endif> Editar <i class="input-helper"></i></label>
                                                     </div>
                                                     @php } else{ @endphp
                                                     <div class="form-check form-check-warning disabled-text">
                                                         <label class="form-check-label">
-                                                        <input type="checkbox" disabled class="form-check-input"> Editar <i class="input-helper"></i></label>
-                                                    </div>                                                            
-                                                    @php } @endphp   
+                                                            <input type="checkbox" disabled class="form-check-input"> Editar <i class="input-helper"></i></label>
+                                                    </div>
+                                                    @php } @endphp
                                                 </td>
                                                 <td width="14%">
-                                                    @php if($excluir==true){ @endphp 
+                                                    @php if($excluir==true){ @endphp
                                                     <div class="form-check form-check-warning">
                                                         <label class="form-check-label">
-                                                        <input type="checkbox" class="form-check-input" name="permission[delete][{{ $submodulo->id }}]" @if($delete_db==true) checked @endif> Excluir <i class="input-helper"></i></label>
+                                                            <input type="checkbox" class="form-check-input" name="permission[{{$modulo->id}}][{{ $submodulo->id }}][delete]" @if($delete_db==true) checked @endif> Excluir <i class="input-helper"></i></label>
                                                     </div>
                                                     @php } else{ @endphp
                                                     <div class="form-check form-check-warning disabled-text">
                                                         <label class="form-check-label">
-                                                        <input type="checkbox" disabled class="form-check-input"> Excluir <i class="input-helper"></i></label>
-                                                    </div>                                                            
-                                                    @php } @endphp  
+                                                            <input type="checkbox" disabled class="form-check-input"> Excluir <i class="input-helper"></i></label>
+                                                    </div>
+                                                    @php } @endphp
                                                 </td>
                                                 <td width="14%">
-                                                    @php if($outros==true){ @endphp 
+                                                    @php if($outros==true){ @endphp
                                                     <div class="form-check form-check-warning">
                                                         <label class="form-check-label">
-                                                        <input type="checkbox" class="form-check-input" name="permission[other][{{ $submodulo->id }}]" @if($other_db==true) checked @endif> Outros <i class="input-helper"></i></label>
+                                                            <input type="checkbox" class="form-check-input" name="permission[{{$modulo->id}}][{{ $submodulo->id }}][other]" @if($other_db==true) checked @endif> Outros <i class="input-helper"></i></label>
                                                     </div>
                                                     @php } else{ @endphp
                                                     <div class="form-check form-check-warning disabled-text">
                                                         <label class="form-check-label">
-                                                        <input type="checkbox" disabled class="form-check-input"> Outros <i class="input-helper"></i></label>
-                                                    </div>                                                            
-                                                    @php } @endphp 
-                                                </td>                                                
+                                                            <input type="checkbox" disabled class="form-check-input"> Outros <i class="input-helper"></i></label>
+                                                    </div>
+                                                    @php } @endphp
+                                                </td>
                                             </tr>
                                             @endforeach
                                         </table>
@@ -200,7 +198,7 @@
                                 @endforeach
                             </tbody>
                         </table>
-                       
+
                     </div>
 
 

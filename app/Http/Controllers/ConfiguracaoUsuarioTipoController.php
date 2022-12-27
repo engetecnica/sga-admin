@@ -89,6 +89,7 @@ class ConfiguracaoUsuarioTipoController extends Controller
      */
     public function update(Request $request, $id)
     {
+
         //
         $tipo = UsuarioTipo::find($request->id);
         $tipo->titulo = $request->nome;

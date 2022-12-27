@@ -10,7 +10,7 @@ Trait FuncoesAdaptadas
         return $expressao;
     }
 
-    public function dd(...$data)
+    static function dd(...$data)
     {
         foreach ($data as $dt) {
             echo "<pre>";

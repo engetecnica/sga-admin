@@ -58,7 +58,17 @@
                         <input type="password" class="form-control" id="password_confirm" name="password_confirm">
                     </div>
 
-                    <div class="col-12">
+                    <div class="col-6">
+                        <label for="id_empresa" class="form-label">Empresa</label>
+                        <select class="form-select" id="id_empresa" name="id_empresa">
+                            <option value="0">Todas as Empresas</option>
+                            @foreach($empresas as $empresa)
+                            <option value="{{ $empresa->id }}" @php if(old('id_empresa', @$store->id_empresa) == $empresa->id) echo "selected"; @endphp >{{ $empresa->nome . ' - ' . $empresa->cpf }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="col-6">
                         <label for="nivel" class="form-label">Tipo de Usuário</label>
                         <select class="form-select" id="nivel" name="nivel">
                             <option value="">Escolha o Tipo de Usuário</option>

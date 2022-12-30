@@ -33,7 +33,7 @@
                 </div>
                 @endif
 
-                @php $action = isset($store) ? url('configuracao/modulo/update/'.$store->id) : url('configuracao/modulo/store'); @endphp
+                @php $action = isset($store) ? route('modulo.update', $store->id) : route('modulo.store'); @endphp
                 <form class="row g-3" method="post" enctype="multipart/form-data" action="{{ $action }}">
                     @csrf
 
@@ -42,7 +42,14 @@
                         <select class="form-select" id="id_modulo" name="id_modulo">
                             <option value="">Módulo Principal</option>
                             @foreach($modulos as $modulo)
-                            <option value="{{ $modulo->id }}" @php if(old('nivel', @$store->id_modulo) == $modulo->id) echo "selected"; @endphp >{{ $modulo->titulo }}</option>
+                            <?php ?>
+                            <option value="{{ $modulo['id'] }}" 
+                                @php 
+                                    if(old('id_modulo', @$store->id_modulo) == $modulo['id']) 
+                                        echo "selected"; 
+                                @endphp>
+                                {{ $modulo['titulo'] }}
+                            </option>
                             @endforeach
                         </select>
                     </div>

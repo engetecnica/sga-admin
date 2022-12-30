@@ -75,7 +75,7 @@ class ConfiguracaoModuloController extends Controller
         $modulo->save();
 
         Alert::success('Muito bem ;)', 'Um registro foi adicionado com sucesso!');
-        return redirect('configuracao/modulo');  
+        return redirect(route('modulo'));  
 
     }
 
@@ -105,7 +105,7 @@ class ConfiguracaoModuloController extends Controller
 
             if(!$id or !$store):  
                 Alert::error('Que Pena!', 'Esse registro não foi encontrado.');
-                return redirect('configuracao/modulo'); 
+                return redirect(route('modulo')); 
             endif;
 
             return view('pages.configuracoes.modulo.form', compact('store', 'modulos', 'acoes_permitidas'));
@@ -147,7 +147,7 @@ class ConfiguracaoModuloController extends Controller
         $modulo->save();
 
         Alert::success('Muito bem ;)', 'Registro modificado com sucesso.');
-        return redirect('configuracao/modulo/editar/'.$id);          
+        return redirect(route('modulo.editar', $id));          
     }
 
     /**

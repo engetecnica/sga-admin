@@ -34,6 +34,7 @@
                     <thead>
                         <tr>
                             <th width="8%">ID</th>
+                            <th>Site</th>
                             <th>CNPJ/CPF</th>
                             <th>Nome / Razão Social</th>
                             <th>WhatsApp</th>
@@ -46,24 +47,23 @@
                         @foreach($lista as $v)
                         <tr>
                             <td><span class="badge badge-dark">{{ $v->id }}</span></td>
+                            <td>
+                                <a href="{{ url('cadastro/empresa/site/'.$v->id) }}">
+                                    <button class="badge badge-secondary" data-toggle="tooltip" data-placement="top" title="Configurar"><i class="mdi mdi-cloud-upload"></i> Acessar Configurações</button>
+                                </a>
+                            </td>
                             <td>{{ ($v->cpf) ?? '-' }}</td>
                             <td>{{ $v->nome }}</td>
                             <td>{{ $v->celular }}</td>
                             <td>{{ $v->email }}</td>
                             <td>{{ $v->status }} </td>
                             <td>
+
                                 <a href="{{ url('cadastro/empresa/editar/'.$v->id) }}">
                                     <button class="badge badge-info" data-toggle="tooltip" data-placement="top" title="Editar"><i class="mdi mdi-pencil"></i> Editar</button>
                                 </a>
 
-                                <a 
-                                    href="javascript:void(0)" 
-                                    class="excluir-padrao" 
-                                    data-id="{{ $v->id }}" 
-                                    data-table="empresas" 
-                                    data-module="cadastro/empresa" 
-                                    data-redirect="{{ route('empresa') }}"
-                                >
+                                <a href="javascript:void(0)" class="excluir-padrao" data-id="{{ $v->id }}" data-table="empresas" data-module="cadastro/empresa" data-redirect="{{ route('empresa') }}">
                                     <button class="badge badge-danger" data-toggle="tooltip" data-placement="top" title="Excluir"><i class="mdi mdi-delete"></i> Excluir</button>
                                 </a>
                             </td>

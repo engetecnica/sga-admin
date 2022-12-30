@@ -2106,7 +2106,7 @@ input.main-search-input:-ms-input-placeholder {
   top: 119%;
   transition: all 0.3s ease 0s;
   visibility: hidden;
-  width: 240px;
+  width: 340px;
   z-index: 9;
   border-top: 4px solid var(--clr-theme-1);
   text-align: left;

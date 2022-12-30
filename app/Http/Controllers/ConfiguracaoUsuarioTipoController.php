@@ -47,7 +47,7 @@ class ConfiguracaoUsuarioTipoController extends Controller
         $tipo->save();
 
         Alert::success('Muito bem ;)', 'Um registro foi adicionado com sucesso!');
-        return redirect('configuracao/usuario_tipo');       
+        return redirect(route('usuario_tipo'));       
     }
 
     /**
@@ -74,7 +74,7 @@ class ConfiguracaoUsuarioTipoController extends Controller
 
             if(!$id or !$store):  
                 Alert::error('Que Pena!', 'Esse registro não foi encontrado.');
-                return redirect('configuracao/usuario_tipo'); 
+                return redirect(route('usuario_tipo')); 
             endif;
 
         return view('pages.configuracoes.usuario_tipo.form', compact('store'));
@@ -97,7 +97,7 @@ class ConfiguracaoUsuarioTipoController extends Controller
         $tipo->save();
 
         Alert::success('Muito bem ;)', 'Registro modificado com sucesso.');
-        return redirect('configuracao/usuario_tipo');          
+        return redirect(route('usuario_tipo'));          
     }
 
     /**

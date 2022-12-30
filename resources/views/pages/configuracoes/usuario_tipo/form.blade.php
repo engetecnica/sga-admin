@@ -25,7 +25,7 @@
         <div class="card">
             <div class="card-body">
 
-                @php $action = isset($store) ? url('configuracao/usuario_tipo/update/'.$store->id) : url('configuracao/usuario_tipo/store'); @endphp
+                @php $action = isset($store) ? route('usuario_tipo.update', $store->id) : route('usuario_tipo.store'); @endphp
                 <form class="row g-3" method="post" enctype="multipart/form-data" action="{{ $action }}">
                     @csrf
 
@@ -50,24 +50,25 @@
                             </thead>
                             <tbody>
                                 @foreach($modulos as $modulo)
-                                <tr>
-                                    <td>{{ $modulo->id }} </td>
-                                    <td>{{ $modulo->titulo }}</td>
+                                
+                                  <tr>
+                                    <td>{{ $modulo['id'] }} </td>
+                                    <td>{{ $modulo['titulo'] }}</td>
                                     <td>
-                                        <table class="table table-striped">
 
-                                            @php
+                                    <table class="table table-striped">
+                                        @php
                                             $visualizar = false;
                                             $adicionar = false;
                                             $editar = false;
                                             $excluir = false;
                                             $outros = false;
-                                            @endphp
+                                        @endphp
 
-                                            @foreach($modulo->submodulos as $submodulo)
+                                        @foreach($modulo['submodulo'] as $submodulo)
                                             @php
                                             $outros = false;
-                                            $tipo_de_acao = $submodulo->tipo_de_acao;
+                                            $tipo_de_acao = $submodulo['tipo_de_acao'];
 
                                             $visualizar = (isset($tipo_de_acao) && str_contains($tipo_de_acao, 'view')) ? true : false;
                                             $adicionar = (isset($tipo_de_acao) && str_contains($tipo_de_acao, 'add')) ? true : false;
@@ -79,6 +80,8 @@
                                             @php
 
                                             $permissoes = (isset($store)) ? json_decode($store->permissoes) : [];
+
+                                           
 
 
                                             /* Verificação se existe no banco de dados para marcar */
@@ -92,26 +95,30 @@
 
                                             foreach($permissoes as $key=>$val){
 
+                                               
+
                                             /* Foreach de verificação simples */
                                             foreach($val as $key_val=>$item){
 
-                                            if($key=="view" && $key_val==$submodulo->id){
+                                                
+
+                                            if($key=="view" && $key_val==$submodulo['id']){
                                             $view_db = true;
                                             }
 
-                                            if($key=="add" && $key_val==$submodulo->id){
+                                            if($key=="add" && $key_val==$submodulo['id']){
                                             $add_db = true;
                                             }
 
-                                            if($key=="edit" && $key_val==$submodulo->id){
+                                            if($key=="edit" && $key_val==$submodulo['id']){
                                             $edit_db = true;
                                             }
 
-                                            if($key=="delete" && $key_val==$submodulo->id){
+                                            if($key=="delete" && $key_val==$submodulo['id']){
                                             $delete_db = true;
                                             }
 
-                                            if($key=="other" && $key_val==$submodulo->id){
+                                            if($key=="other" && $key_val==$submodulo['id']){
                                             $other_db = true;
                                             }
 
@@ -123,13 +130,14 @@
                                             }
 
                                             @endphp
+
                                             <tr>
-                                                <td width="30%">{{ $submodulo->titulo }}</td>
+                                                <td width="30%">{{ $submodulo['titulo'] }}</td>
                                                 <td width="14%">
                                                     @php if($visualizar){ @endphp
                                                     <div class="form-check form-check-warning">
                                                         <label class="form-check-label">
-                                                            <input type="checkbox" class="form-check-input" name="permission[{{$modulo->id}}][{{$submodulo->id}}][view]" @if($view_db==true) checked @endif> Visualizar <i class="input-helper"></i></label>
+                                                            <input type="checkbox" class="form-check-input" name="permission[{{$modulo['id']}}][{{$submodulo['id']}}][view]" @if($view_db==true) checked @endif> Visualizar <i class="input-helper"></i></label>
                                                     </div>
                                                     @php } else{ @endphp
                                                     <div class="form-check form-check-warning disabled-text">
@@ -142,7 +150,7 @@
                                                     @php if($adicionar==true){ @endphp
                                                     <div class="form-check form-check-warning">
                                                         <label class="form-check-label">
-                                                            <input type="checkbox" class="form-check-input" name="permission[{{$modulo->id}}][{{ $submodulo->id }}][add]" @if($add_db==true) checked @endif> Adicionar <i class="input-helper"></i></label>
+                                                            <input type="checkbox" class="form-check-input" name="permission[{{$modulo['id']}}][{{$submodulo['id']}}][add]" @if($add_db==true) checked @endif> Adicionar <i class="input-helper"></i></label>
                                                     </div>
                                                     @php } else{ @endphp
                                                     <div class="form-check form-check-warning disabled-text">
@@ -155,7 +163,7 @@
                                                     @php if($editar==true){ @endphp
                                                     <div class="form-check form-check-warning">
                                                         <label class="form-check-label">
-                                                            <input type="checkbox" class="form-check-input" name="permission[{{$modulo->id}}][{{ $submodulo->id }}][edit]" @if($edit_db==true) checked @endif> Editar <i class="input-helper"></i></label>
+                                                            <input type="checkbox" class="form-check-input" name="permission[{{$modulo['id']}}][{{$submodulo['id']}}][edit]" @if($edit_db==true) checked @endif> Editar <i class="input-helper"></i></label>
                                                     </div>
                                                     @php } else{ @endphp
                                                     <div class="form-check form-check-warning disabled-text">
@@ -168,7 +176,7 @@
                                                     @php if($excluir==true){ @endphp
                                                     <div class="form-check form-check-warning">
                                                         <label class="form-check-label">
-                                                            <input type="checkbox" class="form-check-input" name="permission[{{$modulo->id}}][{{ $submodulo->id }}][delete]" @if($delete_db==true) checked @endif> Excluir <i class="input-helper"></i></label>
+                                                            <input type="checkbox" class="form-check-input" name="permission[{{$modulo['id']}}][{{$submodulo['id']}}][delete]" @if($delete_db==true) checked @endif> Excluir <i class="input-helper"></i></label>
                                                     </div>
                                                     @php } else{ @endphp
                                                     <div class="form-check form-check-warning disabled-text">
@@ -181,7 +189,7 @@
                                                     @php if($outros==true){ @endphp
                                                     <div class="form-check form-check-warning">
                                                         <label class="form-check-label">
-                                                            <input type="checkbox" class="form-check-input" name="permission[{{$modulo->id}}][{{ $submodulo->id }}][other]" @if($other_db==true) checked @endif> Outros <i class="input-helper"></i></label>
+                                                            <input type="checkbox" class="form-check-input" name="permission[{{$modulo['id']}}][{{$submodulo['id']}}][other]" @if($other_db==true) checked @endif> Outros <i class="input-helper"></i></label>
                                                     </div>
                                                     @php } else{ @endphp
                                                     <div class="form-check form-check-warning disabled-text">
@@ -192,9 +200,9 @@
                                                 </td>
                                             </tr>
                                             @endforeach
-                                        </table>
+                                    </table>
                                     </td>
-                                </tr>
+                                  </tr>
                                 @endforeach
                             </tbody>
                         </table>

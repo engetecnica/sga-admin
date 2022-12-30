@@ -15,13 +15,16 @@
                                 <li><a href="contact.html">Como Funciona?</a></li>
                                 <li class="menu-item-has-children"><a href="index.html">Planos</a>
                                     <ul class="sub-menu">
-                                        <li><a href="index.html">Home Style 1</a></li>
+                                        @foreach($produtos as $produto)
+                                        <li><a href="{{ url('produto') }}">{{ $produto->titulo }}</a></li>
+                                        @endforeach
                                     </ul>
                                 </li>
                                 <li class="menu-item-has-children"><a href="about.html">Baixe o Aplicativo</a>
                                     <ul class="sub-menu">
-                                        <li><a href="about.html">About Us</a></li>
-                                        <li><a href="about-me.html">About Me</a></li>
+                                        @foreach($aplicativos as $aplicativo)
+                                        <li><a href="{{ $aplicativo->link_download }}">{{ $aplicativo->titulo }}</a></li>
+                                        @endforeach
                                     </ul>
                                 </li>
 
@@ -42,7 +45,7 @@
                             </div>
                             <div class="bd-header-contacts-text">
                                 <span>Suporte ao Cliente</span>
-                                <a href="tel:+254365980">+55 (48) 99653-3629</a>
+                                <a href="{{ Tratamento::SetURLWhatsApp($site->whatsapp) }}" target="_blank">{{ $site->whatsapp }}</a>
                             </div>
                         </div>
                     </div>

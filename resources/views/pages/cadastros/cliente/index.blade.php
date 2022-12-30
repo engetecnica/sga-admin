@@ -52,9 +52,11 @@
                             <td>{{ ($v->empresa) ?? '-' }}</td>
                             <td>{{ $v->nome }}</td>
                             <td>
-                                <button class="badge badge-primary">
-                                    <span class="mdi mdi-whatsapp"></span> {{ $v->celular }}
-                                </button>
+                                <a href="{{ Tratamento::SetURLWhatsApp($v->celular) }}">
+                                    <button class="badge badge-primary">
+                                        <span class="mdi mdi-whatsapp"></span> {{ $v->celular }}
+                                    </button>
+                                </a>
                             </td>
                             <td>{{ $v->email }}</td>
                             <td>Nenhuma compra encontrada.</td>

@@ -37,22 +37,24 @@
                 <form class="row g-3" method="post" enctype="multipart/form-data" action="{{ $action }}">
                     @csrf
 
+                    @if(Auth::user()->user_level == 1) 
                     <div class="col-12">
                         <label for="nivel" class="form-label">Líder</label>
                         <select class="form-select" id="id_empresa" name="id_empresa">
                             <option value="">Selecione uma empresa de Liderança</option>
                             @foreach($empresas as $empresa)
-                                <option value="{{ $empresa->id }}" @php if(@$store->id_empresa==$empresa->id) echo 'selected' @endphp>{{ $empresa->nome }} - {{ $empresa->cpf }}</option>
+                            <option value="{{ $empresa->id }}" @php if(@$store->id_empresa==$empresa->id) echo 'selected' @endphp>{{ $empresa->nome }} - {{ $empresa->cpf }}</option>
                             @endforeach
                         </select>
                     </div>
+                    @endif
 
                     <div class="col-md-9">
                         <label for="nome" class="form-label">Nome Completo</label>
                         <input type="text" class="form-control" id="nome" value="{{ old('nome', @$store->nome) }}" name="nome">
                     </div>
 
-                    
+
                     <div class="col-md-3">
                         <label for="data_de_nascimento" class="form-label">Data de Nascimento</label>
                         <input type="date" class="form-control" id="data_de_nascimento" value="{{ old('data_de_nascimento', @$store->data_de_nascimento) }}" name="data_de_nascimento">
@@ -66,8 +68,8 @@
                     <div class="col-md-4">
                         <label for="endereco" class="form-label">Endereço</label>
                         <input type="text" class="form-control" id="endereco" value="{{ old('endereco', @$store->endereco) }}" name="endereco">
-                    </div>                                        
-                    
+                    </div>
+
                     <div class="col-md-3">
                         <label for="cidade" class="form-label">Cidade</label>
                         <input type="text" class="form-control" id="cidade" value="{{ old('cidade', @$store->cidade) }}" name="cidade">
@@ -77,25 +79,25 @@
                         <select name="estado" id="estado" class="form-select">
                             <option value="">Selecione o Estado</option>
                             @foreach($estados as $sigla => $estado)
-                                <option value="{{ $sigla }}"  @php if(@$store->estado==$sigla) echo 'selected' @endphp>{{ $estado }}</option>
+                            <option value="{{ $sigla }}" @php if(@$store->estado==$sigla) echo 'selected' @endphp>{{ $estado }}</option>
                             @endforeach
                         </select>
-                    </div>    
-                    
+                    </div>
+
                     <div class="col-md-6">
                         <label for="email" class="form-label">E-mail</label>
                         <input type="email" class="form-control" id="email" value="{{ old('email', @$store->email) }}" name="email">
-                    </div>           
+                    </div>
 
                     <div class="col-md-3">
                         <label for="celular" class="form-label">Celular / WhatsApp</label>
                         <input type="text" class="form-control celular" id="celular" value="{{ old('celular', @$store->celular) }}" name="celular">
-                    </div> 
-                    
+                    </div>
+
                     <div class="col-md-3">
                         <label for="cpf" class="form-label">CPF</label>
                         <input type="text" class="form-control cpf" id="celular" value="{{ old('cpf', @$store->cpf) }}" name="cpf">
-                    </div> 
+                    </div>
 
                     <div class="col-md-3">
                         <label for="status" class="form-label">Status</label>
@@ -103,8 +105,8 @@
                             <option value="Ativo" @php if(@$store->status=="Ativo") echo 'selected' @endphp>Ativo</option>
                             <option value="Inativo" @php if(@$store->status=="Inativo") echo 'selected' @endphp>Inativo</option>
                         </select>
-                    </div>                                          
-                    
+                    </div>
+
 
                     <div class="col-12">
                         <button type="submit" class="btn btn-block btn-gradient-primary btn-lg font-weight-medium">Salvar</button>

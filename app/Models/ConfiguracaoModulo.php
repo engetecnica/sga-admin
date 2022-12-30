@@ -60,8 +60,9 @@ class ConfiguracaoModulo extends Model
 
 
     static function get_modulos_permitidos()
-    {
-        if(Auth::check()){
+    {    
+
+        if(Auth::check() && isset(Auth::user()->user_level)){
             $permissoes = json_decode((ConfiguracaoUsuarioNiveis::find(Auth::user()->user_level))->permissoes);  
             foreach($permissoes as $id_modulo=>$p){
                 $modulo[$id_modulo] = ConfiguracaoModulo::find($id_modulo)->toArray();

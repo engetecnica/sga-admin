@@ -16,7 +16,10 @@ class CustomAuthController extends Controller
     use FuncoesAdaptadas;
 
     public function index()
-    {        
+    {      
+        if(Auth::check()){
+            return redirect()->intended('dashboard');
+        }
         return view('auth.login');
     }  
       

@@ -83,7 +83,7 @@
                                 @endphp
                             </td>
                             <td>
-                                <a href="{{ url('configuracao/modulo/editar/'.$v->id) }}">
+                                <a href="{{ route('modulo.editar', $v->id) }}">
                                     <button class="badge badge-info" data-toggle="tooltip" data-placement="top" title="Editar"><i class="mdi mdi-pencil"></i> Editar</button>
                                 </a>
 

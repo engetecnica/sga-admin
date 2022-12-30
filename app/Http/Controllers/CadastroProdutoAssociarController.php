@@ -26,6 +26,8 @@ class CadastroProdutoAssociarController extends Controller
      */
 
     use FuncoesAdaptadas;
+
+    
     
 
     public function index()
@@ -41,6 +43,7 @@ class CadastroProdutoAssociarController extends Controller
      */
     public function create()
     {
+
         //
         $empresas = CadastroEmpresa::withTrashed()->where('status', 'Ativo')->get(); // Filtro softDeletes + Status Ativo
         $produtos = CadastroProduto::withTrashed()->where('status', 'Ativo')->get(); // Filtro softDeletes + Status Ativo

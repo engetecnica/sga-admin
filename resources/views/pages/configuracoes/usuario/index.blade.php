@@ -52,7 +52,7 @@
                             <td>{{ $v->email }}</td>
                             <td>
                                 @if($v->id != Auth::user()->id)
-                                <a href="{{ url('configuracao/usuario/editar/'.$v->id) }}">
+                                <a href="{{ route('usuario.editar', $v->id) }}">
                                     <button class="badge badge-info"><i class="mdi mdi-pencil"></i> Editar</button>
                                 </a>
 

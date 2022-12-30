@@ -24,4 +24,6 @@ Trait FuncoesAdaptadas
         if(!$nome) return null;
         return mb_strtoupper(str_replace("+", "", $nome));        
     }
+
+    
 }

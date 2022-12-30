@@ -1,12 +1,12 @@
 @extends('dashboard')
-@section('title', 'Tipos de Usuário')
+@section('title', 'Usuário')
 @section('content')
 
 <div class="page-header">
     <h3 class="page-title">
         <span class="page-title-icon bg-gradient-primary text-white me-2">
             <i class="mdi mdi-access-point-network menu-icon"></i>
-        </span> Tipos de Usuário
+        </span> Usuário
     </h3>
     <nav aria-label="breadcrumb">
         <ul class="breadcrumb">
@@ -36,7 +36,7 @@
                 </div>
                 @endif
 
-                @php $action = isset($store) ? url('configuracao/usuario/update/'.$store->id) : url('configuracao/usuario/store'); @endphp
+                @php $action = isset($store) ? route('usuario.update', $store->id) : route('usuario.store'); @endphp
                 <form class="row g-3" method="post" enctype="multipart/form-data" action="{{ $action }}">
                     @csrf
 

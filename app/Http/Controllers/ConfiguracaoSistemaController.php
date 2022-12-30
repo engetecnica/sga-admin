@@ -98,7 +98,7 @@ class ConfiguracaoSistemaController extends Controller
         $configuracao->save();
 
         Alert::success('Muito bem ;)', 'Registro modificado com sucesso.');
-        return redirect('configuracao/sistema');   
+        return redirect(route('sistema'));   
 
     }
 

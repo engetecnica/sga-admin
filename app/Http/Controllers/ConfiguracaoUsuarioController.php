@@ -11,8 +11,6 @@ use Illuminate\Support\Facades\Hash;
 use RealRashid\SweetAlert\Facades\Alert;
 
 
-
-
 class ConfiguracaoUsuarioController extends Controller
 {
     public function index()
@@ -79,11 +77,11 @@ class ConfiguracaoUsuarioController extends Controller
         $user->name = $request->nome;
         $user->password = Hash::make($request->password);
         $user->email = $request->email;
-        $user->user_level = $request->nivel;
+        $user->user_level = ($request->nivel) ? $request->nivel : Auth::user()->user_level;
         $user->save();
 
         Alert::success('Muito bem ;)', 'Um registro foi adicionado com sucesso!');
-        return redirect('configuracao/usuario');       
+        return redirect(route('usuario'));       
     }
 
     /**
@@ -112,12 +110,12 @@ class ConfiguracaoUsuarioController extends Controller
 
             if(!$id or !$store):  
                 Alert::error('Que Pena!', 'Esse registro não foi encontrado.');
-                return redirect('configuracao/usuario'); 
+                return redirect(route('usuario')); 
             endif;
 
             if($id == Auth::user()->id): 
                 Alert::error('Que Pena!', 'Você não poderá modificar seu próprio usuário!');
-                return redirect('configuracao/usuario');  
+                return redirect(route('usuario'));  
             endif;
 
         return view('pages.configuracoes.usuario.form', compact('store', 'usuario_niveis', 'empresas'));
@@ -132,10 +130,15 @@ class ConfiguracaoUsuarioController extends Controller
      */
     public function update(Request $request, $id)
     {
+
         $user = ConfiguracaoUsuario::find($id);
         $user->name = $request->nome;
         $user->email = $request->email;
-        $user->user_level = $request->nivel;
+        
+        if(Auth::user()->user_level==1){
+            $user->user_level = $request->nivel;
+        }
+
         $user->id_empresa = $request->id_empresa;
 
         if(isset($request->password) && isset($request->password_confirm)){
@@ -143,14 +146,14 @@ class ConfiguracaoUsuarioController extends Controller
                 $user->password = Hash::make($request->password);
             } else {
                 Alert::error('Erro', 'As senhas digitadas devem ser iguais.');
-                return redirect('configuracao/usuario');
+                return redirect(route('usuario.adicionar'));
             }
         }
 
         $user->save();
 
         Alert::success('Muito bem ;)', 'Registro modificado com sucesso.');
-        return redirect('configuracao/usuario');         
+        return redirect(route('usuario'));         
     }
 
     /**

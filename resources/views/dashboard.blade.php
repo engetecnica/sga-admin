@@ -49,12 +49,14 @@
 								<option value="0">Todas as Empresas</option>
 								@foreach($empresas_lista as $empresa)
 
-								@php $selected = ""; @endphp
-								@if(Session::has('empresa'))
-								@if(Session::get('empresa')->id==$empresa->id)
-								@php $selected = "selected"; @endphp
-								@endif
-								@endif
+									<?php 
+										$selected = null;
+										if(Session::has('empresa')){
+											if(Session::get('empresa')['id']==$empresa->id){
+												$selected = "selected";
+											}
+										}
+									?>
 
 								<option value="{{ $empresa->id }}" {{ $selected }}>{{ $empresa->nome . ' - ' . $empresa->cpf }}</option>
 								@endforeach
@@ -233,7 +235,7 @@
 							<i class="{{ $module['icone'] }} menu-icon"></i>
 						</a>
 						@else
-						<a class="nav-link" href="{{ $module['url_amigavel'] }}">
+						<a class="nav-link" href="{{ env('URL_APP_ADMIN') }}{{ $module['url_amigavel'] }}">
 							<span class="menu-title">{{ $module['titulo'] }}</span>
 							<i class="{{ $module['icone'] }} menu-icon"></i>
 						</a>
@@ -244,7 +246,7 @@
 							<ul class="nav flex-column sub-menu">
 								@foreach($module['submodulo'] as $sub)
 								@php
-								$item = Request::segment(1)."/".Request::segment(2);
+								$item = Request::segment(2)."/".Request::segment(3);
 								@endphp
 								<li class="nav-item"> <a class="nav-link {{ $item == $sub['url_amigavel']? 'active-submodulo' : '' }}" href="{{ url($sub['url_amigavel']) }}">{{ $sub['titulo'] }}</a></li>
 								@endforeach
@@ -454,7 +456,7 @@
 
 			$('[data-toggle="tooltip"]').tooltip();
 
-			$('.celular').inputmask('+99 (99) 99999-9999');
+			$('.celular').inputmask('(99) 99999-9999');
 			$('.cpf').inputmask('999.999.999-99');
 			$('.cep').inputmask('99999-999');
 

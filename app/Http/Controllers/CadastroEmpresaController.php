@@ -190,4 +190,31 @@ class CadastroEmpresaController extends Controller
     {
         //
     }
+
+
+
+
+    /*
+    Configurações do Site vincualdo à Empresa
+    */
+    public function site(request $request){
+        
+
+        $user = User::
+
+
+        $empresa = CadastroEmpresa::find($request->id);
+
+        if($empresa==null):
+            Alert::error('Que Pena!', 'Empresa não encontrada ou você não tem permissão para acessar essa empresa.');
+            return redirect('cadastro/empresa');
+        endif;
+
+
+
+
+
+    }
+
+
 }

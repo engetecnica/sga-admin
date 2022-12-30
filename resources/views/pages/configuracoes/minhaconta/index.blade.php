@@ -23,7 +23,7 @@
         <div class="card">
             <div class="card-body">
 
-                <form class="row g-3" method="post" enctype="multipart/form-data" action="{{ url('configuracao/minhaconta/store') }}">
+                <form class="row g-3" method="post" enctype="multipart/form-data" action="{{ route('minhaconta.store') }}">
                     @csrf
                     <div class="col-md-6">
                         <label for="email" class="form-label">E-mail / Usuário</label>
@@ -41,6 +41,7 @@
                         <label for="nome" class="form-label">Nome Completo</label>
                         <input type="text" class="form-control" id="nome" value="{{ Auth::user()->name }}" name="nome">
                     </div>
+                    <?php if (isset(Auth::user()->user_level) && Auth::user()->user_level == 1) { ?>
                     <div class="col-12">
                         <label for="nivel" class="form-label">Tipo de Usuário</label>
                         <select class="form-select" id="nivel" name="nivel">
@@ -56,7 +57,7 @@
                             @endforeach
                         </select>
                     </div>
-                   
+                    <?php } ?>
 
                     <div class="col-12">
                         <button type="submit" class="btn btn-block btn-gradient-primary btn-lg font-weight-medium">Salvar</button>

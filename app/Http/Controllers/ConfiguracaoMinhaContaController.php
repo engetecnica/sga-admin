@@ -53,21 +53,24 @@ class ConfiguracaoMinhaContaController extends Controller
 
             $user = User::find($id_usuario);
             $user->name = $request->nome;
-            $user->user_level = $request->nivel;
+
+            if (Auth::user()->user_level == 1) {
+                $user->user_level = $request->nivel;
+            }
 
             if(isset($request->password) && isset($request->password_confirm)){
                 if($request->password === $request->password_confirm){
                     $user->password = Hash::make($request->password);
                 } else {
                     Alert::error('Erro', 'As senhas digitadas devem ser iguais.');
-                    return redirect('configuracao/minhaconta');
+                    return redirect(route('minhaconta'));
                 }
             }
 
             $user->save();
 
             Alert::success('Muito bem ;)', 'Registro modificado com sucesso.');
-            return redirect('configuracao/minhaconta');
+            return redirect(route('minhaconta'));
 
         } else {
 

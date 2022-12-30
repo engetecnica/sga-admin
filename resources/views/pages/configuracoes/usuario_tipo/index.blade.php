@@ -45,7 +45,7 @@
                             <td><span class="badge badge-dark">{{ $v->id }}</span></td>
                             <td>{{ $v->titulo }}</td>
                             <td>
-                                <a href="{{ url('configuracao/usuario_tipo/editar/'.$v->id) }}">
+                                <a href="{{ route('usuario_tipo.editar', $v->id) }}">
                                     <button class="badge badge-info"><i class="mdi mdi-pencil"></i> Editar</button>
                                 </a>
 

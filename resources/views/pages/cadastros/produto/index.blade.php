@@ -23,9 +23,11 @@
             <button class="btn btn-sm btn-danger">Novo Registro</button>
         </a>
 
+        @if(Auth::user()->user_level == 1) 
         <a href="{{ route('cadastro.produto.associar.adicionar') }}">
             <button class="btn btn-sm btn-info">Associar Líder/Empresa</button>
         </a>
+        @endif
     </h3>
 </div>
 

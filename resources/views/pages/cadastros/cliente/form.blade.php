@@ -33,11 +33,13 @@
                 </div>
                 @endif
 
-                @php $action = isset($store) ? url('cadastro/cliente/update/'.$store->id) : url('cadastro/cliente/store'); @endphp
+                @php
+                $action = isset($store) ? route('cadastro.cliente.update', $store->id) : route('cadastro.cliente.store');
+                @endphp
                 <form class="row g-3" method="post" enctype="multipart/form-data" action="{{ $action }}">
                     @csrf
 
-                    @if(Auth::user()->user_level == 1) 
+                    @if(Auth::user()->user_level == 1)
                     <div class="col-12">
                         <label for="nivel" class="form-label">Líder</label>
                         <select class="form-select" id="id_empresa" name="id_empresa">

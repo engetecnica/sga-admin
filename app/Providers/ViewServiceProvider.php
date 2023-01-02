@@ -27,7 +27,7 @@ class ViewServiceProvider extends ServiceProvider
     {
         //
         view()->composer('*', function($view) {
-            $view->with(['modulos' => ConfiguracaoModulo::get_modulos_permitidos(), 'empresas_lista' => CadastroEmpresa::all()]);
+            $view->with(['modulos_permitidos' => ConfiguracaoModulo::get_modulos_permitidos(), 'empresas_lista' => CadastroEmpresa::all()]);
         });
     }
 

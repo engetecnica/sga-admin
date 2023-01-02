@@ -6,7 +6,7 @@ use App\Http\Controllers\CustomAuthController;
 use RealRashid\SweetAlert\Facades\Alert;
 
 /* Site */
-Use App\Http\Controllers\SiteController;
+use App\Http\Controllers\SiteController;
 
 /* Configurações */
 use App\Http\Controllers\ConfiguracaoController;
@@ -26,9 +26,13 @@ use App\Http\Controllers\CadastroProdutoAssociarController;
 use App\Http\Controllers\AnexoController;
 use App\Http\Controllers\ApiController;
 use App\Http\Controllers\AppImportarController;
+
 /* PDV */
 use App\Http\Controllers\VendaPdvController;
 
+/* Ferramenta - Cobranças */
+use App\Http\Controllers\FerramentaCobrancaController;
+use App\Http\Controllers\FerramentaMensagemController;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,18 +53,21 @@ Route::fallback(function () {
 
 // Route::get('/',                                         [SiteController::class, 'index'])->name('site');
 // Route::get('/',                                         [SiteController::class, 'index'])->name('admin');
-// Route::get('admin',                                    [CustomAuthController::class, 'index'])->name('login');
+Route::get('admin',                                               [CustomAuthController::class, 'index'])->name('admin');
 Route::get('admin/login',                                         [CustomAuthController::class, 'index'])->name('login');
-Route::post('admin/custom-login',                                 [CustomAuthController::class, 'customLogin'])->name('login.custom'); 
+Route::post('admin/custom-login',                                 [CustomAuthController::class, 'customLogin'])->name('login.custom');
 Route::get('admin/signout',                                       [CustomAuthController::class, 'signOut'])->name('signout');
-
 
 /* Grupo de Rotas Autenticadas */
 Route::group(['middleware' => 'auth'], function () {
-    
+
     /* Configurações - Dashboard */
     Route::get('admin/configuracao',                              [ConfiguracaoController::class, 'index']);
-    Route::get('admin/dashboard',                                 [CustomAuthController::class, 'dashboard'])->name('dashboard'); 
+    Route::get(
+        'admin/dashboard',
+        [CustomAuthController::class, 'dashboard']
+    )->name('dashboard');
+    
 
     /* Minha Conta */
     Route::get('admin/configuracao/minhaconta',                   [ConfiguracaoMinhaContaController::class, 'index'])->name('minhaconta');
@@ -110,10 +117,6 @@ Route::group(['middleware' => 'auth'], function () {
     /* Cadastros - Empresa - Configurações do Site */
     Route::get('admin/cadastro/empresa/site/{id?}',               [CadastroEmpresaController::class, 'site'])->name('cadastro.empresa.site');
 
-
-
-    
-
     /* Cadastros - Produto */
     Route::get('admin/produto',                                   [CadastroProdutoController::class, 'index'])->name('produto');
     Route::get('admin/cadastro/produto',                          [CadastroProdutoController::class, 'index'])->name('cadastro.produto');
@@ -136,48 +139,41 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('admin/venda/store',                              [VendaPdvController::class, 'store'])->name('venda.store');
     Route::post('admin/cadastro/produto/update/{id}',             [VendaPdvController::class, 'update'])->name('venda.update');
 
-
     /* 
         @function pesquisar_produto_por_empresa
         @int id_empresa
         @retornar produtos que não foram vinculados ainda
         @caso null ou false, nenhum produto encontrado
     */
-    Route::post('admin/cadastro/produto/associar/pesquisar_produto_por_empresa', 
-        [
-            CadastroProdutoAssociarController::class, 
-            'pesquisar_produto_por_empresa'
-        ]
-    )->name('produto.associar.pesquisar_produto_por_empresa');
-
-
-
-    Route::post('admin/cadastro/produto/associar/pesquisar_empresa_por_produto', 
-    [
-        CadastroProdutoAssociarController::class, 
-        'pesquisar_empresa_por_produto'
-    ]
-    )->name('produto.associar.pesquisar_empresa_por_produto');    
-
-
-
-    
+    Route::post('admin/cadastro/produto/associar/pesquisar_produto_por_empresa', [CadastroProdutoAssociarController::class, 'pesquisar_produto_por_empresa'])->name('produto.associar.pesquisar_produto_por_empresa');
+    Route::post('admin/cadastro/produto/associar/pesquisar_empresa_por_produto', [CadastroProdutoAssociarController::class, 'pesquisar_empresa_por_produto'])->name('produto.associar.pesquisar_empresa_por_produto');
 
     /* Manipulação de Anexos */
     Route::post('admin/anexo/salvar_anexo',                       [AnexoController::class, 'store'])->name('anexo.salvar');
-
-
 
     /* APP - Retorno dos dados do sistema antigo */
     Route::get('admin/api/importar_cliente',                      [AppImportarController::class, 'importar_clientes'])->name('importar.cliente');
     Route::get('admin/api/importar_plano',                        [AppImportarController::class, 'importar_planos'])->name('importar.plano');
     Route::get('admin/api/importar_venda',                        [AppImportarController::class, 'importar_vendas'])->name('importar.venda');
 
-
     /* API de Controles */
     Route::post('admin/api/selecionar_empresa',                   [ApiController::class, 'selecionar_empresa'])->name('api.selecionar_empresa');
+
+    /* Cobranças via WhatsApp */
+    Route::get('admin/ferramenta/cobranca',                       [FerramentaCobrancaController::class, 'index'])->name('ferramenta.cobranca');
+
+    /* Ferramentas - Mensagens para WhatsApp */
+    Route::get('admin/ferramenta/mensagem',                       [FerramentaMensagemController::class, 'index'])->name('ferramenta.mensagem');
+    Route::get('admin/ferramenta/mensagem/adicionar',             [FerramentaMensagemController::class, 'create'])->name('ferramenta.mensagem.adicionar');
+    Route::get('admin/ferramenta/mensagem/editar/{id?}',          [FerramentaMensagemController::class, 'edit'])->name('ferramenta.mensagem.editar');
+    Route::post('admin/ferramenta/mensagem/store',                [FerramentaMensagemController::class, 'store'])->name('ferramenta.mensagem.store');
+    Route::post('admin/ferramenta/mensagem/update/{id}',          [FerramentaMensagemController::class, 'update'])->name('ferramenta.mensagemda.update');
+
+    Route::get('admin/ferramenta/',                               [FerramentaMensagemController::class, ''])->name('');
+
+
 
 });
 
 /* Rotas do Site */
-Route::get('como-funciona',                                 [SiteController::class, 'comofunciona'])->name('site.comofunciona');
+Route::get('como-funciona',                                       [SiteController::class, 'comofunciona'])->name('site.comofunciona');

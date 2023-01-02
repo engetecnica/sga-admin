@@ -43,12 +43,12 @@
                             <option value="">Módulo Principal</option>
                             @foreach($modulos as $modulo)
                             <?php ?>
-                            <option value="{{ $modulo['id'] }}" 
+                            <option value="{{ $modulo->id }}" 
                                 @php 
-                                    if(old('id_modulo', @$store->id_modulo) == $modulo['id']) 
+                                    if(old('id_modulo', @$store->id_modulo) == $modulo->id) 
                                         echo "selected"; 
                                 @endphp>
-                                {{ $modulo['titulo'] }}
+                                {{ $modulo->titulo }}
                             </option>
                             @endforeach
                         </select>
@@ -80,7 +80,9 @@
                             @php
                             $selected = false;
                             if(isset($store) && $store->tipo_de_acao){
-                            $selected = (isset($store->tipo_de_acao) && str_contains($store->tipo_de_acao, $permitido)) ? "selected" : false;
+                                $selected = (isset($store->tipo_de_acao) 
+                                    && str_contains($store->tipo_de_acao, $permitido)) 
+                                ? "selected" : false;
                             }
                             @endphp
                             <option value="{{ $permitido }}" {{ $selected ?? '' }}>{{ $key }}</option>

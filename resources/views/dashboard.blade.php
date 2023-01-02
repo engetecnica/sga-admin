@@ -45,18 +45,18 @@
 					<form class="d-flex align-items-center h-100" action="#">
 						<div class="input-group">
 
-							<select class="form-control select2 select-2-width-400" id="selecionar_empresa">
+							<select class="form-control select2 select-2-width-400" id="selecionar_empresa" name="selecionar_empresa">
 								<option value="0">Todas as Empresas</option>
 								@foreach($empresas_lista as $empresa)
 
-									<?php 
-										$selected = null;
-										if(Session::has('empresa')){
-											if(Session::get('empresa')['id']==$empresa->id){
-												$selected = "selected";
-											}
-										}
-									?>
+								<?php
+								$selected = null;
+								if (Session::has('empresa')) {
+									if (Session::get('empresa')['id'] == $empresa->id) {
+										$selected = "selected";
+									}
+								}
+								?>
 
 								<option value="{{ $empresa->id }}" {{ $selected }}>{{ $empresa->nome . ' - ' . $empresa->cpf }}</option>
 								@endforeach
@@ -225,7 +225,8 @@
 						</a>
 					</li>
 
-					@foreach($modulos as $module)
+					@foreach($modulos_permitidos as $module)
+
 					<li class="nav-item">
 
 						@if(count($module['submodulo']) >0)
@@ -245,10 +246,13 @@
 						<div class="collapse" id="{{ $module['url_amigavel'] }}">
 							<ul class="nav flex-column sub-menu">
 								@foreach($module['submodulo'] as $sub)
-								@php
-								$item = Request::segment(2)."/".Request::segment(3);
-								@endphp
-								<li class="nav-item"> <a class="nav-link {{ $item == $sub['url_amigavel']? 'active-submodulo' : '' }}" href="{{ url($sub['url_amigavel']) }}">{{ $sub['titulo'] }}</a></li>
+								<?php
+								$item = env('URL_APP_ADMIN') .
+									Request::segment(2) . "/" .
+									Request::segment(3);
+
+								?>
+								<li class="nav-item"> <a class="nav-link {{ $item === $sub['url_amigavel']? 'active-submodulo' : '' }}" href="{{ url($sub['url_amigavel']) }}">{{ $sub['titulo'] }}</a></li>
 								@endforeach
 							</ul>
 						</div>
@@ -329,10 +333,22 @@
 	<script src="//cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
 
 	<script>
+		function limite_textarea(qtde, valor, campo) {
+			quant = qtde;
+			total = valor.length;
+			if (total <= quant) {
+				resto = quant - total;
+				document.getElementById('cont').innerHTML = resto;
+			} else {
+				document.getElementById(campo).value = valor.substr(0, quant);
+			}
+		}
 		$(document).ready(function() {
 
 			BASE_URL = '<?php echo route('admin'); ?>';
 			var route = window.location.pathname;
+
+
 
 			$(".select2").select2();
 

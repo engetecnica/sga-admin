@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\ConfiguracaoUsuarioNiveis as UsuarioTipo;
+use App\Models\ConfiguracaoModulo;
 
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -30,7 +31,8 @@ class ConfiguracaoUsuarioTipoController extends Controller
     public function create()
     {
         //
-        return view('pages.configuracoes.usuario_tipo.form');
+        $modulos = ConfiguracaoModulo::get_modulos();
+        return view('pages.configuracoes.usuario_tipo.form', compact('modulos'));
     }
 
     /**
@@ -69,7 +71,7 @@ class ConfiguracaoUsuarioTipoController extends Controller
      */
     public function edit($id=null)
     {
-
+        $modulos = ConfiguracaoModulo::get_modulos();
         $store = UsuarioTipo::find($id);
 
             if(!$id or !$store):  
@@ -77,7 +79,7 @@ class ConfiguracaoUsuarioTipoController extends Controller
                 return redirect(route('usuario_tipo')); 
             endif;
 
-        return view('pages.configuracoes.usuario_tipo.form', compact('store'));
+        return view('pages.configuracoes.usuario_tipo.form', compact('store', 'modulos'));
     }
 
     /**

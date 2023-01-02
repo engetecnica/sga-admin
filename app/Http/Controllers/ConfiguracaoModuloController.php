@@ -35,7 +35,7 @@ class ConfiguracaoModuloController extends Controller
     public function create()
     {
         //
-        $modulos = ConfiguracaoModulo::all();
+        $modulos = ConfiguracaoModulo::get_modulos();
         $acoes_permitidas = Configuracao::acoes_permitidas();
         return view('pages.configuracoes.modulo.form', compact('modulos', 'acoes_permitidas'));
     }

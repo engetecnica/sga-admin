@@ -19,32 +19,34 @@ var lightColor = getComputedStyle(document.body).getPropertyValue('--light');
 
         //Add active class to nav-link based on url dynamically
         //Active class can be hard coded directly in html file also as required
-        var current = location.pathname.split("/").slice(1)[0].replace(/^\/|\/$/g, '');
+        var current = location.pathname
+            .split("/")
+            .slice(2)[1]
+            .replace(/^\/|\/$/g, "");
 
         function addActiveClass(element) {
+            console.log("URL Atual: ", current);
+
             if (current === "") {
                 //for root url
-                if (element.attr('href').indexOf("") !== 2) {
-                    console.log("Aqui 1")
-                    element.parents('.nav-item').last().addClass('active');
-                    if (element.parents('.sub-menu').length) {
-                        element.closest('.collapse').addClass('show');
-                        element.addClass('active');
+                if (element.attr("href").indexOf("") !== 2) {
+                    console.log("Aqui 1");
+                    element.parents(".nav-item").last().addClass("active");
+                    if (element.parents(".sub-menu").length) {
+                        element.closest(".collapse").addClass("show");
+                        element.addClass("active");
                     }
                 }
             } else {
                 //for other url
-                if (element.attr('href').indexOf(current) !== -1) {
-
-                   
-
-                    element.parents('.nav-item').last().addClass('active');
-                    if (element.parents('.sub-menu').length) {
-                        element.closest('.collapse').addClass('show');
+                if (element.attr("href").indexOf(current) !== -1) {
+                    element.parents(".nav-item").last().addClass("active");
+                    if (element.parents(".sub-menu").length) {
+                        element.closest(".collapse").addClass("show");
                         //element.addClass('active');
                     }
-                    if (element.parents('.submenu-item').length) {
-                       // element.addClass('active');
+                    if (element.parents(".submenu-item").length) {
+                        // element.addClass('active');
                     }
                 }
             }

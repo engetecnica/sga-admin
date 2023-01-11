@@ -30,5 +30,24 @@ class Tratamento
         return date("d/m/Y - H:i", strtotime($data));
     }
 
+    /* Saudação */
+    public static function SaudacaoHorario()
+    {
+        $hora = date("H", strtotime(NOW()));
+
+        if (
+            $hora >= 6 && $hora <= 12
+        ) {
+            return "Bom dia";
+        } elseif (
+            $hora > 12 && $hora <= 18
+        ) {
+            return "Boa tarde";
+        } else {
+            return "Boa noite";
+        }
+
+        return "Não foi possível identificar.";
+    }
     
 }

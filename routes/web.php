@@ -169,7 +169,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('admin/ferramenta/mensagem/store',                [FerramentaMensagemController::class, 'store'])->name('ferramenta.mensagem.store');
     Route::post('admin/ferramenta/mensagem/update/{id}',          [FerramentaMensagemController::class, 'update'])->name('ferramenta.mensagemda.update');
 
-    Route::get('admin/ferramenta/',                               [FerramentaMensagemController::class, ''])->name('');
+    Route::get('admin/ferramenta/cobranca/automatica',            [FerramentaCobrancaController::class, 'cobranca_automatica'])->name('ferramenta.cobranca.automatica');
 
 
 

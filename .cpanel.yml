@@ -1,5 +1,5 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/appbluetv/public_html/
+    - export DEPLOYPATH=/home/hdtvblue/sales.hdtv.blue/
     - /bin/cp * $DEPLOYPATH

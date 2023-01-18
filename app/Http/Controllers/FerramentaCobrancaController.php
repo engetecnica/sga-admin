@@ -39,7 +39,7 @@ class FerramentaCobrancaController extends Controller
                     $data = explode(" ", $vencimento->data_venda);
 
 
-                    echo "Data Venda Banco de dados: " . $data . "<br><br>";
+                    echo "Data Venda Banco de dados: " . $data[0] . "<br><br>";
 
 
 

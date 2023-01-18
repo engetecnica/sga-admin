@@ -77,7 +77,7 @@ class CadastroVenda extends Model
             ->join("clientes AS c", "c.id", "=", "vendas.id_cliente")
             ->join("produtos AS p", "p.id", "=", "vendas.id_produto")
             ->join("produtos_configuracoes AS pc", "pc.id", "=", "vendas.id_produto")
-            ->where('clientes.id_empresa', 1)
+            ->where('c.id_empresa', 1)
             ->where('vendas.data_vencimento', 'LIKE', '%' . $data . '%')
             ->where('c.id_empresa', 1)
             ->get();

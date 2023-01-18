@@ -78,7 +78,7 @@ class ApiController extends Controller
         $message_type = "image";
         $message_body_mimetype = "image/jpeg";
         $message_body_filename = "tabela_de_valores.jpg";
-        $message_caption = "Tabela de Preços Blue TV";
+        $message_caption = "";
         $message_body = $image;
 
         curl_setopt_array($curl, array(

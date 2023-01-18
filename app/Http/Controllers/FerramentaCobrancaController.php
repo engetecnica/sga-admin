@@ -37,20 +37,12 @@ class FerramentaCobrancaController extends Controller
                     $cliente_celular = "554198036863";
 
                     $data = explode(" ", $vencimento->data_venda);
-
-
-                    echo "Data Venda Banco de dados: " . $data[0] . "<br><br>";
-
-
-
                     //$cliente_celular = Tratamento::FormatarTelefone($vencimento->celular);
-                   
-                    die();
-
+              
                     /* Parte A - Cobrança */
                     $cobranca = new FerramentaMensagem();
                     $cobranca->titulo = "Cobrança Automática - Saudação";
-                    $cobranca->mensagem = "Prezado cliente, {$saudacao}. \n\nInformamos que de acordo com sua compra *realizada em {$vencimento->data_venda}*, seu plano de recarga vencerá nas próximas 24hs. Para recarregar, dúvidas ou suporte técnico, estamos a disposição. *Escolha seu plano na tabela abaixo:*\n\n";
+                    $cobranca->mensagem = "Prezado cliente, {$saudacao}. \n\nInformamos que de acordo com sua compra *realizada em {$data[0]}*, seu plano de recarga vencerá nas próximas 24hs. Para recarregar, dúvidas ou suporte técnico, estamos a disposição. *Escolha seu plano na tabela abaixo:*\n\n";
 
                     if (ApiController::enviar_mensagem($cliente_celular, $cobranca->mensagem)) {
 

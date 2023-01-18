@@ -35,6 +35,12 @@ class FerramentaCobrancaController extends Controller
 
                     /* Variáveis Gerais */
                     $cliente_celular = "554198036863";
+
+
+                    echo "Data Venda Banco de dados: " . $vencimento->data_venda . "<br><br>";
+
+
+
                     //$cliente_celular = Tratamento::FormatarTelefone($vencimento->celular);
                     $vencimento->data_venda = date("d/m/Y", strtotime($vencimento->data_venda));
 

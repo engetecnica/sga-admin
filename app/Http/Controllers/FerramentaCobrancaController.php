@@ -82,10 +82,11 @@ class FerramentaCobrancaController extends Controller
                     }
                 }
 
-                $retorno['cliente'][] = $vencimento->nome_cliente;
+                $retorno['cliente'][$i] = $vencimento->nome_cliente;
+                $i++;
 
 
-                if ($i == 0) break;
+                //if ($i == 0) break;
             }
         }
 

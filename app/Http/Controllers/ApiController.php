@@ -32,7 +32,7 @@ class ApiController extends Controller
     // Enviar MSG para whatsApp
     public static function enviar_mensagem($phone_number, $message_body)
     {
-      //  return true;
+        return true;
 
         $api_key = "9588dd63-98c1-4db4-802b-30abe453efa3";
         $phone_number_sender = "554896533629";

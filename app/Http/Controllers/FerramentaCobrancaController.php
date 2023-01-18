@@ -37,17 +37,14 @@ class FerramentaCobrancaController extends Controller
                     $cliente_celular = "554198036863";
 
                     $data = explode(" ", $vencimento->data_venda);
-                    echo date(("d/m/Y"), strtotime($data[0]));
 
 
-                    echo "Data Venda Banco de dados: " . $vencimento->data_venda . "<br><br>";
+                    echo "Data Venda Banco de dados: " . $data . "<br><br>";
 
 
 
                     //$cliente_celular = Tratamento::FormatarTelefone($vencimento->celular);
-                    $vencimento->data_venda = date("d/m/Y", strtotime($vencimento->data_venda));
-
-                    echo "Data Venda: " . $vencimento->data_venda;
+                   
                     die();
 
                     /* Parte A - Cobrança */

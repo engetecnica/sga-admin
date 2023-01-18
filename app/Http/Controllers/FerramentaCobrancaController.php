@@ -39,7 +39,7 @@ class FerramentaCobrancaController extends Controller
                 if (!$vencimento->celular == "") {
 
                     /* Variáveis Gerais */
-                    $cliente_celular = "554192195191";
+                    $cliente_celular = Tratamento::FormatarTelefone($vencimento->celular);
                     //$cliente_celular = Tratamento::FormatarTelefone($vencimento->celular);
                     $vencimento->data_venda = date("d/m/Y", strtotime($vencimento->data_venda));
 

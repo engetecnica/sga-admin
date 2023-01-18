@@ -54,7 +54,7 @@ class FerramentaCobrancaController extends Controller
                         $cobranca->tipo = "cobranca";
                         $cobranca->whatsapp = $cliente_celular;
                         $cobranca->status = 'Enviado';
-                        $cobranca->save();
+                        //$cobranca->save();
 
                         $msg_retorno[$contador]['disparo_a'] = "Parte A - Cobrança";
                         $msg_retorno[$contador]['cliente_a'] = $vencimento->nome_cliente;
@@ -73,7 +73,7 @@ class FerramentaCobrancaController extends Controller
                         $cobranca_imagem->tipo = "cobranca";
                         $cobranca_imagem->whatsapp = $cliente_celular;
                         $cobranca_imagem->status = 'Enviado';
-                        $cobranca_imagem->save();
+                        //$cobranca_imagem->save();
 
                         $msg_retorno[$contador]['disparo_b'] = "Parte B - Imagem";
                         $msg_retorno[$contador]['cliente_b'] = $vencimento->nome_cliente;
@@ -91,7 +91,7 @@ class FerramentaCobrancaController extends Controller
                         $cobranca_pix->tipo = "cobranca";
                         $cobranca_pix->whatsapp = $cliente_celular;
                         $cobranca_pix->status = 'Enviado';
-                        $cobranca_pix->save();
+                        //$cobranca_pix->save();
 
                         $msg_retorno[$contador]['disparo_c'] = "Parte C - Pix";
                         $msg_retorno[$contador]['cliente_c'] = $vencimento->nome_cliente;

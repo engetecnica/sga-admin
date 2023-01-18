@@ -24,16 +24,11 @@ class FerramentaCobrancaController extends Controller
     {
         $hoje = date("Y-m-d", strtotime(NOW()));
         $vence_hoje = CadastroVenda::BuscarVencimento($hoje);
-
-
         $saudacao = Tratamento::SaudacaoHorario();
-
-
 
         if ($vence_hoje) {
 
             $i = 0;
-            $contador = 0;
             foreach ($vence_hoje as $vencimento) {
 
                 if (!$vencimento->celular == "") {
@@ -42,6 +37,9 @@ class FerramentaCobrancaController extends Controller
                     $cliente_celular = "554198036863";
                     //$cliente_celular = Tratamento::FormatarTelefone($vencimento->celular);
                     $vencimento->data_venda = date("d/m/Y", strtotime($vencimento->data_venda));
+
+                    echo "Data Venda: " . $vencimento->data_venda;
+                    die();
 
                     /* Parte A - Cobrança */
                     $cobranca = new FerramentaMensagem();
@@ -55,30 +53,21 @@ class FerramentaCobrancaController extends Controller
                         $cobranca->whatsapp = $cliente_celular;
                         $cobranca->status = 'Enviado';
                         $cobranca->save();
-
-                        $msg_retorno[$contador]['disparo_a'] = "Parte A - Cobrança";
-                        $msg_retorno[$contador]['cliente_a'] = $vencimento->nome_cliente;
                     }
-
 
                     /* Parte B - Imagem */
                     $cobranca_imagem = new FerramentaMensagem();
                     $cobranca_imagem->titulo = "Cobrança Automática - Tabela de Valores";
-                    $cobranca_imagem->mensagem = "Envio da Tabela";
+                    $cobranca_imagem->mensagem = "";
                     $cobranca_imagem->imagem = base64_encode(file_get_contents('../public/assets/images/tables/07408572902.jpg'));
 
                     if (ApiController::enviar_mensagem_imagem($cliente_celular, $cobranca_imagem->mensagem, $cobranca_imagem->imagem)) {
-
                         $cobranca_imagem->id_cliente = $vencimento->id_cliente;
                         $cobranca_imagem->tipo = "cobranca";
                         $cobranca_imagem->whatsapp = $cliente_celular;
                         $cobranca_imagem->status = 'Enviado';
                         $cobranca_imagem->save();
-
-                        $msg_retorno[$contador]['disparo_b'] = "Parte B - Imagem";
-                        $msg_retorno[$contador]['cliente_b'] = $vencimento->nome_cliente;
                     }
-
 
                     /* Parte C - Pix */
                     $cobranca_pix = new FerramentaMensagem();
@@ -92,20 +81,18 @@ class FerramentaCobrancaController extends Controller
                         $cobranca_pix->whatsapp = $cliente_celular;
                         $cobranca_pix->status = 'Enviado';
                         $cobranca_pix->save();
-
-                        $msg_retorno[$contador]['disparo_c'] = "Parte C - Pix";
-                        $msg_retorno[$contador]['cliente_c'] = $vencimento->nome_cliente;
                     }
-
-                    $contador++;
                 }
+
+                $retorno['cliente'][] = $vencimento->nome_cliente;
+
 
                 if ($i == 0) break;
             }
         }
 
         echo "<pre>";
-        print_r($msg_retorno);
+        print_r($retorno);
         echo "</pre>";
 
 

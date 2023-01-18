@@ -36,6 +36,9 @@ class FerramentaCobrancaController extends Controller
                     /* Variáveis Gerais */
                     $cliente_celular = "554198036863";
 
+                    $data = explode(" ", $vencimento->data_venda);
+                    echo date("d/m/Y", strtotime($data[0]));
+
 
                     echo "Data Venda Banco de dados: " . $vencimento->data_venda . "<br><br>";
 

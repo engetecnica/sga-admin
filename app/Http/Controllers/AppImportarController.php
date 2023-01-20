@@ -21,8 +21,8 @@ class AppImportarController extends Controller
 
 
     public function importar_clientes(){
-        echo "Todos os clientes já foram importados com sucesso. \n Função desativada!";
-        return false;
+        // echo "Todos os clientes já foram importados com sucesso. \n Função desativada!";
+        // return false;
 
         $Clientes = DB::connection('mysql_hdtv')->select("SELECT * FROM cliente WHERE nome LIKE '%+'");      
         foreach($Clientes as $cliente){

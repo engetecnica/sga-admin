@@ -333,6 +333,8 @@
 	<script src="//cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
 
 	<script>
+		dados1 = {};
+
 		function limite_textarea(qtde, valor, campo) {
 			quant = qtde;
 			total = valor.length;
@@ -389,7 +391,7 @@
 			// $('.btn_remove').click(function() {
 			// 	$(this).parents('.box_venda').remove();
 			// });
-
+			//nao é
 
 			$(".consultar-produto-associado").on('click', function() {
 				let id_produto = $(this).attr('data-id_produto');
@@ -500,6 +502,7 @@
 							id_empresa: id_empresa,
 							route: route
 						},
+						dataType: 'json',
 						beforeSend: function() {
 							$(".money").prop("disabled", true);
 							$("#id_produto").prop("disabled", false);
@@ -507,7 +510,26 @@
 						}
 					})
 					.done(function(msg) {
-						$("#id_produto").html(msg);
+						$(".lista-produtos").html('<option>Selecione</option>');
+						$.each(msg.produtos, function(k, v) {
+							$(".lista-produtos").append('<option value="' + v.id + '">' + v.titulo + '</option>');
+							/// do stuff
+						});
+
+						$(".lista-clientes").html('<option>Selecione</option>');
+						$.each(msg.clientes, function(k, v) {
+							$(".lista-clientes").append('<option value="' + v.id + '">' + v.nome + '</option>');
+							/// do stuff
+						});
+
+						$(".listagem").show();
+
+						$('#formulario .lista-produtos').select2();
+						$('#formulario .lista-clientes').select2();
+
+						dados1 = msg;
+
+						//$("#id_produto").html(msg);
 					})
 					.fail(function(jqXHR, textStatus, msg) {
 						alert(msg);
@@ -515,24 +537,52 @@
 			})
 
 
-			$("#id_produto").on('change', function() {
-				let id_produto = $(this).val();
-
-				if (id_produto == '') {
-					$(".money").prop("disabled", true);
-					$(".btn-salvar").prop("disabled", true);
-				} else {
 
 
-					if (route == '/venda/adicionar') {
-						$("#id_cliente").prop('disabled', false);
-						$("input[type=date]").prop('disabled', false);
-					}
 
-					$(".money").prop("disabled", false);
-					$(".btn-salvar").prop("disabled", false);
-				}
-			});
+
+
+			$(document).on('click', '.remove', function() {
+				$(this).closest('.item-lista').remove();
+			})
+
+
+
+
+			//tudo cert??
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+			$(document).on('click', '.clonador', function() {
+				$('.listagem').append($('#listagem-template').html());
+
+				$(".lista-produtos:last").html('<option>Selecione</option>');
+				$.each(dados1.produtos, function(k, v) {
+					$(".lista-produtos:last").append('<option value="' + v.id + '">' + v.titulo + '</option>');
+					/// do stuff
+				});
+
+				$(".lista-clientes:last").html('<option>Selecione</option>');
+				$.each(dados1.clientes, function(k, v) {
+					$(".lista-clientes:last").append('<option value="' + v.id + '">' + v.nome + '</option>');
+					/// do stuff
+				});
+
+				$('#formulario .lista-produtos:last').select2().val(null).trigger('change');;
+				$('#formulario .lista-clientes:last').select2().val(null).trigger('change');;
+			})
 
 
 			$('#lista-simples').DataTable({

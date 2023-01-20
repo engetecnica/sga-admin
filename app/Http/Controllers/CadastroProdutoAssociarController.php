@@ -12,6 +12,7 @@ use App\Traits\FuncoesAdaptadas;
 use App\Models\ProdutoAssociar;
 use App\Models\CadastroEmpresa;
 use App\Models\CadastroProduto;
+use App\Models\CadastroCliente;
 use App\Models\Anexo;
 
 use App\Http\Controllers\AnexoController as AnexoC;
@@ -170,7 +171,7 @@ class CadastroProdutoAssociarController extends Controller
         $route = ($request->route) ?? null;
 
         if ($id_empresa == false) {
-            return "<option value=''>Todos os produtos já foram vinculados ou nenhum produto foi cadastrado.</option>";
+            //return "<option value=''>Todos os produtos já foram vinculados ou nenhum produto foi cadastrado.</option>";
         }
 
         /* Produtos - Associados */
@@ -183,13 +184,16 @@ class CadastroProdutoAssociarController extends Controller
                 ->toArray();
 
             /* Se tiver > 0, exibe */
+            
+
+
             if (count($produtos_venda) > 0) {
-                echo "<option value=''>Selecione um Produto</option>";
+                //echo "<option value=''>Selecione um Produto</option>";
                 foreach ($produtos_venda as $produto) {
-                    echo "<option value='" . $produto['id'] . "'>" . $produto['titulo'] . "</option>";
+                    //echo "<option value='" . $produto['id'] . "'>" . $produto['titulo'] . "</option>";
                 }
             } else {
-                return "<option value=''>Não há produto a ser vinculado.</option>";
+                //return "<option value=''>Não há produto a ser vinculado.</option>";
             }
         } else {
 
@@ -197,24 +201,43 @@ class CadastroProdutoAssociarController extends Controller
             if ($produtos) {
                 foreach ($produtos as $produto) {
                     $ids[] = $produto['id'];
-                    $produtosAll = CadastroProduto::select('titulo', 'id')->whereNotIn('id', $ids)->get()->toArray();
+                    $produtos_venda = CadastroProduto::select('titulo', 'id')->whereNotIn('id', $ids)->get()->toArray();
                 }
             } else {
                 $ids = [];
-                $produtosAll = CadastroProduto::select('titulo', 'id')->get()->toArray();
+                $produtos_venda = CadastroProduto::select('titulo', 'id')->get()->toArray();
             }
 
+
+
+            //print_r($produtos_venda);
+
             /* Se tiver > 0, exibe */
-            if (count($produtosAll) > 0) {
-                echo "<option value=''>Selecione um Produto</option>";
-                foreach ($produtosAll as $produto) {
-                    echo "<option value='" . $produto['id'] . "'>" . $produto['titulo'] . "</option>";
+            if (count($produtos_venda) > 0) {
+                // echo "<option value=''>Selecione um Produto</option>";
+                foreach ($produtos_venda as $produto) {
+                    //echo "<option value='" . $produto['id'] . "'>" . $produto['titulo'] . "</option>";
                 }
             } else {
-                return "<option value=''>Não há produto a ser vinculado.</option>";
+                //return "<option value=''>Não há produto a ser vinculado.</option>";
             }
             
         }
+
+
+        $clientes = CadastroCliente::where('id_empresa', $id_empresa)->orderBy('nome', 'ASC')->get()->toArray();
+
+        //print_r($clientes);
+
+        $dados = array('clientes' => $clientes, 'produtos' => $produtos_venda);
+
+        return json_encode($dados);
+
+
+
+
+
+        //return  $produtos+$clinente > json lista
     }
 
 

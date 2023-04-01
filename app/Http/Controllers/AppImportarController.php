@@ -35,15 +35,17 @@ class AppImportarController extends Controller
                 'created_at' => $cliente->data_inclusao
             ];
 
-            if (CadastroCliente::insert($cliente_app_array)) {
-                echo "".$cliente->id_cliente.": " . $this->importar_cliente_nome($cliente->nome)." <B>REGISTRADO!</B> <br>";
-            } else {
-                echo "Erro ao cadastrar cliente. ";
-            }
-        
+            // if (CadastroCliente::insert($cliente_app_array)) {
+            //     echo "".$cliente->id_cliente.": " . $this->importar_cliente_nome($cliente->nome)." <B>REGISTRADO!</B> <br>";
+            // } else {
+            //     echo "Erro ao cadastrar cliente. ";
+            // }
+
         }
 
-        echo "<hr> <h1>Foram importados ".count($Clientes)." Clientes</h1>";
+        dd($cliente_app_array);
+
+       // echo "<hr> <h1>Foram importados ".count($Clientes)." Clientes</h1>";
     }
 
     public function importar_planos(){

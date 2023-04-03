@@ -55,6 +55,7 @@ class ConfiguracaoModulo extends Model
                                         ->get();
         }
 
+
         return $modulos;
     }
 
@@ -64,13 +65,20 @@ class ConfiguracaoModulo extends Model
 
         if(Auth::check() && isset(Auth::user()->user_level)){
             $permissoes = json_decode((ConfiguracaoUsuarioNiveis::find(Auth::user()->user_level))->permissoes);  
-            foreach($permissoes as $id_modulo=>$p){
-                $modulo[$id_modulo] = ConfiguracaoModulo::find($id_modulo)->toArray();
-                foreach($p as $id_sub_modulo=>$submodulo){
-                    $modulo[$id_modulo]['submodulo'][] = ConfiguracaoModulo::find($id_sub_modulo)->toArray();
+
+            if(count((array)$permissoes)==0){
+                return [];
+            } else {
+                foreach ($permissoes as $id_modulo => $p) {
+                    $modulo[$id_modulo] = ConfiguracaoModulo::orderBy('posicao', 'ASC')->find($id_modulo)->toArray();
+                    foreach ($p as $id_sub_modulo => $submodulo) {
+                        $modulo[$id_modulo]['submodulo'][] = ConfiguracaoModulo::orderBy('posicao', 'ASC')->find($id_sub_modulo)->toArray();
+                    }
                 }
+
+                return $modulo;
             }
-            return $modulo;
+
         }
 
         return [];

@@ -28,11 +28,11 @@ use App\Http\Controllers\ApiController;
 use App\Http\Controllers\AppImportarController;
 
 /* PDV */
-use App\Http\Controllers\VendaPdvController;
+// use App\Http\Controllers\VendaPdvController;
 
 /* Ferramenta - Cobranças */
-use App\Http\Controllers\FerramentaCobrancaController;
-use App\Http\Controllers\FerramentaMensagemController;
+// use App\Http\Controllers\FerramentaCobrancaController;
+// use App\Http\Controllers\FerramentaMensagemController;
 
 /*
 |--------------------------------------------------------------------------
@@ -63,12 +63,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     /* Configurações - Dashboard */
     Route::get('admin/configuracao',                              [ConfiguracaoController::class, 'index']);
-    Route::get(
-        'admin/dashboard',
-        [CustomAuthController::class, 'dashboard']
-    )->name('dashboard');
+    Route::get('admin/dashboard',                                 [CustomAuthController::class, 'dashboard'])->name('dashboard');
     
-
     /* Minha Conta */
     Route::get('admin/configuracao/minhaconta',                   [ConfiguracaoMinhaContaController::class, 'index'])->name('minhaconta');
     Route::post('admin/configuracao/minhaconta/store',            [ConfiguracaoMinhaContaController::class, 'store'])->name('minhaconta.store');
@@ -118,26 +114,26 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('admin/cadastro/empresa/site/{id?}',               [CadastroEmpresaController::class, 'site'])->name('cadastro.empresa.site');
 
     /* Cadastros - Produto */
-    Route::get('admin/produto',                                   [CadastroProdutoController::class, 'index'])->name('produto');
-    Route::get('admin/cadastro/produto',                          [CadastroProdutoController::class, 'index'])->name('cadastro.produto');
-    Route::get('admin/cadastro/produto/editar/{id?}',             [CadastroProdutoController::class, 'edit'])->name('cadastro.produto.editar');
-    Route::get('admin/cadastro/produto/adicionar',                [CadastroProdutoController::class, 'create'])->name('cadastro.produto.adicionar');
-    Route::post('admin/cadastro/produto/store',                   [CadastroProdutoController::class, 'store'])->name('cadastro.produto.store');
-    Route::post('admin/cadastro/produto/update/{id}',             [CadastroProdutoController::class, 'update'])->name('cadastro.produto.update');
+    // Route::get('admin/produto',                                   [CadastroProdutoController::class, 'index'])->name('produto');
+    // Route::get('admin/cadastro/produto',                          [CadastroProdutoController::class, 'index'])->name('cadastro.produto');
+    // Route::get('admin/cadastro/produto/editar/{id?}',             [CadastroProdutoController::class, 'edit'])->name('cadastro.produto.editar');
+    // Route::get('admin/cadastro/produto/adicionar',                [CadastroProdutoController::class, 'create'])->name('cadastro.produto.adicionar');
+    // Route::post('admin/cadastro/produto/store',                   [CadastroProdutoController::class, 'store'])->name('cadastro.produto.store');
+    // Route::post('admin/cadastro/produto/update/{id}',             [CadastroProdutoController::class, 'update'])->name('cadastro.produto.update');
 
-    /* Cadastros - Associar Empresa/Lider ao Produto */
-    Route::get('admin/cadastro/produto/associar',                 [CadastroProdutoAssociarController::class, 'index'])->name('cadastro.produto.associar');
-    Route::get('admin/cadastro/produto/associar/editar/{id?}',    [CadastroProdutoAssociarController::class, 'edit'])->name('cadastro.produto.associar.editar');
-    Route::get('admin/cadastro/produto/associar/adicionar',       [CadastroProdutoAssociarController::class, 'create'])->name('cadastro.produto.associar.adicionar');
-    Route::post('admin/cadastro/produto/associar/store',          [CadastroProdutoAssociarController::class, 'store'])->name('cadastro.produto.associar.store');
-    Route::post('admin/cadastro/produto/associar/update/{id}',    [CadastroProdutoAssociarController::class, 'update'])->name('cadastro.produto.update');
+    // /* Cadastros - Associar Empresa/Lider ao Produto */
+    // Route::get('admin/cadastro/produto/associar',                 [CadastroProdutoAssociarController::class, 'index'])->name('cadastro.produto.associar');
+    // Route::get('admin/cadastro/produto/associar/editar/{id?}',    [CadastroProdutoAssociarController::class, 'edit'])->name('cadastro.produto.associar.editar');
+    // Route::get('admin/cadastro/produto/associar/adicionar',       [CadastroProdutoAssociarController::class, 'create'])->name('cadastro.produto.associar.adicionar');
+    // Route::post('admin/cadastro/produto/associar/store',          [CadastroProdutoAssociarController::class, 'store'])->name('cadastro.produto.associar.store');
+    // Route::post('admin/cadastro/produto/associar/update/{id}',    [CadastroProdutoAssociarController::class, 'update'])->name('cadastro.produto.update');
 
-    /* Ponto de Venda */
-    Route::get('admin/venda/pdv',                                 [VendaPdvController::class, 'index'])->name('venda.pontodevenda');
-    Route::get('admin/venda/adicionar',                           [VendaPdvController::class, 'create'])->name('venda.adicionar');
-    Route::get('admin/venda/editar/{id?}',                        [VendaPdvController::class, 'edit'])->name('venda.editar');
-    Route::post('admin/venda/store',                              [VendaPdvController::class, 'store'])->name('venda.store');
-    Route::post('admin/cadastro/produto/update/{id}',             [VendaPdvController::class, 'update'])->name('venda.update');
+    // /* Ponto de Venda */
+    // Route::get('admin/venda/pdv',                                 [VendaPdvController::class, 'index'])->name('venda.pontodevenda');
+    // Route::get('admin/venda/adicionar',                           [VendaPdvController::class, 'create'])->name('venda.adicionar');
+    // Route::get('admin/venda/editar/{id?}',                        [VendaPdvController::class, 'edit'])->name('venda.editar');
+    // Route::post('admin/venda/store',                              [VendaPdvController::class, 'store'])->name('venda.store');
+    // Route::post('admin/cadastro/produto/update/{id}',             [VendaPdvController::class, 'update'])->name('venda.update');
 
     /* 
         @function pesquisar_produto_por_empresa
@@ -172,8 +168,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('admin/ferramenta/cobranca/automatica',            [FerramentaCobrancaController::class, 'cobranca_automatica'])->name('ferramenta.cobranca.automatica');
 
 
+    /*
+        SGA-E Rotas para Painel
+    */
+
 
 });
 
-/* Rotas do Site */
-Route::get('como-funciona',                                       [SiteController::class, 'comofunciona'])->name('site.comofunciona');

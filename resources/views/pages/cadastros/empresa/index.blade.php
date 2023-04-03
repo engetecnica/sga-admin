@@ -6,7 +6,7 @@
     <h3 class="page-title">
         <span class="page-title-icon bg-gradient-primary text-white me-2">
             <i class="mdi mdi-access-point-network menu-icon"></i>
-        </span> Empresas / Líderes
+        </span> Empresas
     </h3>
     <nav aria-label="breadcrumb">
         <ul class="breadcrumb">
@@ -34,9 +34,8 @@
                     <thead>
                         <tr>
                             <th width="8%">ID</th>
-                            <th>Site</th>
-                            <th>CNPJ/CPF</th>
-                            <th>Nome / Razão Social</th>
+                            <th>CNPJ</th>
+                            <th>Razão Social</th>
                             <th>WhatsApp</th>
                             <th>E-mail</th>
                             <th>Status</th>
@@ -47,19 +46,14 @@
                         @foreach($lista as $v)
                         <tr>
                             <td><span class="badge badge-dark">{{ $v->id }}</span></td>
-                            <td>
-                                <a href="{{ url('cadastro/empresa/site/'.$v->id) }}">
-                                    <button class="badge badge-secondary" data-toggle="tooltip" data-placement="top" title="Configurar"><i class="mdi mdi-cloud-upload"></i> Acessar Configurações</button>
-                                </a>
-                            </td>
-                            <td>{{ ($v->cpf) ?? '-' }}</td>
-                            <td>{{ $v->nome }}</td>
+                            <td>{{ ($v->cnpj) ?? '-' }}</td>
+                            <td>{{ $v->razao_social }}</td>
                             <td>{{ $v->celular }}</td>
                             <td>{{ $v->email }}</td>
                             <td>{{ $v->status }} </td>
                             <td>
 
-                                <a href="{{ url('cadastro/empresa/editar/'.$v->id) }}">
+                                <a href="{{ route('cadastro.empresa.editar',$v->id) }}">
                                     <button class="badge badge-info" data-toggle="tooltip" data-placement="top" title="Editar"><i class="mdi mdi-pencil"></i> Editar</button>
                                 </a>
 

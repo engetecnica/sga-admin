@@ -27,11 +27,11 @@ class NiveisSeeder extends Seeder
                 'permissoes' => '{}'
             ],
             [
-                'titulo' => 'Revendedor',
+                'titulo' => 'Almoxarifado',
                 'permissoes' => '{}'
             ],
             [
-                'titulo' => 'Cliente',
+                'titulo' => 'Engenheiro',
                 'permissoes' => '{}'
             ]
         );

@@ -22,33 +22,33 @@ class ModulosSeeder extends Seeder
                 'id_modulo' => '0',
                 'titulo' => 'Configurações',
                 'posicao' => '1',
-                'url_amigavel' => '#',
+                'url_amigavel' => 'configuracao',
                 'icone' => '',
-                'tipo_de_acao' => 'view'
+                'tipo_de_acao' => 'view,add,edit,delete,other'
             ],
             [
                 'id_modulo' => '1',
                 'titulo' => 'Tipos de Usuário',
                 'posicao' => '1',
-                'url_amigavel' => 'configuracao/usuario_tipo',
+                'url_amigavel' => 'admin/configuracao/usuario_tipo',
                 'icone' => '',
-                'tipo_de_acao' => 'view'
+                'tipo_de_acao' => 'view,add,edit,delete,other'
             ],
             [
                 'id_modulo' => '1',
                 'titulo' => 'Usuários',
                 'posicao' => '2',
-                'url_amigavel' => 'configuracao/usuario',
+                'url_amigavel' => 'admin/configuracao/usuario',
                 'icone' => '',
-                'tipo_de_acao' => 'view'
+                'tipo_de_acao' => 'view,add,edit,delete,other'
             ],
             [
                 'id_modulo' => '1',
-                'titulo' => 'SGRC Configurações',
+                'titulo' => 'SGA Configurações',
                 'posicao' => '3',
-                'url_amigavel' => 'configuracao/sistema',
+                'url_amigavel' => 'admin/configuracao/sistema',
                 'icone' => '',
-                'tipo_de_acao' => 'view'
+                'tipo_de_acao' => 'view,add,edit,delete,other'
             ]
         );
 

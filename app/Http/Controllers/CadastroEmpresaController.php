@@ -51,25 +51,28 @@ class CadastroEmpresaController extends Controller
         //
         $request->validate(
             [
-                'nome' => 'required|min:5',
-                'data_de_nascimento' => 'required',
+                'razao_social' => 'required|min:5',
+                'cnpj' => 'required',
                 'cep' => 'required',
                 'endereco' => 'required',
+                'numero' => 'required',
+                'bairro' => 'required',
+                'cidade' => 'required',
                 'estado' => 'required',
-                'celular' => 'required',
-                'cpf' => 'required',
                 'email' => 'required',
+                'celular' => 'required',
                 'status' => 'required'
             ], 
             [
-                'nome.required' => 'É necessário preencher o nome completo',
-                'data_de_nascimento.required' => 'A data de nascimento é inválida',
+                'razao_social.required' => 'É necessário preencher a Razão Social',
+                'cnpj.required' => 'Este CNPJ não é válido',
                 'cep.required' => 'O CEP é indispensável',
+                'endereco.required' => 'Preencha o endereço corretamente',
+                'numero.required' => 'Preencha o número da residência',
+                'bairro.required' => 'Preencha o Bairro corretamente',
+                'cidade.required' => 'Preencha a Cidade corretamente',
                 'estado.required' => 'Selecione o Estado corretamente',
-                'endereco.required' => 'Preencha o endereço com número da residência',
-                'cidade.required' => 'Preencha a cidade',
                 'email.required' => 'Digite o e-mail do cliente',
-                'cpf.required' => 'Preencha corretamente o CPF',
                 'celular.required' => 'Digite corretamente o telefone celular / whatsapp',
                 'status.required' => 'Selecione o Status'
             ]
@@ -77,21 +80,22 @@ class CadastroEmpresaController extends Controller
 
 
         $empresa = new CadastroEmpresa();
-        $empresa->nome = $request->nome;
-        $empresa->data_de_nascimento = $request->data_de_nascimento;
+        $empresa->razao_social = $request->razao_social;
+        $empresa->cnpj = $request->cnpj;
         $empresa->cep = $request->cep;
         $empresa->endereco = $request->endereco;
-        $empresa->estado = $request->estado;
+        $empresa->numero = $request->numero;
+        $empresa->bairro = $request->bairro;
         $empresa->cidade = $request->cidade;
-        $empresa->cpf = $request->cpf;
-        $empresa->celular = $request->celular;
+        $empresa->estado = $request->estado;
         $empresa->email = $request->email;
+        $empresa->celular = $request->celular;
         $empresa->status = $request->status;
 
         $empresa->save();
 
         Alert::success('Muito bem ;)', 'Um registro foi adicionado com sucesso!');
-        return redirect('cadastro/empresa');
+        return redirect(route('cadastro.empresa'));
 
     }
 
@@ -120,7 +124,7 @@ class CadastroEmpresaController extends Controller
 
             if(!$id or !$store):  
                 Alert::error('Que Pena!', 'Esse registro não foi encontrado.');
-                return redirect('cadastro/empresa'); 
+                return redirect(route('cadastro.empresa')); 
             endif;
 
             return view('pages.cadastros.empresa.form', compact('store', 'estados'));        
@@ -138,46 +142,49 @@ class CadastroEmpresaController extends Controller
         //
         $request->validate(
             [
-                'nome' => 'required|min:5',
-                'data_de_nascimento' => 'required',
+                'razao_social' => 'required|min:5',
+                'cnpj' => 'required',
                 'cep' => 'required',
                 'endereco' => 'required',
+                'numero' => 'required',
+                'bairro' => 'required',
+                'cidade' => 'required',
                 'estado' => 'required',
-                'celular' => 'required',
-                'cpf' => 'required',
                 'email' => 'required',
+                'celular' => 'required',
                 'status' => 'required'
-            ], 
+            ],
             [
-                'nome.required' => 'É necessário preencher o nome completo',
-                'data_de_nascimento.required' => 'A data de nascimento é inválida',
+                'razao_social.required' => 'É necessário preencher a Razão Social',
+                'cnpj.required' => 'Este CNPJ não é válido',
                 'cep.required' => 'O CEP é indispensável',
+                'endereco.required' => 'Preencha o endereço corretamente',
+                'numero.required' => 'Preencha o número da residência',
+                'bairro.required' => 'Preencha o Bairro corretamente',
+                'cidade.required' => 'Preencha a Cidade corretamente',
                 'estado.required' => 'Selecione o Estado corretamente',
-                'endereco.required' => 'Preencha o endereço com número da residência',
-                'cidade.required' => 'Preencha a cidade',
                 'email.required' => 'Digite o e-mail do cliente',
-                'cpf.required' => 'Preencha corretamente o CPF',
                 'celular.required' => 'Digite corretamente o telefone celular / whatsapp',
                 'status.required' => 'Selecione o Status'
             ]
         );
 
-
         $empresa = CadastroEmpresa::find($id);
-        $empresa->nome = $request->nome;
-        $empresa->data_de_nascimento = $request->data_de_nascimento;
+        $empresa->razao_social = $request->razao_social;
+        $empresa->cnpj = $request->cnpj;
         $empresa->cep = $request->cep;
         $empresa->endereco = $request->endereco;
+        $empresa->numero = $request->numero;
+        $empresa->bairro = $request->bairro;
+        $empresa->cidade = $request->cidade;
         $empresa->estado = $request->estado;
-        $empresa->celular = $request->celular;
-        $empresa->cpf = $request->cpf;
         $empresa->email = $request->email;
+        $empresa->celular = $request->celular;
         $empresa->status = $request->status;
-
         $empresa->save();
 
         Alert::success('Muito bem ;)', 'Um registro foi modificado com sucesso!');
-        return redirect('cadastro/empresa/editar/'.$id);
+        return redirect(route('cadastro.empresa.editar', $id));
     }
 
     /**
@@ -190,31 +197,5 @@ class CadastroEmpresaController extends Controller
     {
         //
     }
-
-
-
-
-    /*
-    Configurações do Site vincualdo à Empresa
-    */
-    public function site(request $request){
-        
-
-        $user = User::
-
-
-        $empresa = CadastroEmpresa::find($request->id);
-
-        if($empresa==null):
-            Alert::error('Que Pena!', 'Empresa não encontrada ou você não tem permissão para acessar essa empresa.');
-            return redirect('cadastro/empresa');
-        endif;
-
-
-
-
-
-    }
-
 
 }

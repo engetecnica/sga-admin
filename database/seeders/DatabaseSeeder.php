@@ -16,6 +16,6 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(ModulosSeeder::class);
         $this->call(NiveisSeeder::class);
-        //$this->call(AplicativosSeeder::class);
+        $this->call(UserSeeder::class);
     }
 }

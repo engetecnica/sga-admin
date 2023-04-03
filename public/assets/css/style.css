@@ -14485,3 +14485,7 @@ a.registrar-venda {
 .select-2-width-400 {
   width: 400px !important;
 }
+
+.form-error {
+    border: solid 1px red !important;
+}

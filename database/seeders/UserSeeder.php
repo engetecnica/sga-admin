@@ -18,11 +18,10 @@ class UserSeeder extends Seeder
         //
         $data = array(
             [
-                'name' => 'Master',
-                'email' => "admin@app.app",
-                'password' => "",
-                'user_level' => 1, // Administrador
-
+                'name' => 'Super Administrador',
+                'email' => "master@sga-e.eng.br",
+                'password' => bcrypt('123456789'),
+                'user_level' => 1
             ]
         );
 

@@ -16,6 +16,7 @@ use App\Http\Controllers\ConfiguracaoSistemaController;
 use App\Http\Controllers\CadastroEmpresaController;
 use App\Http\Controllers\CadastroFornecedorController;
 use App\Http\Controllers\CadastroObraController;
+use App\Http\Controllers\CadastroFuncionarioController;
 
 
 /* Anexos */
@@ -108,13 +109,28 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('admin/cadastro/fornecedor/store',                [CadastroFornecedorController::class, 'store'])->name('cadastro.fornecedor.store');
     Route::post('admin/cadastro/fornecedor/update/{id}',          [CadastroFornecedorController::class, 'update'])->name('cadastro.fornecedor.update');    
 
-     /* Cadastros - Obra */
+    /* Cadastros - Obra */
     Route::get('admin/obra',                                                   [CadastroObraController::class, 'index'])->name('obra');
     Route::get('admin/cadastro/obra',                                          [CadastroObraController::class, 'index'])->name('cadastro.obra');
     Route::get('admin/cadastro/obra/editar/{id?}',                             [CadastroObraController::class, 'edit'])->name('cadastro.obra.editar');
     Route::get('admin/cadastro/obra/adicionar',                                [CadastroObraController::class, 'create'])->name('cadastro.obra.adicionar');
     Route::post('admin/cadastro/obra/store',                                   [CadastroObraController::class, 'store'])->name('cadastro.obra.store');
     Route::post('admin/cadastro/obra/update/{id}',                             [CadastroObraController::class, 'update'])->name('cadastro.obra.update');    
+
+
+    /* Cadastros - Obra */
+    Route::get('admin/funcionario',                                                   [CadastroFuncionarioController::class, 'index'])->name('funcionario');
+    Route::get('admin/cadastro/funcionario',                                          [CadastroFuncionarioController::class, 'index'])->name('cadastro.funcionario');
+    Route::get('admin/cadastro/funcionario/editar/{id?}',                             [CadastroFuncionarioController::class, 'edit'])->name('cadastro.funcionario.editar');
+    Route::get('admin/cadastro/funcionario/adicionar',                                [CadastroFuncionarioController::class, 'create'])->name('cadastro.funcionario.adicionar');
+    Route::post('admin/cadastro/funcionario/store',                                   [CadastroFuncionarioController::class, 'store'])->name('cadastro.funcionario.store');
+    Route::post('admin/cadastro/funcionario/update/{id}',                             [CadastroFuncionarioController::class, 'update'])->name('cadastro.funcionario.update');    
+
+   
+
+
+
+
 
    
     /* Manipulação de Anexos */

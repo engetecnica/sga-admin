@@ -378,6 +378,21 @@
 
 			$(function(){
 
+
+
+                $(".digitar-manualmente").on('click', function(){
+                    let field = $(this).attr('data-field');
+                    console.log(field)
+                    if(this.checked){
+                        $("#"+field).attr("readonly", false);
+                    } else {
+                        $("#"+field).attr("readonly", true);
+                    }
+                })
+
+
+
+
 			$(".cep").on('keyup', function() {
 			
 				//Nova variável "cep" somente com dígitos.

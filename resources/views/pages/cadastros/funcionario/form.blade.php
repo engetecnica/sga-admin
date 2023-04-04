@@ -1,12 +1,12 @@
 @extends('dashboard')
-@section('title', 'Obras')
+@section('title', 'funcionarioes')
 @section('content')
 
     <div class="page-header">
         <h3 class="page-title">
             <span class="page-title-icon bg-gradient-primary text-white me-2">
                 <i class="mdi mdi-access-point-network menu-icon"></i>
-            </span> Cadastro de Obras
+            </span> Cadastro de funcionarioes
         </h3>
         <nav aria-label="breadcrumb">
             <ul class="breadcrumb">
@@ -34,35 +34,60 @@
                     @endif
 
                     @php
-                    $action = isset($store) ? route('cadastro.obra.update', $store->id) : route('cadastro.obra.store');
+                    $action = isset($store) ? route('cadastro.funcionario.update', $store->id) : route('cadastro.funcionario.store');
                     @endphp
                     <form class="row g-3" method="post" enctype="multipart/form-data" action="{{ $action }}">
                         @csrf
 
                         <div class="row">
-                            <div class="col-md-9">
-                                
-                            </div>
-
                             <div class="col-md-3">
-                                <label for="codigo_obra" class="form-label">Código da Obra</label>
-                                <input type="text" class="form-control" id="codigo_obra"
-                                    value="{{ old('codigo_obra', @$store->codigo_obra) ?? "SGAE-".date("YmI") }}" name="codigo_obra" readonly>
+                                <label for="matricula" class="form-label">Matrícula</label>
+                                <input type="text" class="form-control" id="matricula"
+                                    value="{{ old('matricula', @$store->matricula) ?? "SGAE".date("YmI")  }}" name="matricula" readonly>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-check margin-top-digitar-manualmente">
+                                    <label class="form-check-label"> Digitar Manualmente
+                                    <input class="checkbox digitar-manualmente" data-field="matricula" type="checkbox"> <i class="input-helper"></i></label>
+                                </div>
                             </div>
                         </div>
 
                         <div class="row mt-3">
-                            <div class="col-md-9">
-                                <label for="razao_social" class="form-label">Razão Social</label>
+                            @include('components.fields.id_obra')
+                        </div>
+
+                        <div class="row mt-3">
+                            <div class="col-md-6">
+                                <label for="nome" class="form-label">Nome Completo</label>
                                 <input type="text" class="form-control" id="razao_social"
-                                    value="{{ old('razao_social', @$store->razao_social) }}" name="razao_social">
+                                    value="{{ old('nome', @$store->nome) }}" name="nome">
                             </div>
-
-
                             <div class="col-md-3">
-                                <label for="cnpj" class="form-label">CNPJ</label>
-                                <input type="text" class="form-control cnpj" id="celular"
-                                    value="{{ old('cnpj', @$store->cnpj) }}" name="cnpj">
+                                <label for="data_nascimento" class="form-label">Data de Nascimento</label>
+                                <input type="date" class="form-control" id="data_nascimento"
+                                    value="{{ old('data_nascimento', @$store->data_nascimento) }}" name="data_nascimento">
+                            </div>
+                            <div class="col-md-3">
+                                <label for="cpf" class="form-label">CPF</label>
+                                <input type="text" class="form-control cpf" id="cpf"
+                                    value="{{ old('cpf', @$store->cpf) }}" name="cpf">
+                            </div>
+                        </div>
+
+                        <div class="row mt-3">
+                            <div class="col-md-3">
+                                <label for="rg" class="form-label">Registro Geral (RG)</label>
+                                <input type="text" class="form-control" id="rg"
+                                    value="{{ old('rg', @$store->rg) }}" name="rg">
+                            </div>
+                            <div class="col-md-3">
+                                <label for="celular" class="form-label">Celular / WhatsApp</label>
+                                <input type="text" class="form-control celular" id="celular"
+                                    value="{{ old('celular', @$store->celular) }}" name="celular">
+                            </div>
+                            <div class="col-md-6">
+                                @include('components.fields.id_funcao')
                             </div>
                         </div>
 
@@ -111,15 +136,7 @@
                                 <input type="email" class="form-control" id="email"
                                     value="{{ old('email', @$store->email) }}" name="email">
                             </div>
-                        </div>
-
-                        <div class="row mt-3">
-                            <div class="col-md-3">
-                                <label for="celular" class="form-label">Celular / WhatsApp</label>
-                                <input type="text" class="form-control celular" id="celular"
-                                    value="{{ old('celular', @$store->celular) }}" name="celular">
-                            </div>
-                        </div>
+                        </div>                        
 
                         <div class="row mt-3">
                             <div class="col-md-3">
@@ -137,7 +154,7 @@
                             <button type="submit"
                                 class="btn btn-block btn-gradient-primary btn-lg font-weight-medium">Salvar</button>
 
-                            <a href="{{ route('cadastro.obra') }}">
+                            <a href="{{ route('cadastro.funcionario') }}">
                                 <button type="button"
                                     class="btn btn-block btn-gradient-danger btn-lg font-weight-medium">Cancelar</button>
                             </a>

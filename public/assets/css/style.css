@@ -14494,3 +14494,7 @@ a.registrar-venda {
     font-size: 0.8125rem;
     padding-left: 10px;
 }
+
+.margin-top-digitar-manualmente {
+  margin-top: 40px !important;
+}

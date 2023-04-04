@@ -2,11 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CustomAuthController;
-
 use RealRashid\SweetAlert\Facades\Alert;
-
-/* Site */
-use App\Http\Controllers\SiteController;
 
 /* Configurações */
 use App\Http\Controllers\ConfiguracaoController;
@@ -17,22 +13,15 @@ use App\Http\Controllers\ConfiguracaoModuloController;
 use App\Http\Controllers\ConfiguracaoSistemaController;
 
 /* Cadastros */
-use App\Http\Controllers\CadastroClienteController;
 use App\Http\Controllers\CadastroEmpresaController;
-use App\Http\Controllers\CadastroProdutoController;
-use App\Http\Controllers\CadastroProdutoAssociarController;
+use App\Http\Controllers\CadastroFornecedorController;
+use App\Http\Controllers\CadastroObraController;
+
 
 /* Anexos */
 use App\Http\Controllers\AnexoController;
 use App\Http\Controllers\ApiController;
-use App\Http\Controllers\AppImportarController;
 
-/* PDV */
-// use App\Http\Controllers\VendaPdvController;
-
-/* Ferramenta - Cobranças */
-// use App\Http\Controllers\FerramentaCobrancaController;
-// use App\Http\Controllers\FerramentaMensagemController;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,8 +40,6 @@ Route::fallback(function () {
 });
 
 
-// Route::get('/',                                         [SiteController::class, 'index'])->name('site');
-// Route::get('/',                                         [SiteController::class, 'index'])->name('admin');
 Route::get('admin',                                               [CustomAuthController::class, 'index'])->name('admin');
 Route::get('admin/login',                                         [CustomAuthController::class, 'index'])->name('login');
 Route::post('admin/custom-login',                                 [CustomAuthController::class, 'customLogin'])->name('login.custom');
@@ -110,67 +97,32 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('admin/cadastro/empresa/store',                   [CadastroEmpresaController::class, 'store'])->name('cadastro.empresa.store');
     Route::post('admin/cadastro/empresa/update/{id}',             [CadastroEmpresaController::class, 'update'])->name('cadastro.empresa.update');
 
-    /* Cadastros - Empresa - Configurações do Site */
-    Route::get('admin/cadastro/empresa/site/{id?}',               [CadastroEmpresaController::class, 'site'])->name('cadastro.empresa.site');
 
-    /* Cadastros - Produto */
-    // Route::get('admin/produto',                                   [CadastroProdutoController::class, 'index'])->name('produto');
-    // Route::get('admin/cadastro/produto',                          [CadastroProdutoController::class, 'index'])->name('cadastro.produto');
-    // Route::get('admin/cadastro/produto/editar/{id?}',             [CadastroProdutoController::class, 'edit'])->name('cadastro.produto.editar');
-    // Route::get('admin/cadastro/produto/adicionar',                [CadastroProdutoController::class, 'create'])->name('cadastro.produto.adicionar');
-    // Route::post('admin/cadastro/produto/store',                   [CadastroProdutoController::class, 'store'])->name('cadastro.produto.store');
-    // Route::post('admin/cadastro/produto/update/{id}',             [CadastroProdutoController::class, 'update'])->name('cadastro.produto.update');
 
-    // /* Cadastros - Associar Empresa/Lider ao Produto */
-    // Route::get('admin/cadastro/produto/associar',                 [CadastroProdutoAssociarController::class, 'index'])->name('cadastro.produto.associar');
-    // Route::get('admin/cadastro/produto/associar/editar/{id?}',    [CadastroProdutoAssociarController::class, 'edit'])->name('cadastro.produto.associar.editar');
-    // Route::get('admin/cadastro/produto/associar/adicionar',       [CadastroProdutoAssociarController::class, 'create'])->name('cadastro.produto.associar.adicionar');
-    // Route::post('admin/cadastro/produto/associar/store',          [CadastroProdutoAssociarController::class, 'store'])->name('cadastro.produto.associar.store');
-    // Route::post('admin/cadastro/produto/associar/update/{id}',    [CadastroProdutoAssociarController::class, 'update'])->name('cadastro.produto.update');
 
-    // /* Ponto de Venda */
-    // Route::get('admin/venda/pdv',                                 [VendaPdvController::class, 'index'])->name('venda.pontodevenda');
-    // Route::get('admin/venda/adicionar',                           [VendaPdvController::class, 'create'])->name('venda.adicionar');
-    // Route::get('admin/venda/editar/{id?}',                        [VendaPdvController::class, 'edit'])->name('venda.editar');
-    // Route::post('admin/venda/store',                              [VendaPdvController::class, 'store'])->name('venda.store');
-    // Route::post('admin/cadastro/produto/update/{id}',             [VendaPdvController::class, 'update'])->name('venda.update');
+    /* Cadastros - Fornecedor */
+    Route::get('admin/fornecedor',                                [CadastroFornecedorController::class, 'index'])->name('fornecedor');
+    Route::get('admin/cadastro/fornecedor',                       [CadastroFornecedorController::class, 'index'])->name('cadastro.fornecedor');
+    Route::get('admin/cadastro/fornecedor/editar/{id?}',          [CadastroFornecedorController::class, 'edit'])->name('cadastro.fornecedor.editar');
+    Route::get('admin/cadastro/fornecedor/adicionar',             [CadastroFornecedorController::class, 'create'])->name('cadastro.fornecedor.adicionar');
+    Route::post('admin/cadastro/fornecedor/store',                [CadastroFornecedorController::class, 'store'])->name('cadastro.fornecedor.store');
+    Route::post('admin/cadastro/fornecedor/update/{id}',          [CadastroFornecedorController::class, 'update'])->name('cadastro.fornecedor.update');    
 
-    /* 
-        @function pesquisar_produto_por_empresa
-        @int id_empresa
-        @retornar produtos que não foram vinculados ainda
-        @caso null ou false, nenhum produto encontrado
-    */
-    Route::post('admin/cadastro/produto/associar/pesquisar_produto_por_empresa', [CadastroProdutoAssociarController::class, 'pesquisar_produto_por_empresa'])->name('produto.associar.pesquisar_produto_por_empresa');
-    Route::post('admin/cadastro/produto/associar/pesquisar_empresa_por_produto', [CadastroProdutoAssociarController::class, 'pesquisar_empresa_por_produto'])->name('produto.associar.pesquisar_empresa_por_produto');
+     /* Cadastros - Obra */
+    Route::get('admin/obra',                                                   [CadastroObraController::class, 'index'])->name('obra');
+    Route::get('admin/cadastro/obra',                                          [CadastroObraController::class, 'index'])->name('cadastro.obra');
+    Route::get('admin/cadastro/obra/editar/{id?}',                             [CadastroObraController::class, 'edit'])->name('cadastro.obra.editar');
+    Route::get('admin/cadastro/obra/adicionar',                                [CadastroObraController::class, 'create'])->name('cadastro.obra.adicionar');
+    Route::post('admin/cadastro/obra/store',                                   [CadastroObraController::class, 'store'])->name('cadastro.obra.store');
+    Route::post('admin/cadastro/obra/update/{id}',                             [CadastroObraController::class, 'update'])->name('cadastro.obra.update');    
 
+   
     /* Manipulação de Anexos */
     Route::post('admin/anexo/salvar_anexo',                       [AnexoController::class, 'store'])->name('anexo.salvar');
-
-    /* APP - Retorno dos dados do sistema antigo */
-    Route::get('admin/api/importar_cliente',                      [AppImportarController::class, 'importar_clientes'])->name('importar.cliente');
-    Route::get('admin/api/importar_plano',                        [AppImportarController::class, 'importar_planos'])->name('importar.plano');
-    Route::get('admin/api/importar_venda',                        [AppImportarController::class, 'importar_vendas'])->name('importar.venda');
+    
 
     /* API de Controles */
     Route::post('admin/api/selecionar_empresa',                   [ApiController::class, 'selecionar_empresa'])->name('api.selecionar_empresa');
-
-    /* Cobranças via WhatsApp */
-    Route::get('admin/ferramenta/cobranca',                       [FerramentaCobrancaController::class, 'index'])->name('ferramenta.cobranca');
-
-    /* Ferramentas - Mensagens para WhatsApp */
-    Route::get('admin/ferramenta/mensagem',                       [FerramentaMensagemController::class, 'index'])->name('ferramenta.mensagem');
-    Route::get('admin/ferramenta/mensagem/adicionar',             [FerramentaMensagemController::class, 'create'])->name('ferramenta.mensagem.adicionar');
-    Route::get('admin/ferramenta/mensagem/editar/{id?}',          [FerramentaMensagemController::class, 'edit'])->name('ferramenta.mensagem.editar');
-    Route::post('admin/ferramenta/mensagem/store',                [FerramentaMensagemController::class, 'store'])->name('ferramenta.mensagem.store');
-    Route::post('admin/ferramenta/mensagem/update/{id}',          [FerramentaMensagemController::class, 'update'])->name('ferramenta.mensagemda.update');
-
-    Route::get('admin/ferramenta/cobranca/automatica',            [FerramentaCobrancaController::class, 'cobranca_automatica'])->name('ferramenta.cobranca.automatica');
-
-
-    /*
-        SGA-E Rotas para Painel
-    */
 
 
 });

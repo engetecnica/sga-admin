@@ -14489,3 +14489,8 @@ a.registrar-venda {
 .form-error {
     border: solid 1px red !important;
 }
+
+.select2-selection--single {
+    font-size: 0.8125rem;
+    padding-left: 10px;
+}

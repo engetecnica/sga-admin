@@ -419,28 +419,7 @@
 
 
 
-            $(".consultar-produto-associado").on('click', function() {
-                let id_produto = $(this).attr('data-id_produto');
-                $.ajax({
-                        url: "{{ route('produto.associar.pesquisar_empresa_por_produto') }}",
-                        type: 'post',
-                        data: {
-                            "_token": "{{ csrf_token() }}",
-                            id_produto: id_produto
-                        },
-                        beforeSend: function() {
-                            $(".money").prop("disabled", true);
-                            $("#id_produto").prop("disabled", false);
-                            $("#id_produto").html("<option value=''>Pesquisando...</option>");
-                        }
-                    })
-                    .done(function(msg) {
-                        $("#id_produto").html(msg);
-                    })
-                    .fail(function(jqXHR, textStatus, msg) {
-                        alert(msg);
-                    });
-            })
+           
 
 
             $("#selecionar_empresa").on('change', function() {
@@ -463,7 +442,7 @@
                     });
             })
 
-
+            // $("select").select2();
 
             $('.summernote').summernote({
                 height: 400

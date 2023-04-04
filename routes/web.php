@@ -18,6 +18,9 @@ use App\Http\Controllers\CadastroFornecedorController;
 use App\Http\Controllers\CadastroObraController;
 use App\Http\Controllers\CadastroFuncionarioController;
 
+/* Ativos */
+use App\Http\Controllers\AtivoConfiguracaoController;
+
 
 /* Anexos */
 use App\Http\Controllers\AnexoController;
@@ -118,13 +121,24 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('admin/cadastro/obra/update/{id}',                             [CadastroObraController::class, 'update'])->name('cadastro.obra.update');    
 
 
-    /* Cadastros - Obra */
+    /* Cadastros - Funcionário */
     Route::get('admin/funcionario',                                                   [CadastroFuncionarioController::class, 'index'])->name('funcionario');
     Route::get('admin/cadastro/funcionario',                                          [CadastroFuncionarioController::class, 'index'])->name('cadastro.funcionario');
     Route::get('admin/cadastro/funcionario/editar/{id?}',                             [CadastroFuncionarioController::class, 'edit'])->name('cadastro.funcionario.editar');
     Route::get('admin/cadastro/funcionario/adicionar',                                [CadastroFuncionarioController::class, 'create'])->name('cadastro.funcionario.adicionar');
     Route::post('admin/cadastro/funcionario/store',                                   [CadastroFuncionarioController::class, 'store'])->name('cadastro.funcionario.store');
     Route::post('admin/cadastro/funcionario/update/{id}',                             [CadastroFuncionarioController::class, 'update'])->name('cadastro.funcionario.update');    
+
+
+
+
+    /* Ativo - Configuração */
+    Route::get('admin/ativo', [AtivoConfiguracaoController::class, 'index'])->name('ativo');
+    Route::get('admin/ativo/configuracao', [AtivoConfiguracaoController::class, 'index'])->name('ativo.configuracao');
+    Route::get('admin/ativo/configuracao/editar/{id?}', [AtivoConfiguracaoController::class, 'edit'])->name('ativo.configuracao.editar');
+    Route::get('admin/ativo/configuracao/adicionar', [AtivoConfiguracaoController::class, 'create'])->name('ativo.configuracao.adicionar');
+    Route::post('admin/ativo/configuracao/store', [AtivoConfiguracaoController::class, 'store'])->name('ativo.configuracao.store');
+    Route::post('admin/ativo/configuracao/update/{id}', [AtivoConfiguracaoController::class, 'update'])->name('ativo.configuracao.update');    
 
    
 

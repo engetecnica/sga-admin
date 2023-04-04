@@ -43,7 +43,7 @@
                             <div class="col-md-3">
                                 <label for="matricula" class="form-label">Matrícula</label>
                                 <input type="text" class="form-control" id="matricula"
-                                    value="{{ old('matricula', @$store->matricula) ?? "SGAE".date("YmI")  }}" name="matricula" readonly>
+                                    value="{{ old('matricula', @$store->matricula) ?? "SGAE-".date("YmI")  }}" name="matricula" readonly>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-check margin-top-digitar-manualmente">

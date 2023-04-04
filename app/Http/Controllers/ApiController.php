@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-use App\Models\CadastroEmpresa;
+use App\Models\{CadastroEmpresa, ConfiguracaoModulo};
 use RealRashid\SweetAlert\Facades\Alert;
 
 
@@ -32,7 +32,5 @@ class ApiController extends Controller
             echo "erro";
         }
     }
-
-
    
 }

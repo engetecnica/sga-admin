@@ -4,20 +4,21 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
-use App\Models\
-    {
-        AtivoConfiguracao, 
-        AtivoExternoEstoque, 
-        AtivoExterno, 
-        AtivoExternoEstoqueItem, 
-        AtivoExternoEstoqueHistorico, 
-        CadastroObra
-    };
+use App\Models\{
+    AtivoConfiguracao,
+    AtivoExternoEstoque,
+    AtivoExterno,
+    AtivoExternoEstoqueItem,
+    AtivoExternoEstoqueHistorico,
+    CadastroObra
+};
 
 use App\Traits\{
-        Configuracao,
-        FuncoesAdaptadas
-    };
+    Configuracao,
+    FuncoesAdaptadas
+};
+
+use App\Helpers\Tratamento;
 
 
 class AtivoExternoController extends Controller
@@ -74,34 +75,34 @@ class AtivoExternoController extends Controller
                 'quantidade.required' => 'A quantidade não pode ser Zero ou Nula',
                 'status.required' => 'Selecione o Status'
             ]
-            );
-            
-       // FuncoesAdaptadas::dv($request->all());
+        );
+
+        // FuncoesAdaptadas::dv($request->all());
 
         /* Salvar Ativo */
         $externo = new AtivoExterno();
         $externo->id_ativo_configuracao = $request->id_ativo_configuracao;
         $externo->titulo = $request->titulo;
         $externo->status = $request->status;
-        $externo->save();       
+        $externo->save();
 
         /* Salvar Ativo Estoque */
         $externo_estoque_quantidade = $request->quantidade;
 
-        if($externo_estoque_quantidade && $externo_estoque_quantidade > 0){
+        if ($externo_estoque_quantidade && $externo_estoque_quantidade > 0) {
 
-            
+
             /* Inclusão de Estoque  */
-            for($i=1; $i<=$externo_estoque_quantidade; $i++){
+            for ($i = 1; $i <= $externo_estoque_quantidade; $i++) {
 
                 /* Contagem de Patrimonio diante do Atual */
                 $patrimonio = Configuracao::PatrimonioAtual() + $i;
-                
+
                 /* Dados para Salvar no Estoque */
                 $externo_estoque = new AtivoExternoEstoque();
                 $externo_estoque->id_ativo_externo = $externo->id;
                 $externo_estoque->id_obra = $request->id_obra;
-                $externo_estoque->patrimonio = Configuracao::PatrimonioSigla(). $patrimonio;
+                $externo_estoque->patrimonio = Configuracao::PatrimonioSigla() . $patrimonio;
                 $externo_estoque->valor = FuncoesAdaptadas::formata_moeda($request->valor) ?? 0;
                 $externo_estoque->calibracao = $request->calibracao;
                 $externo_estoque->save();
@@ -116,19 +117,16 @@ class AtivoExternoController extends Controller
             $externo_estoque_item->quantidade_com_defeito = 0;
             $externo_estoque_item->quantidade_fora_de_operacao = 0;
             $externo_estoque_item->save();
-
         }
-        
-        
-        if($externo && $externo_estoque && $externo_estoque_item){
+
+
+        if ($externo && $externo_estoque && $externo_estoque_item) {
             Alert::success('Muito bem ;)', 'Novos ativos foram inseridos no estoque.');
             return redirect(route('ativo.externo.detalhes', $externo->id));
-        } 
+        }
 
         Alert::error('Atenção', 'Não foi possível processar os ativos solicitados. Fale com seu supervisor.');
-        return redirect(route('ativo.externo'));      
-
-        
+        return redirect(route('ativo.externo'));
     }
 
 
@@ -140,10 +138,10 @@ class AtivoExternoController extends Controller
      * @param  \App\Models\Relatorio  $relatorio
      * @return \Illuminate\Http\Response
      */
-    public function show(string $id)
+    public function show(int $id)
     {
-        echo "Aqui retorno $id";
+        $detalhes = AtivoExterno::find($id);        
+        $ativos = AtivoExternoEstoque::select('obras.razao_social', 'obras.cnpj', 'ativos_externos_estoque.*')->join('obras', 'obras.id', '=', 'ativos_externos_estoque.id_obra')->where('ativos_externos_estoque.id_ativo_externo', $detalhes->id)->get();
+        return view('pages.ativos.externos.show', compact('detalhes', 'ativos'));
     }
-
-   
 }

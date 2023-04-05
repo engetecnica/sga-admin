@@ -26,6 +26,9 @@ class AtivosExternosStatusSeeder extends Seeder
             ], [
                 'titulo' => 'Em Trânsito',
                 'classe' => 'warning'
+            ],[
+                'titulo' => 'Em Estoque',
+                'classe' => 'success'
             ], [
                 'titulo' => 'Recebido',
                 'classe' => 'success'

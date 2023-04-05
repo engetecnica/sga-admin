@@ -3,6 +3,7 @@
 namespace App\Helpers;
 
 use DateTime;
+use App\Models\AtivoExernoStatus;
 
 class Tratamento
 {
@@ -48,6 +49,16 @@ class Tratamento
         }
 
         return "Não foi possível identificar.";
+    }
+
+    /* Get Status do Estoque */
+    public static function getStatusEstoque($status){
+        $pesquisaStatus = AtivoExernoStatus::find($status)->toArray();
+        if($pesquisaStatus){
+            return $pesquisaStatus;
+        }
+
+        return [];
     }
     
 }

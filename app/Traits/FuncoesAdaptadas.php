@@ -35,5 +35,9 @@ Trait FuncoesAdaptadas
         return mb_strtoupper(str_replace("+", "", $nome));        
     }
 
+
+    public function formata_data($data){
+        return date("d/m/Y H:i", strtotime($data));
+    }
     
 }

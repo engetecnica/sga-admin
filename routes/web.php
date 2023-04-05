@@ -20,6 +20,7 @@ use App\Http\Controllers\CadastroFuncionarioController;
 
 /* Ativos */
 use App\Http\Controllers\AtivoConfiguracaoController;
+use App\Http\Controllers\AtivoExternoController;
 
 
 /* Anexos */
@@ -138,7 +139,16 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('admin/ativo/configuracao/editar/{id?}', [AtivoConfiguracaoController::class, 'edit'])->name('ativo.configuracao.editar');
     Route::get('admin/ativo/configuracao/adicionar', [AtivoConfiguracaoController::class, 'create'])->name('ativo.configuracao.adicionar');
     Route::post('admin/ativo/configuracao/store', [AtivoConfiguracaoController::class, 'store'])->name('ativo.configuracao.store');
-    Route::post('admin/ativo/configuracao/update/{id}', [AtivoConfiguracaoController::class, 'update'])->name('ativo.configuracao.update');    
+    Route::post('admin/ativo/configuracao/update/{id}', [AtivoConfiguracaoController::class, 'update'])->name('ativo.configuracao.update');
+
+
+    /* Ativo - Externo */
+    Route::get('admin/ativo', [AtivoExternoController::class, 'index'])->name('ativo');
+    Route::get('admin/ativo/externo', [AtivoExternoController::class, 'index'])->name('ativo.externo');
+    Route::get('admin/ativo/externo/editar/{id?}', [AtivoExternoController::class, 'edit'])->name('ativo.externo.editar');
+    Route::get('admin/ativo/externo/adicionar', [AtivoExternoController::class, 'create'])->name('ativo.externo.adicionar');
+    Route::post('admin/ativo/externo/store', [AtivoExternoController::class, 'store'])->name('ativo.externo.store');
+    Route::post('admin/ativo/externo/update/{id}', [AtivoExternoController::class, 'update'])->name('ativo.externo.update');    
 
    
 

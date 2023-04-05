@@ -199,6 +199,8 @@ return [
 
         RealRashid\SweetAlert\SweetAlertServiceProvider::class,
 
+        Barryvdh\Debugbar\ServiceProvider::class,
+
         
 
     ],
@@ -218,6 +220,7 @@ return [
         // 'ExampleClass' => App\Example\ExampleClass::class,
         'Alert' => RealRashid\SweetAlert\Facades\Alert::class,
         'Tratamento' => App\Helpers\Tratamento::class,
+        'Debugbar' => Barryvdh\Debugbar\Facades\Debugbar::class,
     ])->toArray(),
 
 ];

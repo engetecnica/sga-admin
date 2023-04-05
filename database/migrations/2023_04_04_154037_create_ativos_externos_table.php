@@ -13,12 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('ativos_configuracoes', function (Blueprint $table) {
+        Schema::create('ativos_externos', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_relacionamento');
-            $table->string('titulo')->nullable();
+            $table->unsignedBigInteger('id_ativo_configuracao');
+            $table->foreign('id_ativo_configuracao')->references('id')->on('ativos_configuracoes');
+            $table->string('titulo')->nullable();            
             $table->enum('status', ['Ativo', 'Inativo']);
-            $table->softDeletes();
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ativos_configuracoes');
+        Schema::dropIfExists('ativos_externos');
     }
 };

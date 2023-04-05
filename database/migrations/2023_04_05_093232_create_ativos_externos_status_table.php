@@ -13,11 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('ativos_configuracoes', function (Blueprint $table) {
+        Schema::create('ativos_externos_status', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_relacionamento');
             $table->string('titulo')->nullable();
-            $table->enum('status', ['Ativo', 'Inativo']);
+            $table->char('classe', 12)->default('primary');
             $table->softDeletes();
             $table->timestamps();
         });
@@ -30,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ativos_configuracoes');
+        Schema::dropIfExists('ativos_externos_status');
     }
 };

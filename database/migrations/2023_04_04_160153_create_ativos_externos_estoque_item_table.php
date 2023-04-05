@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('ativos_externos_estoque_item', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedBigInteger('id_ativo_externo');
+            $table->unsignedBigInteger('id_ativo_externo')->unique();
             $table->foreign('id_ativo_externo')->references('id')->on('ativos_externos');
 
             $table->integer('quantidade_estoque')->default('0');

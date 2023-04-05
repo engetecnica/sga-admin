@@ -20,6 +20,16 @@ Trait FuncoesAdaptadas
         exit;
     }
 
+    static function dv(...$data)
+    {
+        foreach ($data as $dt) {
+            echo "<pre>";
+            echo var_dump($dt, true);
+            echo "</pre>";
+        }
+        exit;
+    }
+
     public function importar_cliente_nome($nome){        
         if(!$nome) return null;
         return mb_strtoupper(str_replace("+", "", $nome));        

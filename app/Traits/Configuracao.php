@@ -13,10 +13,15 @@ namespace App\Traits;
 Trait Configuracao
 {
 
+    static function PatrimonioSigla()
+    {
+        return "ENG";
+    }
+
     static function PatrimonioAtual()
     {
         $atual = "ENG999";
-        $atual_numero = str_replace("ENG", "", $atual);
+        $atual_numero = str_replace(self::PatrimonioSigla(), "", $atual);
         return $atual_numero;
     }
 

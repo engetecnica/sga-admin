@@ -150,7 +150,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('admin/ativo/externo/store', [AtivoExternoController::class, 'store'])->name('ativo.externo.store');
     Route::post('admin/ativo/externo/update/{id}', [AtivoExternoController::class, 'update'])->name('ativo.externo.update');    
 
-   
+    Route::get('admin/ativo/externo/detalhes/{id}', [AtivoExternoController::class, 'show'])->name('ativo.externo.detalhes');
 
 
 

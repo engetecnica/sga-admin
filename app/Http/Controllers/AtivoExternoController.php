@@ -4,9 +4,20 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
-use App\Models\{AtivoConfiguracao, AtivoExternoEstoque, AtivoExterno};
+use App\Models\
+    {
+        AtivoConfiguracao, 
+        AtivoExternoEstoque, 
+        AtivoExterno, 
+        AtivoExternoEstoqueItem, 
+        AtivoExternoEstoqueHistorico, 
+        CadastroObra
+    };
 
-use App\Traits\Configuracao;
+use App\Traits\{
+        Configuracao,
+        FuncoesAdaptadas
+    };
 
 
 class AtivoExternoController extends Controller
@@ -18,7 +29,7 @@ class AtivoExternoController extends Controller
      */
 
 
-    use Configuracao;
+    use Configuracao, FuncoesAdaptadas;
 
 
     public function index()
@@ -36,8 +47,9 @@ class AtivoExternoController extends Controller
     public function create()
     {
         //
+        $obras = CadastroObra::all();
         $ativo_configuracoes = AtivoConfiguracao::get_ativo_configuracoes();
-        return view('pages.ativos.externos.form', compact('ativo_configuracoes'));
+        return view('pages.ativos.externos.form', compact('ativo_configuracoes', 'obras'));
     }
 
     /**
@@ -62,45 +74,75 @@ class AtivoExternoController extends Controller
                 'quantidade.required' => 'A quantidade não pode ser Zero ou Nula',
                 'status.required' => 'Selecione o Status'
             ]
-        );
-
+            );
+            
+       // FuncoesAdaptadas::dv($request->all());
 
         /* Salvar Ativo */
         $externo = new AtivoExterno();
         $externo->id_ativo_configuracao = $request->id_ativo_configuracao;
         $externo->titulo = $request->titulo;
         $externo->status = $request->status;
-        $externo->save();
-
-       
+        $externo->save();       
 
         /* Salvar Ativo Estoque */
         $externo_estoque_quantidade = $request->quantidade;
 
         if($externo_estoque_quantidade && $externo_estoque_quantidade > 0){
 
-            /*  */
+            
+            /* Inclusão de Estoque  */
             for($i=1; $i<=$externo_estoque_quantidade; $i++){
+
+                /* Contagem de Patrimonio diante do Atual */
+                $patrimonio = Configuracao::PatrimonioAtual() + $i;
+                
+                /* Dados para Salvar no Estoque */
                 $externo_estoque = new AtivoExternoEstoque();
-                $externo_estoque->id_ativo_exerno = $externo->id;
-                $externo_estoque->patrimonio = Configuracao::PatrimonioAtual() + $i;
-                $externo_estoque->valor = $request->valor;
+                $externo_estoque->id_ativo_externo = $externo->id;
+                $externo_estoque->id_obra = $request->id_obra;
+                $externo_estoque->patrimonio = Configuracao::PatrimonioSigla(). $patrimonio;
+                $externo_estoque->valor = FuncoesAdaptadas::formata_moeda($request->valor) ?? 0;
                 $externo_estoque->calibracao = $request->calibracao;
                 $externo_estoque->save();
             }
 
-
+            /* Inclusão de Estoque - Item */
+            $externo_estoque_item = new AtivoExternoEstoqueItem();
+            $externo_estoque_item->id_ativo_externo = $externo->id;
+            $externo_estoque_item->quantidade_estoque = $externo_estoque_quantidade;
+            $externo_estoque_item->quantidade_em_transito = 0;
+            $externo_estoque_item->quantidade_em_operacao = 0;
+            $externo_estoque_item->quantidade_com_defeito = 0;
+            $externo_estoque_item->quantidade_fora_de_operacao = 0;
+            $externo_estoque_item->save();
 
         }
         
         
-        /* Salvar Ativo Item */
+        if($externo && $externo_estoque && $externo_estoque_item){
+            Alert::success('Muito bem ;)', 'Novos ativos foram inseridos no estoque.');
+            return redirect(route('ativo.externo.detalhes', $externo->id));
+        } 
+
+        Alert::error('Atenção', 'Não foi possível processar os ativos solicitados. Fale com seu supervisor.');
+        return redirect(route('ativo.externo'));      
+
+        
+    }
 
 
-        /* Salvar Ativo Historico */
 
-        // Alert::success('Muito bem ;)', 'Um registro foi adicionado com sucesso!');
-        // return redirect(route('ativo.externo'));
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Relatorio  $relatorio
+     * @return \Illuminate\Http\Response
+     */
+    public function show(string $id)
+    {
+        echo "Aqui retorno $id";
     }
 
    

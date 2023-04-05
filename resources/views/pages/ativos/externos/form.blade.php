@@ -47,11 +47,15 @@
                                 <option value="<?php echo $atv->id; ?>" @php if(old('id_ativo_configuracao', @$store->id_ativo_configuracao) == $atv->id) echo "selected"; @endphp <?php if(count($atv->subcategorias)>0){ ?>disabled style="background-color: #EDEDED !important"<?php } ?>><?php echo $atv->titulo; ?></option>
                                 <?php if(count($atv->subcategorias)>0){ ?>
                                     <?php foreach($atv->subcategorias as $sub){ ?>
-                                        <option><?php echo $sub->titulo; ?></option>
+                                        <option value="<?php echo $sub->id;?>"><?php echo $sub->titulo; ?></option>
                                     <?php } ?>
                                 <?php } ?>
                             <?php } ?>
                         </select>
+                    </div>
+
+                    <div class="col-md-12">
+                        @include('components.fields.id_obra')
                     </div>
 
                     <div class="col-md-6">

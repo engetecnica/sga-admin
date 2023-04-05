@@ -1,4 +1,4 @@
-<label for="id_obra" class="form-label">Empresa</label>
+<label for="id_obra" class="form-label">Obra</label>
 <select name="id_obra" id="id_obra" class="form-select select2">
     <option value="">Selecione uma Obra</option>
     @foreach ($obras as $obra)

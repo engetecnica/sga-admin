@@ -58,7 +58,7 @@ class Tratamento
             return $pesquisaStatus;
         }
 
-        return [];
+        return null;
     }
     
 }

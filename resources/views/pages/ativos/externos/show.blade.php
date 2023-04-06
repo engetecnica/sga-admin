@@ -39,8 +39,8 @@
                     <div class="col-lg-12 grid-margin stretch-card">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">Ativo Externo - Detalhes</h4>
-                                </p>
+                                <h4 class="card-title">Item</h4>
+                                <hr>
                                 <table class="table table-bordered table-striped table-houver">
                                     <thead>
                                         <tr>
@@ -54,7 +54,7 @@
                                     <tbody>
                                         <tr>
                                             <td><?php echo $detalhes['id']; ?></td>
-                                            <td><?php echo $detalhes['id_ativo_configuracao']; ?></td>
+                                            <td><?php echo $detalhes['categoria']; ?></td>
                                             <td><?php echo $detalhes['titulo']; ?></td>
                                             <td><?php echo date('d/m/Y H:i:s', strtotime($detalhes['created_at'])); ?> </td>
                                             <td>
@@ -63,15 +63,80 @@
                                         </tr>
                                     </tbody>
                                 </table>
-
-
-
-
                             </div>
-<div class="card-body">
-                                <h4 class="card-title">Ativo Externo - Detalhes</h4>
-                                </p>
-                                <table class="table">
+
+                            <!-- Estatísticas
+                                    <div class="col-12 grid-margin">
+                                        <div class="card card-statistics">
+                                            <div class="row">
+                                                <div class="card-col col-xl-3 col-lg-3 col-md-3 col-6 border-right">
+                                                    <div class="card-body">
+                                                        <div
+                                                            class="d-flex align-items-center justify-content-center flex-column flex-sm-row">
+                                                            <i
+                                                                class="mdi mdi-account-multiple-outline text-primary mr-0 mr-sm-4 icon-lg"></i>
+                                                            <div class="wrapper text-sm-left">
+                                                                <p class="card-text mb-0">Pendentes</p>
+                                                                <div class="fluid-container">
+                                                                    <h3 class="mb-0 font-weight-medium">150</h3>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card-col col-xl-3 col-lg-3 col-md-3 col-6 border-right">
+                                                    <div class="card-body">
+                                                        <div
+                                                            class="d-flex align-items-center justify-content-center flex-column flex-sm-row">
+                                                            <i
+                                                                class="mdi mdi-checkbox-marked-circle-outline text-primary mr-0 mr-sm-4 icon-lg"></i>
+                                                            <div class="wrapper text-sm-left">
+                                                                <p class="card-text mb-0 ml-3">Em Estoque</p>
+                                                                <div class="fluid-container">
+                                                                    <h3 class="mb-0 font-weight-medium">0</h3>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card-col col-xl-3 col-lg-3 col-md-3 col-6 border-right">
+                                                    <div class="card-body">
+                                                        <div
+                                                            class="d-flex align-items-center justify-content-center flex-column flex-sm-row">
+                                                            <i class="mdi mdi-trophy-outline text-primary mr-0 mr-sm-4 icon-lg"></i>
+                                                            <div class="wrapper text-sm-left">
+                                                                <p class="card-text mb-0">Em Operação</p>
+                                                                <div class="fluid-container">
+                                                                    <h3 class="mb-0 font-weight-medium">0</h3>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card-col col-xl-3 col-lg-3 col-md-3 col-6">
+                                                    <div class="card-body">
+                                                        <div
+                                                            class="d-flex align-items-center justify-content-center flex-column flex-sm-row">
+                                                            <i class="mdi mdi-target text-primary mr-0 mr-sm-4 icon-lg"></i>
+                                                            <div class="wrapper text-sm-left">
+                                                                <p class="card-text mb-0">Em Manutenção</p>
+                                                                <div class="fluid-container">
+                                                                    <h3 class="mb-0 font-weight-medium">0</h3>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    End Estatísticas -->
+
+
+                            <div class="card-body">
+                                <h4 class="card-title">Itens pertencentes ao Estoque</h4>
+                                <hr>
+                                <table class="table table-hover table-striped pt-4  yajra-datatable">
                                     <thead class="table-dark">
                                         <tr>
                                             <th scope="col">#</th>
@@ -85,41 +150,85 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php foreach($ativos as $atv){ ?>
-                                        <tr>
-                                            <th scope="row"><?php echo $atv->id; ?></th>
-                                            <td>
-                                                <div class="badge badge-danger">
-                                                    <i class="mdi mdi-wrench ml-2"></i> <?php echo $atv->patrimonio; ?>
-                                                </div>
-                                            </td>
-                                            <td><?php echo $atv->razao_social; ?> - <?php echo $atv->cnpj; ?></td>
-                                            
-                                            <td>R$ <?php echo number_format($atv->valor, 2, ',', '.'); ?></td>
-                                            <td><?php echo $atv->calibracao=='1' ? 'SIM' : 'NÃO' ?></td>
-                                            <td><?php echo ($atv->data_descarte) ? Tratamento::FormatarData($atv->data_descarte) : '-'; ?></td>
-                                            <td><?php echo Tratamento::FormatarData($atv->created_at); ?></td>
-                                            <td>
-                                                <div class="badge badge-<?php echo (Tratamento::getStatusEstoque($atv->status)['classe']) ?? 'danger'; ?>">
-                                                    <i class="mdi mdi-archive-check ml-2"></i> <?php echo (Tratamento::getStatusEstoque($atv->status)['titulo']) ?? 'Desconhecido'; ?>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <?php } ?>
+
                                     </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Patrimônio</th>
+                                            <th scope="col">Obra Atual</th>
+                                            <th scope="col">Valor do Item</th>
+                                            <th scope="col">Calibração?</th>
+                                            <th scope="col">Data de Descarte</th>
+                                            <th scope="col">Data de Inclusão</th>
+                                            <th scope="col">Situação</th>
+                                        </tr>
+                                    </tfoot>
                                 </table>
-
-</div>
-
+                            </div>
                         </div>
                     </div>
-
-
-
-
                 </div>
             </div>
         </div>
     </div>
 
 @endsection
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script src="//cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+<script src="//stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<script src="//cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+
+<script lang="javascript">
+    $(function() {
+
+        var id = "{{ $detalhes['id'] }}"
+
+        var table = $('.yajra-datatable').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: BASE_URL + "/ativo/externo/search/"+id,
+            columns: [{
+                    data: 'id',
+                    name: 'id'
+                },
+                {
+                    data: 'patrimonio',
+                    name: 'patrimonio'
+                },
+                {
+                    data: 'id_obra',
+                    name: 'obra_atual'
+                },
+                {
+                    data: 'valor',
+                    name: 'valor'
+                },
+                {
+                    data: 'calibracao',
+                    name: 'calibracao'
+                },
+                {
+                    data: 'data_descarte',
+                    name: 'data_descarte'
+                },
+                {
+                    data: 'created_at',
+                    name: 'created_at'
+                },
+                {
+                    data: 'status',
+                    name: 'status',
+                    orderable: true,
+                    searchable: true
+                },
+            ],
+            language: {
+                search: 'Buscar informação da Lista',
+                url: 'https://cdn.datatables.net/plug-ins/1.11.5/i18n/pt-BR.json',
+            },
+        });
+
+    });
+</script>

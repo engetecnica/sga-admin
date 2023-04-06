@@ -29,6 +29,8 @@
     <link href="{{ asset('vendor/select2/css/select2.min.css') }}" rel="stylesheet" />
 
 
+
+
 </head>
 
 <body>
@@ -360,82 +362,67 @@
     <link href="//cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
     <script src="//cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
 
+
+
+
+
     <script>
         dados1 = {};
-
-
-
-
-
-
+        BASE_URL = '<?php echo route('admin'); ?>';
+        var route = window.location.pathname;
 
         $(document).ready(function() {
 
-            BASE_URL = '<?php echo route('admin'); ?>';
-            var route = window.location.pathname;
 
+            $(".digitar-manualmente").on('click', function() {
+                let field = $(this).attr('data-field');
+                console.log(field)
+                if (this.checked) {
+                    $("#" + field).attr("readonly", false);
+                } else {
+                    $("#" + field).attr("readonly", true);
+                }
+            })
 
+            $(".cep").on('keyup', function() {
 
-			$(function(){
+                //Nova variável "cep" somente com dígitos.
+                var cep = $("#cep").val().replace(/\D/g, '');
 
+                //Verifica se campo cep possui valor informado.
+                if (cep != "") {
 
+                    //Expressão regular para validar o CEP.
+                    var validacep = /^[0-9]{8}$/;
 
-                $(".digitar-manualmente").on('click', function(){
-                    let field = $(this).attr('data-field');
-                    console.log(field)
-                    if(this.checked){
-                        $("#"+field).attr("readonly", false);
-                    } else {
-                        $("#"+field).attr("readonly", true);
+                    //Valida o formato do CEP.
+                    if (validacep.test(cep)) {
+
+                        //Consulta o webservice viacep.com.br/
+                        $.getJSON("//viacep.com.br/ws/" + cep + "/json/?callback=?", function(
+                            dados) {
+
+                            if (!("erro" in dados)) {
+                                //Atualiza os campos com os valores da consulta.
+                                $("#endereco").val(dados.logradouro);
+                                $("#bairro").val(dados.bairro);
+                                $("#cidade").val(dados.localidade);
+                                $("#estado").val(dados.uf);
+                            } //end if.
+                            else {
+                                //CEP pesquisado não foi encontrado.
+                                console.log("CEP não encontrado.");
+                            }
+                        });
+                    } //end if.
+                    else {
+                        console.log("Formato de CEP inválido.");
                     }
-                })
-
-
-
-
-			$(".cep").on('keyup', function() {
-			
-				//Nova variável "cep" somente com dígitos.
-				var cep = $("#cep").val().replace(/\D/g, '');
-
-				//Verifica se campo cep possui valor informado.
-				if (cep != "") {
-
-					//Expressão regular para validar o CEP.
-					var validacep = /^[0-9]{8}$/;
-
-					//Valida o formato do CEP.
-					if(validacep.test(cep)) {
-
-					//Consulta o webservice viacep.com.br/
-					$.getJSON("//viacep.com.br/ws/"+ cep +"/json/?callback=?", function(dados) {
-
-							if (!("erro" in dados)) {
-								//Atualiza os campos com os valores da consulta.
-								$("#endereco").val(dados.logradouro);
-								$("#bairro").val(dados.bairro);
-								$("#cidade").val(dados.localidade);
-								$("#estado").val(dados.uf);
-							} //end if.
-							else {
-								//CEP pesquisado não foi encontrado.
-								console.log("CEP não encontrado.");
-							}
-						});
-					} //end if.
-					else {
-						console.log("Formato de CEP inválido.");
-					}
-				} //end if.
-			});
-			});
+                } //end if.
+            });
 
             $(".select2").select2();
             $("select").select2();
-
-
-
-           
 
 
             $("#selecionar_empresa").on('change', function() {
@@ -508,57 +495,19 @@
                 $(this).closest('.item-lista').remove();
             })
 
+            $('#lista-simples').DataTable({});
 
 
 
-            // $(document).on('click', '.clonador', function() {
-            // 	$('.listagem').append($('#listagem-template').html());
-
-            // 	$(".lista-produtos:last").html('<option>Selecione</option>');
-            // 	$.each(dados1.produtos, function(k, v) {
-            // 		$(".lista-produtos:last").append('<option value="' + v.id + '">' + v.titulo + '</option>');
-            // 		/// do stuff
-            // 	});
-
-            // 	$(".lista-clientes:last").html('<option>Selecione</option>');
-            // 	$.each(dados1.clientes, function(k, v) {
-            // 		$(".lista-clientes:last").append('<option value="' + v.id + '">' + v.nome + '</option>');
-            // 		/// do stuff
-            // 	});
-
-            // 	$('#formulario .lista-produtos:last').select2().val(null).trigger('change');;
-            // 	$('#formulario .lista-clientes:last').select2().val(null).trigger('change');;
-            // })
 
 
-            $('#lista-simples').DataTable({
-                "language": {
-                    "sProcessing": "Processando...",
-                    "sLengthMenu": "Mostrar _MENU_ registros",
-                    "sZeroRecords": "Nenhum registroi foi encontrado.",
-                    "sEmptyTable": "Nenhum registroi foi encontrado.",
-                    "sInfo": "Mostrando registros de _START_ a _END_ de um total de _TOTAL_ registros",
-                    "sInfoEmpty": "Mostrando registros de 0 a 0 de um total de 0 registros",
-                    "sInfoFiltered": "(filtrado de um total de _MAX_ registros)",
-                    "sInfoPostFix": "",
-                    "sSearch": "Buscar:",
-                    "sUrl": "",
-                    "sInfoThousands": ",",
-                    "sLoadingRecords": "Carregando...",
-                    "oPaginate": {
-                        "sFirst": "Primero",
-                        "sLast": "Último",
-                        "sNext": "Seguinte",
-                        "sPrevious": "Anterior"
-                    },
-                    "oAria": {
-                        "sSortAscending": ": Ordenar Ascendente",
-                        "sSortDescending": ": Ordenar Descendente"
-                    }
-                }
-            });
+
+
+
+
         });
     </script>
+
 </body>
 
 </html>

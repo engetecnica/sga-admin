@@ -152,6 +152,9 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('admin/ativo/externo/detalhes/{id}', [AtivoExternoController::class, 'show'])->name('ativo.externo.detalhes');
 
+    Route::get('admin/ativo/externo/search/{id}', [AtivoExternoController::class, 'searchAtivoID'])->name('ativo.externo.search');
+    Route::get('admin/ativo/externo/lista/{id?}', [AtivoExternoController::class, 'searchAtivoLista'])->name('ativo.externo.lista');
+
 
 
 

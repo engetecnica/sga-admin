@@ -20,6 +20,7 @@ use App\Traits\{
 
 use App\Helpers\Tratamento;
 
+use DataTables;
 
 class AtivoExternoController extends Controller
 {
@@ -37,6 +38,17 @@ class AtivoExternoController extends Controller
     {
         //
         $lista = [];
+
+
+
+
+
+
+
+
+
+
+
         return view('pages.ativos.externos.index', compact('lista'));
     }
 
@@ -105,6 +117,7 @@ class AtivoExternoController extends Controller
                 $externo_estoque->patrimonio = Configuracao::PatrimonioSigla() . $patrimonio;
                 $externo_estoque->valor = FuncoesAdaptadas::formata_moeda($request->valor) ?? 0;
                 $externo_estoque->calibracao = $request->calibracao;
+                $externo_estoque->status = '4'; // Em Estoque
                 $externo_estoque->save();
             }
 
@@ -140,8 +153,85 @@ class AtivoExternoController extends Controller
      */
     public function show(int $id)
     {
-        $detalhes = AtivoExterno::find($id);        
-        $ativos = AtivoExternoEstoque::select('obras.razao_social', 'obras.cnpj', 'ativos_externos_estoque.*')->join('obras', 'obras.id', '=', 'ativos_externos_estoque.id_obra')->where('ativos_externos_estoque.id_ativo_externo', $detalhes->id)->get();
-        return view('pages.ativos.externos.show', compact('detalhes', 'ativos'));
+        if (!$id) {
+            Alert::error('Atenção', 'Não foi possível localizar este Ativo Externo.');
+            return redirect(route('ativo.externo'));
+        }
+
+        $detalhes = AtivoExterno::select('ativos_configuracoes.titulo AS categoria', 'ativos_externos.*')->join('ativos_configuracoes', 'ativos_configuracoes.id', '=', 'ativos_externos.id_ativo_configuracao')->where('ativos_externos.id', $id)->first();
+        
+        if(!$detalhes){
+            Alert::error('Atenção', 'Não foi possível localizar este Ativo Externo.');
+            return redirect(route('ativo.externo'));
+        }
+        
+        return view('pages.ativos.externos.show', compact('detalhes'));
     }
+
+
+    public function searchAtivoID(Request $request, int $id)
+    {
+
+        if ($request->ajax()) {
+            $ativosPesquisar = AtivoExternoEstoque::select('obras.razao_social', 'obras.cnpj', 'obras.codigo_obra', 'ativos_externos_estoque.*')->join('obras', 'obras.id', '=', 'ativos_externos_estoque.id_obra')->where('ativos_externos_estoque.id_ativo_externo', $id)->get();
+            return DataTables::of($ativosPesquisar)
+                ->editColumn('id_obra', function ($row) {
+                    return '<span class="badge badge-danger">'.$row->codigo_obra . ' - ' . $row->razao_social . '</span>';
+                })
+                ->editColumn('patrimonio', function ($row) {
+                    return '<span class="badge badge-primary">' . $row->patrimonio  . '</span>';
+                })
+                ->editColumn('valor', function ($row) {
+                    return FuncoesAdaptadas::formata_moeda_reverse($row->valor);
+                })
+                ->editColumn('calibracao', function($row){
+                    return $row->calibracao==1 ? "Sim" : "Não";
+                })
+                ->editColumn('data_descarte', function ($row) {
+                    return ($row->data_descarte) ? Tratamento::FormatarData($row->data_descarte) : '-';
+                })
+                ->editColumn('created_at', function ($row) {
+                    return ($row->created_at) ? Tratamento::FormatarData($row->created_at) : '-';
+                })
+                ->addColumn('status', function ($row) {
+                    $status = Tratamento::getStatusEstoque($row->status);
+                    return '<span class="badge badge-'. $status['classe'].'">' . $status['titulo'] . '</span>';
+                })
+                ->rawColumns(['patrimonio', 'id_obra', 'status'])
+                ->make(true);
+        }   
+        
+    }
+
+    public function searchAtivoLista(Request $request){
+
+        if ($request->ajax()) {
+
+            $listaAtivos = AtivoExterno::select('ativos_configuracoes.titulo AS categoria', 'ativos_externos.*')->join('ativos_configuracoes', 'ativos_configuracoes.id', '=', 'ativos_externos.id_ativo_configuracao')->orderBy('ativos_externos.created_at', 'DESC')->get();
+
+            return DataTables::of($listaAtivos)
+
+                ->editColumn('created_at', function ($row) {
+                    return ($row->created_at) ? Tratamento::FormatarData($row->created_at) : '-';
+                })
+                ->editColumn('status', function ($row) {
+                    return 'Ativo';
+                })
+                ->editColumn('id_ativo_configuracao', function ($row) {
+                    return $row->categoria;
+                })
+                ->editColumn('acoes', function($row){                
+                    $btn = '<a href="' . route("ativo.externo.editar", $row->id) . '"><button class="badge badge-info" data-toggle="tooltip" data-placement="top" title="Editar"><i class="mdi mdi-pencil"></i> Editar</button></a>';
+                    $btn .= '<a href="' . route("ativo.externo.detalhes", $row->id) . '"><button class="badge badge-dark" style="margin-left: 5px" data-toggle="tooltip" data-placement="top" title="Detalhes"><i class="mdi mdi-list"></i> Detalhes</button></a>';
+                    return $btn;                    
+                })
+                ->rawColumns(['acoes', 'status'])
+                ->make(true);
+        }
+
+    }
+
+
+
+
 }

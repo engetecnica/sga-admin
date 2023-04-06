@@ -10,6 +10,11 @@ Trait FuncoesAdaptadas
         return $expressao;
     }
 
+    static function formata_moeda_reverse($expressao){
+        if(!$expressao) return "R$ 0,00";
+        return "R$ " . number_format($expressao, '2', ',', '.');
+    }
+
     static function dd(...$data)
     {
         foreach ($data as $dt) {

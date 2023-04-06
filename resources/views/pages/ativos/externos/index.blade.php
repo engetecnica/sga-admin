@@ -32,34 +32,19 @@
         <div class="card">
             <div class="card-body">
 
-                <table class="table table-hover table-striped" id="lista-simples">
+                <table class="table table-hover table-striped yajra-datatable pt-4 ">
                     <thead>
                         <tr>
                             <th width="8%">ID</th>
                             <th>Categoria</th>
                             <th>Título</th>
+                            <th>Data de Inclusão</th>
                             <th>Status</th>
                             <th width="10%">Ações</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($lista as $v)
-                        <tr>
-                            <td><span class="badge badge-dark">{{ $v->id }}</span></td>
-                            <td>{{ ($v->vinculo) ?? '-' }}</td>
-                            <td>{{ $v->titulo }}</td>
-                            <td>{{ $v->status }}</td>
-                            <td>
-                                <a href="{{ url('admin/ativo/externo/editar/'.$v->id) }}">
-                                    <button class="badge badge-info" data-toggle="tooltip" data-placement="top" title="Editar"><i class="mdi mdi-pencil"></i> Editar</button>
-                                </a>
-
-                                <a href="javascript:void(0)" class="excluir-padrao" data-id="{{ $v->id }}" data-table="users" data-module="ativo/externo" data-redirect="{{ route('modulo') }}">
-                                    <button class="badge badge-danger" data-toggle="tooltip" data-placement="top" title="Excluir"><i class="mdi mdi-delete"></i> Excluir</button>
-                                </a>
-                            </td>
-                        </tr>
-                        @endforeach
+                        
                     </tbody>
                 </table>
             </div>
@@ -68,3 +53,52 @@
 </div>
 
 @endsection
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script src="//cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+<script src="//stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<script src="//cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+
+<script lang="javascript">
+    $(function() {
+
+        var table = $('.yajra-datatable').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: BASE_URL + "/ativo/externo/lista",
+            columns: [{
+                    data: 'id',
+                    name: 'id'
+                },
+                {
+                    data: 'id_ativo_configuracao',
+                    name: 'categoria'
+                },
+                {
+                    data: 'titulo',
+                    name: 'titulo'
+                },
+                {
+                    data: 'created_at',
+                    name: 'created_at'
+                },
+                {
+                    data: 'status',
+                    name: 'status'
+                },
+                {
+                    data: 'acoes',
+                    name: 'acoes',
+                    orderable: true,
+                    searchable: true
+                },
+            ],
+            language: {
+                search: 'Buscar informação da Lista',
+                url: 'https://cdn.datatables.net/plug-ins/1.11.5/i18n/pt-BR.json',
+            },
+        });
+
+    });
+</script>

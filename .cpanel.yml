@@ -1,4 +1,4 @@
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/sgaeng/public_html/sga-admin #Add /<sub_folder> if required
+    - export DEPLOYPATH=/home/sgaeng/panel.sga-e.eng.br #Add /<sub_folder> if required
     - /bin/cp -r * $DEPLOYPATH

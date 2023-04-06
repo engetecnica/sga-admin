@@ -56,7 +56,7 @@
 
                                 <select class="form-control select2 select-2-width-400" id="selecionar_empresa"
                                     name="selecionar_empresa">
-                                    <option value="0">Todas as Empresas</option>
+                                    <option value="0">Todas as Obras</option>
                                     @foreach ($empresas_lista as $empresa)
                                         <?php
                                         $selected = null;
@@ -68,7 +68,7 @@
                                         ?>
 
                                         <option value="{{ $empresa->id }}" {{ $selected }}>
-                                            {{ $empresa->nome . ' - ' . $empresa->cpf }}</option>
+                                            {{ $empresa->razao_social . ' - ' . $empresa->cnpj }}</option>
                                     @endforeach
                                 </select>
 

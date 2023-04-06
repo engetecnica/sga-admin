@@ -103,7 +103,6 @@ class AtivoExternoController extends Controller
 
         if ($externo_estoque_quantidade && $externo_estoque_quantidade > 0) {
 
-
             /* Inclusão de Estoque  */
             for ($i = 1; $i <= $externo_estoque_quantidade; $i++) {
 
@@ -117,7 +116,7 @@ class AtivoExternoController extends Controller
                 $externo_estoque->patrimonio = Configuracao::PatrimonioSigla() . $patrimonio;
                 $externo_estoque->valor = FuncoesAdaptadas::formata_moeda($request->valor) ?? 0;
                 $externo_estoque->calibracao = $request->calibracao;
-                $externo_estoque->status = '4'; // Em Estoque
+                $externo_estoque->status = 4; // Em Estoque
                 $externo_estoque->save();
             }
 
@@ -207,7 +206,7 @@ class AtivoExternoController extends Controller
 
         if ($request->ajax()) {
 
-            $listaAtivos = AtivoExterno::select('ativos_configuracoes.titulo AS categoria', 'ativos_externos.*')->join('ativos_configuracoes', 'ativos_configuracoes.id', '=', 'ativos_externos.id_ativo_configuracao')->orderBy('ativos_externos.created_at', 'DESC')->get();
+            $listaAtivos = AtivoExterno::select('ativos_configuracoes.titulo AS categoria', 'ativos_externos.*')->join('ativos_configuracoes', 'ativos_configuracoes.id', '=', 'ativos_externos.id_ativo_configuracao')->orderBy('ativos_externos.titulo', 'ASC')->get();
 
             return DataTables::of($listaAtivos)
 

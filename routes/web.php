@@ -187,8 +187,6 @@ Route::group(['middleware' => 'auth'], function () {
 
    
     /* Manipulação de Anexos */
-    Route::post('admin/anexo/salvar_anexo',                       [AnexoController::class, 'store'])->name('anexo.salvar');
-
     Route::post('admin/anexo/upload', [AnexoController::class, 'upload'])->name('anexo.upload');
 
 

@@ -77,7 +77,7 @@
                                 </div>
                                 @endif
 
-                                @if($detalhes->status==1)
+                                @if($detalhes->status==1 && empty($detalhes->anexo))
                                 <div class="mb-3 mt-3 btn-align-float">
                                     <a href="javascript:void(0)" id="enviar_anexo"
                                                 data-id_retirada="{{ $detalhes->id }}" data-bs-toggle="modal"
@@ -124,6 +124,33 @@
                                         @endforeach
                                     </tbody>
                                 </table>
+
+
+                                @if(!empty($detalhes->anexo))
+                                <hr>
+                                <h3>Anexos</h3>
+                                <table class="table table-bordered table-striped table-houver">
+                                    <thead>
+                                        <tr>
+                                            <th> Tipo </th>
+                                            <th> Título </th>
+                                            <th> Descrição </th>
+                                            <th> Data de Inclusão </th>
+                                            <th> Visualizar Arquivo</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Termo de Responsabilidade - {{ $detalhes->anexo->tipo }}</td>
+                                            <td>{{ $detalhes->anexo->titulo }}</td>
+                                            <td>{{ $detalhes->anexo->descricao }}</td>
+                                            <td>{{ Tratamento::FormatarData($detalhes->anexo->created_at) }}</td>
+                                            <td><button class="btn btn-danger">Baixar Arquivo</button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                @endif
+                                
                             </div>
                         </div>
                     </div>
@@ -155,4 +182,10 @@
     </div>
 </div>
 
-@include('components.anexo.form')
+@include('components.anexo.form', 
+            [
+                'path' => 'termos_retirada', 
+                'id_item' => $detalhes->id,
+                'id_modulo' => 18
+            ]
+        )

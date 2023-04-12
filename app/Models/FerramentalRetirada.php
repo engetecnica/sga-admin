@@ -53,6 +53,8 @@ class FerramentalRetirada extends Model
 
 
         if ($retirada) {
+
+            /** Faz a busca dos itens de acordo com a retirada */
             $retirada->itens = DB::table('ativos_ferramental_retirada_item')
 
                 ->select(
@@ -66,8 +68,17 @@ class FerramentalRetirada extends Model
                 ->where('ativos_ferramental_retirada_item.id_retirada', $id)
                 ->get();
 
+            /** Verifica se tem anexo */
+            $retirada->anexo = DB::table('anexos')
+                ->where('id_item', $id)
+                ->where('id_modulo', '18') // Retirada
+                ->get()
+                ->first();
+
+            /** Verifica se o termo já foi assinado digitalmente */
             $retirada->autenticado = DB::table('ativos_ferramental_retirada_autenticacao')->where('id_retirada', $id)->get()->first();
         }
+        
 
         return $retirada;
     }

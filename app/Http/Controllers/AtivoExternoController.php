@@ -38,17 +38,6 @@ class AtivoExternoController extends Controller
     {
         //
         $lista = [];
-
-
-
-
-
-
-
-
-
-
-
         return view('pages.ativos.externos.index', compact('lista'));
     }
 
@@ -140,9 +129,6 @@ class AtivoExternoController extends Controller
         Alert::error('Atenção', 'Não foi possível processar os ativos solicitados. Fale com seu supervisor.');
         return redirect(route('ativo.externo'));
     }
-
-
-
 
     /**
      * Display the specified resource.

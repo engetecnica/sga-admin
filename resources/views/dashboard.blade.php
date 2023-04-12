@@ -13,23 +13,24 @@
     </title>
     <!-- plugins:css -->
     <link rel="stylesheet" href="{{ asset('assets/vendors/mdi/css/materialdesignicons.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/vendors/css/vendor.bundle.base.css') }}">
-    <!-- endinject -->
-    <!-- Plugin css for this page -->
-    <!-- End plugin css for this page -->
-    <!-- inject:css -->
-    <!-- endinject -->
+
     <!-- Layout styles -->
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
     <!-- End layout styles -->
+
     <link rel="shortcut icon" href="{{ asset('assets/images/favicon.ico') }}" />
 
-    <link rel="stylesheet" type="text/css"
-        href="//cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.12.1/b-2.2.3/b-html5-2.2.3/b-print-2.2.3/datatables.min.css" />
+    <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.12.1/b-2.2.3/b-html5-2.2.3/b-print-2.2.3/datatables.min.css" />
     <link href="{{ asset('vendor/select2/css/select2.min.css') }}" rel="stylesheet" />
 
+    <link href="{{ asset('vendor/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
+
+    <link href="//cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
 
 
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.3/dist/sweetalert2.min.css" rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.3/dist/sweetalert2.all.min.js"></script>
 
 </head>
 
@@ -325,42 +326,39 @@
     </div>
     <!-- container-scroller -->
 
-
-
     <!-- plugins:js -->
-    <script src="{{ asset('assets/vendors/js/vendor.bundle.base.js') }}"></script>
-    <!-- endinject -->
+	<script src="{{ asset('assets/vendors/js/vendor.bundle.base.js') }}"></script>
+	<!-- endinject -->
 
-    <!-- Plugin js for this page -->
-    <script src="{{ asset('assets/vendors/chart.js/Chart.min.js') }}"></script>
-    <script src="{{ asset('assets/js/jquery.cookie.js') }}" type="text/javascript"></script>
-    <!-- End plugin js for this page -->
+	<!-- Plugin js for this page -->
+	<script src="{{ asset('assets/vendors/chart.js/Chart.min.js') }}"></script>
+	<script src="{{ asset('assets/js/jquery.cookie.js') }}" type="text/javascript"></script>
+	<!-- End plugin js for this page -->
 
-    <!-- inject:js -->
-    <script src="{{ asset('assets/js/off-canvas.js') }}"></script>
-    <script src="{{ asset('assets/js/hoverable-collapse.js') }}"></script>
-    <script src="{{ asset('assets/js/misc.js') }}"></script>
-    <!-- endinject -->
+	<!-- inject:js -->
+	<script src="{{ asset('assets/js/off-canvas.js') }}"></script>
+	<script src="{{ asset('assets/js/hoverable-collapse.js') }}"></script>
+	<script src="{{ asset('assets/js/misc.js') }}"></script>
+	<!-- endinject -->
 
-    <!-- Custom js for this page -->
-    <script src="{{ asset('assets/js/dashboard.js') }}"></script>
-    <script src="{{ asset('assets/js/todolist.js') }}"></script>
-    <!-- End custom js for this page -->
+	<!-- Custom js for this page -->
+	<script src="{{ asset('assets/js/dashboard.js') }}"></script>
+	<script src="{{ asset('assets/js/todolist.js') }}"></script>
+	<!-- End custom js for this page -->
 
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
-    <script type="text/javascript"
-        src="//cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.12.1/b-2.2.3/b-html5-2.2.3/b-print-2.2.3/datatables.min.js">
-    </script>
+	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+	<script type="text/javascript" src="//cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.12.1/b-2.2.3/b-html5-2.2.3/b-print-2.2.3/datatables.min.js">
+	</script>
 
-    <script src="//cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+	<script src="//cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
-    <!-- Input-Mask -->
-    <script type="text/javascript" src="{{ asset('vendor/inputmask/js/jquery.inputmask.bundle.min.js') }}"></script>
+	<!-- Input-Mask -->
+	<script type="text/javascript" src="{{ asset('vendor/inputmask/js/jquery.inputmask.bundle.min.js') }}"></script>
 
-    <!-- summernote css/js -->
-    <link href="//cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
-    <script src="//cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
+	<!-- summernote css/js -->
+	<link href="//cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
+	<script src="//cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
 
 
 
@@ -373,6 +371,108 @@
 
         $(document).ready(function() {
 
+            hideModal('gerarTermoModal');
+            $("#gerar_termo").on('click', function() {
+
+                $("#gerarTermoModal").show('fade');
+                let id_retirada = $(this).attr('data-id_retirada');
+
+                $(".retirada-assinar-termo").on('click', function(e) {
+
+                    let tipo = $(this).attr('data-tipo');
+
+
+                    console.log(tipo)
+
+                    if (tipo == 'manual') {
+                        window.open(BASE_URL + '/ferramental/retirada/termo/' + id_retirada);
+                        return false;
+                    }
+
+                    if (tipo == 'digital') {
+
+                        console.log('Autenticar Digitalmente')
+
+                        Swal.fire({
+                            title: 'Atenção!',
+                            text: "Você está prestes a assinar um documento confidencial para liberação dos itens já descritos. Esta operação não poderá ser revertida.",
+                            icon: 'warning',
+                            footer: 'Em caso de dúvidas, entre em contato com seu gestor.',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Assinar Documento'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+
+                                let timerInterval
+                                Swal.fire({
+                                    title: 'Aguarde.',
+                                    html: 'Estamos autenticando o documento em <b></b> milisegundos.',
+                                    timer: 2000,
+                                    timerProgressBar: true,
+                                    didOpen: () => {
+                                        Swal.showLoading()
+                                        const b = Swal.getHtmlContainer()
+                                            .querySelector('b')
+                                        timerInterval = setInterval(() => {
+                                            b.textContent = Swal
+                                                .getTimerLeft()
+                                        }, 100)
+                                    },
+                                    willClose: () => {
+                                        clearInterval(timerInterval)
+                                    }
+                                }).then((result) => {
+
+                                    if (result.dismiss === Swal.DismissReason
+                                        .timer) {
+
+
+                                        // salvar autenticidade
+                                        $.ajax({
+                                            type: 'GET',
+                                            url: BASE_URL + '/ferramental/retirada/termo_assinar/' + id_retirada,
+                                            data: {},
+                                            success: function(result) {
+
+                                                if(result == 0){
+                                                    Swal.fire(
+                                                        'Eita!',
+                                                        'Algo deu errado na assinatura.',
+                                                        'error'
+                                                    )
+                                                }
+
+                                                Swal.fire({
+                                                    title: 'Sucesso!',
+                                                    text: "O Termo de responsabilidade foi assinado com sucesso!",
+                                                    icon: 'success',
+                                                    showCancelButton: true,
+                                                    confirmButtonColor: '#3085d6',
+                                                    cancelButtonColor: '#d33',
+                                                    cancelButtonText: 'Fechar',
+                                                    confirmButtonText: 'Baixar Documento'
+                                                }).then((result) => {
+                                                    if (result.isConfirmed){
+                                                        window.open(BASE_URL + '/ferramental/retirada/termo/' + id_retirada);
+                                                        hideModal("gerarTermoModal");    
+                                                    }
+                                                })
+                                            }
+                                        });
+                                    }
+                                })
+                            }
+                        })
+                    }
+                })
+            })
+
+            function hideModal(id_modal){
+                var modal = bootstrap.Modal.getOrCreateInstance(document.getElementById(id_modal));
+                modal.hide();
+            }
 
             $(".digitar-manualmente").on('click', function() {
                 let field = $(this).attr('data-field');
@@ -422,8 +522,6 @@
             });
 
             $(".select2").select2();
-            $("select").select2();
-
 
             $("#selecionar_empresa").on('change', function() {
                 let id_empresa = $(this).val();
@@ -444,8 +542,6 @@
                         alert(msg);
                     });
             })
-
-            // $("select").select2();
 
             $('.summernote').summernote({
                 height: 400
@@ -489,21 +585,9 @@
 
             })
 
-
-
             $(document).on('click', '.remove', function() {
                 $(this).closest('.item-lista').remove();
             })
-
-            $('#lista-simples').DataTable({});
-
-
-
-
-
-
-
-
 
         });
     </script>

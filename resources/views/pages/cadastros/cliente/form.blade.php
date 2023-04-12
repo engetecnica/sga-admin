@@ -36,7 +36,7 @@
                 @php
                 $action = isset($store) ? route('cadastro.cliente.update', $store->id) : route('cadastro.cliente.store');
                 @endphp
-                <form class="row g-3" method="post" enctype="multipart/form-data" action="{{ $action }}">
+                <form method="post" enctype="multipart/form-data" action="{{ $action }}">
                     @csrf
 
                     @if(Auth::user()->user_level == 1)

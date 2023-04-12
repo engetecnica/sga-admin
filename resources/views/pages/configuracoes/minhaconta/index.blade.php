@@ -23,7 +23,7 @@
         <div class="card">
             <div class="card-body">
 
-                <form class="row g-3" method="post" enctype="multipart/form-data" action="{{ route('minhaconta.store') }}">
+                <form method="post" enctype="multipart/form-data" action="{{ route('minhaconta.store') }}">
                     @csrf
                     <div class="col-md-6">
                         <label for="email" class="form-label">E-mail / Usuário</label>

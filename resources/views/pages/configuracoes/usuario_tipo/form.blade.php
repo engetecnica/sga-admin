@@ -26,7 +26,7 @@
             <div class="card-body">
 
                 @php $action = isset($store) ? route('usuario_tipo.update', $store->id) : route('usuario_tipo.store'); @endphp
-                <form class="row g-3" method="post" enctype="multipart/form-data" action="{{ $action }}">
+                <form method="post" enctype="multipart/form-data" action="{{ $action }}">
                     @csrf
 
                     @if(isset($store))

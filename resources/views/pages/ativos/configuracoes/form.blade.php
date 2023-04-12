@@ -36,7 +36,7 @@
                 @php
                 $action = isset($store) ? route('ativo.configuracao.update', $store->id) : route('ativo.configuracao.store');
                 @endphp
-                <form class="row g-3" method="post" enctype="multipart/form-data" action="{{ $action }}">
+                <form method="post" enctype="multipart/form-data" action="{{ $action }}">
                     @csrf
 
                     <div class="col-md-6">

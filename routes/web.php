@@ -22,6 +22,9 @@ use App\Http\Controllers\CadastroFuncionarioController;
 use App\Http\Controllers\AtivoConfiguracaoController;
 use App\Http\Controllers\AtivoExternoController;
 
+/* Ferramental */
+use App\Http\Controllers\FerramentalRetiradaController;
+use App\Http\Controllers\FerramentalRequisicaoController;
 
 /* Anexos */
 use App\Http\Controllers\AnexoController;
@@ -156,17 +159,44 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('admin/ativo/externo/lista/{id?}', [AtivoExternoController::class, 'searchAtivoLista'])->name('ativo.externo.lista');
 
 
+    /* Ferramental - Retirada */
+    Route::get('admin/ferramental', [FerramentalRetiradaController::class, 'index'])->name('ferramental');
+    Route::get(
+        'admin/ferramental/retirada',
+        [FerramentalRetiradaController::class, 'index']
+    )->name('ferramental.retirada');
+    Route::get('admin/ferramental/retirada/editar/{id?}', [FerramentalRetiradaController::class, 'edit'])->name('ferramental.retirada.editar');
+    Route::get('admin/ferramental/retirada/adicionar', [FerramentalRetiradaController::class, 'create'])->name('ferramental.retirada.adicionar');
+    Route::post('admin/ferramental/retirada/store', [FerramentalRetiradaController::class, 'store'])->name('ferramental.retirada.store');
+    Route::post('admin/ferramental/retirada/update/{id}', [FerramentalRetiradaController::class, 'update'])->name('ferramental.retirada.update');
+    Route::get('admin/ferramental/retirada/detalhes/{id}', [FerramentalRetiradaController::class, 'show'])->name('ferramental.retirada.detalhes');
+    Route::get('admin/ferramental/retirada/termo/{id}', [FerramentalRetiradaController::class, 'termo'])->name('ferramental.retirada.termo');
+    Route::get('admin/ferramental/retirada/termo_assinar/{id}', [FerramentalRetiradaController::class, 'termo_assinar'])->name('ferramental.retirada.termo_assinar');
+    Route::get('admin/ferramental/retirada/lista', [FerramentalRetiradaController::class, 'lista'])->name('ferramental.retirada.lista');
+    Route::get('admin/ferramental/retirada/devolver/{id}', [FerramentalRetiradaController::class, 'show'])->name('ferramental.retirada.devolver');
+    Route::get('admin/ferramental/retirada/termo_download/{id}', [FerramentalRetiradaController::class, 'termo_download'])->name('ferramental.retirada.download');
 
+    /* Ferramental - Requisição */
+    Route::get('admin/ferramental', [FerramentalRequisicaoController::class, 'index'])->name('ferramental');
+    Route::get('admin/ferramental/requisicao', [FerramentalRequisicaoController::class, 'index'])->name('ferramental.requisicao');
+    Route::get('admin/ferramental/requisicao/editar/{id?}', [FerramentalRequisicaoController::class, 'edit'])->name('ferramental.requisicao.editar');
+    Route::get('admin/ferramental/requisicao/adicionar', [FerramentalRequisicaoController::class, 'create'])->name('ferramental.requisicao.adicionar');
+    Route::post('admin/ferramental/requisicao/store', [FerramentalRequisicaoController::class, 'store'])->name('ferramental.requisicao.store');
+    Route::post('admin/ferramental/requisicao/update/{id}', [FerramentalRequisicaoController::class, 'update'])->name('ferramental.requisicao.update');
 
 
    
     /* Manipulação de Anexos */
     Route::post('admin/anexo/salvar_anexo',                       [AnexoController::class, 'store'])->name('anexo.salvar');
-    
+
+    Route::post('admin/anexo/upload', [AnexoController::class, 'upload'])->name('anexo.upload');
+
+
+
+
+
+
 
     /* API de Controles */
     Route::post('admin/api/selecionar_empresa',                   [ApiController::class, 'selecionar_empresa'])->name('api.selecionar_empresa');
-
-
 });
-

@@ -34,7 +34,7 @@
                 </div>
                 @endif            
 
-                <form class="row g-3" method="post" enctype="multipart/form-data" action="{{ route('sistema.store') }}">
+                <form method="post" enctype="multipart/form-data" action="{{ route('sistema.store') }}">
                     @csrf
 
                     <span class="badge badge-danger">Configurações Gerais</span>

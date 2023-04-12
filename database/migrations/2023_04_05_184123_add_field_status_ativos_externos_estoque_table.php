@@ -15,7 +15,7 @@ return new class extends Migration
     {
         //
         Schema::table('ativos_externos_estoque', function ($table) {
-            $table->unsignedBigInteger('status')->after('calibracao');
+            //$table->unsignedBigInteger('status')->after('calibracao');
            // $table->foreign('status')->references('id')->on('ativos_externos_estoque');
         });  
     }

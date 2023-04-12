@@ -4,6 +4,7 @@ namespace App\Helpers;
 
 use DateTime;
 use App\Models\AtivoExernoStatus;
+use App\Models\FerramentalRetiradaStatus;
 
 class Tratamento
 {
@@ -55,6 +56,17 @@ class Tratamento
     public static function getStatusEstoque($status){
         $pesquisaStatus = AtivoExernoStatus::find($status)->toArray();
         if($pesquisaStatus){
+            return $pesquisaStatus;
+        }
+
+        return null;
+    }
+
+    /* Get Status do Retirada */
+    public static function getStatusRetirada($status)
+    {
+        $pesquisaStatus = FerramentalRetiradaStatus::find($status)->toArray();
+        if ($pesquisaStatus) {
             return $pesquisaStatus;
         }
 

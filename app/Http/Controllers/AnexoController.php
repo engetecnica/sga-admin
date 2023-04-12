@@ -37,4 +37,9 @@ class AnexoController extends Controller
         return [];
     }
 
+
+    public function upload(Request $request)
+    {
+        dd($request->all());
+    }
 }

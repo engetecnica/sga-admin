@@ -37,7 +37,7 @@
                 @endif
 
                 @php $action = isset($store) ? route('usuario.update', $store->id) : route('usuario.store'); @endphp
-                <form class="row g-3" method="post" enctype="multipart/form-data" action="{{ $action }}">
+                <form method="post" enctype="multipart/form-data" action="{{ $action }}">
                     @csrf
 
                     <div class="col-12">

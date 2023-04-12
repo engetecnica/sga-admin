@@ -229,8 +229,4 @@ class AtivoExternoController extends Controller
         }
 
     }
-
-
-
-
 }

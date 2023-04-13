@@ -49,12 +49,12 @@
                         </select>
                     </div>
 
-                    <div class="col-md-6">
+                    <div class="col-md-6 mt-3">
                         <label for="titulo" class="form-label">Sub-categoria</label>
                         <input type="text" class="form-control" id="titulo" value="{{ old('titulo', @$store->titulo) }}" name="titulo">
                     </div>                    
 
-                    <div class="col-md-3">
+                    <div class="col-md-3 mt-3">
                         <label for="status" class="form-label">Status</label>
                         <select class="form-select" name="status" id="status">
                             <option value="Ativo" @php if(@$store->status=="Ativo") echo 'selected' @endphp>Ativo</option>
@@ -63,7 +63,7 @@
                     </div>
 
 
-                    <div class="col-12">
+                    <div class="col-12 mt-3">
                         <button type="submit" class="btn btn-block btn-gradient-primary btn-lg font-weight-medium">Salvar</button>
                         <a href="{{ route('ativo.configuracao') }}">
                             <button type="button" class="btn btn-block btn-gradient-danger btn-lg font-weight-medium">Cancelar</button>

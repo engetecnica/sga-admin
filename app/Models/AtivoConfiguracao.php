@@ -17,7 +17,7 @@ class AtivoConfiguracao extends Model
     static function get_ativo_configuracoes(){
         
         $configuracoes = new AtivoConfiguracao();
-        $configuracoes = $configuracoes->where('id_relacionamento', 0)->get();
+        $configuracoes = $configuracoes->where('id_relacionamento', 0)->orderBy('titulo', 'ASC')->get();
         foreach ($configuracoes as &$configs) {
 
             $configs->subcategorias = DB::table('ativos_configuracoes')

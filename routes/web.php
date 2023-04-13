@@ -196,5 +196,8 @@ Route::group(['middleware' => 'auth'], function () {
 
 
     /* API de Controles */
-    Route::post('admin/api/selecionar_empresa',                   [ApiController::class, 'selecionar_empresa'])->name('api.selecionar_empresa');
+    Route::post(
+        'admin/api/selecionar_obra',
+        [ApiController::class, 'selecionar_obra']
+    )->name('api.selecionar_obra');
 });

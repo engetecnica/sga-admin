@@ -13,10 +13,15 @@ use App\Models\{
     FerramentalRetiradaAutenticacao,
     FerramentalRetiradaItem
 };
+
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+
+use Illuminate\Support\Facades\{
+    Auth,
+    Storage
+};
+
 use RealRashid\SweetAlert\Facades\Alert;
-use Illuminate\Support\Facades\Storage;
 
 use App\Traits\{
     Configuracao,
@@ -36,7 +41,6 @@ class FerramentalRetiradaController extends Controller
      */
     public function index()
     {
-        //
         $lista = FerramentalRetirada::getRetirada();
         return view('pages.ferramental.retirada.index', compact('lista'));
     }
@@ -66,11 +70,13 @@ class FerramentalRetiradaController extends Controller
         //
         $request->validate(
             [
+                'id_obra' => 'required',
                 'id_funcionario' => 'required',
                 'id_ativo_externo' => 'required',
                 'devolucao_prevista' => 'required'
             ],
             [
+                'id_obra.required' => 'Qual obra você deseja efetivar esta retirada?',
                 'id_funcionario.required' => 'Você precisa selecionar o funcionário.',
                 'id_ativo_externo.required' => 'Nenhum item foi selecionado para retirada.',
                 'devolucao_prevista.required' => 'Preencha a data e hora para devolução.'

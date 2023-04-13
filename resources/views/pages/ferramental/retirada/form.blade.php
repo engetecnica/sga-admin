@@ -39,11 +39,17 @@
                     <form method="post" enctype="multipart/form-data" action="{{ $action }}">
                         @csrf
 
+                        @if(Auth::user()->user_level ==1)
                         <div class="row">
                             <div class="col-12">
                                 @include('components.fields.id_obra')
                             </div>
                         </div>
+                        @endif
+
+                        @if(Auth::user()->user_level >= 2)
+                            <input type="hidden" name="id_obra" id="id_obra" value="">
+                        @endif
 
                         <div class="row mt-3">
                             <div class="col-6">
@@ -70,18 +76,11 @@
                             </div>
                         </div>
 
-                        {{-- <div class="row">                        
-                        <div class="col-4 mt-3">
-                            <label for="pesquisar_item" class="form-label">Pesquisar Item</label>
-                                <input type="text" class="form-control" value="" name="pesquisar_item" id="pesquisar_item">
-                        </div>
-                        </div> --}}
-
                         <div class="row">
                             <div class="col-12 mt-3">
                                 <table class="table table-striped table-bordered table-hover">
                                     <thead>
-                                        <tr class="table-dark">
+                                        <tr class="">
                                             <th width="10%">Patrimônio</th>
                                             <th width="30%">Estoque na Obra</th>
                                             <th>Item</th>
@@ -111,15 +110,15 @@
                             </div>
                         </div>
 
-                        <div class="col-12 mt-3">
+                       
                             <button type="submit"
-                                class="btn btn-block btn-gradient-primary btn-lg font-weight-medium">Salvar</button>
+                                class="btn btn-gradient-primary font-weight-medium">Salvar</button>
 
                             <a href="{{ route('ferramental.retirada') }}">
                                 <button type="button"
-                                    class="btn btn-block btn-gradient-danger btn-lg font-weight-medium">Cancelar</button>
+                                    class="btn btn-gradient-danger font-weight-medium">Cancelar</button>
                             </a>
-                        </div>
+                        
                     </form>
                 </div>
             </div>

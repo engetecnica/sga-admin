@@ -55,8 +55,6 @@ class CadastroObraController extends Controller
             [
                 'id_empresa' => 'required',
                 'codigo_obra' => 'required|min:5',
-                //'razao_social' => 'required|min:5',
-                //'cnpj' => 'required',
                 'cep' => 'required',
                 'endereco' => 'required',
                 'numero' => 'required',
@@ -69,9 +67,7 @@ class CadastroObraController extends Controller
             ], 
             [
                 'id_empresa.required' => 'Selecione uma Empresa para vincular esta Obra',
-                //'razao_social.required' => 'É necessário preencher a Razão Social',
                 'codigo_obra.required' => 'É necessário digitar um código para esta Obra',
-                //'cnpj.required' => 'Este CNPJ não é válido',
                 'cep.required' => 'O CEP é indispensável',
                 'endereco.required' => 'Preencha o endereço corretamente',
                 'numero.required' => 'Preencha o número da residência',

@@ -40,6 +40,7 @@ class AnexoController extends Controller
             $anexo->id_item = $request->id_item ?? 0;
             $anexo->titulo = $request->titulo ?? null;
             $anexo->tipo = $request->file($input)->extension();
+            $anexo->arquivo = $nome_arquivo;
             $anexo->descricao = $request->detalhes ?? null;
             if ($anexo->save()) {
                 Alert::success('Muito bem ;)', 'Arquivo enviado com sucesso!');

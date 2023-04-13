@@ -3,8 +3,10 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use App\Models\ConfiguracaoModulo;
-use App\Models\CadastroEmpresa;
+use App\Models\{
+    ConfiguracaoModulo,
+    CadastroObra
+};
 
 class ViewServiceProvider extends ServiceProvider
 {
@@ -27,10 +29,12 @@ class ViewServiceProvider extends ServiceProvider
     {
         //
         view()->composer('*', function($view) {
-            $view->with(['modulos_permitidos' => ConfiguracaoModulo::get_modulos_permitidos(), 'empresas_lista' => CadastroEmpresa::all()]);
+            $view->with(
+                [
+                    'modulos_permitidos' => ConfiguracaoModulo::get_modulos_permitidos(),
+                    'obras_lista' => CadastroObra::all()
+                ]
+            );
         });
     }
-
-
-    
 }

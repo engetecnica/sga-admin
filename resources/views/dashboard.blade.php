@@ -11,26 +11,24 @@
             Dashboard
         @endif
     </title>
-    <!-- plugins:css -->
-    <link rel="stylesheet" href="{{ asset('assets/vendors/mdi/css/materialdesignicons.min.css') }}">
 
-    <!-- Layout styles -->
-    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
-    <!-- End layout styles -->
+    <!-- favicon -->
+	<link rel="shortcut icon" href="{{ asset('assets/images/favicon.ico') }}" />
+    
+    <!-- mdi-icons:css -->
+	<link rel="stylesheet" href="{{ asset('assets/components/css/materialdesignicons.min.css') }}">
 
-    <link rel="shortcut icon" href="{{ asset('assets/images/favicon.ico') }}" />
+    <!-- default-style:css -->
+	<link rel="stylesheet" href="{{ asset('assets/components/css/style.css') }}">
 
-    <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.12.1/b-2.2.3/b-html5-2.2.3/b-print-2.2.3/datatables.min.css" />
-    <link href="{{ asset('vendor/select2/css/select2.min.css') }}" rel="stylesheet" />
+    <!-- bootstrap:css-4.1.3 -->
+    <link href="{{ asset('assets/components/css/bootstrap.min.css') }}" rel="stylesheet" />
+	
+    <!-- select2:css -->
+    <link href="{{ asset('assets/components/css/select2.min.css') }}" rel="stylesheet" />   
 
-    <link href="{{ asset('vendor/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
-
-    <link href="//cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
-
-
-    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.3/dist/sweetalert2.min.css" rel="stylesheet">
-
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.3/dist/sweetalert2.all.min.js"></script>
+    <!-- datatables:css -->
+    <link href="{{ asset('assets/components/css/datatables.min.css') }}" rel="stylesheet" />
 
 </head>
 
@@ -55,21 +53,21 @@
                         <form class="d-flex align-items-center h-100" action="#">
                             <div class="input-group">
 
-                                <select class="form-control select2 select-2-width-400" id="selecionar_empresa"
-                                    name="selecionar_empresa">
+                                <select class="form-control select2 select-2-width-400 selecionar_obra" id="selecionar_obra
+                                    name="selecionar_obra">
                                     <option value="0">Todas as Obras</option>
-                                    @foreach ($empresas_lista as $empresa)
+                                    @foreach ($obras_lista as $obra)
                                         <?php
                                         $selected = null;
-                                        if (Session::has('empresa')) {
-                                            if (Session::get('empresa')['id'] == $empresa->id) {
+                                        if (Session::has('obra')) {
+                                            if (Session::get('obra')['id'] == $obra->id) {
                                                 $selected = 'selected';
                                             }
                                         }
                                         ?>
 
-                                        <option value="{{ $empresa->id }}" {{ $selected }}>
-                                            {{ $empresa->razao_social . ' - ' . $empresa->cnpj }}</option>
+                                        <option value="{{ $obra->id }}" {{ $selected }}>
+                                            {{ $obra->codigo_obra . ' - ' . $obra->razao_social }}</option>
                                     @endforeach
                                 </select>
 
@@ -324,44 +322,50 @@
         </div>
         <!-- page-body-wrapper ends -->
     </div>
-    <!-- container-scroller -->
+
+    <!-- jquery:js-3.1.1 -->
+    <script src="{{ asset('assets/components/js/jquery.min.js') }}"></script>
+
+        <!-- bootstrap:js-4.1.3 -->
+    <script src="{{ asset('assets/components/js/bootstrap.min.js') }}"></script>   
+
+
+    <!-- popper:js -->
+    <script src="{{ asset('assets/components/js/popper.min.js') }}"></script>
+
 
     <!-- plugins:js -->
-	<script src="{{ asset('assets/vendors/js/vendor.bundle.base.js') }}"></script>
+	<script src="{{ asset('assets/components/js/vendor.bundle.base.js') }}"></script>
 	<!-- endinject -->
-
-	<!-- Plugin js for this page -->
-	<script src="{{ asset('assets/vendors/chart.js/Chart.min.js') }}"></script>
-	<script src="{{ asset('assets/js/jquery.cookie.js') }}" type="text/javascript"></script>
+	
+    <!-- Plugin js for this page -->
+	<script src="{{ asset('assets/components/js/Chart.min.js') }}"></script>
+	<script src="{{ asset('assets/components/js/jquery.cookie.js') }}"></script>
 	<!-- End plugin js for this page -->
-
-	<!-- inject:js -->
-	<script src="{{ asset('assets/js/off-canvas.js') }}"></script>
-	<script src="{{ asset('assets/js/hoverable-collapse.js') }}"></script>
-	<script src="{{ asset('assets/js/misc.js') }}"></script>
+	
+    <!-- inject:js -->
+	<script src="{{ asset('assets/components/js/off-canvas.js') }}"></script>
+	<script src="{{ asset('assets/components/js/hoverable-collapse.js') }}"></script>
+	<script src="{{ asset('assets/components/js/misc.js') }}"></script>
 	<!-- endinject -->
-
-	<!-- Custom js for this page -->
-	<script src="{{ asset('assets/js/dashboard.js') }}"></script>
-	<script src="{{ asset('assets/js/todolist.js') }}"></script>
+	
+    <!-- Custom js for this page -->
+	<script src="{{ asset('assets/components/js/dashboard.js') }}"></script>
+	<script src="{{ asset('assets/components/js/todolist.js') }}"></script>
 	<!-- End custom js for this page -->
 
-	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
-	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
-	<script type="text/javascript" src="//cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.12.1/b-2.2.3/b-html5-2.2.3/b-print-2.2.3/datatables.min.js">
-	</script>
+    <!-- inputmask:js -->
+    <script src="{{ asset('assets/components/js/jquery.inputmask.min.js') }}"></script>
 
-	<script src="//cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <!-- summernote:css-js -->
+    <link href="{{ asset('assets/components/css/summernote-bs4.min.css') }}" rel="stylesheet">
+    <script src="{{ asset('assets/components/js/summernote-bs4.min.js') }}"></script>
 
-	<!-- Input-Mask -->
-	<script type="text/javascript" src="{{ asset('vendor/inputmask/js/jquery.inputmask.bundle.min.js') }}"></script>
+    <!-- select2:js -->
+    <script src="{{ asset('assets/components/js/select2.min.js') }}"></script>
 
-	<!-- summernote css/js -->
-	<link href="//cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
-	<script src="//cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
-
-
-
+    <!-- datatables:js -->
+    <script src="{{ asset('assets/components/js/datatables.min.js') }}"></script>
 
 
     <script>
@@ -369,9 +373,13 @@
         BASE_URL = '<?php echo route('admin'); ?>';
         var route = window.location.pathname;
 
-        $(document).ready(function() {
+        $(".select2").select2();
 
-            hideModal('gerarTermoModal');
+        console.log('Iniciando JQuery')
+
+
+        //$(document).ready(function() {
+
             $("#gerar_termo").on('click', function() {
 
                 $("#gerarTermoModal").show('fade');
@@ -469,11 +477,6 @@
                 })
             })
 
-            function hideModal(id_modal){
-                var modal = bootstrap.Modal.getOrCreateInstance(document.getElementById(id_modal));
-                modal.hide();
-            }
-
             $(".digitar-manualmente").on('click', function() {
                 let field = $(this).attr('data-field');
                 console.log(field)
@@ -521,17 +524,17 @@
                 } //end if.
             });
 
-            $(".select2").select2();
+            $(".selecionar_obra").on('change', function() {
+                let id_obra = $(this).val();
 
-            $("#selecionar_empresa").on('change', function() {
-                let id_empresa = $(this).val();
+                console.log('Selecionando Obra')
 
                 $.ajax({
-                        url: "{{ route('api.selecionar_empresa') }}",
+                        url: "{{ route('api.selecionar_obra') }}",
                         type: 'post',
                         data: {
                             "_token": "{{ csrf_token() }}",
-                            id_empresa: id_empresa,
+                            id_obra: id_obra,
                             route: route
                         }
                     })
@@ -554,19 +557,7 @@
                 }
             });
 
-            $(".money").inputmask('currency', {
-                "autoUnmask": true,
-                radixPoint: ",",
-                groupSeparator: ".",
-                allowMinus: false,
-                prefix: 'R$ ',
-                digits: 2,
-                digitsOptional: false,
-                rightAlign: true,
-                unmaskAsNumber: true
-            });
-
-            $('[data-toggle="tooltip"]').tooltip();
+            $(".money").inputmask({ mask: "99-999-99"});
 
             $('.celular').inputmask('(99) 99999-9999');
             $('.cpf').inputmask('999.999.999-99');
@@ -589,7 +580,7 @@
                 $(this).closest('.item-lista').remove();
             })
 
-        });
+        //});
     </script>
 
 </body>

@@ -4,7 +4,7 @@ use Illuminate\Http\Request;
 use Hash;
 use Session;
 use Illuminate\Support\Facades\Auth;
-use App\Models\CadastroEmpresa;
+use App\Models\CadastroObra;
 use App\Traits\FuncoesAdaptadas;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -33,18 +33,19 @@ class CustomAuthController extends Controller
         $credentials = $request->only('email', 'password');
         if (Auth::attempt($credentials)) {
 
-            $id_empresa = (Auth::user()->id_empresa) ?? 0;
-            if($id_empresa == 0){
-                $empresa = [
+            $id_obra = (Auth::user()->id_obra) ?? 0;
+            if ($id_obra == 0) {
+                $obra = [
                     'id' => 0,
-                    'nome' => 'Todas as Empresas (Master)'
+                    'nome' => 'Todas as Empresas'
                 ];
             } else {
-                $empresa = CadastroEmpresa::find($id_empresa);
+                $empresa = CadastroObra::find($id_obra);
             }
 
-            $request->session()->put('empresa',
-                $empresa
+            $request->session()->put(
+                'obra',
+                $obra
             );
 
             Alert::success('Seja bem vindo ;)', 'Você acabou de fazer o login no sistema!');

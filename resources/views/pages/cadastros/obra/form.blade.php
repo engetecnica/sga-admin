@@ -41,7 +41,7 @@
 
                         <div class="row">
                             <div class="col-md-9">
-                                
+                                @include('components.fields.id_empresa')
                             </div>
 
                             <div class="col-md-3">
@@ -97,7 +97,7 @@
                             </div>
                             <div class="col-md-3">
                                 <label for="estado" class="form-label">Estado</label>
-                                <select name="estado" id="estado" class="form-select">
+                                <select name="estado" id="estado" class="form-select select2">
                                     <option value="">Selecione o Estado</option>
                                     @foreach ($estados as $sigla => $estado)
                                         <option value="{{ $sigla }}"

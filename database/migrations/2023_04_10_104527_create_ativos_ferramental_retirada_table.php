@@ -52,8 +52,11 @@ return new class extends Migration
             $table->unsignedBigInteger('id_funcionario');
             $table->foreign('id_funcionario')->references('id')->on('funcionarios');
 
+            $table->dateTime('termo_responsabilidade_gerado', $precision = 0)->nullable()->default(null);
+
             $table->dateTime('data_devolucao_prevista', $precision = 0)->nullable();
             $table->dateTime('data_devolucao', $precision = 0)->nullable();
+            $table->longText('devolucao_observacoes')->after('data_devolucao')->nullable()->default(null);
 
             $table->unsignedBigInteger('status');
             $table->foreign('status')->references('id')->on('ativos_ferramental_status');

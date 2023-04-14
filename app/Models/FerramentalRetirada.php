@@ -20,19 +20,16 @@ class FerramentalRetirada extends Model
                 'funcionarios.nome as funcionario',
                 'funcionarios.matricula as funcionario_matricula',
                 'obras.codigo_obra',
-                'obras.razao_social',
-                'ativos_ferramental_retirada_autenticacao.termo_responsabilidade'
+            'obras.razao_social'
             )
             ->join("users", "users.id", "=", "ativos_ferramental_retirada.id_usuario")
             ->join("funcionarios", "funcionarios.id", "=", "ativos_ferramental_retirada.id_funcionario")
             ->join("obras", "obras.id", "=", "ativos_ferramental_retirada.id_obra")
-            ->join("ativos_ferramental_retirada_autenticacao", "ativos_ferramental_retirada_autenticacao.id_retirada", "=", "ativos_ferramental_retirada.id")
-            // ->groupBy('ativos_ferramental_retirada_autenticacao.id_retirada')
             ->get();
     }
 
     /** 
-     * Retirada de Itens de Acordo com o int(id_requisicao)
+     * Retirada de Itens de Acordo com o int(id_retirada)
      */
     static function getRetiradaItems(int $id)
     {
@@ -74,12 +71,11 @@ class FerramentalRetirada extends Model
                 ->where('id_modulo', '18') // Retirada
                 ->get()
                 ->first();
-
-            /** Verifica se o termo já foi assinado digitalmente */
-            $retirada->autenticado = DB::table('ativos_ferramental_retirada_autenticacao')->where('id_retirada', $id)->get()->first();
         }
-        
+
 
         return $retirada;
     }
+
+
 }

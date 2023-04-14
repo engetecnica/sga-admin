@@ -4,14 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\{
     Anexo,
+    AtivoExterno,
     AtivoExternoEstoque,
     FerramentalRetirada,
     FerramentalRetiradaItens,
     CadastroFuncionario,
     CadastroObra,
-    FerramentalRetiradaAutenticacao as Autenticar,
-    FerramentalRetiradaAutenticacao,
-    FerramentalRetiradaItem
+    FerramentalRetiradaItem,
+    FerramentalRetiradaItemDevolver
 };
 
 use Illuminate\Http\Request;
@@ -187,78 +187,33 @@ class FerramentalRetiradaController extends Controller
         /** Nome do Arquivo */
         $termo_responsabilidade = 'termo_retirada_' . date("dmYHis") . '.pdf';
 
-        /** Salvar autenticação (upload do termo) */
-        $autenticar = new Autenticar();
-        $autenticar->id_retirada = $id ?? null;
-        $autenticar->id_usuario = Auth::user()->id ?? 1;
-        $autenticar->id_funcionario = $detalhes->id_funcionario ?? null;
-        $autenticar->termo_responsabilidade = $termo_responsabilidade;
-        $autenticar->save();
+        $termo = FerramentalRetirada::find($id);
+        $termo->termo_responsabilidade_gerado = now();
+        $termo->save();
+
+        // /** Salvar autenticação (upload do termo) */
+        // $autenticar = new Autenticar();
+        // $autenticar->id_retirada = $id ?? null;
+        // $autenticar->id_usuario = Auth::user()->id ?? 1;
+        // $autenticar->id_funcionario = $detalhes->id_funcionario ?? null;
+        // $autenticar->termo_responsabilidade = $termo_responsabilidade;
+        // $autenticar->save();
 
         /** Upload do Termo Automatico */
-        $pdf = PDF::loadView('components.termo.termo_retirada', compact('detalhes'));
-        $content = $pdf->download()->getOriginalContent();
-        Storage::put('public/uploads/termos_retirada/' . $termo_responsabilidade, $content);
+        // $pdf = PDF::loadView('components.termo.termo_retirada', compact('detalhes'));
+        // $content = $pdf->download()->getOriginalContent();
+        // Storage::put('public/uploads/termos_retirada/' . $termo_responsabilidade, $content);
 
         /** Gerar PDF e mostra na tela */
         $pdf = PDF::loadView('components.termo.termo_retirada', compact('detalhes'));
         return $pdf->stream($termo_responsabilidade, array("Attachment" => false));
     }
 
-    /** Assinatura do Termo */
-    public function termo_assinar(int $id)
-    {
-
-        $autenticado = FerramentalRetiradaAutenticacao::find($id);
-        if (!empty($autenticado)) {
-            return 2;
-        }
-
-        $detalhes = FerramentalRetirada::getRetiradaItems($id);
-        $autenticar = new Autenticar();
-        $autenticar->id_retirada = $id ?? null;
-        $autenticar->id_usuario = Auth::user()->id ?? 1;
-        $autenticar->id_funcionario = $detalhes->id_funcionario ?? null;
-        if ($autenticar->save()) {
-
-            /**
-             * Marcar itens como "Entregue"
-             */
-            $entregue = $detalhes->itens ?? false;
-
-            if ($entregue) {
-
-                // Atualiza Retirada
-                $retirada = FerramentalRetirada::find($id);
-                $retirada->status = 2;
-                $retirada->save();
-
-                // Atualiza Item da Retirada
-                foreach ($entregue as $ret) {
-                    $retirada_item = FerramentalRetiradaItem::find($ret->id_retirada);
-                    $retirada_item->status = 2; // Entregue
-                    $retirada_item->save();
-                }
-
-                // Atualiza Estoque
-                foreach ($entregue as $ent) {
-                    $estoque = AtivoExternoEstoque::find($ent->id_ativo_externo);
-                    $estoque->status = 6; // Em Operação
-                    $estoque->save();
-                }
-            }
-
-
-            return 1;
-        }
-
-        return 0;
-    }
 
     /** Download do Termo Atual */
     public function termo_download(int $id)
     {
-        $termo_responsabilidade = (FerramentalRetirada::getRetiradaItems($id)->autenticado->termo_responsabilidade) ?? null;
+        $termo_responsabilidade = (FerramentalRetirada::getRetiradaItems($id)->anexo->arquivo) ?? null;
 
         if ($termo_responsabilidade === null) {
             Alert::error('Atenção', 'Não foi possível localizar o arquivo solicitado.');
@@ -301,23 +256,24 @@ class FerramentalRetiradaController extends Controller
                     }
 
                     /** Gerar Termo */
-                    if ($row->status == "1" && !$row->termo_responsabilidade) {
+                if ($row->status == "1" && !$row->termo_responsabilidade_gerado) {
                         $dropdown .= '<li><a class="dropdown-item" href="' . route('ferramental.retirada.termo', $row->id) . '"><i class="mdi mdi-access-point-network"></i> Gerar Termo</a></li>';
                     }
 
                     /** Baixar Termo */
-                    if ($row->status == "2" or $row->status == "3" && $row->termo_responsabilidade) {
+                if ($row->status == "2" or $row->status == "3" && $row->termo_responsabilidade_gerado) {
                         $dropdown .= '<li><a class="dropdown-item" href="' . route('ferramental.retirada.termo', $row->id) . '"><i class="mdi mdi-download"></i> Baixar Termo</a></li>';
                     }
 
+
+                if ($row->status == "1" && !$row->termo_responsabilidade_gerado) {
+
                     /** Modificar Retirada */
-                    if ($row->status == "1") {
-                        $dropdown .= '<li><a class="dropdown-item" href="#"><i class="mdi mdi-pencil"></i> Modificar Retirada</a></li>';
-                    }
+                    $dropdown .= '<li><a class="dropdown-item" href="#"><i class="mdi mdi-pencil"></i> Modificar Retirada</a></li>';
 
                     /** Cancelar Retirada */
-                    if ($row->status == "1") {
-                        $dropdown .= '<li><a class="dropdown-item" href="#"><i class="mdi mdi-cancel"></i> Cancelar Retirada</a></li>';
+                    $dropdown .= '<li><a class="dropdown-item" href="#"><i class="mdi mdi-cancel"></i> Cancelar Retirada</a></li>';
+
                     }
 
                     $dropdown .= '<li><a class="dropdown-item" href="' . route('ferramental.retirada.detalhes', $row->id) . '"><i class="mdi mdi-minus"></i> Detalhes</a></li> </ul></div>';
@@ -326,6 +282,67 @@ class FerramentalRetiradaController extends Controller
                 })
                 ->rawColumns(['acoes', 'status'])
                 ->make(true);
+        }
+    }
+
+    /**
+     * Devolver Itens
+     * getRetiradaItems id_retirada
+     */
+    public function devolver(int $id)
+    {
+        if (!$id) {
+            Alert::error('Atenção', 'Não foi possível localizar esta Retirada.');
+            return redirect(route('ferramental.retirada'));
+        }
+
+        $detalhes = FerramentalRetirada::getRetiradaItems($id);
+
+        if (!$detalhes) {
+            Alert::error('Atenção', 'Não foi possível localizar esta Retirada.');
+            return redirect(route('ferramental.retirada'));
+        }
+
+        return view('pages.ferramental.retirada.devolver', compact('detalhes'));
+    }
+
+    /**
+     * Salvar devolução
+     */
+
+    public function devolver_salvar(Request $request)
+    {
+
+        if ($request->id_ativo_externo) {
+            foreach ($request->id_ativo_externo as $key => $value) {
+
+                dd($request->id_ativo_externo);
+
+
+
+
+                /** Salvar Retirada Item */
+                $item = FerramentalRetiradaItemDevolver::find($key);
+                $item->status = $value ?? 1;
+                $item->save();
+
+                /** Salvar Retirada */
+                $retirada = FerramentalRetirada::find($item->id_retirada);
+                $retirada->devolucao_observacoes = $request->observacoes ?? null;
+                $retirada->data_devolucao = now();
+                $retirada->updated_at = now();
+                $retirada->status = 2;
+                $retirada->save();
+
+                /** Salvar Ativo Externo */
+                $estoque = AtivoExternoEstoque::find($item->id_ativo_externo);
+                $estoque->status = $status;
+                $estoque->save();
+            }
+
+
+
+            echo "Salvou essa porra.";
         }
     }
 }

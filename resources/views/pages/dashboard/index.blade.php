@@ -1,4 +1,4 @@
-@extends('dashboard')
+<!-- @extends('dashboard')
 @section('title', 'Dashboard')
 @section('content')
 
@@ -158,4 +158,4 @@
 
 
 
-@endsection
+@endsection -->

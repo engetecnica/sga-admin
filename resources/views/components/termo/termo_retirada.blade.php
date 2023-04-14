@@ -204,10 +204,7 @@
                         <p><b>Este termo foi gerado através da Plataforma SGA-E</b></p>
                         <p>{{ date('d/m/Y H:i:s') }}</p>
 
-                        @if($detalhes->autenticado)
-                            <div style="margin-top: 50px;"></div>
-                            <h4 style="color:red !important">ESTE DOCUMENTO ESTÁ AUTENTICADO: {{ Tratamento::FormatarData($detalhes->autenticado->created_at) }}</h4>
-                        @endif
+                        
 
                     </div>
                 </div>

@@ -51,8 +51,7 @@
                                     </button>
                                 </div>
 
-                                @if($detalhes->status==1)
-                                    @if(!empty($detalhes->autenticado->termo_responsabilidade))
+                                @if($detalhes->status==1 && !$detalhes->termo_responsabilidade_gerado)
                                     <div class="mb-3 mt-3 btn-align-float">
                                         <a href="javascript:void(0)">
                                             <button class="btn btn-warning" id="gerar_termo"
@@ -62,22 +61,9 @@
                                             </button>
                                         </a>
                                     </div>
-                                    @endif
                                 @endif
 
-                               
-                                @if(!empty($detalhes->autenticado->termo_responsabilidade))
- 
-                                <div class="mb-3 mt-3 btn-align-float">
-                                    <a href="">
-                                        <button class="btn btn-secondary">
-                                            <span class="mdi mdi-download"></span> Baixar Termo
-                                        </button>
-                                    </a>
-                                </div>
-                                @endif
-
-                                @if($detalhes->status==1 && empty($detalhes->anexo))
+                                @if($detalhes->status==1 && $detalhes->termo_responsabilidade_gerado && empty($detalhes->anexo))
                                 <div class="mb-3 mt-3 btn-align-float">
                                     <a href="javascript:void(0)" id="enviar_anexo"
                                                 data-id_retirada="{{ $detalhes->id }}" data-bs-toggle="modal"
@@ -88,7 +74,16 @@
                                     </a>
                                 </div>
                                 @endif
-                                
+
+                                @if(!empty($detalhes->anexo))
+                                <div class="mb-3 mt-3 btn-align-float">
+                                    <a href="{{ route('ferramental.retirada.download', $detalhes->id) }}">
+                                        <button class="btn btn-secondary">
+                                            <span class="mdi mdi-download"></span> Baixar Termo
+                                        </button>
+                                    </a>
+                                </div>
+                                @endif
 
                                 <table class="table table-bordered table-striped table-houver">
                                     <thead>
@@ -145,7 +140,7 @@
                                             <td>{{ $detalhes->anexo->titulo }}</td>
                                             <td>{{ $detalhes->anexo->descricao }}</td>
                                             <td>{{ Tratamento::FormatarData($detalhes->anexo->created_at) }}</td>
-                                            <td><button class="btn btn-danger">Baixar Arquivo</button></td>
+                                            <td><button class="btn btn-danger btn-sm">Baixar Arquivo</button></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -164,7 +159,7 @@
 <!-- Modal -->
 <div class="modal fade" id="gerarTermoModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="gerarTermoLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-xl modal-dialog-scrollable">
+    <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="gerarTermoLabel">Assinar Termo de Retirada</h5>
@@ -176,7 +171,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                 <button type="button" class="btn btn-warning retirada-assinar-termo" data-tipo="manual" >Assinatura Manual</button>
-                <button type="button" class="btn btn-primary retirada-assinar-termo" data-tipo="digital">Assinatura Digital</button>
+                {{-- <button type="button" class="btn btn-primary retirada-assinar-termo" data-tipo="digital">Assinatura Digital</button> --}}
             </div>
         </div>
     </div>

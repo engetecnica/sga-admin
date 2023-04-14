@@ -11,7 +11,7 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 use App\Traits\{Api, FuncoesAdaptadas};
 
-
+use Session;
 
 class ApiController extends Controller
 {
@@ -21,7 +21,7 @@ class ApiController extends Controller
     /* Selecionar Obra */
     public function selecionar_obra(Request $Request)
     {
-        if(Auth::user()->user_level==1){
+        if (Session::get('usuario_vinculo')['id_nivel'] <= 2) {
 
             Log::info('Trocou para obra ' . $Request->id_obra);
 

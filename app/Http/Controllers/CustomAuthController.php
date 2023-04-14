@@ -4,7 +4,12 @@ use Illuminate\Http\Request;
 use Hash;
 use Session;
 use Illuminate\Support\Facades\Auth;
-use App\Models\CadastroObra;
+
+use App\Models\{
+    CadastroObra,
+    UsuariosVinculos
+};
+
 use App\Traits\FuncoesAdaptadas;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -29,24 +34,36 @@ class CustomAuthController extends Controller
             'email' => 'required',
             'password' => 'required',
         ]);
-   
-        $credentials = $request->only('email', 'password');
+
+        $credentials = $request->only('email', 'password');   
+
         if (Auth::attempt($credentials)) {
 
-            $id_obra = (Auth::user()->id_obra) ?? 0;
-            if ($id_obra == 0) {
-                $obra = [
-                    'id' => 0,
-                    'nome' => 'Todas as Empresas'
-                ];
-            } else {
-                $empresa = CadastroObra::find($id_obra);
+            /** Verificação de Vínculo de Usuário */
+            $usuario_vinculo = UsuariosVinculos::find(Auth::user()->id)->toArray();
+            $request->session()->put("usuario_vinculo", $usuario_vinculo);
+
+            if (!$usuario_vinculo) {
+                Alert::error('Eita!', 'Infelizmente não encontramos suas credenciais e não podemos permitir seu aceso!');
+                return redirect()->intended('login');
             }
 
-            $request->session()->put(
-                'obra',
-                $obra
-            );
+            $id_obra = $usuario_vinculo->id_obra ?? null;
+
+            if ($id_obra == null) {
+                $obra_detalhes = [
+                    'obra' => [
+                        'id' => null,
+                        'razao_social' =>
+                        'SGA Todas as Obras',
+                        'codigo_obra' => 'SGAE-OBRA-ADM'
+                    ]
+                ];
+            } else {
+                $obra_detalhes = CadastroObra::find($id_obra);
+            }
+
+            $request->session()->put("obra", $obra_detalhes);
 
             Alert::success('Seja bem vindo ;)', 'Você acabou de fazer o login no sistema!');
             return redirect()->intended('dashboard');

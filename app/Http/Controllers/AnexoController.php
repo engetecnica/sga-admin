@@ -3,6 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Anexo;
+use App\Models\{
+    FerramentalRetirada,
+    FerramentalRetiradaItem,
+    AtivoExternoEstoque
+};
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -42,9 +48,34 @@ class AnexoController extends Controller
             $anexo->tipo = $request->file($input)->extension();
             $anexo->arquivo = $nome_arquivo;
             $anexo->descricao = $request->detalhes ?? null;
+
             if ($anexo->save()) {
+
+                $detalhes = FerramentalRetirada::getRetiradaItems($request->id_item);
+                if ($detalhes->itens) {
+
+                    // Atualiza Retirada
+                    $retirada = FerramentalRetirada::find($request->id_item);
+                    $retirada->status = 2;
+                    $retirada->save();
+
+                    // Atualiza Item da Retirada
+                    foreach ($detalhes->itens as $ret) {
+                        $retirada_item = FerramentalRetiradaItem::find($ret->id_retirada);
+                        $retirada_item->status = 2; // Entregue
+                        $retirada_item->save();
+                    }
+
+                    // Atualiza Estoque
+                    foreach ($detalhes->itens as $ent) {
+                        $estoque = AtivoExternoEstoque::find($ent->id_ativo_externo);
+                        $estoque->status = 6; // Em Operação
+                        $estoque->save();
+                    }
+                }
                 Alert::success('Muito bem ;)', 'Arquivo enviado com sucesso!');
                 return redirect(route('ferramental.retirada.detalhes', $request->id_item));
+                
             } else {
                 Alert::error('Atenção', 'Não foi possível processar sua solicitação de envio. Fale com seu supervisor.');
                 return redirect(route('ferramental.retirada.detalhes', $request->id_item));

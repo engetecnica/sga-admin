@@ -49,35 +49,6 @@
                     <span class="mdi mdi-menu"></span>
                 </button>
 
-
-                <div class="search-field d-none d-md-block">
-                    <form class="d-flex align-items-center h-100" action="#">
-                        <div class="input-group">
-                            @if(Session::get('usuario_vinculo')['id_nivel'] == 2)
-                            @csrf
-
-                            <select class="select2 selecionar_obra">
-
-                                @if(Session::has('obra') && !Session::get('usuario_vinculo')['id_obra'])
-                                <option value="">Administrador - Todas as Obras</option>
-                                @endif
-
-                                @foreach($obras_lista as $obra)
-
-                                <option value="{{ $obra->id }}" @if(Session::get('obra')['id']==$obra->id) selected="selected" @endif>
-                                    {{ $obra->codigo_obra . ' - ' . $obra->razao_social }}
-                                </option>
-                                @endforeach
-                            </select>
-                            @endif
-                        </div>
-                    </form>
-                </div>
-
-
-
-
-
                 <ul class="navbar-nav navbar-nav-right">
                     <li class="nav-item nav-profile dropdown">
                         <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">

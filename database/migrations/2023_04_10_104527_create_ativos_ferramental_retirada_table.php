@@ -56,7 +56,7 @@ return new class extends Migration
 
             $table->dateTime('data_devolucao_prevista', $precision = 0)->nullable();
             $table->dateTime('data_devolucao', $precision = 0)->nullable();
-            $table->longText('devolucao_observacoes')->after('data_devolucao')->nullable();
+            $table->longText('devolucao_observacoes')->nullable();
 
             $table->unsignedBigInteger('status');
             $table->foreign('status')->references('id')->on('ativos_ferramental_status');

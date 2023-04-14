@@ -20,8 +20,7 @@ class UserSeeder extends Seeder
             [
                 'name' => 'Super Administrador',
                 'email' => "master@sga-e.eng.br",
-                'password' => bcrypt('123456789'),
-                'user_level' => 1
+                'password' => bcrypt('123456789')
             ]
         );
 

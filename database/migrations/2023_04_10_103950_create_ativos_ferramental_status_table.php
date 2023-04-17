@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ativo_ferramental_status');
+        Schema::dropIfExists('ativos_ferramental_status');
     }
 };

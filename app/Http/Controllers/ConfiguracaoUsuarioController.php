@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ConfiguracaoUsuario;
 use App\Models\CadastroEmpresa;
+use App\Models\CadastroUsuariosVinculo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\ConfiguracaoUsuarioNiveis as Niveis;
@@ -17,16 +18,24 @@ class ConfiguracaoUsuarioController extends Controller
     {
         //
         $permite_excluir = 0;
-        $lista = ConfiguracaoUsuario::select("usuarios_niveis.titulo as nivel", "users.*")
-                                            ->join(
-                                                    "usuarios_niveis", 
-                                                    "usuarios_niveis.id", 
-                                                    "=", 
-                                                    "users.user_level"
-                                            )
-                                            ->orderBy('name', 'ASC')
-                                            ->get();
-        
+        $lista = ConfiguracaoUsuario::select(
+            "usuarios_niveis.titulo as nivel",
+            "users.*"
+        )
+            ->join(
+                "usuarios_vinculos",
+                "usuarios_vinculos.id_usuario",
+                "=",
+                "users.id",
+            )
+            ->join(
+                "usuarios_niveis",
+                "usuarios_niveis.id",
+                "=",
+            "usuarios_vinculos.id_nivel",
+        )->orderBy('name', 'ASC')
+        ->get();
+
         return view('pages.configuracoes.usuario.index', compact('lista', 'permite_excluir'));
     }
 
@@ -39,8 +48,9 @@ class ConfiguracaoUsuarioController extends Controller
     {
         //
         $usuario_niveis = Niveis::all();
-        $empresas = CadastroEmpresa::all();
-        return view('pages.configuracoes.usuario.form', compact('usuario_niveis', 'empresas'));
+        $funcionarios = [];
+        $obras = [];
+        return view('pages.configuracoes.usuario.form', compact('usuario_niveis', 'funcionarios', 'obras'));
     }
 
     /**
@@ -56,15 +66,13 @@ class ConfiguracaoUsuarioController extends Controller
         $request->validate(
             [
                 'nome' => 'required',
-                'id_empresa' => 'required',
                 'password' => 'required|min:5',
                 'password_confirm' => 'required|min:5|same:password',
                 'email' => 'required|email|unique:users,email',
                 'nivel' => 'required'
-            ], 
+            ],
             [
                 'nome.required' => 'O nome do usuário deve ser preenchido corretamente',
-                'id_empresa.required' => 'Selecione a empresa para vincular.',
                 'password.required' => 'É necessário digitar uma senha que contenha no mínimo 5 caracteres',
                 'password_confirm.required' => 'A confirmação de senha é necessária',
                 'password_confirm.same' => 'As senhas digitadas não são iguais',
@@ -73,15 +81,20 @@ class ConfiguracaoUsuarioController extends Controller
         );
 
         $user = new ConfiguracaoUsuario();
-        $user->id_empresa = $request->id_empresa;
         $user->name = $request->nome;
         $user->password = Hash::make($request->password);
         $user->email = $request->email;
-        $user->user_level = ($request->nivel) ? $request->nivel : Auth::user()->user_level;
-        $user->save();
+        if ($user->save()) {
+            $user_vinculo = new CadastroUsuariosVinculo();
+            $user_vinculo->id_usuario = $user->id;
+            $user_vinculo->id_obra  = $request->id_obra ?? null;
+            $user_vinculo->id_nivel  = $request->nivel ?? 1;
+            $user_vinculo->status = $request->status ?? 1;
+            $user_vinculo->save();
+        }
 
         Alert::success('Muito bem ;)', 'Um registro foi adicionado com sucesso!');
-        return redirect(route('usuario'));       
+        return redirect(route('usuario'));
     }
 
     /**
@@ -101,22 +114,22 @@ class ConfiguracaoUsuarioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id=null)
+    public function edit($id = null)
     {
 
         $store = ConfiguracaoUsuario::find($id);
         $usuario_niveis = Niveis::all();
         $empresas = CadastroEmpresa::all();
 
-            if(!$id or !$store):  
-                Alert::error('Que Pena!', 'Esse registro não foi encontrado.');
-                return redirect(route('usuario')); 
-            endif;
+        if (!$id or !$store) :
+            Alert::error('Que Pena!', 'Esse registro não foi encontrado.');
+            return redirect(route('usuario'));
+        endif;
 
-            if($id == Auth::user()->id): 
-                Alert::error('Que Pena!', 'Você não poderá modificar seu próprio usuário!');
-                return redirect(route('usuario'));  
-            endif;
+        if ($id == Auth::user()->id) :
+            Alert::error('Que Pena!', 'Você não poderá modificar seu próprio usuário!');
+            return redirect(route('usuario'));
+        endif;
 
         return view('pages.configuracoes.usuario.form', compact('store', 'usuario_niveis', 'empresas'));
     }
@@ -134,15 +147,15 @@ class ConfiguracaoUsuarioController extends Controller
         $user = ConfiguracaoUsuario::find($id);
         $user->name = $request->nome;
         $user->email = $request->email;
-        
-        if(Auth::user()->user_level==1){
+
+        if (Auth::user()->user_level == 1) {
             $user->user_level = $request->nivel;
         }
 
         $user->id_empresa = $request->id_empresa;
 
-        if(isset($request->password) && isset($request->password_confirm)){
-            if($request->password === $request->password_confirm){
+        if (isset($request->password) && isset($request->password_confirm)) {
+            if ($request->password === $request->password_confirm) {
                 $user->password = Hash::make($request->password);
             } else {
                 Alert::error('Erro', 'As senhas digitadas devem ser iguais.');
@@ -153,7 +166,7 @@ class ConfiguracaoUsuarioController extends Controller
         $user->save();
 
         Alert::success('Muito bem ;)', 'Registro modificado com sucesso.');
-        return redirect(route('usuario'));         
+        return redirect(route('usuario'));
     }
 
     /**

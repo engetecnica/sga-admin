@@ -326,6 +326,17 @@
         var route = window.location.pathname;
 
 
+
+
+        $(document).ready(function() {
+            $('#lista-simples').DataTable({
+                language: {
+                    search: 'Buscar informação da Lista',
+                    url: 'https://cdn.datatables.net/plug-ins/1.11.5/i18n/pt-BR.json',
+                }
+            });
+        });
+
         $(document).ready(function() {
 
             //toastr.error('Teste')
@@ -520,8 +531,16 @@
             }
         });
 
-        $(".money").inputmask({
-            mask: "99-999-99"
+        $(".money").inputmask('currency', {
+            "autoUnmask": true,
+            radixPoint: ",",
+            groupSeparator: ".",
+            allowMinus: false,
+            prefix: 'R$ ',
+            digits: 2,
+            digitsOptional: false,
+            rightAlign: true,
+            unmaskAsNumber: true
         });
 
         $('.celular').inputmask('(99) 99999-9999');

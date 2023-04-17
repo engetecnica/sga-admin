@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CustomAuthController;
 use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Facades\Artisan;
+
 
 /* Configurações */
 use App\Http\Controllers\ConfiguracaoController;
@@ -201,4 +203,22 @@ Route::group(['middleware' => 'auth'], function () {
         'admin/api/selecionar_obra',
         [ApiController::class, 'selecionar_obra']
     )->name('api.selecionar_obra');
+
+    /** 
+     * Configurações Internas da Aplicação
+     * 
+     * 1.0 - Função para remover cache
+     * 2.0 - Migration Refresh
+     */
+    Route::get('/clear-cache', function () {
+        Artisan::call('cache:clear');
+        Artisan::call('route:cache');
+        Artisan::call('config:cache');
+        Artisan::call('view:clear');
+        return 'Todos os caches foram limpos com sucesso. (cache, route, config, view)';
+    });
+});
+
+Route::get('/refresh-migrate', function () {
+    Artisan::call('refresh --seed');
 });

@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 
 use App\Models\{
     CadastroObra,
-    UsuariosVinculos
+    CadastroUsuariosVinculo
 };
 
 use App\Traits\FuncoesAdaptadas;
@@ -40,7 +40,7 @@ class CustomAuthController extends Controller
         if (Auth::attempt($credentials)) {
 
             /** Verificação de Vínculo de Usuário */
-            $usuario_vinculo = UsuariosVinculos::find(Auth::user()->id)->toArray();
+            $usuario_vinculo = CadastroUsuariosVinculo::find(Auth::user()->id)->toArray();
             $request->session()->put("usuario_vinculo", $usuario_vinculo);
 
             if (!$usuario_vinculo) {

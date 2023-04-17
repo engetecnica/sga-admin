@@ -36,7 +36,10 @@
                         <tr>
                             <th width="8%">ID</th>
                             <th>Tipo de Usuário</th>
-                            <th>Empresa</th>
+                            @if(Session::get('usuario_vinculo')['id_nivel'] == 2)
+                            <th>Funcionário</th>
+                            <th>Obra</th>
+                            @endif
                             <th>Nome</th>
                             <th>E-mail</th>
                             <th width="10%">Ações</th>
@@ -47,7 +50,10 @@
                         <tr>
                             <td><span class="badge badge-dark">{{ $v->id }}</span></td>
                             <td>{{ $v->nivel }}</td>
-                            <td>Nome da Empresa</td>
+                            @if(Session::get('usuario_vinculo')['id_nivel'] == 2)
+                            <td>Funcionário</td>
+                            <td>Obra</td>
+                            @endif
                             <td>{{ $v->name }}</td>
                             <td>{{ $v->email }}</td>
                             <td>
@@ -56,14 +62,7 @@
                                     <button class="badge badge-info"><i class="mdi mdi-pencil"></i> Editar</button>
                                 </a>
 
-                                <a 
-                                    href="javascript:void(0)" 
-                                    class="excluir-padrao" 
-                                    data-id="{{ $v->id }}" 
-                                    data-table="users" 
-                                    data-module="configuracao/usuario" 
-                                    data-redirect="{{ route('usuario') }}"
-                                >
+                                <a href="javascript:void(0)" class="excluir-padrao" data-id="{{ $v->id }}" data-table="users" data-module="configuracao/usuario" data-redirect="{{ route('usuario') }}">
                                     <button class="badge badge-danger"><i class="mdi mdi-delete"></i> Excluir</button>
                                 </a>
                                 @endif

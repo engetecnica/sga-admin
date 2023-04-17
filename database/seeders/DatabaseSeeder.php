@@ -14,9 +14,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(AtivosExternosStatusSeeder::class);
-        $this->call(NiveisSeeder::class);
-        $this->call(UserSeeder::class);
         $this->call(ModulosSeeder::class);
+        $this->call(NiveisSeeder::class);
+        $this->call(UsersSeeder::class);
+        $this->call(UsersVinculosSeeder::class);
+        $this->call(AtivosExternosStatusSeeder::class);
+        $this->call(AtivosFerramentalStatusSeeder::class);
     }
 }

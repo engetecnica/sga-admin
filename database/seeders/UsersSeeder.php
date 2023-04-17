@@ -6,7 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class UserSeeder extends Seeder
+class UsersSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -18,14 +18,14 @@ class UserSeeder extends Seeder
         //
         $data = array(
             [
-                'name' => 'Super Administrador',
-                'email' => "master@sga-e.eng.br",
-                'password' => bcrypt('123456789')
+                'name' => 'André Baill',
+                'email' => "srandrebaill@gmail.com",
+                'password' => bcrypt('10203010')
             ]
         );
 
         DB::table('users')->insert(
             $data
-         ); 
+        );
     }
 }

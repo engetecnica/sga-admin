@@ -44,11 +44,11 @@
                             <label for="id_ativo_configuracao" class="form-label">Categoria</label>
                             <select class="form-control select2" id="id_ativo_configuracao" name="id_ativo_configuracao">
                                 <option value="">Selecione uma Categoria</option>
-                                <?php foreach($ativo_configuracoes as $atv){ ?>
-                                    <option value="<?php echo $atv->id; ?>" @php if(old('id_ativo_configuracao', @$store->id_ativo_configuracao) == $atv->id) echo "selected"; @endphp <?php if(count($atv->subcategorias)>0){ ?>disabled style="background-color: #EDEDED !important"<?php } ?>><?php echo $atv->titulo; ?></option>
-                                    <?php if(count($atv->subcategorias)>0){ ?>
-                                        <?php foreach($atv->subcategorias as $sub){ ?>
-                                            <option value="<?php echo $sub->id;?>"><?php echo $sub->titulo; ?></option>
+                                <?php foreach ($ativo_configuracoes as $atv) { ?>
+                                    <option value="<?php echo $atv->id; ?>" @php if(old('id_ativo_configuracao', @$store->id_ativo_configuracao) == $atv->id) echo "selected"; @endphp <?php if (count($atv->subcategorias) > 0) { ?>disabled style="background-color: #EDEDED !important"<?php } ?>><?php echo $atv->titulo; ?></option>
+                                    <?php if (count($atv->subcategorias) > 0) { ?>
+                                        <?php foreach ($atv->subcategorias as $sub) { ?>
+                                            <option value="<?php echo $sub->id; ?>"><?php echo $sub->titulo; ?></option>
                                         <?php } ?>
                                     <?php } ?>
                                 <?php } ?>
@@ -66,16 +66,16 @@
                         <div class="col-md-6">
                             <label for="titulo" class="form-label">Título</label>
                             <input type="text" class="form-control" id="titulo" value="{{ old('titulo', @$store->titulo) }}" name="titulo">
-                        </div> 
-                        
+                        </div>
+
                         <div class="col-md-2">
                             <label for="status" class="form-label">Quantidade</label>
                             <input type="number" class="form-control" id="quantidade" name="quantidade" value="1">
-                        </div>  
+                        </div>
 
                         <div class="col-md-2">
                             <label for="status" class="form-label">Valor</label>
-                            <input type="text" class="form-control money" id="valor" name="valor" value="R$ 0.00">
+                            <input type="text" class="form-control money" id="valor" name="valor">
                         </div>
 
                         <div class="col-md-2">
@@ -96,11 +96,11 @@
                         </div>
                     </div>
 
-                    
+
                     <div class="col-12  mt-3">
-                        <button type="submit" class="btn btn-block btn-gradient-dark btn-lg font-weight-medium">Gravar novos Ativos</button>
+                        <button type="submit" class="btn btn-gradient-dark btn-lg font-weight-medium">Gravar novos Ativos</button>
                         <a href="{{ route('ativo.externo') }}">
-                            <button type="button" class="btn btn-block btn-gradient-danger btn-lg font-weight-medium">Cancelar</button>
+                            <button type="button" class="btn btn-gradient-danger btn-lg font-weight-medium">Cancelar</button>
                         </a>
                     </div>
                 </form>

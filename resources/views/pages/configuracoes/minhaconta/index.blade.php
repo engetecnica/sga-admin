@@ -42,28 +42,26 @@
                         <input type="text" class="form-control" id="nome" value="{{ Auth::user()->name }}" name="nome">
                     </div>
                     <?php if (isset(Auth::user()->user_level) && Auth::user()->user_level == 1) { ?>
-                    <div class="col-12">
-                        <label for="nivel" class="form-label">Tipo de Usuário</label>
-                        <select class="form-select" id="nivel" name="nivel">
-                            <option value="">Escolha o Tipo de Usuário</option>
-                            @foreach($usuario_niveis as $nivel)
-                            <option value="{{ $nivel->id }}"
-                                @php
-                                    if(isset(Auth::user()->user_level) && Auth::user()->user_level == $nivel->id){
-                                        echo "selected='selected'";
+                        <div class="col-12">
+                            <label for="nivel" class="form-label">Tipo de Usuário</label>
+                            <select class="form-select" id="nivel" name="nivel">
+                                <option value="">Escolha o Tipo de Usuário</option>
+                                @foreach($usuario_niveis as $nivel)
+                                <option value="{{ $nivel->id }}" @php if(isset(Auth::user()->user_level) && Auth::user()->user_level == $nivel->id){
+                                    echo "selected='selected'";
                                     }
-                                @endphp
-                            >{{ $nivel->titulo }}</option>
-                            @endforeach
-                        </select>
-                    </div>
+                                    @endphp
+                                    >{{ $nivel->titulo }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     <?php } ?>
 
                     <div class="col-12">
-                        <button type="submit" class="btn btn-block btn-gradient-primary btn-lg font-weight-medium">Salvar</button>
-                        
+                        <button type="submit" class="btn btn-gradient-primary btn-lg font-weight-medium">Salvar</button>
+
                         <a href="{{ url('dashboard') }}">
-                            <button type="button" class="btn btn-block btn-gradient-danger btn-lg font-weight-medium">Cancelar</button>
+                            <button type="button" class="btn btn-gradient-danger btn-lg font-weight-medium">Cancelar</button>
                         </a>
                     </div>
                 </form>

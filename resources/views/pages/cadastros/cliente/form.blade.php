@@ -111,10 +111,10 @@
 
 
                     <div class="col-12">
-                        <button type="submit" class="btn btn-block btn-gradient-primary btn-lg font-weight-medium">Salvar</button>
+                        <button type="submit" class="btn btn-gradient-primary btn-lg font-weight-medium">Salvar</button>
 
                         <a href="{{ route('cadastro.cliente') }}">
-                            <button type="button" class="btn btn-block btn-gradient-danger btn-lg font-weight-medium">Cancelar</button>
+                            <button type="button" class="btn btn-gradient-danger btn-lg font-weight-medium">Cancelar</button>
                         </a>
                     </div>
                 </form>

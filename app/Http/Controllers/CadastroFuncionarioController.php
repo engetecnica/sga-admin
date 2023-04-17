@@ -67,7 +67,7 @@ class CadastroFuncionarioController extends Controller
                 'bairro' => 'required',
                 'cidade' => 'required',
                 'estado' => 'required',
-                'email' => 'required',
+                //'email' => 'required',
                 'celular' => 'required',
                 'status' => 'required'
             ],
@@ -85,7 +85,7 @@ class CadastroFuncionarioController extends Controller
                 'bairro.required' => 'Preencha o Bairro corretamente',
                 'cidade.required' => 'Preencha a Cidade corretamente',
                 'estado.required' => 'Selecione o Estado corretamente',
-                'email.required' => 'Digite o e-mail do cliente',
+                //'email.required' => 'Digite o e-mail do cliente',
                 'celular.required' => 'Digite corretamente o telefone celular / whatsapp',
                 'status.required' => 'Selecione o Status'
             ]
@@ -107,7 +107,7 @@ class CadastroFuncionarioController extends Controller
         $funcionario->bairro = $request->bairro;
         $funcionario->cidade = $request->cidade;
         $funcionario->estado = $request->estado;
-        $funcionario->email = $request->email;
+        $funcionario->email = $request->email ?? null;
         $funcionario->celular = $request->celular;
         $funcionario->status = $request->status;
 
@@ -175,7 +175,7 @@ class CadastroFuncionarioController extends Controller
                 'bairro' => 'required',
                 'cidade' => 'required',
                 'estado' => 'required',
-                'email' => 'required',
+                //'email' => 'required',
                 'celular' => 'required',
                 'status' => 'required'
             ],
@@ -193,7 +193,7 @@ class CadastroFuncionarioController extends Controller
                 'bairro.required' => 'Preencha o Bairro corretamente',
                 'cidade.required' => 'Preencha a Cidade corretamente',
                 'estado.required' => 'Selecione o Estado corretamente',
-                'email.required' => 'Digite o e-mail do cliente',
+                //'email.required' => 'Digite o e-mail do cliente',
                 'celular.required' => 'Digite corretamente o telefone celular / whatsapp',
                 'status.required' => 'Selecione o Status'
             ]
@@ -214,7 +214,7 @@ class CadastroFuncionarioController extends Controller
         $funcionario->bairro = $request->bairro;
         $funcionario->cidade = $request->cidade;
         $funcionario->estado = $request->estado;
-        $funcionario->email = $request->email;
+        $funcionario->email = $request->email ?? null;
         $funcionario->celular = $request->celular;
         $funcionario->status = $request->status;
         $funcionario->save();

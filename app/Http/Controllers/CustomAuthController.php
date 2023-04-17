@@ -35,7 +35,9 @@ class CustomAuthController extends Controller
             'password' => 'required',
         ]);
 
-        $credentials = $request->only('email', 'password');   
+        $credentials = $request->only('email', 'password');
+
+        dd($credentials);
 
         if (Auth::attempt($credentials)) {
 

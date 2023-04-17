@@ -46,7 +46,7 @@
 
                         <div class="col-md-3">
                             <label for="codigo_obra" class="form-label">Código da Obra</label>
-                            <input type="text" class="form-control" id="codigo_obra" value="{{ old('codigo_obra', @$store->codigo_obra) ?? "SGAE-".date("YmI") }}" name="codigo_obra" readonly>
+                            <input type="text" class="form-control" id="codigo_obra" value="{{ old('codigo_obra', @$store->codigo_obra) ?? "SGAE-".date("YmI") }}" name="codigo_obra">
                         </div>
                     </div>
 

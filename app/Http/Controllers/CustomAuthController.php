@@ -37,8 +37,6 @@ class CustomAuthController extends Controller
 
         $credentials = $request->only('email', 'password');
 
-        dd($credentials);
-
         if (Auth::attempt($credentials)) {
 
             /** Verificação de Vínculo de Usuário */

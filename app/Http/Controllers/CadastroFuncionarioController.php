@@ -54,7 +54,7 @@ class CadastroFuncionarioController extends Controller
     {
         $request->validate(
             [
-                'matricula' => 'required|unique:funcionarios|min:5|max:30',
+                'matricula' => 'required|unique:funcionarios|min:4|max:30',
                 'id_obra' => 'required',
                 'nome' => 'required',
                 'data_nascimento' => 'required',
@@ -162,7 +162,7 @@ class CadastroFuncionarioController extends Controller
         //
         $request->validate(
             [
-                'matricula' => 'required|unique:funcionarios|min:5|max:30',
+                'matricula' => 'required|unique:funcionarios|min:4|max:30',
                 'id_obra' => 'required',
                 'nome' => 'required',
                 'data_nascimento' => 'required',

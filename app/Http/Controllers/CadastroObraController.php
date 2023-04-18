@@ -54,7 +54,7 @@ class CadastroObraController extends Controller
         $request->validate(
             [
                 'id_empresa' => 'required',
-                'codigo_obra' => 'required|min:5',
+                'codigo_obra' => 'required|min:4',
                 'cep' => 'required',
                 'endereco' => 'required',
                 'numero' => 'required',
@@ -148,7 +148,7 @@ class CadastroObraController extends Controller
         $request->validate(
             [
                 'id_empresa' => 'required',
-                'codigo_obra' => 'required|min:5',
+                'codigo_obra' => 'required|min:4',
                 //'razao_social' => 'required|min:5',
                 //'cnpj' => 'required',
                 'cep' => 'required',

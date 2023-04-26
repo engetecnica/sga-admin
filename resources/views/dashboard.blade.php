@@ -251,16 +251,12 @@
             </nav>
             <!-- partial -->
             <div class="main-panel">
-
-
                 <div class="content-wrapper">
                     @include('sweetalert::alert', ['cdn' => 'https://cdn.jsdelivr.net/npm/sweetalert2@9'])
                     @include('sweetalert::alert')
                     @yield('content')
                 </div>
                 <!-- content-wrapper ends -->
-                <!-- partial:partials/_footer.html -->
-
 
                 <footer class="footer">
                     <div class="container-fluid d-flex justify-content-between">
@@ -346,13 +342,8 @@
         });
 
 
-
         $(".select2").select2();
 
-        console.log('Iniciando JQuery')
-
-
-        //$(document).ready(function() {
 
         $("#gerar_termo").on('click', function() {
 
@@ -564,8 +555,114 @@
             $(this).closest('.item-lista').remove();
         })
 
-        //});
+
+
+
+
+
+
+
+
+
+
+
+        /** Listagem de Ativos - Requisição */
+
+        $(".listar-ativos").select2({
+            tags: true,
+            multiple: false,
+            tokenSeparators: [",", " "],
+            minimumInputLength: 2,
+            minimumResultsForSearch: 10,
+            ajax: {
+                url: BASE_URL + '/ferramental/requisicao/lista_ativo',
+                dataType: "json",
+                type: "get",
+                data: function(params) {
+                    var queryParameters = {
+                        term: params.term,
+                    };
+                    return queryParameters;
+                },
+                processResults: function(data) {
+                    return {
+                        results: $.map(data, function(item) {
+                            return {
+                                text: item.titulo + ' - Em Estoque: ' + item.quantidade_estoque,
+                                id: item.id,
+                            };
+                        }),
+                    };
+                },
+            },
+        });
+
+
+        $('.listar-ativos-adicionar').click(function() {
+            $('#listar-ativos-linha').append($('#listar-ativos-template').html());
+            //$(".listar-ativos.template:last").select2();
+            $(".listar-ativos.template:last").select2({
+                tags: true,
+                multiple: false,
+                tokenSeparators: [",", " "],
+                minimumInputLength: 2,
+                minimumResultsForSearch: 10,
+                ajax: {
+                    url: BASE_URL + '/ferramental/requisicao/lista_ativo',
+                    dataType: "json",
+                    type: "get",
+                    data: function(params) {
+                        var queryParameters = {
+                            term: params.term,
+                        };
+                        return queryParameters;
+                    },
+                    processResults: function(data) {
+                        return {
+                            results: $.map(data, function(item) {
+                                return {
+                                    text: item.titulo + ' - Em Estoque: ' + item.quantidade_estoque,
+                                    id: item.id,
+                                };
+                            }),
+                        };
+                    },
+                },
+            });
+
+
+
+        });
+
+
+        $(document).on('change', '.listar-ativos', function() {
+            console.log($(this).val());
+            alvo = $(this);
+
+            $.ajax({
+                    url: "{{ route('ferramental.requisicao.ativo_externo_id') }}/" + $(this).val(),
+                    type: 'get',
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                    }
+                })
+                .done(function(quantidade) {
+                    console.log("Resultado", quantidade);
+                    alvo.parent().parent().find(".text_quantidade").val(1);
+                    alvo.parent().parent().find(".text_quantidade").prop('disabled', false);
+                    alvo.parent().parent().find(".text_quantidade").attr('max', quantidade);
+                })
+                .fail(function(jqXHR, textStatus, quantidade) {
+                    alert(quantidade);
+                });
+
+        })
     </script>
+
+
+
+
+
 
 </body>
 

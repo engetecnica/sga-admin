@@ -41,8 +41,7 @@ class FerramentalRetiradaController extends Controller
      */
     public function index()
     {
-        $lista = FerramentalRetirada::getRetirada();
-        return view('pages.ferramental.retirada.index', compact('lista'));
+        return view('pages.ferramental.retirada.index');
     }
 
     /**

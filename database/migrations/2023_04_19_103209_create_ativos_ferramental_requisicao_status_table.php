@@ -13,9 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('usuarios_niveis', function (Blueprint $table) {
+        Schema::create('ativos_ferramental_requisicao_status', function (Blueprint $table) {
             $table->id();
             $table->string('titulo')->nullable();
+            $table->char('classe', 12)->default('primary');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
@@ -27,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('usuarios_niveis');
+        Schema::dropIfExists('ativos_ferramental_requisicao_status');
     }
 };

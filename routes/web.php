@@ -32,6 +32,18 @@ use App\Http\Controllers\FerramentalRequisicaoController;
 use App\Http\Controllers\AnexoController;
 use App\Http\Controllers\ApiController;
 
+/** 
+ * Consumindo API em Módulos
+ * Redução de redundancia de pesquisa
+ * 
+ * @Modulos
+ * 
+ * 1.0 - Requisições
+ *  1.1 - Listagem de Ativos (Popular Select - Form)
+ */
+
+use App\Http\Controllers\Api\ApiRequisicao;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -187,6 +199,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('admin/ferramental/requisicao/store', [FerramentalRequisicaoController::class, 'store'])->name('ferramental.requisicao.store');
     Route::post('admin/ferramental/requisicao/update/{id}', [FerramentalRequisicaoController::class, 'update'])->name('ferramental.requisicao.update');
 
+    /** Ferramental - Requisição API */
+    Route::get('admin/ferramental/requisicao/lista_ativo/{term?}', [ApiRequisicao::class, 'lista_ativo'])->name('ferramental.requisicao.lista_ativo');
+    Route::get('admin/ferramental/requisicao/ativo_externo_id/{id?}', [ApiRequisicao::class, 'ativo_externo_id'])->name('ferramental.requisicao.ativo_externo_id');
 
    
     /* Manipulação de Anexos */

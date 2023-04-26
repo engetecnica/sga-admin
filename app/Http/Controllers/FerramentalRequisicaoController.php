@@ -2,8 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\FerramentalRequisicao;
+use App\Models\{
+    FerramentalRequisicao,
+    CadastroObra,
+    CadastroFuncionario
+};
+
 use Illuminate\Http\Request;
+
 
 class FerramentalRequisicaoController extends Controller
 {
@@ -15,6 +21,7 @@ class FerramentalRequisicaoController extends Controller
     public function index()
     {
         //
+        return view('pages.ferramental.requisicao.index');
     }
 
     /**
@@ -25,6 +32,8 @@ class FerramentalRequisicaoController extends Controller
     public function create()
     {
         //
+        $obras = CadastroObra::all();
+        return view('pages.ferramental.requisicao.form', compact('obras'));
     }
 
     /**

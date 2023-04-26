@@ -37,6 +37,7 @@ class CustomAuthController extends Controller
 
         $credentials = $request->only('email', 'password');
 
+       
         if (Auth::attempt($credentials)) {
 
             /** Verificação de Vínculo de Usuário */
@@ -45,7 +46,7 @@ class CustomAuthController extends Controller
 
             if (!$usuario_vinculo) {
                 Alert::error('Eita!', 'Infelizmente não encontramos suas credenciais e não podemos permitir seu aceso!');
-                return redirect()->intended('login');
+                return redirect('login');
             }
 
             $id_obra = $usuario_vinculo->id_obra ?? null;

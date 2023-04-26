@@ -22,14 +22,12 @@
 
 <body>
 	<div class="container-scroller">
-		@yield('content')
-	</div>
-
-	<div class="content-wrapper">
-		@include('sweetalert::alert', ['cdn' => "https://cdn.jsdelivr.net/npm/sweetalert2@9"])
+		@include('sweetalert::alert', ['cdn' => 'https://cdn.jsdelivr.net/npm/sweetalert2@9'])
 		@include('sweetalert::alert')
 		@yield('content')
 	</div>
+
+
 
 	<!-- container-scroller -->
 	<!-- plugins:js -->

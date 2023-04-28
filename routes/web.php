@@ -23,6 +23,7 @@ use App\Http\Controllers\CadastroFuncionarioController;
 /* Ativos */
 use App\Http\Controllers\AtivoConfiguracaoController;
 use App\Http\Controllers\AtivoExternoController;
+use App\Http\Controllers\VeiculoController;
 
 /* Ferramental */
 use App\Http\Controllers\FerramentalRetiradaController;
@@ -43,7 +44,11 @@ use App\Http\Controllers\ApiController;
  */
 
 use App\Http\Controllers\Api\ApiRequisicao;
-
+use App\Http\Controllers\VeiculoAbastecimentoController;
+use App\Http\Controllers\VeiculoDepreciacaoController;
+use App\Http\Controllers\VeiculoIpvaController;
+use App\Http\Controllers\VeiculoQuilometragemController;
+use App\Http\Controllers\VeiculoSeguroController;
 
 /*
 |--------------------------------------------------------------------------
@@ -73,7 +78,7 @@ Route::group(['middleware' => 'auth'], function () {
     /* Configurações - Dashboard */
     Route::get('admin/configuracao',                              [ConfiguracaoController::class, 'index']);
     Route::get('admin/dashboard',                                 [CustomAuthController::class, 'dashboard'])->name('dashboard');
-    
+
     /* Minha Conta */
     Route::get('admin/configuracao/minhaconta',                   [ConfiguracaoMinhaContaController::class, 'index'])->name('minhaconta');
     Route::post('admin/configuracao/minhaconta/store',            [ConfiguracaoMinhaContaController::class, 'store'])->name('minhaconta.store');
@@ -128,7 +133,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('admin/cadastro/fornecedor/editar/{id?}',          [CadastroFornecedorController::class, 'edit'])->name('cadastro.fornecedor.editar');
     Route::get('admin/cadastro/fornecedor/adicionar',             [CadastroFornecedorController::class, 'create'])->name('cadastro.fornecedor.adicionar');
     Route::post('admin/cadastro/fornecedor/store',                [CadastroFornecedorController::class, 'store'])->name('cadastro.fornecedor.store');
-    Route::post('admin/cadastro/fornecedor/update/{id}',          [CadastroFornecedorController::class, 'update'])->name('cadastro.fornecedor.update');    
+    Route::post('admin/cadastro/fornecedor/update/{id}',          [CadastroFornecedorController::class, 'update'])->name('cadastro.fornecedor.update');
 
     /* Cadastros - Obra */
     Route::get('admin/obra',                                                   [CadastroObraController::class, 'index'])->name('obra');
@@ -136,7 +141,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('admin/cadastro/obra/editar/{id?}',                             [CadastroObraController::class, 'edit'])->name('cadastro.obra.editar');
     Route::get('admin/cadastro/obra/adicionar',                                [CadastroObraController::class, 'create'])->name('cadastro.obra.adicionar');
     Route::post('admin/cadastro/obra/store',                                   [CadastroObraController::class, 'store'])->name('cadastro.obra.store');
-    Route::post('admin/cadastro/obra/update/{id}',                             [CadastroObraController::class, 'update'])->name('cadastro.obra.update');    
+    Route::post('admin/cadastro/obra/update/{id}',                             [CadastroObraController::class, 'update'])->name('cadastro.obra.update');
 
 
     /* Cadastros - Funcionário */
@@ -145,7 +150,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('admin/cadastro/funcionario/editar/{id?}',                             [CadastroFuncionarioController::class, 'edit'])->name('cadastro.funcionario.editar');
     Route::get('admin/cadastro/funcionario/adicionar',                                [CadastroFuncionarioController::class, 'create'])->name('cadastro.funcionario.adicionar');
     Route::post('admin/cadastro/funcionario/store',                                   [CadastroFuncionarioController::class, 'store'])->name('cadastro.funcionario.store');
-    Route::post('admin/cadastro/funcionario/update/{id}',                             [CadastroFuncionarioController::class, 'update'])->name('cadastro.funcionario.update');    
+    Route::post('admin/cadastro/funcionario/update/{id}',                             [CadastroFuncionarioController::class, 'update'])->name('cadastro.funcionario.update');
 
 
 
@@ -165,13 +170,48 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('admin/ativo/externo/editar/{id?}', [AtivoExternoController::class, 'edit'])->name('ativo.externo.editar');
     Route::get('admin/ativo/externo/adicionar', [AtivoExternoController::class, 'create'])->name('ativo.externo.adicionar');
     Route::post('admin/ativo/externo/store', [AtivoExternoController::class, 'store'])->name('ativo.externo.store');
-    Route::post('admin/ativo/externo/update/{id}', [AtivoExternoController::class, 'update'])->name('ativo.externo.update');    
+    Route::post('admin/ativo/externo/update/{id}', [AtivoExternoController::class, 'update'])->name('ativo.externo.update');
 
     Route::get('admin/ativo/externo/detalhes/{id}', [AtivoExternoController::class, 'show'])->name('ativo.externo.detalhes');
 
     Route::get('admin/ativo/externo/search/{id}', [AtivoExternoController::class, 'searchAtivoID'])->name('ativo.externo.search');
     Route::get('admin/ativo/externo/lista/{id?}', [AtivoExternoController::class, 'searchAtivoLista'])->name('ativo.externo.lista');
 
+
+    /* Ativo - Veículos */
+    Route::get('admin/ativo/veiculo', [VeiculoController::class, 'index'])->name('ativo.veiculo');
+    Route::get('admin/ativo/veiculo/adicionar', [VeiculoController::class, 'create'])->name('ativo.veiculo.adicionar');
+    Route::post('admin/ativo/veiculo/store', [VeiculoController::class, 'store'])->name('ativo.veiculo.store');
+    Route::get('admin/ativo/veiculo/editar/{id}', [VeiculoController::class, 'edit'])->name('ativo.veiculo.editar');
+    Route::post('admin/ativo/veiculo/update/{id}', [VeiculoController::class, 'update'])->name('ativo.veiculo.update');
+
+    /* Ativo - Veículos - Abastecimento */
+    Route::get('admin/ativo/veiculo/abastecimento/{id}', [VeiculoAbastecimentoController::class, 'edit'])->name('ativo.veiculo.abastecimento.editar');
+    Route::post('admin/ativo/veiculo/abastecimento/store/{id}', [VeiculoAbastecimentoController::class, 'store'])->name('ativo.veiculo.abastecimento.store');
+    Route::post('admin/ativo/veiculo/abastecimento/update/{id}', [VeiculoAbastecimentoController::class, 'update'])->name('ativo.veiculo.abastecimento.update');
+
+    /* Ativo - Veículos - Depreciacao */
+    Route::get('admin/ativo/veiculo/depreciacao/{id}', [VeiculoDepreciacaoController::class, 'edit'])->name('ativo.veiculo.depreciacao.editar');
+    Route::post('admin/ativo/veiculo/depreciacao/store/{id}', [VeiculoDepreciacaoController::class, 'store'])->name('ativo.veiculo.depreciacao.store');
+    Route::post('admin/ativo/veiculo/depreciacao/update/{id}', [VeiculoDepreciacaoController::class, 'update'])->name('ativo.veiculo.depreciacao.update');
+
+    /* Ativo - Veículos - Ipva */
+    Route::get('admin/ativo/veiculo/ipva/{id}', [VeiculoIpvaController::class, 'edit'])->name('ativo.veiculo.ipva.editar');
+    Route::post('admin/ativo/veiculo/ipva/store/{id}', [VeiculoIpvaController::class, 'store'])->name('ativo.veiculo.ipva.store');
+    Route::post('admin/ativo/veiculo/ipva/update/{id}', [VeiculoIpvaController::class, 'update'])->name('ativo.veiculo.ipva.update');
+
+    /* Ativo - Veículos - Manutencao */
+    Route::get('admin/ativo/veiculo/manutencao/{id}', [VeiculoQuilometragemController::class, 'edit'])->name('ativo.veiculo.manutencao.editar');
+
+    /* Ativo - Veículos - Quilometragem */
+    Route::get('admin/ativo/veiculo/quilometragem/{id}', [VeiculoQuilometragemController::class, 'edit'])->name('ativo.veiculo.quilometragem.editar');
+    Route::post('admin/ativo/veiculo/quilometragem/store/{id}', [VeiculoQuilometragemController::class, 'store'])->name('ativo.veiculo.quilometragem.store');
+    Route::post('admin/ativo/veiculo/quilometragem/update/{id}', [VeiculoQuilometragemController::class, 'update'])->name('ativo.veiculo.quilometragem.update');
+
+    /* Ativo - Veículos - Seguro */
+    Route::get('admin/ativo/veiculo/seguro/{id}', [VeiculoSeguroController::class, 'edit'])->name('ativo.veiculo.seguro.editar');
+    Route::post('admin/ativo/veiculo/seguro/store/{id}', [VeiculoSeguroController::class, 'store'])->name('ativo.veiculo.seguro.store');
+    Route::post('admin/ativo/veiculo/seguro/update/{id}', [VeiculoSeguroController::class, 'update'])->name('ativo.veiculo.seguro.update');
 
     /* Ferramental - Retirada */
     Route::get('admin/ferramental', [FerramentalRetiradaController::class, 'index'])->name('ferramental');
@@ -203,14 +243,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('admin/ferramental/requisicao/lista_ativo/{term?}', [ApiRequisicao::class, 'lista_ativo'])->name('ferramental.requisicao.lista_ativo');
     Route::get('admin/ferramental/requisicao/ativo_externo_id/{id?}', [ApiRequisicao::class, 'ativo_externo_id'])->name('ferramental.requisicao.ativo_externo_id');
 
-   
+
     /* Manipulação de Anexos */
     Route::post('admin/anexo/upload', [AnexoController::class, 'upload'])->name('anexo.upload');
-
-
-
-
-
 
 
     /* API de Controles */

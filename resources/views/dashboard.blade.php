@@ -6,9 +6,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>SGA-E | @if (View::hasSection('title'))
-        @yield('title')
+            @yield('title')
         @else
-        Dashboard
+            Dashboard
         @endif
     </title>
 
@@ -41,8 +41,10 @@
         <!-- partial:partials/_navbar.html -->
         <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
             <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-                <a class="navbar-brand brand-logo" href="{{ env('APP_URL') }}"><img src="{{ asset('assets/images/logo-mini.png') }}" alt="{{ env('APP_NAME') }}" /></a>
-                <a class="navbar-brand brand-logo-mini" href="{{ env('APP_URL') }}"><img src="{{ asset('assets/images/logo-mini.png') }}" alt="{{ env('APP_NAME') }}" /></a>
+                <a class="navbar-brand brand-logo" href="{{ env('APP_URL') }}"><img
+                        src="{{ asset('assets/images/logo-mini.png') }}" alt="{{ env('APP_NAME') }}" /></a>
+                <a class="navbar-brand brand-logo-mini" href="{{ env('APP_URL') }}"><img
+                        src="{{ asset('assets/images/logo-mini.png') }}" alt="{{ env('APP_NAME') }}" /></a>
             </div>
             <div class="navbar-menu-wrapper d-flex align-items-stretch">
                 <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
@@ -51,7 +53,8 @@
 
                 <ul class="navbar-nav navbar-nav-right">
                     <li class="nav-item nav-profile dropdown">
-                        <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" id="profileDropdown" href="#"
+                            data-bs-toggle="dropdown" aria-expanded="false">
                             <div class="nav-profile-img">
                                 <img src="{{ asset('assets/images/faces/face1.jpg') }}" alt="image">
                                 <span class="availability-status online"></span>
@@ -74,18 +77,22 @@
                         </a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link count-indicator dropdown-toggle" id="messageDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link count-indicator dropdown-toggle" id="messageDropdown" href="#"
+                            data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="mdi mdi-email-outline"></i>
                             <span class="count-symbol bg-warning"></span>
                         </a>
-                        <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="messageDropdown">
+                        <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list"
+                            aria-labelledby="messageDropdown">
                             <h6 class="p-3 mb-0">Messages</h6>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item preview-item">
                                 <div class="preview-thumbnail">
-                                    <img src="{{ asset('assets/images/faces/face4.jpg') }}" alt="image" class="profile-pic">
+                                    <img src="{{ asset('assets/images/faces/face4.jpg') }}" alt="image"
+                                        class="profile-pic">
                                 </div>
-                                <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
+                                <div
+                                    class="preview-item-content d-flex align-items-start flex-column justify-content-center">
                                     <h6 class="preview-subject ellipsis mb-1 font-weight-normal">Mark send you a message
                                     </h6>
                                     <p class="text-gray mb-0"> 1 Minutes ago </p>
@@ -94,9 +101,11 @@
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item preview-item">
                                 <div class="preview-thumbnail">
-                                    <img src="{{ asset('assets/images/faces/face2.jpg') }}" alt="image" class="profile-pic">
+                                    <img src="{{ asset('assets/images/faces/face2.jpg') }}" alt="image"
+                                        class="profile-pic">
                                 </div>
-                                <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
+                                <div
+                                    class="preview-item-content d-flex align-items-start flex-column justify-content-center">
                                     <h6 class="preview-subject ellipsis mb-1 font-weight-normal">Cregh send you a
                                         message</h6>
                                     <p class="text-gray mb-0"> 15 Minutes ago </p>
@@ -105,9 +114,11 @@
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item preview-item">
                                 <div class="preview-thumbnail">
-                                    <img src="{{ asset('assets/images/faces/face3.jpg') }}" alt="image" class="profile-pic">
+                                    <img src="{{ asset('assets/images/faces/face3.jpg') }}" alt="image"
+                                        class="profile-pic">
                                 </div>
-                                <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
+                                <div
+                                    class="preview-item-content d-flex align-items-start flex-column justify-content-center">
                                     <h6 class="preview-subject ellipsis mb-1 font-weight-normal">Profile picture
                                         updated
                                     </h6>
@@ -119,11 +130,13 @@
                         </div>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-bs-toggle="dropdown">
+                        <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#"
+                            data-bs-toggle="dropdown">
                             <i class="mdi mdi-bell-outline"></i>
                             <span class="count-symbol bg-danger"></span>
                         </a>
-                        <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
+                        <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list"
+                            aria-labelledby="notificationDropdown">
                             <h6 class="p-3 mb-0">Notificações</h6>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item preview-item">
@@ -132,7 +145,8 @@
                                         <i class="mdi mdi-calendar"></i>
                                     </div>
                                 </div>
-                                <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
+                                <div
+                                    class="preview-item-content d-flex align-items-start flex-column justify-content-center">
                                     <h6 class="preview-subject font-weight-normal mb-1">Event today</h6>
                                     <p class="text-gray ellipsis mb-0"> Just a reminder that you have an event today
                                     </p>
@@ -145,7 +159,8 @@
                                         <i class="mdi mdi-settings"></i>
                                     </div>
                                 </div>
-                                <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
+                                <div
+                                    class="preview-item-content d-flex align-items-start flex-column justify-content-center">
                                     <h6 class="preview-subject font-weight-normal mb-1">Settings</h6>
                                     <p class="text-gray ellipsis mb-0"> Update dashboard </p>
                                 </div>
@@ -157,7 +172,8 @@
                                         <i class="mdi mdi-link-variant"></i>
                                     </div>
                                 </div>
-                                <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
+                                <div
+                                    class="preview-item-content d-flex align-items-start flex-column justify-content-center">
                                     <h6 class="preview-subject font-weight-normal mb-1">Launch Admin</h6>
                                     <p class="text-gray ellipsis mb-0"> New admin wow! </p>
                                 </div>
@@ -177,7 +193,8 @@
                         </a>
                     </li>
                 </ul>
-                <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+                <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
+                    data-toggle="offcanvas">
                     <span class="mdi mdi-menu"></span>
                 </button>
             </div>
@@ -208,36 +225,39 @@
                     </li>
 
                     @foreach ($modulos_permitidos as $module)
-                    <li class="nav-item">
+                        <li class="nav-item">
 
-                        @if (count($module['submodulo']) > 0)
-                        <a class="nav-link" data-bs-toggle="collapse" href="#{{ $module['url_amigavel'] }}" aria-expanded="false" aria-controls="{{ $module['url_amigavel'] }}">
-                            <span class="menu-title">{{ $module['titulo'] }}</span>
-                            <i class="menu-arrow"></i>
-                            <i class="{{ $module['icone'] }} menu-icon"></i>
-                        </a>
-                        @else
-                        <a class="nav-link" href="{{ env('URL_APP_ADMIN') }}{{ $module['url_amigavel'] }}">
-                            <span class="menu-title">{{ $module['titulo'] }}</span>
-                            <i class="{{ $module['icone'] }} menu-icon"></i>
-                        </a>
-                        @endif
+                            @if (count($module['submodulo']) > 0)
+                                <a class="nav-link" data-bs-toggle="collapse" href="#{{ $module['url_amigavel'] }}"
+                                    aria-expanded="false" aria-controls="{{ $module['url_amigavel'] }}">
+                                    <span class="menu-title">{{ $module['titulo'] }}</span>
+                                    <i class="menu-arrow"></i>
+                                    <i class="{{ $module['icone'] }} menu-icon"></i>
+                                </a>
+                            @else
+                                <a class="nav-link" href="{{ env('URL_APP_ADMIN') }}{{ $module['url_amigavel'] }}">
+                                    <span class="menu-title">{{ $module['titulo'] }}</span>
+                                    <i class="{{ $module['icone'] }} menu-icon"></i>
+                                </a>
+                            @endif
 
-                        @if (count($module['submodulo']) > 0)
-                        <div class="collapse" id="{{ $module['url_amigavel'] }}">
-                            <ul class="nav flex-column sub-menu">
-                                @foreach ($module['submodulo'] as $sub)
-                                <?php
-                                $item = env('URL_APP_ADMIN') . Request::segment(2) . '/' . Request::segment(3);
-
-                                ?>
-                                <li class="nav-item"> <a class="nav-link {{ $item === $sub['url_amigavel'] ? 'active-submodulo' : '' }}" href="{{ url($sub['url_amigavel']) }}">{{ $sub['titulo'] }}</a>
-                                </li>
-                                @endforeach
-                            </ul>
-                        </div>
-                        @endif
-                    </li>
+                            @if (count($module['submodulo']) > 0)
+                                <div class="collapse" id="{{ $module['url_amigavel'] }}">
+                                    <ul class="nav flex-column sub-menu">
+                                        @foreach ($module['submodulo'] as $sub)
+                                            <?php
+                                            $item = env('URL_APP_ADMIN') . Request::segment(2) . '/' . Request::segment(3);
+                                            
+                                            ?>
+                                            <li class="nav-item"> <a
+                                                    class="nav-link {{ $item === $sub['url_amigavel'] ? 'active-submodulo' : '' }}"
+                                                    href="{{ url($sub['url_amigavel']) }}">{{ $sub['titulo'] }}</a>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
+                        </li>
                     @endforeach
 
                     <li class="nav-item">
@@ -260,8 +280,10 @@
 
                 <footer class="footer">
                     <div class="container-fluid d-flex justify-content-between">
-                        <span class="text-muted d-block text-center text-sm-start d-sm-inline-block">{{ env('APP_COPY') }}</span>
-                        <span class="float-none float-sm-end mt-1 mt-sm-0 text-end">{{ env('APP_COPY_DEVELOPMENT') }}</span>
+                        <span
+                            class="text-muted d-block text-center text-sm-start d-sm-inline-block">{{ env('APP_COPY') }}</span>
+                        <span
+                            class="float-none float-sm-end mt-1 mt-sm-0 text-end">{{ env('APP_COPY_DEVELOPMENT') }}</span>
                     </div>
                 </footer>
                 <!-- partial -->
@@ -405,7 +427,9 @@
                                     // salvar autenticidade
                                     $.ajax({
                                         type: 'GET',
-                                        url: BASE_URL + '/ferramental/retirada/termo_assinar/' + id_retirada,
+                                        url: BASE_URL +
+                                            '/ferramental/retirada/termo_assinar/' +
+                                            id_retirada,
                                         data: {},
                                         success: function(result) {
 
@@ -427,9 +451,15 @@
                                                 cancelButtonText: 'Fechar',
                                                 confirmButtonText: 'Baixar Documento'
                                             }).then((result) => {
-                                                if (result.isConfirmed) {
-                                                    window.open(BASE_URL + '/ferramental/retirada/termo/' + id_retirada);
-                                                    hideModal("gerarTermoModal");
+                                                if (result
+                                                    .isConfirmed) {
+                                                    window.open(
+                                                        BASE_URL +
+                                                        '/ferramental/retirada/termo/' +
+                                                        id_retirada);
+                                                    hideModal(
+                                                        "gerarTermoModal"
+                                                    );
                                                 }
                                             })
                                         }
@@ -621,7 +651,8 @@
                         return {
                             results: $.map(data, function(item) {
                                 return {
-                                    text: item.titulo + ' - Em Estoque: ' + item.quantidade_estoque,
+                                    text: item.titulo + ' - Em Estoque: ' + item
+                                        .quantidade_estoque,
                                     id: item.id,
                                 };
                             }),

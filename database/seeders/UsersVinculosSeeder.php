@@ -32,5 +32,13 @@ class UsersVinculosSeeder extends Seeder
         DB::table('usuarios_vinculos')->insert(
             $data
         );
+
+        DB::table('usuarios_vinculos')->insert([
+            'id_usuario' => '2',
+            'id_nivel' => '2',
+            'status'         => 'Ativo',
+            'created_at'    => now(),
+            'updated_at'    => now()
+        ]);
     }
 }

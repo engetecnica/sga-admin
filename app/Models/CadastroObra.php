@@ -12,7 +12,6 @@ class CadastroObra extends Model
     use HasFactory;
     use SoftDeletes;
 
-
     protected $table = "obras";
     protected $dates = ['deleted_at'];
 

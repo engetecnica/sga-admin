@@ -14,11 +14,22 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(ModulosSeeder::class);
-        $this->call(NiveisSeeder::class);
-        $this->call(UsersSeeder::class);
-        $this->call(UsersVinculosSeeder::class);
-        $this->call(AtivosExternosStatusSeeder::class);
-        $this->call(AtivosFerramentalStatusSeeder::class);
+        $this->call([
+            ModulosSeeder::class,
+            NiveisSeeder::class,
+            UsersSeeder::class,
+            UsersVinculosSeeder::class,
+            AtivosExternosStatusSeeder::class,
+            AtivosFerramentalStatusSeeder::class,
+            EmpresaSeeder::class,
+            VeiculoSeeder::class,
+            ObraSeeder::class,
+            VeiculoAbastecimentoSeeder::class,
+            VeiculoDepreciacaoSeeder::class,
+            VeiculoIpvaSeeder::class,
+            VeiculoManutencaoSeeder::class,
+            VeiculoQuilometragemSeeder::class,
+            VeiculoSeguroSeeder::class
+        ]);
     }
 }

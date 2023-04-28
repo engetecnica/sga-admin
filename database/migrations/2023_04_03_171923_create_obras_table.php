@@ -15,12 +15,12 @@ return new class extends Migration
     {
         Schema::create('obras', function (Blueprint $table) {
             $table->id();
+
+            $table->unsignedBigInteger('veiculo_id')->unsigned();
+            $table->unsignedBigInteger('id_empresa')->unsigned();
+
             $table->string('razao_social')->nullable();
             $table->string('cnpj')->nullable();
-            
-            $table->unsignedBigInteger('id_empresa')->unsigned();
-            $table->foreign('id_empresa')->references('id')->on('empresas');
-            
             $table->string('codigo_obra')->nullable();
             $table->string('cep')->nullable();
             $table->string('endereco')->nullable();
@@ -33,6 +33,9 @@ return new class extends Migration
             $table->enum('status', ['Ativo', 'Inativo']);
             $table->softDeletes();
             $table->timestamps();
+
+            $table->foreign('veiculo_id')->references('id')->on('veiculos');
+            $table->foreign('id_empresa')->references('id')->on('empresas');
         });
     }
 

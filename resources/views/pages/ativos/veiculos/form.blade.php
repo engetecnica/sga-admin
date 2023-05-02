@@ -43,11 +43,15 @@
                             <div class="col-md-10">
                                 <label for="obra" class="form-label">Obra</label>
                                 <select name="obra" id="obra" class="form-select">
+                                    @if (@$store->obra)
+                                        <option value="{{ $store->obra }}" selected>{{ $store->obra }}</option>
+                                    @else
+                                        <option value="" selected>Selecione</option>
+                                    @endif
                                     @foreach ($obras as $obra)
-                                        <option value="{{ $obra->id }}">{{ $obra->razao_social }}</option>
+                                        <option value="{{ $obra->razao_social }}">{{ $obra->razao_social }}</option>
                                     @endforeach
                                 </select>
-
                             </div>
                         </div>
 
@@ -67,8 +71,13 @@
                         <div class="row  mt-3">
                             <div class="col-md-4">
                                 <label for="tipo" class="form-label">Tipo</label>
-                                <select name="tipo" id="tipo" class="form-select">
-                                    <option value="" selected>Selecione</option>
+                                <select name="tipo" id="tipo" class="form-select"
+                                    onchange="mostrarEsconderInputs()">
+                                    @if (@$store->tipo)
+                                        <option value="{{ $store->tipo }}" selected>{{ $store->tipo }}</option>
+                                    @else
+                                        <option value="" selected>Selecione</option>
+                                    @endif
                                     <option value="motos">Moto</option>
                                     <option value="carros">Carro</option>
                                     <option value="caminhoes">Caminhão</option>
@@ -78,51 +87,78 @@
                             <div class="col-md-4">
                                 <label for="marca" class="form-label">Marca</label>
                                 <select name="marca" id="marca" class="form-select">
-                                    <option value="" selected>Selecione o tipo</option>
+
+                                    @if (@$store->marca)
+                                        <option value="{{ $store->marca }}" selected>{{ $store->marca }}</option>
+                                    @else
+                                        <option value="" selected>Selecione</option>
+                                    @endif
+
                                 </select>
+                                <input type="hidden" name="marca_nome" id="marca_nome">
+
                             </div>
+
                             <div class="col-md-4">
                                 <label for="modelo" class="form-label">Modelo</label>
                                 <select name="modelo" id="modelo" class="form-select">
-                                    <option value="" selected>Selecione o modelo</option>
+
+                                    @if (@$store->modelo)
+                                        <option value="{{ $store->modelo }}" selected>{{ $store->modelo }}</option>
+                                    @else
+                                        <option value="" selected>Selecione</option>
+                                    @endif
+
                                 </select>
+                                <input type="hidden" name="modelo_nome" id="modelo_nome">
                             </div>
+
+
                         </div>
 
                         <div class="row  mt-3">
                             <div class="col-md-4">
                                 <label for="ano" class="form-label">Ano</label>
                                 <select name="ano" id="ano" class="form-select">
-                                    <option value="">Selecione</option>
+
+                                    @if (@$store->ano)
+                                        <option value="{{ $store->ano }}" selected>{{ $store->ano }}</option>
+                                    @else
+                                        <option value="" selected>Selecione</option>
+                                    @endif
+
                                 </select>
                             </div>
                             <div class="col-md-8">
                                 <label for="veiculo" class="form-label">Veículo</label>
-                                <input type="veiculo" class="form-control" id="veiculo"
-                                    value="{{ old('veiculo', @$store->veiculo) }}" name="veiculo">
+                                <input type="veiculo" class="form-control" id="veiculo" readonly
+                                    value="{{ old('veiculo', @$store->veiculo) }}" name="veiculo"
+                                    placeholder="Preenchimento Automático">
                             </div>
                         </div>
 
                         <div class="row  mt-3">
                             <div class="col-md-4">
                                 <label for="valor_fipe" class="form-label">Valor</label>
-                                <input type="number" class="form-control" id="valor_fipe"
-                                    value="{{ old('valor_fipe', @$store->valor_fipe) }}" name="valor_fipe">
+                                <input type="number" class="form-control" id="valor_fipe" readonly
+                                    value="{{ old('valor_fipe', @$store->valor_fipe) }}" name="valor_fipe"
+                                    placeholder="Preenchimento Automático">
                             </div>
                             <div class="col-md-4">
                                 <label for="codigo_fipe" class="form-label">Código</label>
-                                <input type="text" class="form-control" id="codigo_fipe"
-                                    value="{{ old('codigo_fipe', @$store->codigo_fipe) }}" name="codigo_fipe">
+                                <input type="text" class="form-control" id="codigo_fipe" readonly
+                                    value="{{ old('codigo_fipe', @$store->codigo_fipe) }}" name="codigo_fipe"
+                                    placeholder="Preenchimento Automático">
                             </div>
                             <div class="col-md-4">
                                 <label for="fipe_mes_referencia" class="form-label">Mês de referência</label>
-                                <input type="text" class="form-control" id="fipe_mes_referencia"
+                                <input type="text" class="form-control" id="fipe_mes_referencia" readonly
                                     value="{{ old('fipe_mes_referencia', @$store->fipe_mes_referencia) }}"
-                                    name="fipe_mes_referencia">
+                                    name="fipe_mes_referencia" placeholder="Preenchimento Automático">
                             </div>
                         </div>
 
-                        <div class="row  mt-3">
+                        <div class="row mt-3" id="divPlacaRenavam" style="display:none;">
                             <div class="col-md-4">
                                 <label for="placa" class="form-label">Placa</label>
                                 <input type="text" class="form-control" id="placa"
@@ -135,21 +171,27 @@
                             </div>
                         </div>
 
-                        <div class="row  mt-3">
+                        <div class="row mt-3" id="divHorimetro" style="display:none;">
                             <div class="col-md-4">
-                                <label for="quilometragem_atual" class="form-label">
-
-                                    @isset($store->quilometragem->quilometragem_atual)
-                                        Quilometragem Atual
-                                    @else
-                                        Quilometragem Inicial
-                                    @endisset
-                                </label>
-                                <input type="number" class="form-control" id="quilometragem_atual"
-                                    value="{{ old('quilometragem_atual', @$store->quilometragem->quilometragem_atual) }}"
-                                    name="quilometragem_atual">
+                                <label for="horimetro_inicial" class="form-label">Horímetro inicial</label>
+                                <input type="text" class="form-control" id="horimetro_inicial"
+                                    value="{{ old('horimetro_inicial', @$store->horimetro_inicial) }}"
+                                    name="horimetro_inicial">
                             </div>
                         </div>
+
+                        @if (!@$store)
+                            <div class="row  mt-3">
+                                <div class="col-md-4">
+                                    <label for="quilometragem_atual" class="form-label">
+                                        Quilometragem Inicial
+                                    </label>
+                                    <input type="number" class="form-control" id="quilometragem_atual"
+                                        value="{{ old('quilometragem_atual', @$store->quilometragem->quilometragem_atual) }}"
+                                        name="quilometragem_atual">
+                                </div>
+                            </div>
+                        @endif
 
                         <div class="row  mt-3">
                             <div class="col-md-4">
@@ -169,7 +211,7 @@
                         <div class="row  mt-3">
                             <div class="col-md-8">
                                 <label for="valor_funcionario" class="form-label">Observação</label>
-                                <textarea name="observacao" id="observacao" cols="30" rows="6" class="form-control"></textarea>
+                                <textarea name="observacao" id="observacao" cols="30" rows="6" class="form-control">{{ @$store->observacao }}</textarea>
                             </div>
                         </div>
 
@@ -221,6 +263,11 @@
                 $('#marca').empty().append('<option value="" selected>Selecione o tipo</option>');
             }
         });
+
+        $('#marca').on('change', function() {
+            var selectedOption = $(this).find('option:selected');
+            $('#marca_nome').val(selectedOption.text());
+        });
     });
 </script>
 <script>
@@ -240,12 +287,18 @@
                         $.each(data.modelos, function(key, value) {
                             $('#modelo').append('<option value="' + value.codigo +
                                 '">' + value.nome + '</option>');
+                            $('#modelo_nome').val(value.nome);
                         });
                     }
                 });
             } else {
                 $('#modelo').empty().append('<option value="" selected>Selecione o modelo</option>');
             }
+        });
+
+        $('#modelo').on('change', function() {
+            var selectedOption = $(this).find('option:selected');
+            $('#modelo_nome').val(selectedOption.text());
         });
     });
 </script>
@@ -306,4 +359,19 @@
             }
         });
     });
+</script>
+<script>
+    function mostrarEsconderInputs() {
+        var tipo = document.getElementById("tipo").value;
+        if (tipo == "motos" || tipo == "carros" || tipo == "caminhoes") {
+            document.getElementById("divPlacaRenavam").style.display = "";
+            document.getElementById("divHorimetro").style.display = "none";
+        } else if (tipo == "maquinas") {
+            document.getElementById("divPlacaRenavam").style.display = "none";
+            document.getElementById("divHorimetro").style.display = "block";
+        } else {
+            document.getElementById("divPlacaRenavam").style.display = "none";
+            document.getElementById("divHorimetro").style.display = "none";
+        }
+    }
 </script>

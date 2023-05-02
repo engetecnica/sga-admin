@@ -11,6 +11,8 @@ class VeiculoManutencao extends Model
 
     protected $fillable = [
         'veiculo_id',
+        'fornecedor_id',
+        'servico_id',
         'tipo',
         'quilometragem_atual',
         'quilometragem_proxima',
@@ -21,8 +23,19 @@ class VeiculoManutencao extends Model
         'descricao',
         'valor_do_servico'
     ];
+
     public function veiculo()
     {
         return $this->belongsTo(Veiculo::class);
+    }
+
+    public function fornecedor()
+    {
+        return $this->belongsTo(CadastroFornecedor::class);
+    }
+
+    public function servico()
+    {
+        return $this->belongsTo(Servico::class);
     }
 }

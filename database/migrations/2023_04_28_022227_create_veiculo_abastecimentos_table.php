@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('veiculo_abastecimentos', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('veiculo_id')->unsigned();
+            $table->unsignedBigInteger('fornecedor_id')->unsigned();
 
             $table->string('combustivel');
             $table->integer('quilometragem');
@@ -25,6 +26,7 @@ return new class extends Migration
 
             $table->timestamps();
             $table->foreign('veiculo_id')->references('id')->on('veiculos');
+            $table->foreign('fornecedor_id')->references('id')->on('fornecedores');
         });
     }
 

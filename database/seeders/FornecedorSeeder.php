@@ -6,7 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class ObraSeeder extends Seeder
+class FornecedorSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,18 +15,13 @@ class ObraSeeder extends Seeder
      */
     public function run()
     {
+
         $faker = \Faker\Factory::create();
 
-        // $veiculos = DB::table('veiculos')->pluck('id');
-        $empresas = DB::table('empresas')->pluck('id');
-        for ($i = 0; $i < 50; $i++) {
-            DB::table('obras')->insert([
-                // 'veiculo_id' => $veiculos->random(),
-                'id_empresa' => $empresas->random(),
-
-                'razao_social' => $faker->name,
-                'cnpj'         => $faker->unique()->randomNumber(9),
-                'codigo_obra'  => $faker->randomNumber(5),
+        foreach (range(1, 50) as $index) {
+            DB::table('fornecedores')->insert([
+                'razao_social'      => $faker->name,
+                'cnpj'          => $faker->unique()->randomNumber(9),
                 'cep' => $faker->postcode,
                 'endereco' => $faker->address,
                 'numero' => $faker->buildingNumber,
@@ -36,9 +31,8 @@ class ObraSeeder extends Seeder
                 'email' => $faker->unique()->email,
                 'celular' => $faker->phoneNumber,
                 'status' => $faker->randomElement(['Ativo', 'Inativo']),
-
                 'created_at' => now(),
-                'updated_at' => now()
+                'updated_at' => now(),
             ]);
         }
     }

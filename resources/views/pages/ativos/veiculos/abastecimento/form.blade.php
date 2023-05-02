@@ -6,7 +6,7 @@
         <h3 class="page-title">
             <span class="page-title-icon bg-gradient-primary text-white me-2">
                 <i class="mdi mdi-access-point-network menu-icon"></i>
-            </span> Abastecimento do veículo {{ $store->abastecimento }}
+            </span> Abastecimento do veículo
         </h3>
         <nav aria-label="breadcrumb">
             <ul class="breadcrumb">
@@ -42,10 +42,22 @@
                         <div class="row mt-3">
                             <div class="col-md-4">
                                 <label for="combustivel" class="form-label">Fornecedor</label>
+                                {{-- retorna o nome do fornecedor relacionado com o abastecimento de veiculo --}}
+                                {{-- {{ $store->abastecimento->fornecedor->razao_social }} --}}
                                 <select name="fornecedor" id="fornecedor" class="form-select">
-                                    <option value="1" selected>1</option>
-                                    <option value="2">2</option>
+                                    <option value="" selected>Selecione</option>
+                                    @foreach ($fornecedores as $fornecedor)
+                                        <option value="{{ $fornecedor->id }}"
+                                            @if (
+                                                $store->abastecimento &&
+                                                    $store->abastecimento->fornecedor &&
+                                                    $fornecedor->id == $store->abastecimento->fornecedor->id) selected @endif>
+                                            {{ $fornecedor->razao_social }}</option>
+                                    @endforeach
                                 </select>
+
+
+
                             </div>
 
                             <div class="col-md-4">

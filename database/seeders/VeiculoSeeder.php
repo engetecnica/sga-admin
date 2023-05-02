@@ -20,7 +20,7 @@ class VeiculoSeeder extends Seeder
 
         foreach (range(1, 50) as $index) {
             DB::table('veiculos')->insert([
-
+                'obra' => $faker->name(),
                 'periodo_inicial'   => $faker->date(),
                 'periodo_final'   => $faker->date(),
                 'tipo' => $faker->randomElement(['carros', 'motos', 'caminhoes', 'maquinas']),

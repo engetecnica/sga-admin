@@ -2,84 +2,34 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Relatorio;
+use App\Exports\VeiculosExport;
+use App\Models\Veiculo;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Maatwebsite\Excel\Facades\Excel;
 
 class RelatorioController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //
+        return view('pages.relatorio.index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function gerarVeiculosPdf()
     {
-        //
+        $veiculos = Veiculo::all();
+
+        $data_de_geracao = now()->format('d/m/Y H:i:s');
+
+        $pdf = Pdf::loadView('pages.relatorio.pdf', compact('veiculos', 'data_de_geracao'));
+
+        $pdf->getDOMPdf()->set_option('isPhpEnabled', true);
+
+        return $pdf->stream('teste.pdf');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function gerarVeiculosXls()
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Relatorio  $relatorio
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Relatorio $relatorio)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Relatorio  $relatorio
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Relatorio $relatorio)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Relatorio  $relatorio
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Relatorio $relatorio)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Relatorio  $relatorio
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Relatorio $relatorio)
-    {
-        //
+        return Excel::download(new VeiculosExport, 'users.xlsx');
     }
 }

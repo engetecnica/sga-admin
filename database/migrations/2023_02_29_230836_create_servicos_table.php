@@ -13,15 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('veiculo_quilometragems', function (Blueprint $table) {
+        Schema::create('servicos', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('veiculo_id')->unsigned();
 
-            $table->integer('quilometragem_atual');
-            $table->integer('quilometragem_nova')->nullable();
+            $table->string('name');
 
             $table->timestamps();
-            $table->foreign('veiculo_id')->references('id')->on('veiculos');
         });
     }
 
@@ -32,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('veiculo_quilometragems');
+        Schema::dropIfExists('servicos');
     }
 };

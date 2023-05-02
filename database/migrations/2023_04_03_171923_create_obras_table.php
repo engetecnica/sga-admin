@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('obras', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedBigInteger('veiculo_id')->unsigned();
+            // $table->unsignedBigInteger('veiculo_id')->unsigned();
             $table->unsignedBigInteger('id_empresa')->unsigned();
 
             $table->string('razao_social')->nullable();
@@ -34,7 +34,7 @@ return new class extends Migration
             $table->softDeletes();
             $table->timestamps();
 
-            $table->foreign('veiculo_id')->references('id')->on('veiculos');
+            // $table->foreign('veiculo_id')->references('id')->on('veiculos');
             $table->foreign('id_empresa')->references('id')->on('empresas');
         });
     }

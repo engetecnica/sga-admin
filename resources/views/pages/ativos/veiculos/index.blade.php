@@ -48,14 +48,53 @@
                                     <td><span class="badge badge-dark">{{ $veiculo->id }}</span></td>
 
                                     <td>{{ $veiculo->tipo }}</td>
-                                    <td>{{ $veiculo->abastecimento->combustivel }}</td>
-                                    <td>{{ $veiculo->quilometragem->quilometragem_atual }}</td>
                                     <td>
+                                        @isset($veiculo->abastecimento)
+                                            {{ $veiculo->abastecimento->combustivel }}
+                                        @endisset
+                                    </td>
+                                    <td>
+                                        @isset($veiculo->quilometragem)
+                                            {{ $veiculo->quilometragem->quilometragem_atual }}
+                                        @endisset
+                                    </td>
+                                    <td class="d-flex gap-2">
+                                        <div class="dropdown">
+                                            <button class="badge badge-info" type="button" id="dropdownMenuButton1"
+                                                data-bs-toggle="dropdown" aria-expanded="false">
+                                                <i class="mdi mdi-pencil"></i> Gerenciar
+                                            </button>
+                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                                <li><a class="dropdown-item"
+                                                        href="{{ route('ativo.veiculo.editar', $veiculo->id) }}">Editar</a>
+                                                </li>
+                                                <li><a class="dropdown-item"
+                                                        href="{{ route('ativo.veiculo.quilometragem.editar', $veiculo->id) }}">Quilometragem</a>
+                                                </li>
+                                                <li><a class="dropdown-item"
+                                                        href="{{ route('ativo.veiculo.abastecimento.editar', $veiculo->id) }}">Abastecimento</a>
+                                                </li>
+                                                <li><a class="dropdown-item"
+                                                        href="{{ route('ativo.veiculo.manutencao.editar', $veiculo->id) }}">Manutenção</a>
+                                                </li>
+                                                <li><a class="dropdown-item"
+                                                        href="{{ route('ativo.veiculo.ipva.editar', $veiculo->id) }}">IPVA</a>
+                                                </li>
+                                                <li><a class="dropdown-item"
+                                                        href="{{ route('ativo.veiculo.seguro.editar', $veiculo->id) }}">Seguro</a>
+                                                </li>
+                                                <li><a class="dropdown-item"
+                                                        href="{{ route('ativo.veiculo.depreciacao.editar', $veiculo->id) }}">Depreciação</a>
+                                                </li>
+                                                <li><a class="dropdown-item" href="#">Anexos</a></li>
+                                            </ul>
+                                        </div>
 
-                                        <a href="{{ route('ativo.veiculo.editar', $veiculo->id) }}">
+                                        {{-- <a href="{{ route('ativo.veiculo.editar', $veiculo->id) }}">
                                             <button class="badge badge-info" data-toggle="tooltip" data-placement="top"
-                                                title="Editar"><i class="mdi mdi-pencil"></i> Editar</button>
-                                        </a>
+                                                title="Editar"><i class="mdi mdi-pencil"></i> Gerenciar
+                                            </button>
+                                        </a> --}}
 
                                         <a href="javascript:void(0)" class="excluir-padrao" data-id="{{ $veiculo->id }}"
                                             data-table="empresas" data-module="cadastro/empresa"

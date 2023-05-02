@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\CadastroFornecedor;
+use App\Models\Servico;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Veiculo;
@@ -19,11 +21,17 @@ class VeiculoManutencaoSeeder extends Seeder
         $faker = \Faker\Factory::create();
 
         $veiculos = Veiculo::where('id', '>', 0)->get();
+        $fornecedores = CadastroFornecedor::where('id', '>', 0)->get();
+        $servicos = Servico::where('id', '>', 0)->get();
 
         foreach ($veiculos as $veiculo) {
+            $fornecedor = $fornecedores->random();
+            $servico = $servicos->random();
             DB::table('veiculo_manutencaos')->insert([
                 'veiculo_id'       => $veiculo->id,
-
+                'fornecedor_id' => $fornecedor->id,
+                'servico_id' => $servico->id,
+                
                 'tipo' => $faker->randomElement(['corretiva', 'preventiva']),
                 'quilometragem_atual' => $faker->randomNumber(6),
                 'quilometragem_proxima' => $faker->randomNumber(6),

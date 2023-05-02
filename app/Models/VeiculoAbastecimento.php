@@ -11,6 +11,7 @@ class VeiculoAbastecimento extends Model
 
     protected $fillable = [
         'veiculo_id',
+        'fornecedor_id',
         'combustivel',
         'quilometragem',
         'valor_do_litro',
@@ -21,5 +22,10 @@ class VeiculoAbastecimento extends Model
     public function veiculo()
     {
         return $this->belongsTo(Veiculo::class);
+    }
+
+    public function fornecedor()
+    {
+        return $this->belongsTo(CadastroFornecedor::class);
     }
 }

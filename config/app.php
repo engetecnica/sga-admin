@@ -202,7 +202,7 @@ return [
 
         Barryvdh\Debugbar\ServiceProvider::class,
 
-        
+        Maatwebsite\Excel\ExcelServiceProvider::class,
 
     ],
 
@@ -222,6 +222,7 @@ return [
         'Tratamento' => App\Helpers\Tratamento::class,
         'Debugbar' => Barryvdh\Debugbar\Facades\Debugbar::class,
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
     ])->toArray(),
 
 ];

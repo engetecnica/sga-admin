@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\VeiculoDepreciacao;
 use Illuminate\Http\Request;
 use App\Models\Veiculo;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class VeiculoDepreciacaoController extends Controller
 {

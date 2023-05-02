@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\CadastroObra;
 use App\Models\Veiculo;
+use App\Models\VeiculoQuilometragem;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class VeiculoController extends Controller
 {
@@ -24,33 +26,69 @@ class VeiculoController extends Controller
     public function store(Request $request)
     {
         // dd($request);
+        $veiculo = Veiculo::create(
+            [
+                'obra' => $request->input('obra'),
+                'periodo_inicial' => $request->input('periodo_inicial'),
+                'periodo_final' => $request->input('periodo_final'),
+                'tipo' => $request->input('tipo'),
+                'marca' => $request->input('marca_nome'),
+                'modelo' => $request->input('modelo_nome'),
+                'ano' => $request->input('ano'),
+                'veiculo' => $request->input('veiculo'),
+                'valor_fipe' => $request->input('valor_fipe'),
+                'codigo_fipe' => $request->input('codigo_fipe'),
+                'fipe_mes_referencia' => $request->input('fipe_mes_referencia'),
+                'placa' => $request->input('placa'),
+                'renavam' => $request->input('renavam'),
+                'horimetro_inicial' => $request->input('horimetro_inicial'),
+                'valor_funcionario' => $request->input('valor_funcionario'),
+                'valor_adicional' => $request->input('valor_adicional'),
+                'observacao' => $request->input('observacao'),
+                'situacao' => $request->input('situacao'),
+            ]
+        );
 
-        try {
-            Veiculo::create(
-                [
-                    'periodo_inicial' => $request->input('periodo_inicial'),
-                    'periodo_final' => $request->input('periodo_final'),
-                    'tipo' => $request->input('tipo'),
-                    'marca' => $request->input('marca'),
-                    'modelo' => $request->input('modelo'),
-                    'ano' => $request->input('ano'),
-                    'veiculo' => $request->input('veiculo'),
-                    'valor_fipe' => $request->input('valor_fipe'),
-                    'codigo_fipe' => $request->input('codigo_fipe'),
-                    'fipe_mes_referencia' => $request->input('fipe_mes_referencia'),
-                    'placa' => $request->input('placa'),
-                    'renavam' => $request->input('renavam'),
-                    'valor_funcionario' => $request->input('valor_funcionario'),
-                    'valor_adicional' => $request->input('valor_adicional'),
-                    'observacao' => $request->input('observacao'),
-                    'situacao' => $request->input('situacao'),
-                ]
-            );
-            return redirect()->back()->with('success', 'Sucesso');
-        } catch (\Exception $e) {
+        VeiculoQuilometragem::create([
+            'veiculo_id' => $veiculo->id,
+            'quilometragem_atual' => $request->input('quilometragem_atual')
+        ]);
+        
+        return redirect()->back();
 
-            return redirect()->back()->withInput();
-        }
+        // try {
+        //     $veiculo = Veiculo::create(
+        //         [
+        //             'obra' => $request->input('obra'),
+        //             'periodo_inicial' => $request->input('periodo_inicial'),
+        //             'periodo_final' => $request->input('periodo_final'),
+        //             'tipo' => $request->input('tipo'),
+        //             'marca' => $request->input('marca_nome'),
+        //             'modelo' => $request->input('modelo_nome'),
+        //             'ano' => $request->input('ano'),
+        //             'veiculo' => $request->input('veiculo'),
+        //             'valor_fipe' => $request->input('valor_fipe'),
+        //             'codigo_fipe' => $request->input('codigo_fipe'),
+        //             'fipe_mes_referencia' => $request->input('fipe_mes_referencia'),
+        //             'placa' => $request->input('placa'),
+        //             'renavam' => $request->input('renavam'),
+        //             'horimetro_inicial' => $request->input('horimetro_inicial'),
+        //             'valor_funcionario' => $request->input('valor_funcionario'),
+        //             'valor_adicional' => $request->input('valor_adicional'),
+        //             'observacao' => $request->input('observacao'),
+        //             'situacao' => $request->input('situacao'),
+        //         ]
+        //     );
+
+        //     VeiculoQuilometragem::create([
+        //         'veiculo_id' => $veiculo->id,
+        //         'quilometragem_atual' => $request->input('quilometragem_atual')
+        //     ]);
+        //     return redirect()->back()->with('success', 'Sucesso');
+        // } catch (\Exception $e) {
+
+        //     return redirect()->back()->withInput();
+        // }
     }
 
     public function edit($id)
@@ -71,6 +109,26 @@ class VeiculoController extends Controller
     {
         $veiculo = Veiculo::findOrFail($id);
 
-        $veiculo->obra = $request->input('obra');
+        $veiculo->update([
+            'obra' => $request->obra,
+            'periodo_inicial' => $request->periodo_inicial,
+            'periodo_final' => $request->periodo_final,
+            'tipo' => $request->tipo,
+            'marca' => $request->marca_nome,
+            'modelo' => $request->modelo_nome,
+            'veiculo' => $request->veiculo,
+            'valor_fipe' => $request->valor_fipe,
+            'codigo_fipe' => $request->codigo_fipe,
+            'fipe_mes_referencia' => $request->fipe_mes_referencia,
+            'placa' => $request->placa,
+            'renavam' => $request->renavam,
+            'horimetro_inicial' => $request->horimetro_inicial,
+            'valor_funcionario' => $request->valor_funcionario,
+            'valor_adicional' => $request->valor_adicional,
+            'observacao' => $request->observacao,
+            'situacao' => $request->situacao,
+        ]);
+
+        return redirect()->back()->with('success', 'Sucesso');
     }
 }

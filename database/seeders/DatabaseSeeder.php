@@ -15,6 +15,8 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
+            FornecedorSeeder::class,
+            ServicoSeeder::class,
             ModulosSeeder::class,
             NiveisSeeder::class,
             UsersSeeder::class,
@@ -22,8 +24,9 @@ class DatabaseSeeder extends Seeder
             AtivosExternosStatusSeeder::class,
             AtivosFerramentalStatusSeeder::class,
             EmpresaSeeder::class,
-            VeiculoSeeder::class,
             ObraSeeder::class,
+
+            VeiculoSeeder::class,
             VeiculoAbastecimentoSeeder::class,
             VeiculoDepreciacaoSeeder::class,
             VeiculoIpvaSeeder::class,

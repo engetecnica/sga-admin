@@ -10,6 +10,7 @@ class Veiculo extends Model
     use HasFactory;
 
     protected $fillable = [
+        'obra',
         'periodo_inicial',
         'periodo_final',
         'tipo',
@@ -22,6 +23,7 @@ class Veiculo extends Model
         'fipe_mes_referencia',
         'placa',
         'renavam',
+        'horimetro_inicial',
         'valor_funcionario',
         'valor_adicional',
         'observacao',

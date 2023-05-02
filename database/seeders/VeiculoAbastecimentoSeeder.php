@@ -6,6 +6,7 @@ use App\Models\Veiculo;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use App\Models\CadastroFornecedor;
 
 class VeiculoAbastecimentoSeeder extends Seeder
 {
@@ -19,10 +20,13 @@ class VeiculoAbastecimentoSeeder extends Seeder
         $faker = \Faker\Factory::create();
 
         $veiculos = Veiculo::where('id', '>', 0)->get();
+        $fornecedores = CadastroFornecedor::where('id', '>', 0)->get();
 
         foreach ($veiculos as $veiculo) {
+            $fornecedor = $fornecedores->random();
             DB::table('veiculo_abastecimentos')->insert([
                 'veiculo_id'       => $veiculo->id,
+                'fornecedor_id' => $fornecedor->id,
                 'combustivel' => $faker->randomElement(['gasolina', 'diesel', 'etanol']),
                 'quilometragem' => $faker->randomNumber(6),
                 'valor_do_litro' => $faker->randomFloat($nbMaxDecimals = NULL, $min = 0, $max = 100),

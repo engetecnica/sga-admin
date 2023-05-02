@@ -44,9 +44,11 @@ use App\Http\Controllers\ApiController;
  */
 
 use App\Http\Controllers\Api\ApiRequisicao;
+use App\Http\Controllers\RelatorioController;
 use App\Http\Controllers\VeiculoAbastecimentoController;
 use App\Http\Controllers\VeiculoDepreciacaoController;
 use App\Http\Controllers\VeiculoIpvaController;
+use App\Http\Controllers\VeiculoManutencaoController;
 use App\Http\Controllers\VeiculoQuilometragemController;
 use App\Http\Controllers\VeiculoSeguroController;
 
@@ -201,7 +203,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('admin/ativo/veiculo/ipva/update/{id}', [VeiculoIpvaController::class, 'update'])->name('ativo.veiculo.ipva.update');
 
     /* Ativo - Veículos - Manutencao */
-    Route::get('admin/ativo/veiculo/manutencao/{id}', [VeiculoQuilometragemController::class, 'edit'])->name('ativo.veiculo.manutencao.editar');
+    Route::get('admin/ativo/veiculo/manutencao/{id}', [VeiculoManutencaoController::class, 'edit'])->name('ativo.veiculo.manutencao.editar');
+    Route::post('admin/ativo/veiculo/manutencao/store/{id}', [VeiculoManutencaoController::class, 'store'])->name('ativo.veiculo.manutencao.store');
+    Route::post('admin/ativo/veiculo/manutencao/update/{id}', [VeiculoManutencaoController::class, 'update'])->name('ativo.veiculo.manutencao.update');
 
     /* Ativo - Veículos - Quilometragem */
     Route::get('admin/ativo/veiculo/quilometragem/{id}', [VeiculoQuilometragemController::class, 'edit'])->name('ativo.veiculo.quilometragem.editar');
@@ -212,6 +216,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('admin/ativo/veiculo/seguro/{id}', [VeiculoSeguroController::class, 'edit'])->name('ativo.veiculo.seguro.editar');
     Route::post('admin/ativo/veiculo/seguro/store/{id}', [VeiculoSeguroController::class, 'store'])->name('ativo.veiculo.seguro.store');
     Route::post('admin/ativo/veiculo/seguro/update/{id}', [VeiculoSeguroController::class, 'update'])->name('ativo.veiculo.seguro.update');
+
+    // Relatórios
+    Route::get('admin/relatorio/novo', [RelatorioController::class, 'index'])->name('relatorio.index');
+    Route::post('admin/relatorio/veiculos/pdf', [RelatorioController::class, 'gerarVeiculosPdf'])->name('relatorio.veiculos.pdf');
+    Route::post('admin/relatorio/veiculos/xls', [RelatorioController::class, 'gerarVeiculosXls'])->name('relatorio.veiculos.xls');
+
 
     /* Ferramental - Retirada */
     Route::get('admin/ferramental', [FerramentalRetiradaController::class, 'index'])->name('ferramental');

@@ -552,9 +552,73 @@
             }
         });
 
+        $('#obra').select2({
+            minimumResultsForSearch: -1,
+            placeholder: function() {
+                $(this).data('placeholder');
+            }
+        });
+
+        $('#tipo').select2({
+            minimumResultsForSearch: -1,
+            placeholder: function() {
+                $(this).data('placeholder');
+            }
+        });
+
+        $('#marca').select2({
+            minimumResultsForSearch: -1,
+            placeholder: function() {
+                $(this).data('placeholder');
+            }
+        });
+
+        $('#modelo').select2({
+            minimumResultsForSearch: -1,
+            placeholder: function() {
+                $(this).data('placeholder');
+            }
+        });
+
+        $('#ano').select2({
+            minimumResultsForSearch: -1,
+            placeholder: function() {
+                $(this).data('placeholder');
+            }
+        });
+
+        $('#situacao').select2({
+            minimumResultsForSearch: -1,
+            placeholder: function() {
+                $(this).data('placeholder');
+            }
+        });
+
+        $('#fornecedor').select2({
+            minimumResultsForSearch: -1,
+            placeholder: function() {
+                $(this).data('placeholder');
+            }
+        });
+
+        $('#combustivel').select2({
+            minimumResultsForSearch: -1,
+            placeholder: function() {
+                $(this).data('placeholder');
+            }
+        });
+
+        $('#servico').select2({
+            minimumResultsForSearch: -1,
+            placeholder: function() {
+                $(this).data('placeholder');
+            }
+        });
+
+
         $(".money").inputmask('currency', {
             "autoUnmask": true,
-            radixPoint: ",",
+            radixPoint: ".",
             groupSeparator: ".",
             allowMinus: false,
             prefix: 'R$ ',
@@ -564,10 +628,84 @@
             unmaskAsNumber: true
         });
 
+
         $('.celular').inputmask('(99) 99999-9999');
         $('.cpf').inputmask('999.999.999-99');
         $('.cep').inputmask('99999-999');
         $('.cnpj').inputmask('99.999.999/9999-99');
+        $("#valor_fipe").inputmask('currency', {
+            "autoUnmask": true,
+            radixPoint: ".",
+            groupSeparator: ".",
+            allowMinus: false,
+            prefix: 'R$ ',
+            digits: 2,
+            digitsOptional: false,
+            rightAlign: true,
+            unmaskAsNumber: true
+        });
+        $("#valor_do_litro").inputmask('currency', {
+            "autoUnmask": true,
+            radixPoint: ".",
+            groupSeparator: ".",
+            allowMinus: false,
+            prefix: 'R$ ',
+            digits: 2,
+            digitsOptional: false,
+            rightAlign: true,
+            unmaskAsNumber: true
+        });
+        $("#valor_total").inputmask('currency', {
+            "autoUnmask": true,
+            radixPoint: ".",
+            groupSeparator: ".",
+            allowMinus: false,
+            prefix: 'R$ ',
+            digits: 2,
+            digitsOptional: false,
+            rightAlign: true,
+            unmaskAsNumber: true
+        });
+        $("#valor_do_servico").inputmask('currency', {
+            "autoUnmask": true,
+            radixPoint: ".",
+            groupSeparator: ".",
+            allowMinus: false,
+            prefix: 'R$ ',
+            digits: 2,
+            digitsOptional: false,
+            rightAlign: true,
+            unmaskAsNumber: true
+        });
+        $("#valor").inputmask('currency', {
+            "autoUnmask": true,
+            radixPoint: ".",
+            groupSeparator: ".",
+            allowMinus: false,
+            prefix: 'R$ ',
+            suffix: '',
+            digits: 2,
+            decimalProtect: true,
+            rightAlign: true,
+            unmaskAsNumber: true
+        });
+        $("#valor_atual").inputmask('currency', {
+            "autoUnmask": true,
+            radixPoint: ".",
+            groupSeparator: ".",
+            allowMinus: false,
+            prefix: 'R$ ',
+            suffix: '',
+            digits: 2,
+            decimalProtect: true,
+            rightAlign: true,
+            unmaskAsNumber: true
+        });
+
+        $("#placa").inputmask({
+            mask: 'AAA-9999'
+        });
+
 
 
         /* Exclusão Padrão */

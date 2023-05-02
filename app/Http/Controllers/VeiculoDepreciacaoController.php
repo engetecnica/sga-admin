@@ -31,7 +31,7 @@ class VeiculoDepreciacaoController extends Controller
             VeiculoDepreciacao::create(
                 [
                     'veiculo_id' => $veiculo->id,
-                    'valor_atual' => $request->input('valor_atual'),
+                    'valor_atual' => str_replace('R$ ', '', $request->input('valor_atual')),
                     'referencia_mes' => $request->input('referencia_mes'),
                     'referencia_ano' => $request->input('referencia_ano'),
                 ]
@@ -49,7 +49,7 @@ class VeiculoDepreciacaoController extends Controller
         $veiculo = Veiculo::findOrFail($id);
         try {
             $veiculo->depreciacao->update([
-                'valor_atual' => $request->valor_atual,
+                'valor_atual' => str_replace('R$ ', '', $request->valor_atual),
                 'referencia_mes' => $request->referencia_mes,
                 'referencia_ano' => $request->referencia_ano
             ]);

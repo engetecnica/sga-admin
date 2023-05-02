@@ -36,9 +36,13 @@
                         <thead>
                             <tr>
                                 <th width="8%">ID</th>
-                                <th>TIPO</th>
-                                <th>Combustível</th>
+                                <th>Tipo</th>
+                                <th>Obra</th>
+                                {{-- <th>Período de Vigência</th> --}}
+                                <th>Placa / Nome do veículo</th>
+                                {{-- <th>Combustível</th> --}}
                                 <th>KM atual</th>
+                                <th>HR Atual</th>
                                 <th width="10%">Ações</th>
                             </tr>
                         </thead>
@@ -47,15 +51,36 @@
                                 <tr>
                                     <td><span class="badge badge-dark">{{ $veiculo->id }}</span></td>
 
-                                    <td>{{ $veiculo->tipo }}</td>
-                                    <td>
+                                    @php
+                                        $tiposVeiculos = [
+                                            'motos' => 'Moto',
+                                            'caminhoes' => 'Caminhão',
+                                            'carros' => 'Carro',
+                                            'maquinas' => 'Máquina',
+                                        ];
+                                    @endphp
+
+                                    <td>{{ $tiposVeiculos[$veiculo->tipo] }}</td>
+                                    <td>{{ $veiculo->obra->razao_social }}</td>
+                                    {{-- <td>
+                                        {{ date('d/m/Y', strtotime($veiculo->periodo_inicial)) }} até
+                                        {{ date('d/m/Y', strtotime($veiculo->periodo_final)) }}
+                                    </td> --}}
+
+                                    <td>{{ $veiculo->placa }}/{{ $veiculo->veiculo }}</td>
+                                    {{-- <td>
                                         @isset($veiculo->abastecimento)
                                             {{ $veiculo->abastecimento->combustivel }}
                                         @endisset
-                                    </td>
+                                    </td> --}}
                                     <td>
                                         @isset($veiculo->quilometragem)
-                                            {{ $veiculo->quilometragem->quilometragem_atual }}
+                                            {{ $veiculo->quilometragem->quilometragem_atual }}Km
+                                        @endisset
+                                    </td>
+                                    <td>
+                                        @isset($veiculo->horimetro_inicial)
+                                            {{ $veiculo->horimetro_inicial }}Hr
                                         @endisset
                                     </td>
                                     <td class="d-flex gap-2">

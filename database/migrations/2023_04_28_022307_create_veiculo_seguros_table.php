@@ -19,7 +19,7 @@ return new class extends Migration
 
             $table->string('carencia_inicial');
             $table->string('carencia_final');
-            $table->float('valor');
+            $table->string('valor');
 
             $table->timestamps();
             $table->foreign('veiculo_id')->references('id')->on('veiculos');

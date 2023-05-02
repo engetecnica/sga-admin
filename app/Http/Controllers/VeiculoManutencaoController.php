@@ -46,8 +46,7 @@ class VeiculoManutencaoController extends Controller
                     'data_de_execucao' => $request->input('data_de_execucao'),
                     'data_de_vencimento' => $request->input('data_de_vencimento'),
                     'descricao' => $request->input('descricao'),
-                    'valor_do_servico' => $request->input('valor_do_servico'),
-
+                    'valor_do_servico' => str_replace('R$ ', '', $request->input('valor_do_servico')),
                 ]
             );
             return redirect()->back()->with('success', 'Sucesso');
@@ -61,25 +60,38 @@ class VeiculoManutencaoController extends Controller
     {
         // dd($request);
         $veiculo = Veiculo::findOrFail($id);
-        try {
-            $veiculo->manutencao->update([
-                'tipo' => $request->tipo,
-                'fornecedor_id' => $request->fornecedor,
-                'servico_id' => $request->servico,
-                'quilometragem_atual' => $request->quilometragem_atual,
-                'quilometragem_proxima' => $request->quilometragem_proxima,
-                'horimetro_atual' => $request->horimetro_atual,
-                'horimetro_proximo' => $request->horimetro_proximo,
-                'data_de_execucao' => $request->data_de_execucao,
-                'data_de_vencimento' => $request->data_de_vencimento,
-                'descricao' => $request->descricao,
-                'valor_do_servico' => $request->valor_do_servico
-            ]);
+        $veiculo->manutencao->update([
+            'tipo' => $request->tipo,
+            'fornecedor_id' => $request->fornecedor,
+            'servico_id' => $request->servico,
+            'quilometragem_atual' => $request->quilometragem_atual,
+            'quilometragem_proxima' => $request->quilometragem_proxima,
+            'horimetro_atual' => $request->horimetro_atual,
+            'horimetro_proximo' => $request->horimetro_proximo,
+            'data_de_execucao' => $request->data_de_execucao,
+            'data_de_vencimento' => $request->data_de_vencimento,
+            'valor_do_servico' => str_replace('R$ ', '', $request->valor_do_servico),
+        ]);
+        return redirect()->back();
+        // try {
+        //     $veiculo->manutencao->update([
+        //         'tipo' => $request->tipo,
+        //         'fornecedor_id' => $request->fornecedor,
+        //         'servico_id' => $request->servico,
+        //         'quilometragem_atual' => $request->quilometragem_atual,
+        //         'quilometragem_proxima' => $request->quilometragem_proxima,
+        //         'horimetro_atual' => $request->horimetro_atual,
+        //         'horimetro_proximo' => $request->horimetro_proximo,
+        //         'data_de_execucao' => $request->data_de_execucao,
+        //         'data_de_vencimento' => $request->data_de_vencimento,
+        //         'descricao' => $request->descricao,
+        //         'valor_do_servico' => $request->valor_do_servico
+        //     ]);
 
-            return redirect()->back()->with('success', 'Sucesso');
-        } catch (\Exception $e) {
+        //     return redirect()->back()->with('success', 'Sucesso');
+        // } catch (\Exception $e) {
 
-            return redirect()->back()->withInput();
-        }
+        //     return redirect()->back()->withInput();
+        // }
     }
 }

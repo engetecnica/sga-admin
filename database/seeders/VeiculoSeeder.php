@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\CadastroObra;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -17,10 +18,11 @@ class VeiculoSeeder extends Seeder
     {
         $faker = (new \Faker\Factory())::create();
         $faker->addProvider(new \Faker\Provider\Fakecar($faker));
-
+        $obraIds = CadastroObra::pluck('id')->toArray(); // convertendo Collection em array
+        shuffle($obraIds);
         foreach (range(1, 50) as $index) {
             DB::table('veiculos')->insert([
-                'obra' => $faker->name(),
+                'obra_id'           => $obraIds[array_rand($obraIds)],
                 'periodo_inicial'   => $faker->date(),
                 'periodo_final'   => $faker->date(),
                 'tipo' => $faker->randomElement(['carros', 'motos', 'caminhoes', 'maquinas']),
@@ -37,8 +39,7 @@ class VeiculoSeeder extends Seeder
                 'renavam' => $faker->randomNumber(6),
 
                 // 'km' => $faker->randomNumber(6),
-                'valor_funcionario' => $faker->randomFloat($nbMaxDecimals = NULL, $min = 0, $max = 1000),
-                'valor_adicional' => $faker->randomFloat($nbMaxDecimals = NULL, $min = 0, $max = 100),
+          
                 'observacao' => $faker->text($maxNbChars = 200),
                 'situacao' => $faker->randomElement(['ativo', 'inativo']),
 

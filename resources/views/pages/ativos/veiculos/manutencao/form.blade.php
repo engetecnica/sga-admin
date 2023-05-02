@@ -6,7 +6,7 @@
         <h3 class="page-title">
             <span class="page-title-icon bg-gradient-primary text-white me-2">
                 <i class="mdi mdi-access-point-network menu-icon"></i>
-            </span> Abastecimento do veículo
+            </span> Manutenção do Veículo
         </h3>
         <nav aria-label="breadcrumb">
             <ul class="breadcrumb">
@@ -77,36 +77,40 @@
                             </div>
                         </div>
 
-                        <div class="row  mt-3">
-                            <div class="col-md-4">
-                                <label for="quilometragem_atual" class="form-label">Quilometragem Atual</label>
-                                <input type="number" class="form-control" id="quilometragem_atual"
-                                    value="{{ old('quilometragem_atual', @$store->manutencao->quilometragem_atual) }}"
-                                    name="quilometragem_atual">
-                            </div>
 
-                            <div class="col-md-4">
-                                <label for="quilometragem_proxima" class="form-label">Quilometragem Nova</label>
-                                <input type="number" class="form-control" id="quilometragem_proxima"
-                                    value="{{ old('quilometragem_proxima', @$store->manutencao->quilometragem_proxima) }}"
-                                    name="quilometragem_proxima">
+                        @if (@$store->tipo == 'maquinas')
+                            <div class="row  mt-3">
+                                <div class="col-md-4">
+                                    <label for="horimetro_atual" class="form-label">Horímetro Atual</label>
+                                    <input type="time" class="form-control" id="horimetro_atual"
+                                        value="{{ old('horimetro_atual', @$store->manutencao->horimetro_atual) }}"
+                                        name="horimetro_atual" step="60">
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="horimetro_proximo" class="form-label">Horímetro Próximo</label>
+                                    <input type="time" class="form-control" id="horimetro_proximo"
+                                        value="{{ old('horimetro_proximo', @$store->manutencao->horimetro_proximo) }}"
+                                        name="horimetro_proximo" step="60">
+                                </div>
                             </div>
-                        </div>
+                        @else
+                            <div class="row  mt-3">
+                                <div class="col-md-4">
+                                    <label for="quilometragem_atual" class="form-label">Quilometragem Atual</label>
+                                    <input type="number" class="form-control" id="quilometragem_atual"
+                                        value="{{ old('quilometragem_atual', @$store->manutencao->quilometragem_atual) }}"
+                                        name="quilometragem_atual">
+                                </div>
 
-                        <div class="row  mt-3">
-                            <div class="col-md-4">
-                                <label for="horimetro_atual" class="form-label">Horímetro Atual</label>
-                                <input type="time" class="form-control" id="horimetro_atual"
-                                    value="{{ old('horimetro_atual', @$store->manutencao->horimetro_atual) }}"
-                                    name="horimetro_atual" step="60">
+                                <div class="col-md-4">
+                                    <label for="quilometragem_proxima" class="form-label">Quilometragem Nova</label>
+                                    <input type="number" class="form-control" id="quilometragem_proxima"
+                                        value="{{ old('quilometragem_proxima', @$store->manutencao->quilometragem_proxima) }}"
+                                        name="quilometragem_proxima">
+                                </div>
                             </div>
-                            <div class="col-md-4">
-                                <label for="horimetro_proximo" class="form-label">Horímetro Próximo</label>
-                                <input type="time" class="form-control" id="horimetro_proximo"
-                                    value="{{ old('horimetro_proximo', @$store->manutencao->horimetro_proximo) }}"
-                                    name="horimetro_proximo" step="60">
-                            </div>
-                        </div>
+                        @endif
+
 
                         <div class="row  mt-3">
                             <div class="col-md-4">
@@ -133,7 +137,7 @@
                         <div class="row  mt-3">
                             <div class="col-md-4">
                                 <label for="valor_do_servico" class="form-label">Valor do Serviço</label>
-                                <input type="number" class="form-control" id="valor_do_servico"
+                                <input type="text" class="form-control" id="valor_do_servico"
                                     value="{{ old('valor_do_servico', @$store->manutencao->valor_do_servico) }}"
                                     name="valor_do_servico" step="any">
                             </div>

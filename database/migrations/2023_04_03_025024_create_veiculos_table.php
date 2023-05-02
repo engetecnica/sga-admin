@@ -15,7 +15,9 @@ return new class extends Migration
     {
         Schema::create('veiculos', function (Blueprint $table) {
             $table->id();
-            $table->string('obra');
+            
+            $table->unsignedBigInteger('obra_id');
+
             $table->string('periodo_inicial');
             $table->string('periodo_final');
             $table->string('tipo');
@@ -23,18 +25,17 @@ return new class extends Migration
             $table->string('modelo');
             $table->string('ano');
             $table->string('veiculo');
-            $table->float('valor_fipe');
+            $table->string('valor_fipe');
             $table->string('codigo_fipe');
             $table->string('fipe_mes_referencia');
             $table->string('placa')->nullable();
             $table->string('renavam')->nullable();
             $table->string('horimetro_inicial')->nullable();
-            $table->float('valor_funcionario');
-            $table->float('valor_adicional');
             $table->longText('observacao')->nullable();
             $table->string('situacao');
 
             $table->timestamps();
+            $table->foreign('obra_id')->references('id')->on('obras');
         });
     }
 

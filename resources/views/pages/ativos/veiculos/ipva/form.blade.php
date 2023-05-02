@@ -6,7 +6,7 @@
         <h3 class="page-title">
             <span class="page-title-icon bg-gradient-primary text-white me-2">
                 <i class="mdi mdi-access-point-network menu-icon"></i>
-            </span> IPVA do veículo {{ $store->ipva }}
+            </span> IPVA do veículo
         </h3>
         <nav aria-label="breadcrumb">
             <ul class="breadcrumb">
@@ -50,7 +50,7 @@
                             </div>
                             <div class="col-md-4">
                                 <label for="valor" class="form-label">Valor</label>
-                                <input type="number" step="any" class="form-control" id="valor"
+                                <input type="text" step="any" class="form-control" id="valor"
                                     value="{{ old('valor', @$store->ipva->valor) }}" name="valor">
                             </div>
                         </div>

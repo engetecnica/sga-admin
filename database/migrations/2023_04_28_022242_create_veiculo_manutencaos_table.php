@@ -27,7 +27,7 @@ return new class extends Migration
             $table->date('data_de_execucao')->nullable();
             $table->date('data_de_vencimento')->nullable();
             $table->longText('descricao')->nullable();
-            $table->float('valor_do_servico');
+            $table->string('valor_do_servico');
             $table->timestamps();
             
             $table->foreign('veiculo_id')->references('id')->on('veiculos');

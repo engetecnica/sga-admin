@@ -37,9 +37,11 @@ class VeiculoAbastecimentoController extends Controller
                     'fornecedor_id' => $request->input('fornecedor'),
                     'combustivel' => $request->input('combustivel'),
                     'quilometragem' => $request->input('quilometragem'),
-                    'valor_do_litro' => $request->input('valor_do_litro'),
+                    'valor_do_litro' => str_replace('R$ ', '', $request->input('valor_do_litro')),
                     'quantidade' => $request->input('quantidade'),
-                    'valor_total' => $request->input('valor_total'),
+                 
+                    'valor_total' => str_replace('R$ ', '', $request->input('valor_total')),
+
                 ]
             );
             return redirect()->back()->with('success', 'Sucesso');
@@ -58,9 +60,9 @@ class VeiculoAbastecimentoController extends Controller
                 'fornecedor_id' => $request->fornecedor,
                 'combustivel' => $request->combustivel,
                 'quilometragem' => $request->quilometragem,
-                'valor_do_litro' => $request->valor_do_litro,
+                'valor_do_litro' => str_replace('R$ ', '', $request->valor_do_litro),
                 'quantidade' => $request->quantidade,
-                'valor_total' => $request->valor_total,
+                'valor_total' => str_replace('R$ ', '', $request->valor_total),
             ]);
 
             return redirect()->back()->with('success', 'Sucesso');

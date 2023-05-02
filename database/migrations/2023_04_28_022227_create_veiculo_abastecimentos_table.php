@@ -20,9 +20,9 @@ return new class extends Migration
 
             $table->string('combustivel');
             $table->integer('quilometragem');
-            $table->float('valor_do_litro');
+            $table->string('valor_do_litro');
             $table->integer('quantidade');
-            $table->float('valor_total')->nullable();
+            $table->string('valor_total')->nullable();
 
             $table->timestamps();
             $table->foreign('veiculo_id')->references('id')->on('veiculos');

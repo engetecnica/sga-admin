@@ -44,12 +44,12 @@
                                 <label for="obra" class="form-label">Obra</label>
                                 <select name="obra" id="obra" class="form-select">
                                     @if (@$store->obra)
-                                        <option value="{{ $store->obra }}" selected>{{ $store->obra }}</option>
+                                        <option value="{{ $store->obra }}" selected>{{ $store->obra->razao_social }}</option>
                                     @else
                                         <option value="" selected>Selecione</option>
                                     @endif
                                     @foreach ($obras as $obra)
-                                        <option value="{{ $obra->razao_social }}">{{ $obra->razao_social }}</option>
+                                        <option value="{{ $obra->id }}">{{ $obra->razao_social }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -140,7 +140,7 @@
                         <div class="row  mt-3">
                             <div class="col-md-4">
                                 <label for="valor_fipe" class="form-label">Valor</label>
-                                <input type="number" class="form-control" id="valor_fipe" readonly
+                                <input type="text" class="form-control" id="valor_fipe" readonly
                                     value="{{ old('valor_fipe', @$store->valor_fipe) }}" name="valor_fipe"
                                     placeholder="Preenchimento Automático">
                             </div>
@@ -174,7 +174,7 @@
                         <div class="row mt-3" id="divHorimetro" style="display:none;">
                             <div class="col-md-4">
                                 <label for="horimetro_inicial" class="form-label">Horímetro inicial</label>
-                                <input type="text" class="form-control" id="horimetro_inicial"
+                                <input type="time" step="60" class="form-control" id="horimetro_inicial"
                                     value="{{ old('horimetro_inicial', @$store->horimetro_inicial) }}"
                                     name="horimetro_inicial">
                             </div>
@@ -193,24 +193,11 @@
                             </div>
                         @endif
 
-                        <div class="row  mt-3">
-                            <div class="col-md-4">
-                                <label for="valor_funcionario" class="form-label">Valor Funcionário</label>
-                                <input type="number" class="form-control" id="valor_funcionario"
-                                    value="{{ old('valor_funcionario', @$store->valor_funcionario) }}"
-                                    name="valor_funcionario">
-                            </div>
-                            <div class="col-md-4">
-                                <label for="valor_adicional" class="form-label">Valor Adicional</label>
-                                <input type="number" class="form-control" id="valor_adicional"
-                                    value="{{ old('valor_adicional', @$store->valor_adicional) }}"
-                                    name="valor_adicional">
-                            </div>
-                        </div>
+                     
 
                         <div class="row  mt-3">
                             <div class="col-md-8">
-                                <label for="valor_funcionario" class="form-label">Observação</label>
+                                <label for="observacao" class="form-label">Observação</label>
                                 <textarea name="observacao" id="observacao" cols="30" rows="6" class="form-control">{{ @$store->observacao }}</textarea>
                             </div>
                         </div>

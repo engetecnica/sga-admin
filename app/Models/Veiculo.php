@@ -10,7 +10,7 @@ class Veiculo extends Model
     use HasFactory;
 
     protected $fillable = [
-        'obra',
+        'obra_id',
         'periodo_inicial',
         'periodo_final',
         'tipo',
@@ -24,8 +24,6 @@ class Veiculo extends Model
         'placa',
         'renavam',
         'horimetro_inicial',
-        'valor_funcionario',
-        'valor_adicional',
         'observacao',
         'situacao'
     ];
@@ -58,5 +56,10 @@ class Veiculo extends Model
     public function ipva()
     {
         return $this->hasOne(VeiculoIpva::class);
+    }
+
+    public function obra()
+    {
+        return $this->belongsTo(CadastroObra::class);
     }
 }

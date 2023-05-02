@@ -17,21 +17,20 @@ class Relatorio extends Model
 
 
 
-    static function RelatorioVendaPeriodo($periodo = 7){
+    static function RelatorioVendaPeriodo($periodo = 7)
+    {
 
-        $periodo = "Now -".$periodo." days";
+        $periodo = "Now -" . $periodo . " days";
 
-        $consulta['bruto'] = CadastroVenda::
-                                where('vendas.created_at', '>=', \Carbon\Carbon::parse($periodo))
-                                ->join("produtos_configuracoes AS pc", "pc.id", "=", "vendas.id_produto")
-                                ->sum('pc.valor_venda');
+        $consulta['bruto'] = CadastroVenda::where('vendas.created_at', '>=', \Carbon\Carbon::parse($periodo))
+            ->join("produtos_configuracoes AS pc", "pc.id", "=", "vendas.id_produto")
+            ->sum('pc.valor_venda');
 
         $consulta['liquido'] = CadastroVenda::where('vendas.created_at', '>=', \Carbon\Carbon::parse($periodo))
-                                ->join("produtos_configuracoes AS pc", "pc.id", "=", "vendas.id_produto")
-                                ->sum('pc.valor_lucro');
+            ->join("produtos_configuracoes AS pc", "pc.id", "=", "vendas.id_produto")
+            ->sum('pc.valor_lucro');
 
 
         return $consulta;
-
     }
 }

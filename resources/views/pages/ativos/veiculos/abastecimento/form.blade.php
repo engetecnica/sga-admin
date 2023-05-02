@@ -6,7 +6,7 @@
         <h3 class="page-title">
             <span class="page-title-icon bg-gradient-primary text-white me-2">
                 <i class="mdi mdi-access-point-network menu-icon"></i>
-            </span> Abastecimento do veículo
+            </span> Abastecimento do Veículo
         </h3>
         <nav aria-label="breadcrumb">
             <ul class="breadcrumb">
@@ -86,7 +86,7 @@
                             </div>
                             <div class="col-md-4">
                                 <label for="valor_do_litro" class="form-label">Valor do litro</label>
-                                <input type="number" step="any" class="form-control" id="valor_do_litro"
+                                <input type="text" step="any" class="form-control" id="valor_do_litro"
                                     value="{{ old('valor_do_litro', @$store->abastecimento->valor_do_litro) }}"
                                     name="valor_do_litro">
                             </div>
@@ -100,7 +100,7 @@
                             </div>
                             <div class="col-md-4">
                                 <label for="valor_total" class="form-label">Valor total</label>
-                                <input type="number" step="any" readonly class="form-control" id="valor_total"
+                                <input type="text" step="any" readonly class="form-control" id="valor_total"
                                     value="{{ old('valor_total', @$store->abastecimento->valor_total) }}"
                                     name="valor_total">
                             </div>

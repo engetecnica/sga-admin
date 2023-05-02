@@ -34,7 +34,7 @@ class VeiculoIpvaController extends Controller
                 [
                     'veiculo_id' => $veiculo->id,
                     'referencia_ano' => $request->input('referencia_ano'),
-                    'valor' => $request->input('valor'),
+                    'valor' => str_replace('R$ ', '', $request->input('valor')),
                     'data_de_vencimento' => $request->input('data_de_vencimento'),
                     'data_de_pagamento' => $request->input('data_de_pagamento')
                 ]
@@ -49,11 +49,14 @@ class VeiculoIpvaController extends Controller
     public function update(Request $request, $id)
     {
         // dd($request);
+
+
         $veiculo = Veiculo::findOrFail($id);
+
         try {
             $veiculo->ipva->update([
                 'referencia_ano' => $request->referencia_ano,
-                'valor' => $request->valor,
+                'valor' => str_replace('R$ ', '', $request->valor),
                 'data_de_vencimento' => $request->data_de_vencimento,
                 'data_de_pagamento' => $request->data_de_pagamento,
             ]);

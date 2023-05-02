@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('veiculo_id')->unsigned();
 
-            $table->float('valor_atual');
+            $table->string('valor_atual');
 
             $table->string('referencia_mes');
             $table->string('referencia_ano');

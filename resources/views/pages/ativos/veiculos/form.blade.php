@@ -210,9 +210,11 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="col-md-2">
-                                <button type="button" class="btn btn-primary position-absolute fixed-bottom" data-toggle="modal"
-                                    data-target="#addMarcaModal">Adicionar marca</button>
+                            <div class="col-md-1">
+                                <button type="button" class="btn btn-primary position-absolute fixed-bottom"
+                                    data-toggle="modal" data-target="#addMarcaModal"><span
+                                        class="mdi mdi-plus"></span></button>
+
                             </div>
                         </div>
 

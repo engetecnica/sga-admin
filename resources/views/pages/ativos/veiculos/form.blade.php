@@ -44,7 +44,8 @@
                                 <label for="obra" class="form-label">Obra</label>
                                 <select name="obra" id="obra" class="form-select">
                                     @if (@$store->obra)
-                                        <option value="{{ $store->obra }}" selected>{{ $store->obra->razao_social }}</option>
+                                        <option value="{{ $store->obra }}" selected>{{ $store->obra->razao_social }}
+                                        </option>
                                     @else
                                         <option value="" selected>Selecione</option>
                                     @endif
@@ -169,6 +170,16 @@
                                 <input type="text" class="form-control" id="renavam"
                                     value="{{ old('renavam', @$store->renavam) }}" name="renavam">
                             </div>
+                            @if (!@$store)
+                                <div class="col-md-4">
+                                    <label for="quilometragem_atual" class="form-label">
+                                        Quilometragem Inicial
+                                    </label>
+                                    <input type="number" class="form-control" id="quilometragem_atual"
+                                        value="{{ old('quilometragem_atual', @$store->quilometragem->quilometragem_atual) }}"
+                                        name="quilometragem_atual">
+                                </div>
+                            @endif
                         </div>
 
                         <div class="row mt-3" id="divHorimetro" style="display:none;">
@@ -178,22 +189,13 @@
                                     value="{{ old('horimetro_inicial', @$store->horimetro_inicial) }}"
                                     name="horimetro_inicial">
                             </div>
-                        </div>
-
-                        @if (!@$store)
-                            <div class="row  mt-3">
-                                <div class="col-md-4">
-                                    <label for="quilometragem_atual" class="form-label">
-                                        Quilometragem Inicial
-                                    </label>
-                                    <input type="number" class="form-control" id="quilometragem_atual"
-                                        value="{{ old('quilometragem_atual', @$store->quilometragem->quilometragem_atual) }}"
-                                        name="quilometragem_atual">
-                                </div>
+                            <div class="col-md-4">
+                                <label for="codigo_da_maquina" class="form-label">ID da Máquina</label>
+                                <input type="text" class="form-control" id="codigo_da_maquina"
+                                    value="{{ old('codigo_da_maquina', @$store->codigo_da_maquina) }}"
+                                    name="codigo_da_maquina">
                             </div>
-                        @endif
-
-                     
+                        </div>
 
                         <div class="row  mt-3">
                             <div class="col-md-8">
@@ -355,7 +357,7 @@
             document.getElementById("divHorimetro").style.display = "none";
         } else if (tipo == "maquinas") {
             document.getElementById("divPlacaRenavam").style.display = "none";
-            document.getElementById("divHorimetro").style.display = "block";
+            document.getElementById("divHorimetro").style.display = "";
         } else {
             document.getElementById("divPlacaRenavam").style.display = "none";
             document.getElementById("divHorimetro").style.display = "none";

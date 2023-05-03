@@ -18,21 +18,22 @@ return new class extends Migration
             
             $table->unsignedBigInteger('obra_id');
 
-            $table->string('periodo_inicial');
-            $table->string('periodo_final');
-            $table->string('tipo');
-            $table->string('marca');
-            $table->string('modelo');
-            $table->string('ano');
-            $table->string('veiculo');
-            $table->string('valor_fipe');
-            $table->string('codigo_fipe');
-            $table->string('fipe_mes_referencia');
+            $table->string('periodo_inicial')->nullable();
+            $table->string('periodo_final')->nullable();
+            $table->string('tipo')->nullable();
+            $table->string('marca')->nullable();
+            $table->string('modelo')->nullable();
+            $table->string('ano')->nullable();
+            $table->string('veiculo')->nullable();
+            $table->string('valor_fipe')->nullable();
+            $table->string('codigo_fipe')->nullable();
+            $table->string('fipe_mes_referencia')->nullable();
             $table->string('placa')->nullable();
+            $table->string('codigo_da_maquina')->nullable();
             $table->string('renavam')->nullable();
             $table->string('horimetro_inicial')->nullable();
             $table->longText('observacao')->nullable();
-            $table->string('situacao');
+            $table->string('situacao')->nullable();
 
             $table->timestamps();
             $table->foreign('obra_id')->references('id')->on('obras');

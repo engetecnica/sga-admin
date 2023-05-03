@@ -27,19 +27,15 @@ class VeiculoSeeder extends Seeder
                 'periodo_final'   => $faker->date(),
                 'tipo' => $faker->randomElement(['carros', 'motos', 'caminhoes', 'maquinas']),
                 'marca' => $faker->vehicleBrand,
-
                 'modelo' => $faker->vehicleModel,
                 'ano' => $faker->year($max = 'now'),
                 'veiculo' => $faker->vehicle,
                 'valor_fipe' => $faker->randomFloat($nbMaxDecimals = NULL, $min = 1000, $max = 15000),
                 'codigo_fipe' => $faker->randomNumber(6),
                 'fipe_mes_referencia' => $faker->monthName($max = 'now'),
+                'codigo_da_maquina' => $faker->randomNumber(6),
                 'placa' => $faker->vehicleRegistration,
-
                 'renavam' => $faker->randomNumber(6),
-
-                // 'km' => $faker->randomNumber(6),
-          
                 'observacao' => $faker->text($maxNbChars = 200),
                 'situacao' => $faker->randomElement(['ativo', 'inativo']),
 

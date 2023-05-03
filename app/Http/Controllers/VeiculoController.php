@@ -29,7 +29,7 @@ class VeiculoController extends Controller
         $request->validate([
             'periodo_inicial' => 'required|date|before_or_equal:periodo_final',
             'periodo_final' => 'required|date',
-            'quilometragem_atual' => 'required|numeric|min:1',
+            // 'quilometragem_atual' => 'numeric|min:1',
         ]);
 
         $veiculo = Veiculo::create(

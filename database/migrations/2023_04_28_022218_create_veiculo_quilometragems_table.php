@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('veiculo_id')->unsigned();
 
-            $table->integer('quilometragem_atual');
+            $table->integer('quilometragem_atual')->nullable();
             $table->integer('quilometragem_nova')->nullable();
 
             $table->timestamps();

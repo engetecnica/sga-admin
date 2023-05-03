@@ -25,7 +25,7 @@ class DatabaseSeeder extends Seeder
             AtivosFerramentalStatusSeeder::class,
             EmpresaSeeder::class,
             ObraSeeder::class,
-
+            MarcaMaquinaSeeder::class,
             // VeiculoSeeder::class,
             // VeiculoAbastecimentoSeeder::class,
             // VeiculoDepreciacaoSeeder::class,

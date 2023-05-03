@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\CadastroObra;
+use App\Models\MarcaMaquina;
 use App\Models\Veiculo;
 use App\Models\VeiculoQuilometragem;
 use Illuminate\Http\Request;
@@ -19,8 +20,8 @@ class VeiculoController extends Controller
     public function create()
     {
         $obras = CadastroObra::select('id', 'razao_social')->get();
-
-        return view('pages.ativos.veiculos.form', compact('obras'));
+        $marcas = MarcaMaquina::all();
+        return view('pages.ativos.veiculos.form', compact('obras', 'marcas'));
     }
 
     public function store(Request $request)
@@ -46,6 +47,8 @@ class VeiculoController extends Controller
                 'codigo_fipe' => $request->input('codigo_fipe'),
                 'fipe_mes_referencia' => $request->input('fipe_mes_referencia'),
                 'codigo_da_maquina' => $request->input('codigo_da_maquina'),
+                'marca_da_maquina' => $request->input('marca_da_maquina'),
+
                 'placa' => $request->input('placa'),
                 'renavam' => $request->input('renavam'),
                 'horimetro_inicial' => $request->input('horimetro_inicial'),
@@ -125,6 +128,7 @@ class VeiculoController extends Controller
             'fipe_mes_referencia' => $request->fipe_mes_referencia,
             'placa' => $request->placa,
             'codigo_da_maquina' => $request->codigo_da_maquina,
+            'marca_da_maquina' => $request->marca_da_maquina,
             'renavam' => $request->renavam,
             'horimetro_inicial' => $request->horimetro_inicial,
             'observacao' => $request->observacao,
@@ -132,5 +136,13 @@ class VeiculoController extends Controller
         ]);
 
         return redirect()->back()->with('success', 'Sucesso');
+    }
+
+    public function adicionarMarca(Request $request)
+    {
+        MarcaMaquina::create([
+            'marca' => $request->input('add_marca_da_maquina')
+        ]);
+        return redirect()->back()->withInput();
     }
 }

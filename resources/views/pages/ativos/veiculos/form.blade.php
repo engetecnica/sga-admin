@@ -183,17 +183,36 @@
                         </div>
 
                         <div class="row mt-3" id="divHorimetro" style="display:none;">
-                            <div class="col-md-4">
+                            <div class="col-md-2">
                                 <label for="horimetro_inicial" class="form-label">Horímetro inicial</label>
                                 <input type="time" step="60" class="form-control" id="horimetro_inicial"
                                     value="{{ old('horimetro_inicial', @$store->horimetro_inicial) }}"
                                     name="horimetro_inicial">
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <label for="codigo_da_maquina" class="form-label">ID da Máquina</label>
                                 <input type="text" class="form-control" id="codigo_da_maquina"
                                     value="{{ old('codigo_da_maquina', @$store->codigo_da_maquina) }}"
                                     name="codigo_da_maquina">
+                            </div>
+                            <div class="col-md-3">
+                                <label for="marca_da_maquina" class="form-label">Marca</label>
+                                <select name="marca_da_maquina" id="marca_da_maquina" class="form-select">
+                                    @if (@$store->marca_da_maquina)
+                                        <option value="{{ $store->marca_da_maquina }}" selected>
+                                            {{ $store->marca_da_maquina }}
+                                        </option>
+                                    @else
+                                        <option value="" selected>Selecione</option>
+                                    @endif
+                                    @foreach ($marcas as $marca)
+                                        <option value="{{ $marca->id }}">{{ $marca->marca }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <button type="button" class="btn btn-primary position-absolute fixed-bottom" data-toggle="modal"
+                                    data-target="#addMarcaModal">Adicionar marca</button>
                             </div>
                         </div>
 
@@ -224,6 +243,31 @@
                             </a>
                         </div>
                     </form>
+                    <div class="modal fade" id="addMarcaModal" tabindex="-1" role="dialog"
+                        aria-labelledby="addMarcaModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="addMarcaModalLabel">Adicionar nova marca</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="{{ route('adicionar.marca') }}" method="POST">
+                                        @csrf
+                                        <div class="form-group">
+                                            <label for="add_marca_da_maquina" class="form-label">Nome da marca</label>
+                                            <input type="text" class="form-control" id="add_marca_da_maquina"
+                                                name="add_marca_da_maquina">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Adicionar</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -363,4 +407,12 @@
             document.getElementById("divHorimetro").style.display = "none";
         }
     }
+</script>
+
+<script>
+    $(document).ready(function() {
+        $('#addMarcaModal').on('hidden.bs.modal', function(e) {
+            $('#add_marca_da_maquina').val('');
+        });
+    });
 </script>

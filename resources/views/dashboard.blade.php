@@ -552,12 +552,7 @@
             }
         });
 
-        $('#obra').select2({
-            minimumResultsForSearch: -1,
-            placeholder: function() {
-                $(this).data('placeholder');
-            }
-        });
+        $('#obra').select2();
 
         $('#tipo').select2({
             minimumResultsForSearch: -1,
@@ -566,60 +561,25 @@
             }
         });
 
-        $('#marca').select2({
-            minimumResultsForSearch: -1,
-            placeholder: function() {
-                $(this).data('placeholder');
-            }
-        });
+        $('#marca').select2();
 
-        $('#modelo').select2({
-            minimumResultsForSearch: -1,
-            placeholder: function() {
-                $(this).data('placeholder');
-            }
-        });
+        $('#modelo').select2();
 
-        $('#ano').select2({
-            minimumResultsForSearch: -1,
-            placeholder: function() {
-                $(this).data('placeholder');
-            }
-        });
+        $('#ano').select2();
 
-        $('#situacao').select2({
-            minimumResultsForSearch: -1,
-            placeholder: function() {
-                $(this).data('placeholder');
-            }
-        });
+        $('#situacao').select2();
 
-        $('#fornecedor').select2({
-            minimumResultsForSearch: -1,
-            placeholder: function() {
-                $(this).data('placeholder');
-            }
-        });
+        $('#fornecedor').select2();
 
-        $('#combustivel').select2({
-            minimumResultsForSearch: -1,
-            placeholder: function() {
-                $(this).data('placeholder');
-            }
-        });
+        $('#combustivel').select2();
 
-        $('#servico').select2({
-            minimumResultsForSearch: -1,
-            placeholder: function() {
-                $(this).data('placeholder');
-            }
-        });
+        $('#servico').select2();
 
 
         $(".money").inputmask('currency', {
             "autoUnmask": true,
-            radixPoint: ".",
-            groupSeparator: ".",
+            radixPoint: ",",
+            groupSeparator: ",",
             allowMinus: false,
             prefix: 'R$ ',
             digits: 2,
@@ -635,8 +595,8 @@
         $('.cnpj').inputmask('99.999.999/9999-99');
         $("#valor_fipe").inputmask('currency', {
             "autoUnmask": true,
-            radixPoint: ".",
-            groupSeparator: ".",
+            radixPoint: ",",
+            groupSeparator: ",",
             allowMinus: false,
             prefix: 'R$ ',
             digits: 2,
@@ -646,8 +606,8 @@
         });
         $("#valor_do_litro").inputmask('currency', {
             "autoUnmask": true,
-            radixPoint: ".",
-            groupSeparator: ".",
+            radixPoint: ",",
+            groupSeparator: ",",
             allowMinus: false,
             prefix: 'R$ ',
             digits: 2,
@@ -657,8 +617,8 @@
         });
         $("#valor_total").inputmask('currency', {
             "autoUnmask": true,
-            radixPoint: ".",
-            groupSeparator: ".",
+            radixPoint: ",",
+            groupSeparator: ",",
             allowMinus: false,
             prefix: 'R$ ',
             digits: 2,
@@ -668,8 +628,8 @@
         });
         $("#valor_do_servico").inputmask('currency', {
             "autoUnmask": true,
-            radixPoint: ".",
-            groupSeparator: ".",
+            radixPoint: ",",
+            groupSeparator: ",",
             allowMinus: false,
             prefix: 'R$ ',
             digits: 2,
@@ -679,8 +639,8 @@
         });
         $("#valor").inputmask('currency', {
             "autoUnmask": true,
-            radixPoint: ".",
-            groupSeparator: ".",
+            radixPoint: ",",
+            groupSeparator: ",",
             allowMinus: false,
             prefix: 'R$ ',
             suffix: '',
@@ -691,8 +651,8 @@
         });
         $("#valor_atual").inputmask('currency', {
             "autoUnmask": true,
-            radixPoint: ".",
-            groupSeparator: ".",
+            radixPoint: ",",
+            groupSeparator: ",",
             allowMinus: false,
             prefix: 'R$ ',
             suffix: '',
@@ -703,7 +663,7 @@
         });
 
         $("#placa").inputmask({
-            mask: 'AAA-9999'
+            mask: 'AAA-9*99'
         });
 
 

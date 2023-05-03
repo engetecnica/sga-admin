@@ -258,6 +258,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('admin/anexo/upload', [AnexoController::class, 'upload'])->name('anexo.upload');
 
 
+    // Adicionar marca
+    Route::post('adicionar-marca', [VeiculoController::class, 'adicionarMarca'])->name('adicionar.marca');
+
+
     /* API de Controles */
     Route::post(
         'admin/api/selecionar_obra',

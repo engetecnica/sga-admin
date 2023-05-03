@@ -34,6 +34,7 @@ class VeiculoSeeder extends Seeder
                 'codigo_fipe' => $faker->randomNumber(6),
                 'fipe_mes_referencia' => $faker->monthName($max = 'now'),
                 'codigo_da_maquina' => $faker->randomNumber(6),
+                'marca' => $faker->randomElement(['TKA', 'BOBCAT', 'JCB', 'BMH', 'Munck', 'Perfuratriz']),
                 'placa' => $faker->vehicleRegistration,
                 'renavam' => $faker->randomNumber(6),
                 'observacao' => $faker->text($maxNbChars = 200),

@@ -22,6 +22,7 @@ class Veiculo extends Model
         'codigo_fipe',
         'fipe_mes_referencia',
         'codigo_da_maquina',
+        'marca_da_maquina',
         'placa',
         'renavam',
         'horimetro_inicial',

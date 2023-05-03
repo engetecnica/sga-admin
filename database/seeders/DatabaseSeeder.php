@@ -26,13 +26,13 @@ class DatabaseSeeder extends Seeder
             EmpresaSeeder::class,
             ObraSeeder::class,
 
-            VeiculoSeeder::class,
-            VeiculoAbastecimentoSeeder::class,
-            VeiculoDepreciacaoSeeder::class,
-            VeiculoIpvaSeeder::class,
-            VeiculoManutencaoSeeder::class,
-            VeiculoQuilometragemSeeder::class,
-            VeiculoSeguroSeeder::class
+            // VeiculoSeeder::class,
+            // VeiculoAbastecimentoSeeder::class,
+            // VeiculoDepreciacaoSeeder::class,
+            // VeiculoIpvaSeeder::class,
+            // VeiculoManutencaoSeeder::class,
+            // VeiculoQuilometragemSeeder::class,
+            // VeiculoSeguroSeeder::class
         ]);
     }
 }

@@ -60,14 +60,14 @@
                                         ];
                                     @endphp
 
-                                    <td>{{ $tiposVeiculos[$veiculo->tipo] }}</td>
-                                    <td>{{ $veiculo->obra->razao_social }}</td>
+                                    <td>{{ @$tiposVeiculos[$veiculo->tipo] }}</td>
+                                    <td>{{ @$veiculo->obra->razao_social }}</td>
                                     {{-- <td>
                                         {{ date('d/m/Y', strtotime($veiculo->periodo_inicial)) }} até
                                         {{ date('d/m/Y', strtotime($veiculo->periodo_final)) }}
                                     </td> --}}
 
-                                    <td>{{ $veiculo->placa }}/{{ $veiculo->veiculo }}</td>
+                                    <td>{{ @$veiculo->placa }}/{{ @$veiculo->veiculo }}</td>
                                     {{-- <td>
                                         @isset($veiculo->abastecimento)
                                             {{ $veiculo->abastecimento->combustivel }}

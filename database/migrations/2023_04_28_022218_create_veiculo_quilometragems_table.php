@@ -21,6 +21,7 @@ return new class extends Migration
             $table->integer('quilometragem_nova')->nullable();
 
             $table->timestamps();
+            $table->softDeletes();
             $table->foreign('veiculo_id')->references('id')->on('veiculos');
         });
     }

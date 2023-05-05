@@ -29,7 +29,7 @@ return new class extends Migration
             $table->longText('descricao')->nullable();
             $table->string('valor_do_servico');
             $table->timestamps();
-            
+            $table->softDeletes();
             $table->foreign('veiculo_id')->references('id')->on('veiculos');
             $table->foreign('fornecedor_id')->references('id')->on('fornecedores');
             $table->foreign('servico_id')->references('id')->on('servicos');

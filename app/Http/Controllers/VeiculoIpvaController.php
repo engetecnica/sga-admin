@@ -82,4 +82,12 @@ class VeiculoIpvaController extends Controller
             return redirect()->back()->withInput();
         }
     }
+    public function delete($id)
+    {
+        $veiculo = VeiculoIpva::findOrFail($id);
+
+        $veiculo->delete();
+
+        return redirect()->back();
+    }
 }

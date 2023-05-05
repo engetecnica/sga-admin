@@ -41,7 +41,6 @@
                                     <th>Horímetro Atual</th>
                                     <th>Marca</th>
                                     <th>Data</th>
-                                    <th width="10%">Ações</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -52,8 +51,6 @@
                                     <td>{{ @$store->horimetro_inicial }}</td>
                                     <td>{{ @$store->marca_da_maquina }}</td>
                                     <td>{{ @$store->created_at }}</td>
-
-                                    <td>editar/excluir</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -65,7 +62,6 @@
                                     <th>KM atual</th>
                                     <th>Valor</th>
                                     <th>Data</th>
-                                    <th width="10%">Ações</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -83,7 +79,7 @@
                                         {{ number_format(floatval(str_replace(',', '.', str_replace('.', '', @$store->valor_fipe))), 2, ',', '.') }}
                                     </td>
                                     <td>{{ strftime('%d/%m/%Y às %H:%M', strtotime(@$store->created_at)) }}</td>
-                                    <td>editar/excluir</td>
+
                                 </tr>
                             </tbody>
                         </table>
@@ -110,12 +106,24 @@
                                         {{ number_format(floatval(str_replace(',', '.', str_replace('.', '', @$abastecimento->valor_atual))), 2, ',', '.') }}
                                     </td>
                                     <td>{{ strftime('%d/%m/%Y às %H:%M', strtotime(@$abastecimento->created_at)) }}</td>
-                                    <td>
+                                    <td class="d-flex gap-2">
                                         <a href="{{ route('ativo.veiculo.abastecimento.editar', $abastecimento->id) }}">
                                             <button class="badge badge-info" data-toggle="tooltip" data-placement="top"
                                                 title="Editar"><i class="mdi mdi-pencil"></i> Editar
                                             </button>
                                         </a>
+                                        <form
+                                            action="{{ route('ativo.veiculo.abastecimento.delete', $abastecimento->id) }}"
+                                            method="POST">
+                                            @csrf
+                                            <a class="excluir-padrao" data-id="{{ $abastecimento->id }}"
+                                                data-table="empresas" data-module="cadastro/empresa">
+                                                <button class="badge badge-danger" data-toggle="tooltip"
+                                                    data-placement="top" title="Excluir" type="submit"><i
+                                                        class="mdi mdi-delete"></i>
+                                                    Excluir</button>
+                                            </a>
+                                        </form>
                                     </td>
                                 </tr>
                             @endforeach

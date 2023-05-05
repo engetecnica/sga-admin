@@ -72,4 +72,12 @@ class VeiculoDepreciacaoController extends Controller
             return redirect()->back()->withInput();
         }
     }
+    public function delete($id)
+    {
+        $veiculo = VeiculoDepreciacao::findOrFail($id);
+
+        $veiculo->delete();
+
+        return redirect()->back();
+    }
 }

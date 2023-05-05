@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('valor_total')->nullable();
 
             $table->timestamps();
+            $table->softDeletes();
             $table->foreign('veiculo_id')->references('id')->on('veiculos');
             $table->foreign('fornecedor_id')->references('id')->on('fornecedores');
         });

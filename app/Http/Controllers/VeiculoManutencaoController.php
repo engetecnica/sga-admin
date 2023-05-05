@@ -110,4 +110,13 @@ class VeiculoManutencaoController extends Controller
         //     return redirect()->back()->withInput();
         // }
     }
+
+    public function delete($id)
+    {
+        $veiculo = VeiculoManutencao::findOrFail($id);
+
+        $veiculo->delete();
+
+        return redirect()->back();
+    }
 }

@@ -114,12 +114,22 @@
                                     <td>{{ @$manutencao->quilometragem_atual }}</td>
                                     <td>{{ @$manutencao->quilometragem_proxima }}</td>
                                     <td>{{ strftime('%d/%m/%Y às %H:%M', strtotime(@$manutencao->created_at)) }}</td>
-                                    <td>
+                                    <td class="d-flex gap-2">
                                         <a href="{{ route('ativo.veiculo.manutencao.editar', $manutencao->id) }}">
                                             <button class="badge badge-info" data-toggle="tooltip" data-placement="top"
                                                 title="Editar"><i class="mdi mdi-pencil"></i> Editar
                                             </button>
                                         </a>
+                                        <form action="{{ route('ativo.veiculo.manutencao.delete', $manutencao->id) }}" method="POST">
+                                            @csrf
+                                            <a class="excluir-padrao" data-id="{{ $manutencao->id }}" data-table="empresas"
+                                                data-module="cadastro/empresa">
+                                                <button class="badge badge-danger" data-toggle="tooltip"
+                                                    data-placement="top" title="Excluir" type="submit"><i
+                                                        class="mdi mdi-delete"></i>
+                                                    Excluir</button>
+                                            </a>
+                                        </form>
                                     </td>
                                 </tr>
                             @endforeach

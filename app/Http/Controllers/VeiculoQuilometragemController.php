@@ -71,4 +71,12 @@ class VeiculoQuilometragemController extends Controller
             return redirect()->back()->withInput();
         }
     }
+    public function delete($id)
+    {
+        $veiculo = VeiculoQuilometragem::findOrFail($id);
+
+        $veiculo->delete();
+
+        return redirect()->back();
+    }
 }

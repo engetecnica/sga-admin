@@ -38,6 +38,7 @@ return new class extends Migration
             $table->string('situacao')->nullable();
 
             $table->timestamps();
+            $table->softDeletes();
             $table->foreign('obra_id')->references('id')->on('obras');
         });
     }

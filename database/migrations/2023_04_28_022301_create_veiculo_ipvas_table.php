@@ -24,6 +24,7 @@ return new class extends Migration
             $table->date('data_de_pagamento');
 
             $table->timestamps();
+            $table->softDeletes();
             $table->foreign('veiculo_id')->references('id')->on('veiculos');
         });
     }

@@ -77,4 +77,12 @@ class VeiculoSeguroController extends Controller
             return redirect()->back()->withInput();
         }
     }
+    public function delete($id)
+    {
+        $veiculo = VeiculoSeguro::findOrFail($id);
+
+        $veiculo->delete();
+
+        return redirect()->back();
+    }
 }

@@ -109,12 +109,24 @@
                                     <td>{{ @$quilometragem->quilometragem_atual }} Km</td>
 
                                     <td>{{ strftime('%d/%m/%Y às %H:%M', strtotime(@$quilometragem->created_at)) }}</td>
-                                    <td>
+                                    <td class="d-flex gap-2">
                                         <a href="{{ route('ativo.veiculo.quilometragem.editar', $quilometragem->id) }}">
                                             <button class="badge badge-info" data-toggle="tooltip" data-placement="top"
                                                 title="Editar"><i class="mdi mdi-pencil"></i> Editar
                                             </button>
                                         </a>
+                                        <form
+                                            action="{{ route('ativo.veiculo.quilometragem.delete', $quilometragem->id) }}"
+                                            method="POST">
+                                            @csrf
+                                            <a class="excluir-padrao" data-id="{{ $quilometragem->id }}"
+                                                data-table="empresas" data-module="cadastro/empresa">
+                                                <button class="badge badge-danger" data-toggle="tooltip"
+                                                    data-placement="top" title="Excluir" type="submit"><i
+                                                        class="mdi mdi-delete"></i>
+                                                    Excluir</button>
+                                            </a>
+                                        </form>
                                     </td>
                                 </tr>
                             @endforeach

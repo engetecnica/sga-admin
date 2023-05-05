@@ -6,6 +6,7 @@ use App\Models\CadastroFornecedor;
 use Illuminate\Http\Request;
 use App\Models\Veiculo;
 use App\Models\VeiculoAbastecimento;
+use App\Models\VeiculoDepreciacao;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class VeiculoAbastecimentoController extends Controller
@@ -84,5 +85,13 @@ class VeiculoAbastecimentoController extends Controller
 
             return redirect()->back()->withInput();
         }
+    }
+    public function delete($id)
+    {
+        $veiculo = VeiculoAbastecimento::findOrFail($id);
+
+        $veiculo->delete();
+
+        return redirect()->back();
     }
 }

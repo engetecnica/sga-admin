@@ -9,9 +9,21 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class VeiculoDepreciacaoController extends Controller
 {
-    public function edit($id)
+    public function index($id)
     {
         $store = Veiculo::find($id);
+
+        if (!$id or !$store) :
+            Alert::error('Que Pena!', 'Esse veículo não foi encontrado.');
+            return redirect(route('ativo.veiculo'));
+        endif;
+
+        return view('pages.ativos.veiculos.depreciacao.index', compact('store'));
+    }
+
+    public function edit($id)
+    {
+        $store = VeiculoDepreciacao::find($id);
 
         if (!$id or !$store) :
             Alert::error('Que Pena!', 'Esse veículo não foi encontrado.');
@@ -46,9 +58,9 @@ class VeiculoDepreciacaoController extends Controller
     public function update(Request $request, $id)
     {
         // dd($request);
-        $veiculo = Veiculo::findOrFail($id);
+        $veiculo = VeiculoDepreciacao::findOrFail($id);
         try {
-            $veiculo->depreciacao->update([
+            $veiculo->update([
                 'valor_atual' => str_replace('R$ ', '', $request->valor_atual),
                 'referencia_mes' => $request->referencia_mes,
                 'referencia_ano' => $request->referencia_ano

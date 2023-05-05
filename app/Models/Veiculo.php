@@ -30,34 +30,34 @@ class Veiculo extends Model
         'situacao'
     ];
 
-    public function quilometragem()
+    public function quilometragens()
     {
-        return $this->hasOne(VeiculoQuilometragem::class);
+        return $this->hasMany(VeiculoQuilometragem::class);
     }
 
-    public function abastecimento()
+    public function abastecimentos()
     {
-        return $this->hasOne(VeiculoAbastecimento::class);
+        return $this->hasMany(VeiculoAbastecimento::class);
     }
 
-    public function depreciacao()
+    public function depreciacaos()
     {
-        return $this->hasOne(VeiculoDepreciacao::class);
+        return $this->hasMany(VeiculoDepreciacao::class);
     }
 
-    public function manutencao()
+    public function manutencaos()
     {
-        return $this->hasOne(VeiculoManutencao::class);
+        return $this->hasMany(VeiculoManutencao::class);
     }
 
-    public function seguro()
+    public function seguros()
     {
-        return $this->hasOne(VeiculoSeguro::class);
+        return $this->hasMany(VeiculoSeguro::class);
     }
 
-    public function ipva()
+    public function ipvas()
     {
-        return $this->hasOne(VeiculoIpva::class);
+        return $this->hasMany(VeiculoIpva::class);
     }
 
     public function obra()

@@ -14,6 +14,7 @@ class VeiculoQuilometragem extends Model
         'quilometragem_atual',
         'quilometragem_nova',
     ];
+
     public function veiculo()
     {
         return $this->belongsTo(Veiculo::class);

@@ -94,22 +94,22 @@
                                                         href="{{ route('ativo.veiculo.editar', $veiculo->id) }}">Editar</a>
                                                 </li>
                                                 <li><a class="dropdown-item"
-                                                        href="{{ route('ativo.veiculo.quilometragem.editar', $veiculo->id) }}">Quilometragem</a>
+                                                        href="{{ route('ativo.veiculo.quilometragem.index', $veiculo->id) }}">Quilometragem</a>
                                                 </li>
                                                 <li><a class="dropdown-item"
-                                                        href="{{ route('ativo.veiculo.abastecimento.editar', $veiculo->id) }}">Abastecimento</a>
+                                                        href="{{ route('ativo.veiculo.abastecimento.index', $veiculo->id) }}">Abastecimento</a>
                                                 </li>
                                                 <li><a class="dropdown-item"
-                                                        href="{{ route('ativo.veiculo.manutencao.editar', $veiculo->id) }}">Manutenção</a>
+                                                        href="{{ route('ativo.veiculo.manutencao.index', $veiculo->id) }}">Manutenção</a>
                                                 </li>
                                                 <li><a class="dropdown-item"
-                                                        href="{{ route('ativo.veiculo.ipva.editar', $veiculo->id) }}">IPVA</a>
+                                                        href="{{ route('ativo.veiculo.ipva.index', $veiculo->id) }}">IPVA</a>
                                                 </li>
                                                 <li><a class="dropdown-item"
-                                                        href="{{ route('ativo.veiculo.seguro.editar', $veiculo->id) }}">Seguro</a>
+                                                        href="{{ route('ativo.veiculo.seguro.index', $veiculo->id) }}">Seguro</a>
                                                 </li>
                                                 <li><a class="dropdown-item"
-                                                        href="{{ route('ativo.veiculo.depreciacao.editar', $veiculo->id) }}">Depreciação</a>
+                                                        href="{{ route('ativo.veiculo.depreciacao.index', $veiculo->id) }}">Depreciação</a>
                                                 </li>
                                                 <li><a class="dropdown-item" href="#">Anexos</a></li>
                                             </ul>

@@ -10,11 +10,25 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class VeiculoAbastecimentoController extends Controller
 {
-    public function edit($id)
+    public function index($id)
     {
         $fornecedores = CadastroFornecedor::select('id', 'razao_social')->get();
 
         $store = Veiculo::find($id);
+
+        if (!$id or !$store) :
+            Alert::error('Que Pena!', 'Esse veículo não foi encontrado.');
+            return redirect(route('ativo.veiculo'));
+        endif;
+
+        return view('pages.ativos.veiculos.abastecimento.index', compact('store', 'fornecedores'));
+    }
+
+    public function edit($id)
+    {
+        $fornecedores = CadastroFornecedor::select('id', 'razao_social')->get();
+
+        $store = VeiculoAbastecimento::find($id);
 
         if (!$id or !$store) :
             Alert::error('Que Pena!', 'Esse veículo não foi encontrado.');
@@ -39,7 +53,7 @@ class VeiculoAbastecimentoController extends Controller
                     'quilometragem' => $request->input('quilometragem'),
                     'valor_do_litro' => str_replace('R$ ', '', $request->input('valor_do_litro')),
                     'quantidade' => $request->input('quantidade'),
-                 
+
                     'valor_total' => str_replace('R$ ', '', $request->input('valor_total')),
 
                 ]
@@ -54,9 +68,9 @@ class VeiculoAbastecimentoController extends Controller
     public function update(Request $request, $id)
     {
         // dd($request);
-        $veiculo = Veiculo::findOrFail($id);
+        $veiculo = VeiculoAbastecimento::findOrFail($id);
         try {
-            $veiculo->abastecimento->update([
+            $veiculo->update([
                 'fornecedor_id' => $request->fornecedor,
                 'combustivel' => $request->combustivel,
                 'quilometragem' => $request->quilometragem,

@@ -9,9 +9,22 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class VeiculoQuilometragemController extends Controller
 {
-    public function edit($id)
+
+    public function index($id)
     {
         $store = Veiculo::find($id);
+
+        if (!$id or !$store) :
+            Alert::error('Que Pena!', 'Esse veículo não foi encontrado.');
+            return redirect(route('ativo.veiculo'));
+        endif;
+
+        return view('pages.ativos.veiculos.quilometragem.index', compact('store'));
+    }
+
+    public function edit($id)
+    {
+        $store = VeiculoQuilometragem::find($id);
 
         if (!$id or !$store) :
             Alert::error('Que Pena!', 'Esse veículo não foi encontrado.');
@@ -45,9 +58,9 @@ class VeiculoQuilometragemController extends Controller
     public function update(Request $request, $id)
     {
         // dd($request);
-        $veiculo = Veiculo::findOrFail($id);
+        $veiculo = VeiculoQuilometragem::findOrFail($id);
         try {
-            $veiculo->quilometragem->update([
+            $veiculo->update([
                 'quilometragem_atual' => $request->quilometragem_atual,
                 'quilometragem_nova' => $request->quilometragem_nova
             ]);

@@ -9,11 +9,26 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class VeiculoIpvaController extends Controller
 {
-    public function edit($id)
+
+    public function index($id)
     {
         // $fornecedores = CadastroFornecedor::all();
 
         $store = Veiculo::find($id);
+
+        if (!$id or !$store) :
+            Alert::error('Que Pena!', 'Esse veículo não foi encontrado.');
+            return redirect(route('ativo.veiculo'));
+        endif;
+
+        return view('pages.ativos.veiculos.ipva.index', compact('store'));
+    }
+
+    public function edit($id)
+    {
+        // $fornecedores = CadastroFornecedor::all();
+
+        $store = VeiculoIpva::find($id);
 
         if (!$id or !$store) :
             Alert::error('Que Pena!', 'Esse veículo não foi encontrado.');
@@ -51,10 +66,10 @@ class VeiculoIpvaController extends Controller
         // dd($request);
 
 
-        $veiculo = Veiculo::findOrFail($id);
+        $veiculo = VeiculoIpva::findOrFail($id);
 
         try {
-            $veiculo->ipva->update([
+            $veiculo->update([
                 'referencia_ano' => $request->referencia_ano,
                 'valor' => str_replace('R$ ', '', $request->valor),
                 'data_de_vencimento' => $request->data_de_vencimento,

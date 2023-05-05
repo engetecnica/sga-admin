@@ -9,11 +9,26 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class VeiculoSeguroController extends Controller
 {
-    public function edit($id)
+
+    public function index($id)
     {
         // $fornecedores = CadastroFornecedor::all();
 
         $store = Veiculo::find($id);
+
+        if (!$id or !$store) :
+            Alert::error('Que Pena!', 'Esse veículo não foi encontrado.');
+            return redirect(route('ativo.veiculo'));
+        endif;
+
+        return view('pages.ativos.veiculos.seguro.index', compact('store'));
+    }
+
+    public function edit($id)
+    {
+        // $fornecedores = CadastroFornecedor::all();
+
+        $store = VeiculoSeguro::find($id);
 
         if (!$id or !$store) :
             Alert::error('Que Pena!', 'Esse veículo não foi encontrado.');
@@ -48,9 +63,9 @@ class VeiculoSeguroController extends Controller
     public function update(Request $request, $id)
     {
         // dd($request);valor
-        $veiculo = Veiculo::findOrFail($id);
+        $veiculo = VeiculoSeguro::findOrFail($id);
         try {
-            $veiculo->seguro->update([
+            $veiculo->update([
                 'carencia_inicial' => $request->carencia_inicial,
                 'carencia_final' => $request->carencia_final,
                 'valor' => $request->valor

@@ -34,7 +34,7 @@
                     @endif
 
                     @php
-                        $action = isset($store->seguro) ? route('ativo.veiculo.seguro.update', $store->id) : route('ativo.veiculo.seguro.store', $store->id);
+                        $action = isset($store) ? route('ativo.veiculo.seguro.update', $store->id) : route('ativo.veiculo.seguro.store', $store->id);
                     @endphp
                     <form method="post" enctype="multipart/form-data" action="{{ $action }}">
                         @csrf
@@ -43,7 +43,7 @@
                             <div class="col-md-4">
                                 <label for="carencia_inicial" class="form-label">Carência Inicial</label>
                                 <input type="date" class="form-control" id="carencia_inicial"
-                                    value="{{ old('carencia_inicial', @$store->seguro->carencia_inicial) }}"
+                                    value="{{ old('carencia_inicial', @$store->carencia_inicial) }}"
                                     name="carencia_inicial">
                             </div>
                         </div>
@@ -52,7 +52,7 @@
                             <div class="col-md-4">
                                 <label for="carencia_final" class="form-label">Carência Final</label>
                                 <input type="date" class="form-control" id="carencia_final"
-                                    value="{{ old('carencia_final', @$store->seguro->carencia_final) }}"
+                                    value="{{ old('carencia_final', @$store->carencia_final) }}"
                                     name="carencia_final">
                             </div>
                         </div>
@@ -61,7 +61,7 @@
                             <div class="col-md-4">
                                 <label for="valor" class="form-label">Valor</label>
                                 <input type="text" step="any" class="form-control" id="valor"
-                                    value="{{ old('valor', @$store->seguro->valor) }}" name="valor">
+                                    value="{{ old('valor', @$store->valor) }}" name="valor">
                             </div>
                         </div>
 

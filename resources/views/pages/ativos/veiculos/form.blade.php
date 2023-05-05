@@ -206,7 +206,7 @@
                                         <option value="" selected>Selecione</option>
                                     @endif
                                     @foreach ($marcas as $marca)
-                                        <option value="{{ $marca->id }}">{{ $marca->marca }}</option>
+                                        <option value="{{ $marca->marca }}">{{ $marca->marca }}</option>
                                     @endforeach
                                 </select>
                             </div>

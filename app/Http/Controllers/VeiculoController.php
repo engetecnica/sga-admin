@@ -100,7 +100,7 @@ class VeiculoController extends Controller
     public function edit($id)
     {
         $obras = CadastroObra::select('id', 'razao_social')->get();
-
+        $marcas = MarcaMaquina::all();
         $store = Veiculo::find($id);
 
         if (!$id or !$store) :
@@ -108,7 +108,7 @@ class VeiculoController extends Controller
             return redirect(route('ativo.veiculo'));
         endif;
 
-        return view('pages.ativos.veiculos.form', compact('store', 'obras'));
+        return view('pages.ativos.veiculos.form', compact('store', 'obras', 'marcas'));
     }
 
     public function update(Request $request, $id)

@@ -34,7 +34,7 @@
                     @endif
 
                     @php
-                        $action = isset($store->ipva) ? route('ativo.veiculo.ipva.update', $store->id) : route('ativo.veiculo.ipva.store', $store->id);
+                        $action = isset($store) ? route('ativo.veiculo.ipva.update', $store->id) : route('ativo.veiculo.ipva.store', $store->id);
                     @endphp
                     <form method="post" enctype="multipart/form-data" action="{{ $action }}">
                         @csrf
@@ -45,13 +45,13 @@
                             <div class="col-md-4">
                                 <label for="referencia_ano" class="form-label">Ano de Referência</label>
                                 <input type="number" step="any" class="form-control" id="referencia_ano"
-                                    value="{{ old('referencia_ano', @$store->ipva->referencia_ano) }}"
+                                    value="{{ old('referencia_ano', @$store->referencia_ano) }}"
                                     name="referencia_ano">
                             </div>
                             <div class="col-md-4">
                                 <label for="valor" class="form-label">Valor</label>
                                 <input type="text" step="any" class="form-control" id="valor"
-                                    value="{{ old('valor', @$store->ipva->valor) }}" name="valor">
+                                    value="{{ old('valor', @$store->valor) }}" name="valor">
                             </div>
                         </div>
 
@@ -59,13 +59,13 @@
                             <div class="col-md-4">
                                 <label for="data_de_vencimento" class="form-label">Data de Vencimento</label>
                                 <input type="date" class="form-control" id="data_de_vencimento"
-                                    value="{{ old('data_de_vencimento', @$store->ipva->data_de_vencimento) }}"
+                                    value="{{ old('data_de_vencimento', @$store->data_de_vencimento) }}"
                                     name="data_de_vencimento">
                             </div>
                             <div class="col-md-4">
                                 <label for="data_de_pagamento" class="form-label">Data de Pagamento</label>
                                 <input type="date" class="form-control" id="data_de_pagamento"
-                                    value="{{ old('data_de_pagamento', @$store->ipva->data_de_pagamento) }}"
+                                    value="{{ old('data_de_pagamento', @$store->data_de_pagamento) }}"
                                     name="data_de_pagamento">
                             </div>
                         </div>

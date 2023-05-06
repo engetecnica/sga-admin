@@ -19,7 +19,7 @@ class ObraSeeder extends Seeder
 
         // $veiculos = DB::table('veiculos')->pluck('id');
         $empresas = DB::table('empresas')->pluck('id');
-        for ($i = 0; $i < 50; $i++) {
+        for ($i = 0; $i < 100; $i++) {
             DB::table('obras')->insert([
                 // 'veiculo_id' => $veiculos->random(),
                 'id_empresa' => $empresas->random(),

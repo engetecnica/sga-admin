@@ -16,4 +16,8 @@ class CadastroEmpresa extends Model
     protected $table = "empresas";
     protected $dates = ['deleted_at'];
 
+    public function obras()
+    {
+        return $this->hasMany(CadastroObra::class, 'id_empresa', 'id');
+    }
 }

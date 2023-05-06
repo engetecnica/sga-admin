@@ -15,4 +15,13 @@ class CadastroObra extends Model
     protected $table = "obras";
     protected $dates = ['deleted_at'];
 
+    public function empresa()
+    {
+        return $this->belongsTo(CadastroEmpresa::class, 'id_empresa', 'id');
+    }
+
+    public function funcionarios()
+    {
+        return $this->hasMany(CadastroFuncionario::class, 'id_obra', 'id');
+    }
 }

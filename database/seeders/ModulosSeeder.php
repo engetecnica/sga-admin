@@ -253,9 +253,9 @@ class ModulosSeeder extends Seeder
             ],
             [
                 'id_modulo' => 20,
-                'titulo' => 'Novo Relatório',
+                'titulo' => 'Veículos',
                 'posicao' => 1,
-                'url_amigavel' => 'admin/relatorio/novo',
+                'url_amigavel' => 'admin/relatorio/veiculos',
                 'icone' => NULL,
                 'tipo_de_acao' => 'other',
                 'created_at' => now(),

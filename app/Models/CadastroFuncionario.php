@@ -12,6 +12,8 @@ class CadastroFuncionario extends Model
     protected $table = "funcionarios";
     protected $dates = ['deleted_at'];
 
-
-    
+    public function obra()
+    {
+        return $this->belongsTo(CadastroObra::class, 'id_obra', 'id');
+    }
 }

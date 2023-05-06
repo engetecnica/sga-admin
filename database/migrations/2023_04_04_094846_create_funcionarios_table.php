@@ -15,12 +15,13 @@ return new class extends Migration
     {
         Schema::create('funcionarios', function (Blueprint $table) {
             $table->id();
-            $table->char('matricula', 50)->unique();
+            // $table->char('matricula', 50)->unique();
+            $table->integer('matricula');
 
             $table->unsignedBigInteger('id_obra')->unsigned();
             $table->foreign('id_obra')->references('id')->on('obras');
 
-            $table->unsignedBigInteger('id_funcao');
+            $table->unsignedBigInteger('id_funcao')->nullable();
             $table->foreign('id_funcao')->references('id')->on('funcionarios_funcoes');
 
             $table->string('nome')->nullable();

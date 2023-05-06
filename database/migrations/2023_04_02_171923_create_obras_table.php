@@ -16,7 +16,6 @@ return new class extends Migration
         Schema::create('obras', function (Blueprint $table) {
             $table->id();
 
-            // $table->unsignedBigInteger('veiculo_id')->unsigned();
             $table->unsignedBigInteger('id_empresa')->unsigned();
 
             $table->string('razao_social')->nullable();

@@ -44,7 +44,10 @@ use App\Http\Controllers\ApiController;
  */
 
 use App\Http\Controllers\Api\ApiRequisicao;
+use App\Http\Controllers\RelatorioAtivoInternoController;
 use App\Http\Controllers\RelatorioController;
+use App\Http\Controllers\RelatorioFuncionarioController;
+use App\Http\Controllers\RelatorioVeiculoController;
 use App\Http\Controllers\VeiculoAbastecimentoController;
 use App\Http\Controllers\VeiculoDepreciacaoController;
 use App\Http\Controllers\VeiculoIpvaController;
@@ -201,7 +204,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('admin/ativo/veiculo/depreciacao/store/{id}', [VeiculoDepreciacaoController::class, 'store'])->name('ativo.veiculo.depreciacao.store');
     Route::post('admin/ativo/veiculo/depreciacao/update/{id}', [VeiculoDepreciacaoController::class, 'update'])->name('ativo.veiculo.depreciacao.update');
     Route::post('admin/ativo/veiculo/depreciacao/delete/{id}', [VeiculoDepreciacaoController::class, 'delete'])->name('ativo.veiculo.depreciacao.delete');
-   
+
     /* Ativo - Veículos - Ipva */
     Route::get('admin/ativo/veiculo/ipva/{id}', [VeiculoIpvaController::class, 'index'])->name('ativo.veiculo.ipva.index');
     Route::get('admin/ativo/veiculo/ipva/editar/{id}', [VeiculoIpvaController::class, 'edit'])->name('ativo.veiculo.ipva.editar');
@@ -230,11 +233,24 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('admin/ativo/veiculo/seguro/update/{id}', [VeiculoSeguroController::class, 'update'])->name('ativo.veiculo.seguro.update');
     Route::post('admin/ativo/veiculo/seguro/delete/{id}', [VeiculoSeguroController::class, 'delete'])->name('ativo.veiculo.seguro.delete');
 
-    // Relatórios
-    Route::get('admin/relatorio/novo', [RelatorioController::class, 'index'])->name('relatorio.index');
-    Route::post('admin/relatorio/veiculos/pdf', [RelatorioController::class, 'gerarVeiculosPdf'])->name('relatorio.veiculos.pdf');
-    Route::post('admin/relatorio/veiculos/xls', [RelatorioController::class, 'gerarVeiculosXls'])->name('relatorio.veiculos.xls');
+    /* Relatórios - Funcionários */
+    Route::get('admin/relatorio/funcionarios', [RelatorioFuncionarioController::class, 'index'])->name('relatorio.funcionario.index');
+    Route::post('admin/relatorio/funcionarios/gerar', [RelatorioFuncionarioController::class, 'gerar'])->name('relatorio.funcionario.gerar');
+    Route::get('obras/select', [RelatorioFuncionarioController::class, 'select'])->name('obras.select');
 
+    /* Relatórios - Fornecedores */
+
+    /* Relatórios - Obras */
+
+    /* Relatórios - Veículos */
+    Route::get('admin/relatorio/veiculos', [RelatorioVeiculoController::class, 'index'])->name('relatorio.veiculo.index');
+    Route::post('admin/relatorio/veiculos/gerar', [RelatorioVeiculoController::class, 'gerar'])->name('relatorio.veiculo.gerar');
+
+    /* Relatórios - Ativos Internos */
+    Route::get('admin/relatorio/ativos-internos', [RelatorioAtivoInternoController::class, 'index'])->name('relatorio.ativo.interno.index');
+    Route::post('admin/relatorio/ativos-internos/gerar', [RelatorioAtivoInternoController::class, 'gerar'])->name('relatorio.ativo.interno.gerar');
+
+    /* Relatórios - Externos */
 
     /* Ferramental - Retirada */
     Route::get('admin/ferramental', [FerramentalRetiradaController::class, 'index'])->name('ferramental');

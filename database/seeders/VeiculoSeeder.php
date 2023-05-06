@@ -6,6 +6,7 @@ use App\Models\CadastroObra;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class VeiculoSeeder extends Seeder
 {
@@ -21,6 +22,9 @@ class VeiculoSeeder extends Seeder
         $obraIds = CadastroObra::pluck('id')->toArray(); // convertendo Collection em array
         shuffle($obraIds);
         foreach (range(1, 50) as $index) {
+            $minDate = Carbon::parse('2020-01-01');
+            $maxDate = Carbon::now();
+            $randomDate = Carbon::createFromTimestamp(rand($minDate->timestamp, $maxDate->timestamp));
             DB::table('veiculos')->insert([
                 'obra_id'           => $obraIds[array_rand($obraIds)],
                 'periodo_inicial'   => $faker->date(),
@@ -40,8 +44,8 @@ class VeiculoSeeder extends Seeder
                 'observacao' => $faker->text($maxNbChars = 200),
                 'situacao' => $faker->randomElement(['ativo', 'inativo']),
 
-                'created_at' => now(),
-                'updated_at' => now(),
+                'created_at'        => $randomDate,
+                'updated_at'        => $randomDate,
             ]);
         }
     }

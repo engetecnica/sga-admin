@@ -32,7 +32,8 @@ class DatabaseSeeder extends Seeder
             VeiculoIpvaSeeder::class,
             VeiculoManutencaoSeeder::class,
             VeiculoQuilometragemSeeder::class,
-            VeiculoSeguroSeeder::class
+            VeiculoSeguroSeeder::class,
+            FuncionarioSeeder::class
         ]);
     }
 }

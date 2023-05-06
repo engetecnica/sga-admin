@@ -33,7 +33,8 @@
                         </div>
                     @endif
 
-                    <form method="post" enctype="multipart/form-data" action="{{ route('relatorio.veiculos.pdf') }}">
+                    <form method="post" enctype="multipart/form-data"
+                        action="{{ route('relatorio.ativo.interno.gerar') }}">
                         @csrf
                         <div>
                             <h1>Gerar veículos</h1>
@@ -52,21 +53,9 @@
                         </div> --}}
 
                         <div class="col-12 mt-5">
-                            <button type="submit" class="btn btn-gradient-primary btn-lg font-weight-medium">Gerar
-                                PDF</button>
-
-                            {{-- <a href="#">
-                                <button type="button"
-                                    class="btn btn-gradient-danger btn-lg font-weight-medium">Limpar</button>
-                            </a> --}}
-                        </div>
-                    </form>
-
-                    <form method="post" enctype="multipart/form-data" action="{{ route('relatorio.veiculos.xls') }}">
-                        @csrf
-                        <div class="col-12 mt-5">
-                            <button type="submit" class="btn btn-gradient-primary btn-lg font-weight-medium">Gerar
-                                XLS</button>
+                            <button type="submit" class="btn btn-gradient-primary btn-lg font-weight-medium">
+                                Gerar
+                            </button>
                         </div>
                     </form>
                 </div>

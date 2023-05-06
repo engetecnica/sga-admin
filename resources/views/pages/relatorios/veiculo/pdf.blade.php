@@ -56,8 +56,8 @@
             <tr>
                 <th width="8%">ID</th>
                 <th>TIPO</th>
-                <th>Combustível</th>
-                <th>KM atual</th>
+                <th>Marca</th>
+                <th>Veículo</th>
                 <th>Data</th>
             </tr>
         </thead>
@@ -66,15 +66,24 @@
                 <tr>
                     <td><span class="badge badge-dark">{{ $veiculo->id }}</span></td>
 
-                    <td>{{ $veiculo->tipo }}</td>
+                    @php
+                        $tiposVeiculos = [
+                            'motos' => 'Moto',
+                            'caminhoes' => 'Caminhão',
+                            'carros' => 'Carro',
+                            'maquinas' => 'Máquina',
+                        ];
+                    @endphp
+
+                    <td>{{ @$tiposVeiculos[$veiculo->tipo] }}</td>
                     <td>
-                        @isset($veiculo->abastecimento)
-                            {{ $veiculo->abastecimento->combustivel }}
+                        @isset($veiculo->marca)
+                            {{ $veiculo->marca }}
                         @endisset
                     </td>
                     <td>
-                        @isset($veiculo->quilometragem)
-                            {{ $veiculo->quilometragem->quilometragem_atual }}
+                        @isset($veiculo->veiculo)
+                            {{ $veiculo->veiculo }}
                         @endisset
                     </td>
                     <td>

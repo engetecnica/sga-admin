@@ -46,7 +46,9 @@ use App\Http\Controllers\ApiController;
 use App\Http\Controllers\Api\ApiRequisicao;
 use App\Http\Controllers\RelatorioAtivoInternoController;
 use App\Http\Controllers\RelatorioController;
+use App\Http\Controllers\RelatorioFornecedorController;
 use App\Http\Controllers\RelatorioFuncionarioController;
+use App\Http\Controllers\RelatorioObraController;
 use App\Http\Controllers\RelatorioVeiculoController;
 use App\Http\Controllers\VeiculoAbastecimentoController;
 use App\Http\Controllers\VeiculoDepreciacaoController;
@@ -239,8 +241,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('obras/select', [RelatorioFuncionarioController::class, 'select'])->name('obras.select');
 
     /* Relatórios - Fornecedores */
+    Route::get('admin/relatorio/fornecedores', [RelatorioFornecedorController::class, 'index'])->name('relatorio.fornecedor.index');
+    Route::post('admin/relatorio/fornecedores/gerar', [RelatorioFornecedorController::class, 'gerar'])->name('relatorio.fornecedor.gerar');
 
     /* Relatórios - Obras */
+    Route::get('admin/relatorio/obras', [RelatorioObraController::class, 'index'])->name('relatorio.obra.index');
+    Route::post('admin/relatorio/obras/gerar', [RelatorioObraController::class, 'gerar'])->name('relatorio.obra.gerar');
 
     /* Relatórios - Veículos */
     Route::get('admin/relatorio/veiculos', [RelatorioVeiculoController::class, 'index'])->name('relatorio.veiculo.index');

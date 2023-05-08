@@ -48,10 +48,7 @@
                                     <option value="" selected>Selecione</option>
                                     @foreach ($fornecedores as $fornecedor)
                                         <option value="{{ $fornecedor->id }}"
-                                            @if (
-                                                $store &&
-                                                    $store->fornecedor &&
-                                                    $fornecedor->id == $store->fornecedor->id) selected @endif>
+                                            @if ($store && $store->fornecedor && $fornecedor->id == $store->fornecedor->id) selected @endif>
                                             {{ $fornecedor->razao_social }}</option>
                                     @endforeach
                                 </select>
@@ -81,14 +78,12 @@
                             <div class="col-md-4">
                                 <label for="quilometragem" class="form-label">Quilometragem Atual</label>
                                 <input type="number" step="any" class="form-control" id="quilometragem"
-                                    value="{{ old('quilometragem', @$store->quilometragem) }}"
-                                    name="quilometragem">
+                                    value="{{ old('quilometragem', @$store->quilometragem) }}" name="quilometragem">
                             </div>
                             <div class="col-md-4">
                                 <label for="valor_do_litro" class="form-label">Valor do litro</label>
                                 <input type="text" step="any" class="form-control" id="valor_do_litro"
-                                    value="{{ old('valor_do_litro', @$store->valor_do_litro) }}"
-                                    name="valor_do_litro">
+                                    value="{{ old('valor_do_litro', @$store->valor_do_litro) }}" name="valor_do_litro">
                             </div>
                         </div>
 
@@ -101,8 +96,7 @@
                             <div class="col-md-4">
                                 <label for="valor_total" class="form-label">Valor total</label>
                                 <input type="text" step="any" readonly class="form-control" id="valor_total"
-                                    value="{{ old('valor_total', @$store->valor_total) }}"
-                                    name="valor_total">
+                                    value="{{ old('valor_total', @$store->valor_total) }}" name="valor_total">
                             </div>
                         </div>
 
@@ -132,12 +126,13 @@
         quantidadeInput.addEventListener('change', updateValorTotal);
 
         function updateValorTotal() {
-            var valorDoLitro = parseFloat(valorDoLitroInput.value);
+            var valorDoLitro = parseFloat(valorDoLitroInput.inputmask.unmaskedvalue());
             var quantidade = parseFloat(quantidadeInput.value);
 
             var valorTotal = valorDoLitro * quantidade;
 
-            valorTotalInput.value = valorTotal.toFixed(2);
+            valorTotalInput.value = 'R$ ' + valorTotal.toFixed(2).replace('.', ',');
         }
+
     });
 </script>

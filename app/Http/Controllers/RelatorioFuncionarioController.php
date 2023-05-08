@@ -33,6 +33,20 @@ class RelatorioFuncionarioController extends Controller
             $funcionarios->whereDate('created_at', today());
         } elseif ($periodo == 'ontem') {
             $funcionarios->whereDate('created_at', yesterday());
+        } elseif ($periodo == '7dias') {
+            $funcionarios->whereBetween('created_at', [today()->subDays(6), now()]);
+        } elseif ($periodo == '30dias') {
+            $funcionarios->whereBetween('created_at', [today()->subDays(29), now()]);
+        } elseif ($periodo == '60dias') {
+            $funcionarios->whereBetween('created_at', [today()->subDays(59), now()]);
+        } elseif ($periodo == '90dias') {
+            $funcionarios->whereBetween('created_at', [today()->subDays(89), now()]);
+        } elseif ($periodo == '180dias') {
+            $funcionarios->whereBetween('created_at', [today()->subDays(179), now()]);
+        } elseif ($periodo == '365dias') {
+            $funcionarios->whereBetween('created_at', [today()->subDays(364), now()]);
+        } elseif ($periodo == '730dias') {
+            $funcionarios->whereBetween('created_at', [today()->subDays(729), now()]);
         } elseif ($periodo == 'outro') {
             $funcionarios->whereDate('created_at', '>=', $inicio)
                 ->whereDate('created_at', '<=', $fim);

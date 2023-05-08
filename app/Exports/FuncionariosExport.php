@@ -23,10 +23,6 @@ class FuncionariosExport implements FromCollection
         $this->obra = $obra;
     }
 
-
-    /**
-     * @return \Illuminate\Support\Collection
-     */
     public function collection()
     {
         $funcionarios = CadastroFuncionario::query();

@@ -33,24 +33,51 @@
                         </div>
                     @endif
 
-                    <form method="post" enctype="multipart/form-data"
-                        action="{{ route('relatorio.ativo.interno.gerar') }}">
+                    <form method="post" action="{{ route('relatorio.fornecedor.gerar') }}">
                         @csrf
                         <div>
-                            <h1>Gerar veículos</h1>
+                            <h1>Gerar Relatório de Funcionários</h1>
                         </div>
-                        {{-- <div class="row">
-                            <div class="col-md-10">
-                                <label for="obra" class="form-label">Obra</label>
-                                <select name="obra" id="obra" class="form-select">
 
-                                    <option value="" selected>Selecione</option>
-
-                                    <option value="">AAA</option>
-
+                        <div class="row mt-3">
+                            <div class="col-md-4">
+                                <label for="periodo" class="form-label">Periodo</label>
+                                <select name="periodo" id="periodo" class="form-select">
+                                    <option value="" selected>Todos</option>
+                                    <option value="hoje">Hoje</option>
+                                    <option value="ontem">Ontem</option>
+                                    <option value="7dias">Últimos 7 dias</option>
+                                    <option value="30dias">Últimos 30 dias</option>
+                                    <option value="60dias">Últimos 60 dias</option>
+                                    <option value="90dias">Últimos 90 dias</option>
+                                    <option value="180dias">Últimos 6 meses</option>
+                                    <option value="365dias">Último ano</option>
+                                    <option value="730dias">Últimos 2 anos</option>
+                                    <option value="outro">Outro</option>
                                 </select>
                             </div>
-                        </div> --}}
+                            <div class="row col-md-6" id="outro-periodo" style="display: none;">
+                                <div class="col-md-6">
+                                    <label for="inicio" class="form-label">Início</label>
+                                    <input type="date" class="form-control" id="inicio" name="inicio">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="fim" class="form-label">Fim</label>
+                                    <input type="date" class="form-control" id="fim" name="fim">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row  mt-3">
+                            <div class="col-md-4">
+                                <label for="tipo_arquivo" class="form-label">Tipo de Arquivo</label>
+                                <select name="tipo_arquivo" id="tipo_arquivo" class="form-select" required>
+                                    <option value="" selected>Selecione</option>
+                                    <option value="pdf">PDF</option>
+                                    <option value="xls">XLS (Excel)</option>
+                                </select>
+                            </div>
+                        </div>
 
                         <div class="col-12 mt-5">
                             <button type="submit" class="btn btn-gradient-primary btn-lg font-weight-medium">
@@ -64,3 +91,17 @@
     </div>
 @endsection
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const select = document.querySelector('#periodo');
+        const outroPeriodoDiv = document.querySelector('#outro-periodo');
+
+        select.addEventListener('change', () => {
+            if (select.value === 'outro') {
+                outroPeriodoDiv.style.display = 'flex';
+            } else {
+                outroPeriodoDiv.style.display = 'none';
+            }
+        });
+    });
+</script>

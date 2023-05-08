@@ -15,7 +15,19 @@ class MarcaMaquinaSeeder extends Seeder
      */
     public function run()
     {
-        $marcas = ['TKA', 'BOBCAT', 'JCB', 'BMH', 'Munck', 'Perfuratriz'];
+        $marcas = [
+            'Case',
+            'CAT | Caterpillar',
+            'Jhon Deere',
+            'Massey Ferguson',
+            'New Holland',
+            'Valtra',
+            'Bobcat',
+            'JCB',
+            'TKA',
+            'Argus',
+            'Outra'
+        ];
 
         foreach ($marcas as $marca) {
             MarcaMaquina::create(['marca' => $marca]);

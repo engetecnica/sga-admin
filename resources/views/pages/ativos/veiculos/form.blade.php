@@ -85,7 +85,7 @@
                                     <option value="maquinas">Máquina</option>
                                 </select>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-4" id="marcaVeiculos">
                                 <label for="marca" class="form-label">Marca</label>
                                 <select name="marca" id="marca" class="form-select">
 
@@ -97,10 +97,24 @@
 
                                 </select>
                                 <input type="hidden" name="marca_nome" id="marca_nome">
-
+                            </div>
+                            <div class="col-md-4" id="marcaMaquinas" style="display:none;">
+                                <label for="marca" class="form-label">Marca</label>
+                                <select name="marca_da_maquina" id="marca_da_maquina" class="form-select">
+                                    @if (@$store->marca_da_maquina)
+                                        <option value="{{ $store->marca_da_maquina }}" selected>
+                                            {{ $store->marca_da_maquina }}
+                                        </option>
+                                    @else
+                                        <option value="" selected>Selecione</option>
+                                    @endif
+                                    @foreach ($marcas as $marca)
+                                        <option value="{{ $marca->marca }}">{{ $marca->marca }}</option>
+                                    @endforeach
+                                </select>
                             </div>
 
-                            <div class="col-md-4">
+                            <div class="col-md-4" id="modeloVeiculos">
                                 <label for="modelo" class="form-label">Modelo</label>
                                 <select name="modelo" id="modelo" class="form-select">
 
@@ -113,47 +127,115 @@
                                 </select>
                                 <input type="hidden" name="modelo_nome" id="modelo_nome">
                             </div>
-
-
+                            <div class="col-md-4" id="modeloMaquinas" style="display:none;">
+                                <label for="modelo_da_maquina" class="form-label">Modelo</label>
+                                <select name="modelo_da_maquina" id="modelo_da_maquina" class="form-select">
+                                    @if (@$store->modelo)
+                                        <option value="{{ $store->modelo }}" selected>
+                                            {{ $store->modelo }}
+                                        </option>
+                                    @else
+                                        <option value="" selected>Selecione</option>
+                                    @endif
+                                    @foreach ($modelos as $modelo)
+                                        <option value="{{ $modelo->modelo }}">{{ $modelo->modelo }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
 
-                        <div class="row  mt-3">
-                            <div class="col-md-4">
+
+
+                        <div class="row mt-3">
+                            <div class="col-md-4" id="anoVeiculos">
                                 <label for="ano" class="form-label">Ano</label>
                                 <select name="ano" id="ano" class="form-select">
-
                                     @if (@$store->ano)
                                         <option value="{{ $store->ano }}" selected>{{ $store->ano }}</option>
                                     @else
                                         <option value="" selected>Selecione</option>
                                     @endif
-
                                 </select>
                             </div>
-                            <div class="col-md-8">
+                            <div class="col-md-4" id="anoMaquinas" style="display:none;">
+                                <label for="ano_da_maquina" class="form-label">Ano</label>
+                                <select name="ano_da_maquina" id="ano_da_maquina" class="form-select">
+                                    @if (@$store->ano)
+                                        <option value="{{ $store->ano }}" selected>{{ $store->ano }}</option>
+                                    @else
+                                        <option value="">Selecione</option>
+                                        <option value="1987">1987</option>
+                                        <option value="1988">1988</option>
+                                        <option value="1989">1989</option>
+                                        <option value="1990">1990</option>
+                                        <option value="1991">1991</option>
+                                        <option value="1992">1992</option>
+                                        <option value="1993">1993</option>
+                                        <option value="1994">1994</option>
+                                        <option value="1995">1995</option>
+                                        <option value="1996">1996</option>
+                                        <option value="1997">1997</option>
+                                        <option value="1998">1998</option>
+                                        <option value="1999">1999</option>
+                                        <option value="2000">2000</option>
+                                        <option value="2001">2001</option>
+                                        <option value="2002">2002</option>
+                                        <option value="2003">2003</option>
+                                        <option value="2004">2004</option>
+                                        <option value="2005">2005</option>
+                                        <option value="2006">2006</option>
+                                        <option value="2007">2007</option>
+                                        <option value="2008">2008</option>
+                                        <option value="2009">2009</option>
+                                        <option value="2010">2010</option>
+                                        <option value="2011">2011</option>
+                                        <option value="2012">2012</option>
+                                        <option value="2013">2013</option>
+                                        <option value="2014">2014</option>
+                                        <option value="2015">2015</option>
+                                        <option value="2016">2016</option>
+                                        <option value="2017">2017</option>
+                                        <option value="2018">2018</option>
+                                        <option value="2019">2019</option>
+                                        <option value="2020">2020</option>
+                                        <option value="2021">2021</option>
+                                        <option value="2022">2022</option>
+                                        <option value="2023">2023</option>
+                                        <option value="2024">2024</option>
+                                    @endif
+                                </select>
+                            </div>
+                            <div class="col-md-8" id="nomeVeiculos">
                                 <label for="veiculo" class="form-label">Veículo</label>
                                 <input type="veiculo" class="form-control" id="veiculo" readonly
                                     value="{{ old('veiculo', @$store->veiculo) }}" name="veiculo"
                                     placeholder="Preenchimento Automático">
                             </div>
+                            <div class="col-md-8" id="nomeMaquinas">
+                                <label for="veiculo_maquina" class="form-label">Modelo/Ano</label>
+                                <input type="veiculo_maquina" class="form-control" id="veiculo_maquina" readonly
+                                    value="{{ old('veiculo_maquina', @$store->veiculo) }}" name="veiculo_maquina"
+                                    placeholder="Preenchimento Automático">
+                            </div>
                         </div>
+
 
                         <div class="row  mt-3">
                             <div class="col-md-4">
                                 <label for="valor_fipe" class="form-label">Valor</label>
-                                <input type="text" class="form-control" id="valor_fipe" readonly
+                                <input type="text" class="form-control" id="valor_fipe"
                                     value="{{ old('valor_fipe', @$store->valor_fipe) }}" name="valor_fipe"
                                     placeholder="Preenchimento Automático">
                             </div>
                             <div class="col-md-4">
                                 <label for="codigo_fipe" class="form-label">Código</label>
-                                <input type="text" class="form-control" id="codigo_fipe" readonly
+                                <input type="text" class="form-control" id="codigo_fipe"
                                     value="{{ old('codigo_fipe', @$store->codigo_fipe) }}" name="codigo_fipe"
                                     placeholder="Preenchimento Automático">
                             </div>
                             <div class="col-md-4">
                                 <label for="fipe_mes_referencia" class="form-label">Mês de referência</label>
-                                <input type="text" class="form-control" id="fipe_mes_referencia" readonly
+                                <input type="text" class="form-control" id="fipe_mes_referencia"
                                     value="{{ old('fipe_mes_referencia', @$store->fipe_mes_referencia) }}"
                                     name="fipe_mes_referencia" placeholder="Preenchimento Automático">
                             </div>
@@ -195,7 +277,7 @@
                                     value="{{ old('codigo_da_maquina', @$store->codigo_da_maquina) }}"
                                     name="codigo_da_maquina">
                             </div>
-                            <div class="col-md-3">
+                            {{-- <div class="col-md-3">
                                 <label for="marca_da_maquina" class="form-label">Marca</label>
                                 <select name="marca_da_maquina" id="marca_da_maquina" class="form-select">
                                     @if (@$store->marca_da_maquina)
@@ -215,7 +297,7 @@
                                     data-toggle="modal" data-target="#addMarcaModal"><span
                                         class="mdi mdi-plus"></span></button>
 
-                            </div>
+                            </div> --}}
                         </div>
 
                         <div class="row  mt-3">
@@ -408,6 +490,38 @@
             document.getElementById("divPlacaRenavam").style.display = "none";
             document.getElementById("divHorimetro").style.display = "none";
         }
+        var tipo = document.getElementById("tipo").value;
+        if (tipo === "maquinas") {
+            document.getElementById("marcaMaquinas").style.display = "block";
+            document.getElementById("marcaVeiculos").style.display = "none";
+        } else {
+            document.getElementById("marcaMaquinas").style.display = "none";
+            document.getElementById("marcaVeiculos").style.display = "block";
+        }
+        var tipo = document.getElementById("tipo").value;
+        if (tipo === "maquinas") {
+            document.getElementById("modeloMaquinas").style.display = "block";
+            document.getElementById("modeloVeiculos").style.display = "none";
+        } else {
+            document.getElementById("modeloMaquinas").style.display = "none";
+            document.getElementById("modeloVeiculos").style.display = "block";
+        }
+        var tipo = document.getElementById("tipo").value;
+        if (tipo === "maquinas") {
+            document.getElementById("anoMaquinas").style.display = "block";
+            document.getElementById("anoVeiculos").style.display = "none";
+        } else {
+            document.getElementById("anoMaquinas").style.display = "none";
+            document.getElementById("anoVeiculos").style.display = "block";
+        }
+        var tipo = document.getElementById("tipo").value;
+        if (tipo === "maquinas") {
+            document.getElementById("nomeMaquinas").style.display = "block";
+            document.getElementById("nomeVeiculos").style.display = "none";
+        } else {
+            document.getElementById("nomeMaquinas").style.display = "none";
+            document.getElementById("nomeVeiculos").style.display = "block";
+        }
     }
 </script>
 
@@ -416,5 +530,21 @@
         $('#addMarcaModal').on('hidden.bs.modal', function(e) {
             $('#add_marca_da_maquina').val('');
         });
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        var modeloSelect = $("#modelo_da_maquina");
+        var anoSelect = $("#ano_da_maquina");
+        var veiculoInput = $("#veiculo_maquina");
+
+        modeloSelect.on("change", updateVeiculo);
+        anoSelect.on("change", updateVeiculo);
+
+        function updateVeiculo() {
+            var modeloValue = modeloSelect.val();
+            var anoValue = anoSelect.val();
+            veiculoInput.val(modeloValue + '/' + anoValue);
+        }
     });
 </script>

@@ -30,7 +30,6 @@ return new class extends Migration
             $table->string('fipe_mes_referencia')->nullable();
             $table->string('placa')->nullable();
             $table->string('codigo_da_maquina')->nullable();
-            $table->string('marca_da_maquina')->nullable();
             
             $table->string('renavam')->nullable();
             $table->string('horimetro_inicial')->nullable();

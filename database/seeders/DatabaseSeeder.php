@@ -26,6 +26,7 @@ class DatabaseSeeder extends Seeder
             EmpresaSeeder::class,
             ObraSeeder::class,
             MarcaMaquinaSeeder::class,
+            ModeloMaquinaSeeder::class,
             VeiculoSeeder::class,
             VeiculoAbastecimentoSeeder::class,
             VeiculoDepreciacaoSeeder::class,

@@ -51,14 +51,27 @@ class RelatorioVeiculoController extends Controller
 
         $data_de_geracao = now()->format('d/m/Y H:i:s');
 
-        if ($tipo_arquivo == 'pdf') {
-            $pdf = PDF::loadView('pages.relatorios.veiculo.pdf', compact('veiculos', 'data_de_geracao'));
-            $pdf->getDOMPdf()->set_option('isPhpEnabled', true);
-            return $pdf->stream('veiculos.pdf');
-        } elseif ($tipo_arquivo == 'xls') {
-            return Excel::download(new VeiculosExport($tipo_veiculo, $periodo, $inicio, $fim), 'veiculos.xlsx');
+        if ($request->tipo_arquivo) {
+            if ($tipo_arquivo == 'pdf') {
+                $pdf = PDF::loadView('pages.relatorios.veiculo.pdf', compact('veiculos', 'data_de_geracao'));
+                $pdf->getDOMPdf()->set_option('isPhpEnabled', true);
+                return $pdf->stream('veiculos.pdf');
+            } elseif ($tipo_arquivo == 'xls') {
+                return Excel::download(new VeiculosExport($tipo_veiculo, $periodo, $inicio, $fim), 'veiculos.xlsx');
+            } else {
+                return redirect()->back();
+            }
         } else {
-            return redirect()->back();
+
+            return view(
+                'pages.relatorios.veiculo.index',
+                compact(
+                    'veiculos',
+                    'data_de_geracao',
+                    'tipo_veiculo',
+                    'periodo'
+                )
+            );
         }
     }
 }

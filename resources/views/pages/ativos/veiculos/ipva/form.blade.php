@@ -4,14 +4,18 @@
 
     <div class="page-header">
         <h3 class="page-title">
-            <span class="page-title-icon bg-gradient-primary text-white me-2">
+            <span class="page-title-icon bg-gradient-primary me-2 text-white">
                 <i class="mdi mdi-access-point-network menu-icon"></i>
             </span> IPVA do veículo
         </h3>
         <nav aria-label="breadcrumb">
             <ul class="breadcrumb">
                 <li class="breadcrumb-item active" aria-current="page">
-                    <span></span>Cadastros <i class="mdi mdi-check icon-sm text-primary align-middle"></i>
+                    <button class="btn btn-success">
+                        <a class="text-white" href="{{ route('ativo.veiculo.ipva.index', $store->veiculo_id) }}">
+                            <i class="mdi mdi-arrow-left icon-sm align-middle text-white"></i> Voltar
+                        </a>
+                    </button>
                 </li>
             </ul>
         </nav>
@@ -33,50 +37,36 @@
                         </div>
                     @endif
 
-                    @php
-                        $action = isset($store) ? route('ativo.veiculo.ipva.update', $store->id) : route('ativo.veiculo.ipva.store', $store->id);
-                    @endphp
-                    <form method="post" enctype="multipart/form-data" action="{{ $action }}">
+                    <form method="post" enctype="multipart/form-data" action="{{ $btn == 'add' ? route('ativo.veiculo.ipva.store', $store->veiculo_id) : route('ativo.veiculo.ipva.update', $store->id) }}">
                         @csrf
-
-
 
                         <div class="row mt-3">
                             <div class="col-md-4">
-                                <label for="referencia_ano" class="form-label">Ano de Referência</label>
-                                <input type="number" step="any" class="form-control" id="referencia_ano"
-                                    value="{{ old('referencia_ano', @$store->referencia_ano) }}"
-                                    name="referencia_ano">
+                                <label class="form-label" for="referencia_ano">Ano de Referência</label>
+                                <input class="form-control" id="referencia_ano" name="referencia_ano" type="number" value="{{ old('referencia_ano', @$store->referencia_ano) }}" step="any">
                             </div>
                             <div class="col-md-4">
-                                <label for="valor" class="form-label">Valor</label>
-                                <input type="text" step="any" class="form-control" id="valor"
-                                    value="{{ old('valor', @$store->valor) }}" name="valor">
+                                <label class="form-label" for="valor">Valor</label>
+                                <input class="form-control" id="valor" name="valor" type="text" value="{{ old('valor', @$store->valor) }}" step="any">
                             </div>
                         </div>
 
                         <div class="row mt-3">
                             <div class="col-md-4">
-                                <label for="data_de_vencimento" class="form-label">Data de Vencimento</label>
-                                <input type="date" class="form-control" id="data_de_vencimento"
-                                    value="{{ old('data_de_vencimento', @$store->data_de_vencimento) }}"
-                                    name="data_de_vencimento">
+                                <label class="form-label" for="data_de_vencimento">Data de Vencimento</label>
+                                <input class="form-control" id="data_de_vencimento" name="data_de_vencimento" type="date" value="{{ old('data_de_vencimento', @$store->data_de_vencimento) }}">
                             </div>
                             <div class="col-md-4">
-                                <label for="data_de_pagamento" class="form-label">Data de Pagamento</label>
-                                <input type="date" class="form-control" id="data_de_pagamento"
-                                    value="{{ old('data_de_pagamento', @$store->data_de_pagamento) }}"
-                                    name="data_de_pagamento">
+                                <label class="form-label" for="data_de_pagamento">Data de Pagamento</label>
+                                <input class="form-control" id="data_de_pagamento" name="data_de_pagamento" type="date" value="{{ old('data_de_pagamento', @$store->data_de_pagamento) }}">
                             </div>
                         </div>
 
                         <div class="col-12 mt-5">
-                            <button type="submit"
-                                class="btn btn-gradient-primary btn-lg font-weight-medium">Salvar</button>
+                            <button class="btn btn-gradient-primary btn-lg font-weight-medium" type="submit">Salvar</button>
 
                             <a href="{{ route('ativo.veiculo') }}">
-                                <button type="button"
-                                    class="btn btn-gradient-danger btn-lg font-weight-medium">Cancelar</button>
+                                <button class="btn btn-gradient-danger btn-lg font-weight-medium" type="button">Cancelar</button>
                             </a>
                         </div>
                     </form>

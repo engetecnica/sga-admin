@@ -4,14 +4,18 @@
 
     <div class="page-header">
         <h3 class="page-title">
-            <span class="page-title-icon bg-gradient-primary text-white me-2">
+            <span class="page-title-icon bg-gradient-primary me-2 text-white">
                 <i class="mdi mdi-access-point-network menu-icon"></i>
             </span> Manutenção do Veículo
         </h3>
         <nav aria-label="breadcrumb">
             <ul class="breadcrumb">
                 <li class="breadcrumb-item active" aria-current="page">
-                    <span></span>Cadastros <i class="mdi mdi-check icon-sm text-primary align-middle"></i>
+                    <button class="btn btn-success">
+                        <a class="text-white" href="{{ route('ativo.veiculo.ipva.editar', [$last->id, 'add']) }}">
+                            Adicionar
+                        </a>
+                    </button>
                 </li>
             </ul>
         </nav>
@@ -34,7 +38,7 @@
                     @endif
 
                     @if ($store->tipo == 'maquinas')
-                        <table class="table table-hover table-striped">
+                        <table class="table-hover table-striped table">
                             <thead>
                                 <tr>
                                     <th width="8%">ID Máquina</th>
@@ -58,7 +62,7 @@
                             </tbody>
                         </table>
                     @else
-                        <table class="table table-hover table-striped">
+                        <table class="table-hover table-striped table">
                             <thead>
                                 <tr>
                                     <th>Placa</th>
@@ -80,7 +84,7 @@
 
                                     </td>
                                     <td>R$
-                                        {{ number_format(floatval(str_replace(',', '.', str_replace('.', '', @$store->valor_fipe))), 2, ',', '.') }}
+                                        {{ Tratamento::formatFloat($store->valor_fipe) }}
                                     </td>
                                     <td>{{ strftime('%d/%m/%Y às %H:%M', strtotime(@$store->created_at)) }}</td>
                                     <td>editar/excluir</td>
@@ -89,7 +93,7 @@
                         </table>
                     @endif
 
-                    <table class="table table-hover table-striped" id="lista-simples">
+                    <table class="table-hover table-striped table" id="lista-simples">
                         <thead>
                             <tr>
                                 <th width="8%">ID</th>
@@ -106,27 +110,26 @@
                                     <td><span class="badge badge-dark">{{ @$ipva->id }}</span></td>
                                     <td>{{ @$ipva->referencia_ano }}</td>
                                     <td>R$
-                                        {{ number_format(floatval(str_replace(',', '.', str_replace('.', '', @$ipva->valor))), 2, ',', '.') }}
+                                        {{ Tratamento::formatFloat($ipva->valor) }}
                                     </td>
                                     <td>{{ strftime('%d/%m/%Y', strtotime(@$ipva->data_de_pagamento)) }}</td>
                                     <td>{{ strftime('%d/%m/%Y', strtotime(@$ipva->data_de_vencimento)) }}</td>
 
-
                                     <td class="d-flex gap-2">
-                                        <a href="{{ route('ativo.veiculo.ipva.editar', $ipva->id) }}">
-                                            <button class="badge badge-info" data-toggle="tooltip" data-placement="top"
-                                                title="Editar"><i class="mdi mdi-pencil"></i> Editar
-                                            </button>
-                                        </a>
-                                        <form action="{{ route('ativo.veiculo.ipva.delete', $ipva->id) }}"
-                                            method="POST">
+                                        @if ($loop->last)
+                                            <a href="{{ route('ativo.veiculo.ipva.editar', [$ipva->id, 'edit']) }}">
+                                                <button class="badge badge-info" data-toggle="tooltip" data-placement="top" title="Editar">
+                                                    <i class="mdi mdi-pencil"></i> Editar
+                                                </button>
+                                            </a>
+                                        @endif
+
+                                        <form action="{{ route('ativo.veiculo.ipva.delete', $ipva->id) }}" method="POST">
                                             @csrf
-                                            <a class="excluir-padrao" data-id="{{ $ipva->id }}"
-                                                data-table="empresas" data-module="cadastro/empresa">
-                                                <button class="badge badge-danger" data-toggle="tooltip"
-                                                    data-placement="top" title="Excluir" type="submit"><i
-                                                        class="mdi mdi-delete"></i>
-                                                    Excluir</button>
+                                            <a class="excluir-padrao" data-id="{{ $ipva->id }}" data-table="empresas" data-module="cadastro/empresa">
+                                                <button class="badge badge-danger" data-toggle="tooltip" data-placement="top" type="submit" title="Excluir">
+                                                    <i class="mdi mdi-delete"></i> Excluir
+                                                </button>
                                             </a>
                                         </form>
                                     </td>

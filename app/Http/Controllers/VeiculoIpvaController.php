@@ -15,16 +15,18 @@ class VeiculoIpvaController extends Controller
         // $fornecedores = CadastroFornecedor::all();
 
         $store = Veiculo::find($id);
+        $last = VeiculoIpva::where('veiculo_id', $store->id)->orderBy('id', 'desc')->first();
+        // dd($last);
 
         if (!$id or !$store) :
             Alert::error('Que Pena!', 'Esse veículo não foi encontrado.');
             return redirect(route('ativo.veiculo'));
         endif;
 
-        return view('pages.ativos.veiculos.ipva.index', compact('store'));
+        return view('pages.ativos.veiculos.ipva.index', compact('store', 'last'));
     }
 
-    public function edit($id)
+    public function edit($id, $btn)
     {
         // $fornecedores = CadastroFornecedor::all();
 
@@ -35,7 +37,7 @@ class VeiculoIpvaController extends Controller
             return redirect(route('ativo.veiculo'));
         endif;
 
-        return view('pages.ativos.veiculos.ipva.form', compact('store'));
+        return view('pages.ativos.veiculos.ipva.form', compact('store', 'btn'));
     }
 
     public function store(Request $request, $id)
@@ -54,7 +56,7 @@ class VeiculoIpvaController extends Controller
                     'data_de_pagamento' => $request->input('data_de_pagamento')
                 ]
             );
-            return redirect()->back()->with('success', 'Sucesso');
+            return redirect()->route('ativo.veiculo.ipva.index', $id)->with('success', 'Sucesso');
         } catch (\Exception $e) {
 
             return redirect()->back()->withInput();
@@ -63,8 +65,6 @@ class VeiculoIpvaController extends Controller
 
     public function update(Request $request, $id)
     {
-        // dd($request);
-
 
         $veiculo = VeiculoIpva::findOrFail($id);
 
@@ -76,7 +76,7 @@ class VeiculoIpvaController extends Controller
                 'data_de_pagamento' => $request->data_de_pagamento,
             ]);
 
-            return redirect()->back()->with('success', 'Sucesso');
+            return redirect()->route('ativo.veiculo.ipva.index', $veiculo->veiculo_id)->with('success', 'Sucesso');
         } catch (\Exception $e) {
 
             return redirect()->back()->withInput();

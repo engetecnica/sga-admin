@@ -13,7 +13,7 @@ class Tratamento
     /* Formatação do Número do celular com link para WhatsApp */
     public static function SetURLWhatsApp(string $celular)
     {
-        if (!$celular) return "";        
+        if (!$celular) return "";
         $URL_WP = "https://api.whatsapp.com/send?phone=55";
         return $URL_WP.preg_replace('/[^0-9]/', '', $celular);
     }
@@ -72,5 +72,17 @@ class Tratamento
 
         return null;
     }
-    
+
+    public static function formatFloat($data)
+    {
+
+        //condição de recebimento de dados
+        $data = isset($data) ? str_replace('.', '', str_replace(',', '.', $data)) : 0;
+
+        //Caso receba um número formata. Se for zero retorna 0,00
+        $formatted = number_format(floatval($data), 2, ',', '.');
+
+        return $formatted;
+    }
+
 }

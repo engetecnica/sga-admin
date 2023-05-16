@@ -33,12 +33,12 @@ use App\Http\Controllers\FerramentalRequisicaoController;
 use App\Http\Controllers\AnexoController;
 use App\Http\Controllers\ApiController;
 
-/** 
+/**
  * Consumindo API em Módulos
  * Redução de redundancia de pesquisa
- * 
+ *
  * @Modulos
- * 
+ *
  * 1.0 - Requisições
  *  1.1 - Listagem de Ativos (Popular Select - Form)
  */
@@ -209,7 +209,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     /* Ativo - Veículos - Ipva */
     Route::get('admin/ativo/veiculo/ipva/{id}', [VeiculoIpvaController::class, 'index'])->name('ativo.veiculo.ipva.index');
-    Route::get('admin/ativo/veiculo/ipva/editar/{id}', [VeiculoIpvaController::class, 'edit'])->name('ativo.veiculo.ipva.editar');
+    Route::get('admin/ativo/veiculo/ipva/editar/{id}/{btn}', [VeiculoIpvaController::class, 'edit'])->name('ativo.veiculo.ipva.editar');
     Route::post('admin/ativo/veiculo/ipva/store/{id}', [VeiculoIpvaController::class, 'store'])->name('ativo.veiculo.ipva.store');
     Route::post('admin/ativo/veiculo/ipva/update/{id}', [VeiculoIpvaController::class, 'update'])->name('ativo.veiculo.ipva.update');
     Route::post('admin/ativo/veiculo/ipva/delete/{id}', [VeiculoIpvaController::class, 'delete'])->name('ativo.veiculo.ipva.delete');
@@ -303,9 +303,9 @@ Route::group(['middleware' => 'auth'], function () {
         [ApiController::class, 'selecionar_obra']
     )->name('api.selecionar_obra');
 
-    /** 
+    /**
      * Configurações Internas da Aplicação
-     * 
+     *
      * 1.0 - Função para remover cache
      * 2.0 - Migration Refresh
      */

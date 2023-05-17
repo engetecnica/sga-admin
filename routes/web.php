@@ -223,7 +223,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     /* Ativo - Veículos - Quilometragem */
     Route::get('admin/ativo/veiculo/quilometragem/{id}', [VeiculoQuilometragemController::class, 'index'])->name('ativo.veiculo.quilometragem.index');
-    Route::get('admin/ativo/veiculo/quilometragem/editar/{id}', [VeiculoQuilometragemController::class, 'edit'])->name('ativo.veiculo.quilometragem.editar');
+    Route::get('admin/ativo/veiculo/quilometragem/editar/{id}/{btn}', [VeiculoQuilometragemController::class, 'edit'])->name('ativo.veiculo.quilometragem.editar');
     Route::post('admin/ativo/veiculo/quilometragem/store/{id}', [VeiculoQuilometragemController::class, 'store'])->name('ativo.veiculo.quilometragem.store');
     Route::post('admin/ativo/veiculo/quilometragem/update/{id}', [VeiculoQuilometragemController::class, 'update'])->name('ativo.veiculo.quilometragem.update');
     Route::post('admin/ativo/veiculo/quilometragem/delete/{id}', [VeiculoQuilometragemController::class, 'delete'])->name('ativo.veiculo.quilometragem.delete');

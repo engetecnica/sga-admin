@@ -230,7 +230,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     /* Ativo - Veículos - Seguro */
     Route::get('admin/ativo/veiculo/seguro/{id}', [VeiculoSeguroController::class, 'index'])->name('ativo.veiculo.seguro.index');
-    Route::get('admin/ativo/veiculo/seguro/editar/{id}', [VeiculoSeguroController::class, 'edit'])->name('ativo.veiculo.seguro.editar');
+    Route::get('admin/ativo/veiculo/seguro/editar/{id}/{btn}', [VeiculoSeguroController::class, 'edit'])->name('ativo.veiculo.seguro.editar');
     Route::post('admin/ativo/veiculo/seguro/store/{id}', [VeiculoSeguroController::class, 'store'])->name('ativo.veiculo.seguro.store');
     Route::post('admin/ativo/veiculo/seguro/update/{id}', [VeiculoSeguroController::class, 'update'])->name('ativo.veiculo.seguro.update');
     Route::post('admin/ativo/veiculo/seguro/delete/{id}', [VeiculoSeguroController::class, 'delete'])->name('ativo.veiculo.seguro.delete');

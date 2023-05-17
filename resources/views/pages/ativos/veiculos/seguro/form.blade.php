@@ -4,14 +4,16 @@
 
     <div class="page-header">
         <h3 class="page-title">
-            <span class="page-title-icon bg-gradient-primary text-white me-2">
+            <span class="page-title-icon bg-gradient-primary me-2 text-white">
                 <i class="mdi mdi-access-point-network menu-icon"></i>
             </span> Seguro do Veículo
         </h3>
         <nav aria-label="breadcrumb">
             <ul class="breadcrumb">
                 <li class="breadcrumb-item active" aria-current="page">
-                    <span></span>Cadastros <i class="mdi mdi-check icon-sm text-primary align-middle"></i>
+                    <a class="btn btn-success" href="{{ route('ativo.veiculo.seguro.index', $store->veiculo_id) }}">
+                        <i class="mdi mdi-arrow-left icon-sm align-middle text-white"></i> Voltar
+                    </a>
                 </li>
             </ul>
         </nav>
@@ -33,45 +35,35 @@
                         </div>
                     @endif
 
-                    @php
-                        $action = isset($store) ? route('ativo.veiculo.seguro.update', $store->id) : route('ativo.veiculo.seguro.store', $store->id);
-                    @endphp
-                    <form method="post" enctype="multipart/form-data" action="{{ $action }}">
+                    <form method="post" enctype="multipart/form-data" action="{{ $btn == 'add' ? route('ativo.veiculo.seguro.store', $store->veiculo_id) : route('ativo.veiculo.seguro.update', $store->id) }}">
                         @csrf
 
                         <div class="row mt-3">
                             <div class="col-md-4">
-                                <label for="carencia_inicial" class="form-label">Carência Inicial</label>
-                                <input type="date" class="form-control" id="carencia_inicial"
-                                    value="{{ old('carencia_inicial', @$store->carencia_inicial) }}"
-                                    name="carencia_inicial">
+                                <label class="form-label" for="carencia_inicial">Carência Inicial</label>
+                                <input class="form-control" id="carencia_inicial" name="carencia_inicial" type="date" value="{{ old('carencia_inicial', @$store->carencia_inicial) }}">
                             </div>
                         </div>
 
                         <div class="row mt-3">
                             <div class="col-md-4">
-                                <label for="carencia_final" class="form-label">Carência Final</label>
-                                <input type="date" class="form-control" id="carencia_final"
-                                    value="{{ old('carencia_final', @$store->carencia_final) }}"
-                                    name="carencia_final">
+                                <label class="form-label" for="carencia_final">Carência Final</label>
+                                <input class="form-control" id="carencia_final" name="carencia_final" type="date" value="{{ old('carencia_final', @$store->carencia_final) }}">
                             </div>
                         </div>
 
                         <div class="row mt-3">
                             <div class="col-md-4">
-                                <label for="valor" class="form-label">Valor</label>
-                                <input type="text" step="any" class="form-control" id="valor"
-                                    value="{{ old('valor', @$store->valor) }}" name="valor">
+                                <label class="form-label" for="valor">Valor</label>
+                                <input class="form-control" id="valor" name="valor" type="text" value="{{ old('valor', @$store->valor) }}" step="any">
                             </div>
                         </div>
 
                         <div class="col-12 mt-5">
-                            <button type="submit"
-                                class="btn btn-gradient-primary btn-lg font-weight-medium">Salvar</button>
+                            <button class="btn btn-gradient-primary btn-lg font-weight-medium" type="submit">Salvar</button>
 
                             <a href="{{ route('ativo.veiculo') }}">
-                                <button type="button"
-                                    class="btn btn-gradient-danger btn-lg font-weight-medium">Cancelar</button>
+                                <button class="btn btn-gradient-danger btn-lg font-weight-medium" type="button">Cancelar</button>
                             </a>
                         </div>
                     </form>

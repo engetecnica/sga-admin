@@ -4,14 +4,16 @@
 
     <div class="page-header">
         <h3 class="page-title">
-            <span class="page-title-icon bg-gradient-primary text-white me-2">
+            <span class="page-title-icon bg-gradient-primary me-2 text-white">
                 <i class="mdi mdi-access-point-network menu-icon"></i>
             </span> Manutenção do Veículo
         </h3>
         <nav aria-label="breadcrumb">
             <ul class="breadcrumb">
                 <li class="breadcrumb-item active" aria-current="page">
-                    <span></span>Cadastros <i class="mdi mdi-check icon-sm text-primary align-middle"></i>
+                    <a class="btn btn-success" href="{{ route('ativo.veiculo.seguro.editar', [$last->id, 'add']) }}">
+                        Adicionar
+                    </a>
                 </li>
             </ul>
         </nav>
@@ -34,7 +36,7 @@
                     @endif
 
                     @if ($store->tipo == 'maquinas')
-                        <table class="table table-hover table-striped">
+                        <table class="table-hover table-striped table">
                             <thead>
                                 <tr>
                                     <th width="8%">ID Máquina</th>
@@ -58,7 +60,7 @@
                             </tbody>
                         </table>
                     @else
-                        <table class="table table-hover table-striped">
+                        <table class="table-hover table-striped table">
                             <thead>
                                 <tr>
                                     <th>Placa</th>
@@ -79,17 +81,15 @@
                                         @endforeach
 
                                     </td>
-                                    <td>R$
-                                        {{ number_format(floatval(str_replace(',', '.', str_replace('.', '', @$store->valor_fipe))), 2, ',', '.') }}
-                                    </td>
-                                    <td>{{ strftime('%d/%m/%Y às %H:%M', strtotime(@$store->created_at)) }}</td>
+                                    <td>R$ {{ Tratamento::formatFloat($store->valor_fipe) }} </td>
+                                    <td>{{ Tratamento::datetimeBr($store->created_at) }}</td>
                                     <td>editar/excluir</td>
                                 </tr>
                             </tbody>
                         </table>
                     @endif
 
-                    <table class="table table-hover table-striped" id="lista-simples">
+                    <table class="table-hover table-striped table" id="lista-simples">
                         <thead>
                             <tr>
                                 <th width="8%">ID</th>
@@ -104,25 +104,21 @@
                                 <tr>
                                     <td><span class="badge badge-dark">{{ @$seguro->id }}</span></td>
                                     <td>R$
-                                        {{ number_format(floatval(str_replace(',', '.', str_replace('.', '', @$seguro->valor))), 2, ',', '.') }}
+                                        {{ Tratamento::formatFloat($seguro->valor) }}
                                     </td>
-                                    <td>{{ strftime('%d/%m/%Y', strtotime(@$seguro->carencia_inicial)) }}</td>
-                                    <td>{{ strftime('%d/%m/%Y', strtotime(@$seguro->carencia_final)) }}</td>
+                                    <td>{{ Tratamento::dateBr($seguro->carencia_inicial) }}</td>
+                                    <td>{{ Tratamento::dateBr($seguro->carencia_final) }}</td>
                                     <td class="d-flex gap-2">
-                                        <a href="{{ route('ativo.veiculo.seguro.editar', $seguro->id) }}">
-                                            <button class="badge badge-info" data-toggle="tooltip" data-placement="top"
-                                                title="Editar"><i class="mdi mdi-pencil"></i> Editar
-                                            </button>
-                                        </a>
-                                        <form
-                                            action="{{ route('ativo.veiculo.seguro.delete', $seguro->id) }}"
-                                            method="POST">
+                                        @if ($loop->last)
+                                            <a href="{{ route('ativo.veiculo.seguro.editar', [$seguro->id, 'edit']) }}">
+                                                <button class="badge badge-info" data-toggle="tooltip" data-placement="top" title="Editar"><i class="mdi mdi-pencil"></i> Editar
+                                                </button>
+                                            </a>
+                                        @endif
+                                        <form action="{{ route('ativo.veiculo.seguro.delete', $seguro->id) }}" method="POST">
                                             @csrf
-                                            <a class="excluir-padrao" data-id="{{ $seguro->id }}"
-                                                data-table="empresas" data-module="cadastro/empresa">
-                                                <button class="badge badge-danger" data-toggle="tooltip"
-                                                    data-placement="top" title="Excluir" type="submit"><i
-                                                        class="mdi mdi-delete"></i>
+                                            <a class="excluir-padrao" data-id="{{ $seguro->id }}" data-table="empresas" data-module="cadastro/empresa">
+                                                <button class="badge badge-danger" data-toggle="tooltip" data-placement="top" type="submit" title="Excluir"><i class="mdi mdi-delete"></i>
                                                     Excluir</button>
                                             </a>
                                         </form>

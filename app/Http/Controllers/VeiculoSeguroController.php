@@ -16,15 +16,17 @@ class VeiculoSeguroController extends Controller
 
         $store = Veiculo::find($id);
 
+        $last = VeiculoSeguro::where('veiculo_id', $id)->orderBy('id', 'desc')->first();
+
         if (!$id or !$store) :
             Alert::error('Que Pena!', 'Esse veículo não foi encontrado.');
             return redirect(route('ativo.veiculo'));
         endif;
 
-        return view('pages.ativos.veiculos.seguro.index', compact('store'));
+        return view('pages.ativos.veiculos.seguro.index', compact('store', 'last'));
     }
 
-    public function edit($id)
+    public function edit($id, $btn)
     {
         // $fornecedores = CadastroFornecedor::all();
 
@@ -35,7 +37,7 @@ class VeiculoSeguroController extends Controller
             return redirect(route('ativo.veiculo'));
         endif;
 
-        return view('pages.ativos.veiculos.seguro.form', compact('store'));
+        return view('pages.ativos.veiculos.seguro.form', compact('store', 'btn'));
     }
 
     public function store(Request $request, $id)
@@ -50,10 +52,10 @@ class VeiculoSeguroController extends Controller
                     'veiculo_id' => $veiculo->id,
                     'carencia_inicial' => $request->input('carencia_inicial'),
                     'carencia_final' => $request->input('carencia_final'),
-                    'valor' => $request->input('valor')
+                    'valor' => str_replace('R$ ', '', $request->input('valor'))
                 ]
             );
-            return redirect()->back()->with('success', 'Sucesso');
+            return redirect()->route('ativo.veiculo.seguro.index', $id)->with('success', 'Sucesso');
         } catch (\Exception $e) {
 
             return redirect()->back()->withInput();
@@ -62,16 +64,16 @@ class VeiculoSeguroController extends Controller
 
     public function update(Request $request, $id)
     {
-        // dd($request);valor
+        // dd($request->all());
         $veiculo = VeiculoSeguro::findOrFail($id);
         try {
             $veiculo->update([
                 'carencia_inicial' => $request->carencia_inicial,
                 'carencia_final' => $request->carencia_final,
-                'valor' => $request->valor
+                'valor' => str_replace('R$ ', '', $request->valor)
             ]);
 
-            return redirect()->back()->with('success', 'Sucesso');
+            return redirect()->route('ativo.veiculo.seguro.index', $veiculo->veiculo_id)->with('success', 'Sucesso');
         } catch (\Exception $e) {
 
             return redirect()->back()->withInput();

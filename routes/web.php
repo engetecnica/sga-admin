@@ -202,7 +202,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     /* Ativo - Veículos - Depreciacao */
     Route::get('admin/ativo/veiculo/depreciacao/{id}', [VeiculoDepreciacaoController::class, 'index'])->name('ativo.veiculo.depreciacao.index');
-    Route::get('admin/ativo/veiculo/depreciacao/editar/{id}', [VeiculoDepreciacaoController::class, 'edit'])->name('ativo.veiculo.depreciacao.editar');
+    Route::get('admin/ativo/veiculo/depreciacao/editar/{id}/{btn}', [VeiculoDepreciacaoController::class, 'edit'])->name('ativo.veiculo.depreciacao.editar');
     Route::post('admin/ativo/veiculo/depreciacao/store/{id}', [VeiculoDepreciacaoController::class, 'store'])->name('ativo.veiculo.depreciacao.store');
     Route::post('admin/ativo/veiculo/depreciacao/update/{id}', [VeiculoDepreciacaoController::class, 'update'])->name('ativo.veiculo.depreciacao.update');
     Route::post('admin/ativo/veiculo/depreciacao/delete/{id}', [VeiculoDepreciacaoController::class, 'delete'])->name('ativo.veiculo.depreciacao.delete');

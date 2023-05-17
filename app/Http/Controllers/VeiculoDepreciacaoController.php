@@ -13,15 +13,17 @@ class VeiculoDepreciacaoController extends Controller
     {
         $store = Veiculo::find($id);
 
+        $last = VeiculoDepreciacao::where('veiculo_id', $id)->orderBy('id', 'DESC')->first();
+
         if (!$id or !$store) :
             Alert::error('Que Pena!', 'Esse veículo não foi encontrado.');
             return redirect(route('ativo.veiculo'));
         endif;
 
-        return view('pages.ativos.veiculos.depreciacao.index', compact('store'));
+        return view('pages.ativos.veiculos.depreciacao.index', compact('store', 'last'));
     }
 
-    public function edit($id)
+    public function edit($id, $btn)
     {
         $store = VeiculoDepreciacao::find($id);
 
@@ -30,7 +32,7 @@ class VeiculoDepreciacaoController extends Controller
             return redirect(route('ativo.veiculo'));
         endif;
 
-        return view('pages.ativos.veiculos.depreciacao.form', compact('store'));
+        return view('pages.ativos.veiculos.depreciacao.form', compact('store', 'btn'));
     }
 
     public function store(Request $request, $id)
@@ -48,7 +50,7 @@ class VeiculoDepreciacaoController extends Controller
                     'referencia_ano' => $request->input('referencia_ano'),
                 ]
             );
-            return redirect()->back()->with('success', 'Sucesso');
+            return redirect()->route('ativo.veiculo.depreciacao.index', $id)->with('success', 'Sucesso');
         } catch (\Exception $e) {
 
             return redirect()->back()->withInput();
@@ -66,7 +68,7 @@ class VeiculoDepreciacaoController extends Controller
                 'referencia_ano' => $request->referencia_ano
             ]);
 
-            return redirect()->back()->with('success', 'Sucesso');
+            return redirect()->route('ativo.veiculo.depreciacao.index', $veiculo->veiculo_id)->with('success', 'Sucesso');
         } catch (\Exception $e) {
 
             return redirect()->back()->withInput();

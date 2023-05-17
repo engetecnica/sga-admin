@@ -6,7 +6,7 @@
         <h3 class="page-title">
             <span class="page-title-icon bg-gradient-primary me-2 text-white">
                 <i class="mdi mdi-access-point-network menu-icon"></i>
-            </span> Manutenção do Veículo
+            </span> Seguro do Veículo
         </h3>
         <nav aria-label="breadcrumb">
             <ul class="breadcrumb">
@@ -103,9 +103,7 @@
                             @foreach ($store->seguros as $seguro)
                                 <tr>
                                     <td><span class="badge badge-dark">{{ @$seguro->id }}</span></td>
-                                    <td>R$
-                                        {{ Tratamento::formatFloat($seguro->valor) }}
-                                    </td>
+                                    <td>R$ {{ Tratamento::formatFloat($seguro->valor) }} </td>
                                     <td>{{ Tratamento::dateBr($seguro->carencia_inicial) }}</td>
                                     <td>{{ Tratamento::dateBr($seguro->carencia_final) }}</td>
                                     <td class="d-flex gap-2">

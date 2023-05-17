@@ -4,14 +4,16 @@
 
     <div class="page-header">
         <h3 class="page-title">
-            <span class="page-title-icon bg-gradient-primary text-white me-2">
+            <span class="page-title-icon bg-gradient-primary me-2 text-white">
                 <i class="mdi mdi-access-point-network menu-icon"></i>
             </span> Depreciação do veículo
         </h3>
         <nav aria-label="breadcrumb">
             <ul class="breadcrumb">
                 <li class="breadcrumb-item active" aria-current="page">
-                    <span></span>Cadastros <i class="mdi mdi-check icon-sm text-primary align-middle"></i>
+                    <a class="btn btn-success" href="{{ route('ativo.veiculo.depreciacao.index', $store->veiculo_id) }}">
+                        <i class="mdi mdi-arrow-left icon-sm align-middle text-white"></i> Voltar
+                    </a>
                 </li>
             </ul>
         </nav>
@@ -33,67 +35,48 @@
                         </div>
                     @endif
 
-                    @php
-                        $action = isset($store) ? route('ativo.veiculo.depreciacao.update', $store->id) : route('ativo.veiculo.depreciacao.store', $store->id);
-                    @endphp
-                    <form method="post" enctype="multipart/form-data" action="{{ $action }}">
+                    <form method="post" enctype="multipart/form-data" action="{{ $btn == 'add' ? route('ativo.veiculo.depreciacao.store', $store->veiculo_id) : route('ativo.veiculo.depreciacao.update', $store->id) }}">
                         @csrf
 
                         <div class="row mt-3">
                             <div class="col-md-4">
-                                <label for="valor_atual" class="form-label">Valor Atual</label>
-                                <input type="text" class="form-control" id="valor_atual"
-                                    value="{{ old('valor_atual', @$store->valor_atual) }}" name="valor_atual"
-                                    placeholder="R$ 0,00">
+                                <label class="form-label" for="valor_atual">Valor Atual</label>
+                                <input class="form-control" id="valor_atual" name="valor_atual" type="text" value="{{ old('valor_atual', @$store->valor_atual) }}" placeholder="R$ 0,00">
 
                             </div>
                         </div>
 
                         <div class="row mt-3">
                             <div class="col-md-2">
-                                <label for="referencia_mes" class="form-label">Mês de referência</label>
-                                <select name="referencia_mes" id="referencia_mes" class="form-select">
-                                    <option value="" @if (!isset($store) || !$store->referencia_mes) selected @endif>Selecione
-                                    </option>
-                                    <option value="janeiro" @if (isset($store) && $store->referencia_mes == 'janeiro') selected @endif>Janeiro
-                                    </option>
-                                    <option value="fevereiro" @if (isset($store) && $store->referencia_mes == 'fevereiro') selected @endif>Fevereiro
-                                    </option>
-                                    <option value="marco" @if (isset($store) && $store->referencia_mes == 'marco') selected @endif>Março</option>
-                                    <option value="abril" @if (isset($store) && $store->referencia_mes == 'abril') selected @endif>Abril</option>
-                                    <option value="maio" @if (isset($store) && $store->referencia_mes == 'maio') selected @endif>Maio</option>
-                                    <option value="junho" @if (isset($store) && $store->referencia_mes == 'junho') selected @endif>Junho</option>
-                                    <option value="julho" @if (isset($store) && $store->referencia_mes == 'julho') selected @endif>Julho</option>
-                                    <option value="agosto" @if (isset($store) && $store->referencia_mes == 'agosto') selected @endif>Agosto</option>
-                                    <option value="setembro" @if (isset($store) && $store->referencia_mes == 'setembro') selected @endif>Setembro
-                                    </option>
-                                    <option value="outubro" @if (isset($store) && $store->referencia_mes == 'outubro') selected @endif>Outubro
-                                    </option>
-                                    <option value="novembro" @if (isset($store) && $store->referencia_mes == 'novembro') selected @endif>Novembro
-                                    </option>
-                                    <option value="dezembro" @if (isset($store) && $store->referencia_mes == 'dezembro') selected @endif>Dezembro
-                                    </option>
+                                <label class="form-label" for="referencia_mes">Mês de referência</label>
+                                <select class="form-control form-select" id="referencia_mes" name="referencia_mes">
+                                    @php
+                                        $meses = ['janeiro', 'fevereiro', 'marco', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];
+                                    @endphp
+
+                                    <option value="" {{ !isset($store) || !$store->referencia_mes ? 'selected' : '' }}>Selecione</option>
+
+                                    @foreach ($meses as $mes)
+                                        <option value="{{ $mes }}" {{ isset($store) && old('referencia_mes', $store->referencia_mes) == $mes ? 'selected' : '' }}>
+                                            {{ ucfirst($mes) }}
+                                        </option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
 
-
                         <div class="row mt-3">
                             <div class="col-md-2">
-                                <label for="referencia_ano" class="form-label">Ano de referência</label>
-                                <input type="number" class="form-control" id="referencia_ano"
-                                    value="{{ old('referencia_ano', @$store->referencia_ano) }}"
-                                    name="referencia_ano">
+                                <label class="form-label" for="referencia_ano">Ano de referência</label>
+                                <input class="form-control" id="referencia_ano" name="referencia_ano" type="number" value="{{ old('referencia_ano', @$store->referencia_ano) }}">
                             </div>
                         </div>
 
                         <div class="col-12 mt-5">
-                            <button type="submit"
-                                class="btn btn-gradient-primary btn-lg font-weight-medium">Salvar</button>
+                            <button class="btn btn-gradient-primary btn-lg font-weight-medium" type="submit">Salvar</button>
 
                             <a href="{{ route('ativo.veiculo') }}">
-                                <button type="button"
-                                    class="btn btn-gradient-danger btn-lg font-weight-medium">Cancelar</button>
+                                <button class="btn btn-gradient-danger btn-lg font-weight-medium" type="button">Cancelar</button>
                             </a>
                         </div>
                     </form>

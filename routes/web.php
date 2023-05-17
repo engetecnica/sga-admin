@@ -195,7 +195,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     /* Ativo - Veículos - Abastecimento */
     Route::get('admin/ativo/veiculo/abastecimento/{id}', [VeiculoAbastecimentoController::class, 'index'])->name('ativo.veiculo.abastecimento.index');
-    Route::get('admin/ativo/veiculo/abastecimento/editar/{id}', [VeiculoAbastecimentoController::class, 'edit'])->name('ativo.veiculo.abastecimento.editar');
+    Route::get('admin/ativo/veiculo/abastecimento/editar/{id}/{btn}', [VeiculoAbastecimentoController::class, 'edit'])->name('ativo.veiculo.abastecimento.editar');
     Route::post('admin/ativo/veiculo/abastecimento/store/{id}', [VeiculoAbastecimentoController::class, 'store'])->name('ativo.veiculo.abastecimento.store');
     Route::post('admin/ativo/veiculo/abastecimento/update/{id}', [VeiculoAbastecimentoController::class, 'update'])->name('ativo.veiculo.abastecimento.update');
     Route::post('admin/ativo/veiculo/abastecimento/delete/{id}', [VeiculoAbastecimentoController::class, 'delete'])->name('ativo.veiculo.abastecimento.delete');

@@ -17,15 +17,17 @@ class VeiculoAbastecimentoController extends Controller
 
         $store = Veiculo::find($id);
 
+        $last = VeiculoAbastecimento::where('veiculo_id', $id)->orderBy('id', 'desc')->first();
+
         if (!$id or !$store) :
             Alert::error('Que Pena!', 'Esse veículo não foi encontrado.');
             return redirect(route('ativo.veiculo'));
         endif;
 
-        return view('pages.ativos.veiculos.abastecimento.index', compact('store', 'fornecedores'));
+        return view('pages.ativos.veiculos.abastecimento.index', compact('store', 'last', 'fornecedores'));
     }
 
-    public function edit($id)
+    public function edit($id, $btn)
     {
         $fornecedores = CadastroFornecedor::select('id', 'razao_social')->get();
 
@@ -36,7 +38,7 @@ class VeiculoAbastecimentoController extends Controller
             return redirect(route('ativo.veiculo'));
         endif;
 
-        return view('pages.ativos.veiculos.abastecimento.form', compact('store', 'fornecedores'));
+        return view('pages.ativos.veiculos.abastecimento.form', compact('store', 'fornecedores', 'btn'));
     }
 
     public function store(Request $request, $id)
@@ -59,7 +61,7 @@ class VeiculoAbastecimentoController extends Controller
 
                 ]
             );
-            return redirect()->back()->with('success', 'Sucesso');
+            return redirect()->route('ativo.veiculo.abastecimento.index', $id)->with('success', 'Sucesso');
         } catch (\Exception $e) {
 
             return redirect()->back()->withInput();
@@ -80,7 +82,7 @@ class VeiculoAbastecimentoController extends Controller
                 'valor_total' => str_replace('R$ ', '', $request->valor_total),
             ]);
 
-            return redirect()->back()->with('success', 'Sucesso');
+            return redirect()->route('ativo.veiculo.abastecimento.index', $veiculo->veiculo_id)->with('success', 'Sucesso');
         } catch (\Exception $e) {
 
             return redirect()->back()->withInput();

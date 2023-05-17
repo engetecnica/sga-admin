@@ -4,14 +4,18 @@
 
     <div class="page-header">
         <h3 class="page-title">
-            <span class="page-title-icon bg-gradient-primary text-white me-2">
+            <span class="page-title-icon bg-gradient-primary me-2 text-white">
                 <i class="mdi mdi-access-point-network menu-icon"></i>
             </span> Abastecimento do Veículo
         </h3>
         <nav aria-label="breadcrumb">
             <ul class="breadcrumb">
                 <li class="breadcrumb-item active" aria-current="page">
-                    <span></span>Cadastros <i class="mdi mdi-check icon-sm text-primary align-middle"></i>
+                    <button class="btn btn-success">
+                        <a class="text-white" href="{{ route('ativo.veiculo.abastecimento.index', $store->veiculo_id) }}">
+                            <i class="mdi mdi-arrow-left icon-sm align-middle text-white"></i> Voltar
+                        </a>
+                    </button>
                 </li>
             </ul>
         </nav>
@@ -33,33 +37,27 @@
                         </div>
                     @endif
 
-                    @php
-                        $action = isset($store) ? route('ativo.veiculo.abastecimento.update', $store->id) : route('ativo.veiculo.abastecimento.store', $store->id);
-                    @endphp
-                    <form method="post" enctype="multipart/form-data" action="{{ $action }}">
+                    <form method="post" enctype="multipart/form-data" action="{{ $btn == 'add' ? route('ativo.veiculo.abastecimento.store', $store->veiculo_id) : route('ativo.veiculo.abastecimento.update', $store->id) }}">
                         @csrf
                         {{ $store->combustivel }}
                         <div class="row mt-3">
                             <div class="col-md-4">
-                                <label for="combustivel" class="form-label">Fornecedor</label>
+                                <label class="form-label" for="combustivel">Fornecedor</label>
                                 {{-- retorna o nome do fornecedor relacionado com o abastecimento de veiculo --}}
                                 {{-- {{ $store->fornecedor->razao_social }} --}}
-                                <select name="fornecedor" id="fornecedor" class="form-select">
+                                <select class="form-select" id="fornecedor" name="fornecedor">
                                     <option value="" selected>Selecione</option>
                                     @foreach ($fornecedores as $fornecedor)
-                                        <option value="{{ $fornecedor->id }}"
-                                            @if ($store && $store->fornecedor && $fornecedor->id == $store->fornecedor->id) selected @endif>
+                                        <option value="{{ $fornecedor->id }}" @if ($store && $store->fornecedor && $fornecedor->id == $store->fornecedor->id) selected @endif>
                                             {{ $fornecedor->razao_social }}</option>
                                     @endforeach
                                 </select>
 
-
-
                             </div>
 
                             <div class="col-md-4">
-                                <label for="combustivel" class="form-label">Tipo de Combustível</label>
-                                <select name="combustivel" id="combustivel" class="form-select">
+                                <label class="form-label" for="combustivel">Tipo de Combustível</label>
+                                <select class="form-select" id="combustivel" name="combustivel">
                                     <option value="" @if (!isset($store) || !$store->combustivel) selected @endif>Selecione
                                     </option>
 
@@ -76,37 +74,31 @@
 
                         <div class="row mt-3">
                             <div class="col-md-4">
-                                <label for="quilometragem" class="form-label">Quilometragem Atual</label>
-                                <input type="number" step="any" class="form-control" id="quilometragem"
-                                    value="{{ old('quilometragem', @$store->quilometragem) }}" name="quilometragem">
+                                <label class="form-label" for="quilometragem">Quilometragem Atual</label>
+                                <input class="form-control" id="quilometragem" name="quilometragem" type="number" value="{{ old('quilometragem', @$store->quilometragem) }}" step="any">
                             </div>
                             <div class="col-md-4">
-                                <label for="valor_do_litro" class="form-label">Valor do litro</label>
-                                <input type="text" step="any" class="form-control" id="valor_do_litro"
-                                    value="{{ old('valor_do_litro', @$store->valor_do_litro) }}" name="valor_do_litro">
+                                <label class="form-label" for="valor_do_litro">Valor do litro</label>
+                                <input class="form-control" id="valor_do_litro" name="valor_do_litro" type="text" value="{{ old('valor_do_litro', @$store->valor_do_litro) }}" step="any">
                             </div>
                         </div>
 
                         <div class="row mt-3">
                             <div class="col-md-4">
-                                <label for="quantidade" class="form-label">Quantidade</label>
-                                <input type="number" class="form-control" id="quantidade"
-                                    value="{{ old('quantidade', @$store->quantidade) }}" name="quantidade">
+                                <label class="form-label" for="quantidade">Quantidade</label>
+                                <input class="form-control" id="quantidade" name="quantidade" type="number" value="{{ old('quantidade', @$store->quantidade) }}">
                             </div>
                             <div class="col-md-4">
-                                <label for="valor_total" class="form-label">Valor total</label>
-                                <input type="text" step="any" readonly class="form-control" id="valor_total"
-                                    value="{{ old('valor_total', @$store->valor_total) }}" name="valor_total">
+                                <label class="form-label" for="valor_total">Valor total</label>
+                                <input class="form-control" id="valor_total" name="valor_total" type="text" value="{{ old('valor_total', @$store->valor_total) }}" step="any" readonly>
                             </div>
                         </div>
 
                         <div class="col-12 mt-5">
-                            <button type="submit"
-                                class="btn btn-gradient-primary btn-lg font-weight-medium">Salvar</button>
+                            <button class="btn btn-gradient-primary btn-lg font-weight-medium" type="submit">Salvar</button>
 
                             <a href="{{ route('ativo.veiculo') }}">
-                                <button type="button"
-                                    class="btn btn-gradient-danger btn-lg font-weight-medium">Cancelar</button>
+                                <button class="btn btn-gradient-danger btn-lg font-weight-medium" type="button">Cancelar</button>
                             </a>
                         </div>
                     </form>

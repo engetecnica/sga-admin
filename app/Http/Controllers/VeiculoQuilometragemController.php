@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Veiculo;
 use App\Models\VeiculoQuilometragem;
+use Database\Seeders\VeiculoSeguroSeeder;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -12,17 +13,19 @@ class VeiculoQuilometragemController extends Controller
 
     public function index($id)
     {
-        $store = Veiculo::find($id);
+        $veiculo = Veiculo::find($id);
+        $store = VeiculoQuilometragem::with('veiculo')->where('veiculo_id', $id)->get();
+        $last = VeiculoQuilometragem::where('veiculo_id', $id)->orderByDesc('id')->first();
 
         if (!$id or !$store) :
             Alert::error('Que Pena!', 'Esse veículo não foi encontrado.');
             return redirect(route('ativo.veiculo'));
         endif;
 
-        return view('pages.ativos.veiculos.quilometragem.index', compact('store'));
+        return view('pages.ativos.veiculos.quilometragem.index', compact('veiculo', 'store', 'last'));
     }
 
-    public function edit($id)
+    public function edit($id, $btn)
     {
         $store = VeiculoQuilometragem::find($id);
 
@@ -31,7 +34,7 @@ class VeiculoQuilometragemController extends Controller
             return redirect(route('ativo.veiculo'));
         endif;
 
-        return view('pages.ativos.veiculos.quilometragem.form', compact('store'));
+        return view('pages.ativos.veiculos.quilometragem.form', compact('store', 'btn'));
     }
 
     public function store(Request $request, $id)
@@ -48,7 +51,7 @@ class VeiculoQuilometragemController extends Controller
                     'quilometragem_nova' => $request->input('quilometragem_nova')
                 ]
             );
-            return redirect()->back()->with('success', 'Sucesso');
+            return redirect()->route('ativo.veiculo.quilometragem.index', $id)->with('success', 'Sucesso');
         } catch (\Exception $e) {
 
             return redirect()->back()->withInput();
@@ -65,7 +68,7 @@ class VeiculoQuilometragemController extends Controller
                 'quilometragem_nova' => $request->quilometragem_nova
             ]);
 
-            return redirect()->back()->with('success', 'Sucesso');
+            return redirect()->route('ativo.veiculo.quilometragem.index', $veiculo->veiculo_id)->with('success', 'Sucesso');
         } catch (\Exception $e) {
 
             return redirect()->back()->withInput();

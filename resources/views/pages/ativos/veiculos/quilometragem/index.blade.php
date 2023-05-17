@@ -4,7 +4,7 @@
 
     <div class="page-header">
         <h3 class="page-title">
-            <span class="page-title-icon bg-gradient-primary text-white me-2">
+            <span class="page-title-icon bg-gradient-primary me-2 text-white">
                 <i class="mdi mdi-access-point-network menu-icon"></i>
             </span> Quilometragem do veículo
         </h3>
@@ -12,7 +12,7 @@
             <ul class="breadcrumb">
                 <li class="breadcrumb-item active" aria-current="page">
                     <button class="btn btn-success">
-                        <a href="{{ route('ativo.veiculo.quilometragem.editar', $store->id) }}" class="text-white">
+                        <a class="text-white" href="{{ route('ativo.veiculo.quilometragem.editar', [$last->id, 'add']) }}">
                             Adicionar
                         </a>
                     </button>
@@ -37,8 +37,8 @@
                         </div>
                     @endif
 
-                    @if ($store->tipo == 'maquinas')
-                        <table class="table table-hover table-striped">
+                    @if ($veiculo->tipo == 'maquinas')
+                        <table class="table-hover table-striped table">
                             <thead>
                                 <tr>
                                     <th width="8%">ID Máquina</th>
@@ -53,16 +53,16 @@
                                 <tr>
                                     <td><span class="badge badge-dark">{{ @$store->codigo_da_maquina }}</span></td>
 
-                                    <td>{{ @$store->horimetro_inicial }}</td>
-                                    <td>{{ @$store->marca }}</td>
-                                    <td>{{ @$store->created_at }}</td>
+                                    <td>{{ @$veiculo->horimetro_inicial }}</td>
+                                    <td>{{ @$veiculo->marca }}</td>
+                                    <td>{{ @$veiculo->created_at }}</td>
 
                                     <td>editar/excluir</td>
                                 </tr>
                             </tbody>
                         </table>
                     @else
-                        <table class="table table-hover table-striped">
+                        <table class="table-hover table-striped table">
                             <thead>
                                 <tr>
                                     <th>Placa</th>
@@ -74,25 +74,16 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td><span class="badge badge-dark">{{ @$store->placa }}</span></td>
-                                    <td>
-                                        @foreach ($store->quilometragens as $quilometragem)
-                                            @if ($loop->last)
-                                                {{ @$quilometragem->quilometragem_atual }} Km
-                                            @endif
-                                        @endforeach
-
-                                    </td>
-                                    <td>R$
-                                        {{ number_format(floatval(str_replace(',', '.', str_replace('.', '', @$store->valor_fipe))), 2, ',', '.') }}
-                                    </td>
-                                    <td>{{ strftime('%d/%m/%Y às %H:%M', strtotime(@$store->created_at)) }}</td>
+                                    <td><span class="badge badge-dark">{{ @$veiculo->placa }}</span></td>
+                                    <td>{{ $last->quilometragem_nova }} km</td>
+                                    <td>R$ {{ Tratamento::formatFloat($veiculo->valor_fipe) }}</td>
+                                    <td>{{ Tratamento::datetimeBr($last->created_at) }}</td>
                                     <td>editar/excluir</td>
                                 </tr>
                             </tbody>
                         </table>
                     @endif
-                    <table class="table table-hover table-striped" id="lista-simples">
+                    <table class="table-hover table-striped table" id="lista-simples">
                         <thead>
                             <tr>
                                 <th width="8%">ID</th>
@@ -102,29 +93,28 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($store->quilometragens as $quilometragem)
+
+                            @foreach ($store as $quilometragem)
                                 <tr>
                                     <td><span class="badge badge-dark">{{ $quilometragem->id }}</span></td>
 
-                                    <td>{{ @$quilometragem->quilometragem_atual }} Km</td>
+                                    <td>{{ @$quilometragem->quilometragem_nova }} Km</td>
 
-                                    <td>{{ strftime('%d/%m/%Y às %H:%M', strtotime(@$quilometragem->created_at)) }}</td>
+                                    <td>{{ Tratamento::datetimeBr($quilometragem->created_at) }}</td>
                                     <td class="d-flex gap-2">
-                                        <a href="{{ route('ativo.veiculo.quilometragem.editar', $quilometragem->id) }}">
-                                            <button class="badge badge-info" data-toggle="tooltip" data-placement="top"
-                                                title="Editar"><i class="mdi mdi-pencil"></i> Editar
-                                            </button>
-                                        </a>
-                                        <form
-                                            action="{{ route('ativo.veiculo.quilometragem.delete', $quilometragem->id) }}"
-                                            method="POST">
+                                        @if ($loop->last)
+                                            <a href="{{ route('ativo.veiculo.quilometragem.editar', [$quilometragem->id, 'edit']) }}">
+                                                <button class="badge badge-info" data-toggle="tooltip" data-placement="top" title="Editar">
+                                                    <i class="mdi mdi-pencil"></i> Editar
+                                                </button>
+                                            </a>
+                                        @endif
+                                        <form action="{{ route('ativo.veiculo.quilometragem.delete', $quilometragem->id) }}" method="POST">
                                             @csrf
-                                            <a class="excluir-padrao" data-id="{{ $quilometragem->id }}"
-                                                data-table="empresas" data-module="cadastro/empresa">
-                                                <button class="badge badge-danger" data-toggle="tooltip"
-                                                    data-placement="top" title="Excluir" type="submit"><i
-                                                        class="mdi mdi-delete"></i>
-                                                    Excluir</button>
+                                            <a class="excluir-padrao" data-id="{{ $quilometragem->id }}" data-table="empresas" data-module="cadastro/empresa">
+                                                <button class="badge badge-danger" data-toggle="tooltip" data-placement="top" type="submit" title="Excluir">
+                                                    <i class="mdi mdi-delete"></i> Excluir
+                                                </button>
                                             </a>
                                         </form>
                                     </td>

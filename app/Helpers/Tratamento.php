@@ -73,14 +73,37 @@ class Tratamento
         return null;
     }
 
-    public static function formatFloat($data)
+    /* Formatar Float */
+    public static function formatFloat($number)
     {
 
         //condição de recebimento de dados
-        $data = isset($data) ? str_replace('.', '', str_replace(',', '.', $data)) : 0;
+        $number = isset($number) ? str_replace(',', '.', str_replace('.', '', $number)) : 0;
 
         //Caso receba um número formata. Se for zero retorna 0,00
-        $formatted = number_format(floatval($data), 2, ',', '.');
+        $formatted = number_format(floatval($number), 2, ',', '.');
+
+        return $formatted;
+    }
+
+    public static function datetimeBr($date)
+    {
+        //verifica se esta recebendo a data
+        $date = isset($date) ? $date : 'now';
+
+        //formata a data
+        $formatted = date('d/m/Y \à\s H:i', strtotime($date));
+
+        return $formatted;
+    }
+
+    public static function dateBr($date)
+    {
+        //verifica se esta recebendo a data
+        $date = isset($date) ? $date : 'now';
+
+        //formata a data
+        $formatted = date('d/m/Y', strtotime($date));
 
         return $formatted;
     }

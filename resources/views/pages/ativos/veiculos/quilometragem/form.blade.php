@@ -4,14 +4,18 @@
 
     <div class="page-header">
         <h3 class="page-title">
-            <span class="page-title-icon bg-gradient-primary text-white me-2">
+            <span class="page-title-icon bg-gradient-primary me-2 text-white">
                 <i class="mdi mdi-access-point-network menu-icon"></i>
             </span> Quilometragem do veículo
         </h3>
         <nav aria-label="breadcrumb">
             <ul class="breadcrumb">
                 <li class="breadcrumb-item active" aria-current="page">
-                    <span></span>Cadastros <i class="mdi mdi-check icon-sm text-primary align-middle"></i>
+                    <button class="btn btn-success">
+                        <a class="text-white" href="{{ route('ativo.veiculo.quilometragem.index', $store->veiculo_id) }}">
+                            <i class="mdi mdi-arrow-left icon-sm align-middle text-white"></i> Voltar
+                        </a>
+                    </button>
                 </li>
             </ul>
         </nav>
@@ -33,37 +37,28 @@
                         </div>
                     @endif
 
-                    @php
-                        $action = isset($store) ? route('ativo.veiculo.quilometragem.update', $store->id) : route('ativo.veiculo.quilometragem.store', $store->id);
-                    @endphp
-                    <form method="post" enctype="multipart/form-data" action="{{ $action }}">
+                    <form method="post" enctype="multipart/form-data" action="{{ $btn == 'add' ? route('ativo.veiculo.quilometragem.store', $store->veiculo_id) : route('ativo.veiculo.quilometragem.update', $store->id) }}">
                         @csrf
                         {{ $store->quilometragens }}
-                        <div class="row  mt-3">
+                        <div class="row mt-3">
                             <div class="col-md-4">
-                                <label for="quilometragem_atual" class="form-label">Quilometragem Atual</label>
-                                <input type="number" class="form-control" id="quilometragem_atual"
-                                    value="{{ old('quilometragem_atual', @$store->quilometragem_atual) }}"
-                                    name="quilometragem_atual">
+                                <label class="form-label" for="quilometragem_atual">Quilometragem Atual</label>
+                                <input class="form-control" id="quilometragem_atual" name="quilometragem_atual" type="number" value="{{ old('quilometragem_nova', @$store->quilometragem_nova) }}">
                             </div>
                         </div>
 
-                        <div class="row  mt-3">
+                        <div class="row mt-3">
                             <div class="col-md-4">
-                                <label for="quilometragem_nova" class="form-label">Quilometragem Nova</label>
-                                <input type="number" class="form-control" id="quilometragem_nova"
-                                    value="{{ old('quilometragem_nova', @$store->quilometragem_nova) }}"
-                                    name="quilometragem_nova">
+                                <label class="form-label" for="quilometragem_nova">Quilometragem Nova</label>
+                                <input class="form-control" id="quilometragem_nova" name="quilometragem_nova" type="number" value="{{ old('quilometragem_nova', @$store->quilometragem_nova) }}">
                             </div>
                         </div>
 
                         <div class="col-12 mt-5">
-                            <button type="submit"
-                                class="btn btn-gradient-primary btn-lg font-weight-medium">Salvar</button>
+                            <button class="btn btn-gradient-primary btn-lg font-weight-medium" type="submit">Salvar</button>
 
                             <a href="{{ route('ativo.veiculo') }}">
-                                <button type="button"
-                                    class="btn btn-gradient-danger btn-lg font-weight-medium">Cancelar</button>
+                                <button class="btn btn-gradient-danger btn-lg font-weight-medium" type="button">Cancelar</button>
                             </a>
                         </div>
                     </form>

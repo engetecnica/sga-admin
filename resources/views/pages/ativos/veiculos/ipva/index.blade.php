@@ -6,16 +6,14 @@
         <h3 class="page-title">
             <span class="page-title-icon bg-gradient-primary me-2 text-white">
                 <i class="mdi mdi-access-point-network menu-icon"></i>
-            </span> Manutenção do Veículo
+            </span> IPVA do Veículo
         </h3>
         <nav aria-label="breadcrumb">
             <ul class="breadcrumb">
                 <li class="breadcrumb-item active" aria-current="page">
-                    <button class="btn btn-success">
-                        <a class="text-white" href="{{ route('ativo.veiculo.ipva.editar', [$last->id, 'add']) }}">
-                            Adicionar
-                        </a>
-                    </button>
+                    <a class="btn btn-success" href="{{ route('ativo.veiculo.ipva.editar', [$last->id, 'add']) }}">
+                        Adicionar
+                    </a>
                 </li>
             </ul>
         </nav>

@@ -11,11 +11,9 @@
         <nav aria-label="breadcrumb">
             <ul class="breadcrumb">
                 <li class="breadcrumb-item active" aria-current="page">
-                    <button class="btn btn-success">
-                        <a class="text-white" href="{{ route('ativo.veiculo.quilometragem.editar', [$last->id, 'add']) }}">
-                            Adicionar
-                        </a>
-                    </button>
+                    <a class="btn btn-success" href="{{ route('ativo.veiculo.quilometragem.editar', [$last->id, 'add']) }}">
+                        Adicionar
+                    </a>
                 </li>
             </ul>
         </nav>

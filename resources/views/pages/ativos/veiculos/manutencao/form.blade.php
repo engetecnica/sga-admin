@@ -4,14 +4,16 @@
 
     <div class="page-header">
         <h3 class="page-title">
-            <span class="page-title-icon bg-gradient-primary text-white me-2">
+            <span class="page-title-icon bg-gradient-primary me-2 text-white">
                 <i class="mdi mdi-access-point-network menu-icon"></i>
             </span> Manutenção do Veículo
         </h3>
         <nav aria-label="breadcrumb">
             <ul class="breadcrumb">
                 <li class="breadcrumb-item active" aria-current="page">
-                    <span></span>Cadastros <i class="mdi mdi-check icon-sm text-primary align-middle"></i>
+                    <a class="btn btn-success" href="{{ route('ativo.veiculo.manutencao.index', $store->veiculo_id) }}">
+                        <i class="mdi mdi-arrow-left icon-sm align-middle text-white"></i> Voltar
+                    </a>
                 </li>
             </ul>
         </nav>
@@ -33,17 +35,13 @@
                         </div>
                     @endif
 
-                    @php
-                        $action = isset($store) ? route('ativo.veiculo.manutencao.update', $store->id) : route('ativo.veiculo.manutencao.store', $store->id);
-                    @endphp
-                    <form method="post" enctype="multipart/form-data" action="{{ $action }}">
+                    <form method="post" enctype="multipart/form-data" action="{{ $btn == 'add' ? route('ativo.veiculo.manutencao.store', $store->veiculo_id) : route('ativo.veiculo.manutencao.update', $store->id) }}">
                         @csrf
-
 
                         <div class="row mt-3">
                             <div class="col-md-4">
-                                <label for="tipo" class="form-label">Tipo </label>
-                                <select name="tipo" id="tipo" class="form-select">
+                                <label class="form-label" for="tipo">Tipo </label>
+                                <select class="form-select" id="tipo" name="tipo">
                                     <option value="" @if (!isset($store) || !$store->tipo) selected @endif>Selecione
                                     </option>
                                     <option value="corretiva" @if (isset($store) && $store->tipo == 'corretiva') selected @endif>Corretiva
@@ -54,102 +52,82 @@
                                 </select>
                             </div>
                             <div class="col-md-4">
-                                <label for="fornecedor" class="form-label">Fornecedor</label>
-                                <select name="fornecedor" id="fornecedor" class="form-select">
+                                <label class="form-label" for="fornecedor">Fornecedor</label>
+                                <select class="form-select" id="fornecedor" name="fornecedor">
                                     <option value="" selected>Selecione</option>
                                     @foreach ($fornecedores as $fornecedor)
-                                        <option value="{{ $fornecedor->id }}"
-                                            @if ($store && $store->fornecedor && $fornecedor->id == $store->fornecedor->id) selected @endif>
+                                        <option value="{{ $fornecedor->id }}" @if ($store && $store->fornecedor && $fornecedor->id == $store->fornecedor->id) selected @endif>
                                             {{ $fornecedor->razao_social }}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="col-md-4">
-                                <label for="servico" class="form-label">Serviço</label>
-                                <select name="servico" id="servico" class="form-select">
+                                <label class="form-label" for="servico">Serviço</label>
+                                <select class="form-select" id="servico" name="servico">
                                     <option value="" selected>Selecione</option>
                                     @foreach ($servicos as $servico)
-                                        <option value="{{ $servico->id }}"
-                                            @if ($store && $store->servico && $servico->id == $store->servico->id) selected @endif>
+                                        <option value="{{ $servico->id }}" @if ($store && $store->servico && $servico->id == $store->servico->id) selected @endif>
                                             {{ $servico->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
                         </div>
 
-
                         @if (@$store->tipo == 'maquinas')
-                            <div class="row  mt-3">
+                            <div class="row mt-3">
                                 <div class="col-md-4">
-                                    <label for="horimetro_atual" class="form-label">Horímetro Atual</label>
-                                    <input type="time" class="form-control" id="horimetro_atual"
-                                        value="{{ old('horimetro_atual', @$store->horimetro_atual) }}"
-                                        name="horimetro_atual" step="60">
+                                    <label class="form-label" for="horimetro_atual">Horímetro Atual</label>
+                                    <input class="form-control" id="horimetro_atual" name="horimetro_atual" type="time" value="{{ old('horimetro_atual', @$store->horimetro_atual) }}" step="60">
                                 </div>
                                 <div class="col-md-4">
-                                    <label for="horimetro_proximo" class="form-label">Horímetro Próximo</label>
-                                    <input type="time" class="form-control" id="horimetro_proximo"
-                                        value="{{ old('horimetro_proximo', @$store->horimetro_proximo) }}"
-                                        name="horimetro_proximo" step="60">
+                                    <label class="form-label" for="horimetro_proximo">Horímetro Próximo</label>
+                                    <input class="form-control" id="horimetro_proximo" name="horimetro_proximo" type="time" value="{{ old('horimetro_proximo', @$store->horimetro_proximo) }}" step="60">
                                 </div>
                             </div>
                         @else
-                            <div class="row  mt-3">
+                            <div class="row mt-3">
                                 <div class="col-md-4">
-                                    <label for="quilometragem_atual" class="form-label">Quilometragem Atual</label>
-                                    <input type="number" class="form-control" id="quilometragem_atual"
-                                        value="{{ old('quilometragem_atual', @$store->quilometragem_atual) }}"
-                                        name="quilometragem_atual">
+                                    <label class="form-label" for="quilometragem_atual">Quilometragem Atual</label>
+                                    <input class="form-control" id="quilometragem_atual" name="quilometragem_atual" type="number" value="{{ old('quilometragem_atual', @$store->quilometragem_atual) }}">
                                 </div>
 
                                 <div class="col-md-4">
-                                    <label for="quilometragem_proxima" class="form-label">Quilometragem Nova</label>
-                                    <input type="number" class="form-control" id="quilometragem_proxima"
-                                        value="{{ old('quilometragem_proxima', @$store->quilometragem_proxima) }}"
-                                        name="quilometragem_proxima">
+                                    <label class="form-label" for="quilometragem_proxima">Quilometragem Nova</label>
+                                    <input class="form-control" id="quilometragem_proxima" name="quilometragem_proxima" type="number" value="{{ old('quilometragem_proxima', @$store->quilometragem_proxima) }}">
                                 </div>
                             </div>
                         @endif
 
-
-                        <div class="row  mt-3">
+                        <div class="row mt-3">
                             <div class="col-md-4">
-                                <label for="data_de_execucao" class="form-label">Data de Execução</label>
-                                <input type="date" class="form-control" id="data_de_execucao"
-                                    value="{{ old('data_de_execucao', @$store->data_de_execucao) }}"
-                                    name="data_de_execucao">
+                                <label class="form-label" for="data_de_execucao">Data de Execução</label>
+                                <input class="form-control" id="data_de_execucao" name="data_de_execucao" type="date" value="{{ old('data_de_execucao', @$store->data_de_execucao) }}">
                             </div>
                             <div class="col-md-4">
-                                <label for="data_de_vencimento" class="form-label">Data de Vencimento</label>
-                                <input type="date" class="form-control" id="data_de_vencimento"
-                                    value="{{ old('data_de_vencimento', @$store->data_de_vencimento) }}"
-                                    name="data_de_vencimento">
+                                <label class="form-label" for="data_de_vencimento">Data de Vencimento</label>
+                                <input class="form-control" id="data_de_vencimento" name="data_de_vencimento" type="date" value="{{ old('data_de_vencimento', @$store->data_de_vencimento) }}">
                             </div>
                         </div>
 
-                        <div class="row  mt-3">
+                        <div class="row mt-3">
                             <div class="col-md-8">
-                                <label for="descricao" class="form-label">Descrição</label>
-                                <textarea name="descricao" id="descricao" cols="30" rows="6" class="form-control">{{ optional($store)->descricao }}</textarea>
+                                <label class="form-label" for="descricao">Descrição</label>
+                                <textarea class="form-control" id="descricao" name="descricao" cols="30" rows="6">{{ optional($store)->descricao }}</textarea>
                             </div>
                         </div>
 
-                        <div class="row  mt-3">
+                        <div class="row mt-3">
                             <div class="col-md-4">
-                                <label for="valor_do_servico" class="form-label">Valor do Serviço</label>
-                                <input type="text" class="form-control" id="valor_do_servico"
-                                    value="{{ old('valor_do_servico', @$store->valor_do_servico) }}"
-                                    name="valor_do_servico" step="any">
+                                <label class="form-label" for="valor_do_servico">Valor do Serviço</label>
+                                <input class="form-control" id="valor_do_servico" name="valor_do_servico" type="text" value="{{ old('valor_do_servico', @$store->valor_do_servico) }}" step="any">
                             </div>
                         </div>
 
                         <div class="col-12 mt-5">
-                            <button type="submit"
-                                class="btn btn-gradient-primary btn-lg font-weight-medium">Salvar</button>
+                            <button class="btn btn-gradient-primary btn-lg font-weight-medium" type="submit">Salvar</button>
 
                             <a href="{{ route('ativo.veiculo') }}">
-                                <button type="button"
-                                    class="btn btn-gradient-danger btn-lg font-weight-medium">Cancelar</button>
+                                <button class="btn btn-gradient-danger btn-lg font-weight-medium" type="button">Cancelar</button>
                             </a>
                         </div>
                     </form>

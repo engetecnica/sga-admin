@@ -15,8 +15,8 @@ class VeiculoIpvaController extends Controller
         // $fornecedores = CadastroFornecedor::all();
 
         $store = Veiculo::find($id);
+
         $last = VeiculoIpva::where('veiculo_id', $store->id)->orderBy('id', 'desc')->first();
-        // dd($last);
 
         if (!$id or !$store) :
             Alert::error('Que Pena!', 'Esse veículo não foi encontrado.');

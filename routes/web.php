@@ -216,7 +216,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     /* Ativo - Veículos - Manutencao */
     Route::get('admin/ativo/veiculo/manutencao/{id}', [VeiculoManutencaoController::class, 'index'])->name('ativo.veiculo.manutencao.index');
-    Route::get('admin/ativo/veiculo/manutencao/editar/{id}', [VeiculoManutencaoController::class, 'edit'])->name('ativo.veiculo.manutencao.editar');
+    Route::get('admin/ativo/veiculo/manutencao/editar/{id}/{btn}', [VeiculoManutencaoController::class, 'edit'])->name('ativo.veiculo.manutencao.editar');
     Route::post('admin/ativo/veiculo/manutencao/store/{id}', [VeiculoManutencaoController::class, 'store'])->name('ativo.veiculo.manutencao.store');
     Route::post('admin/ativo/veiculo/manutencao/update/{id}', [VeiculoManutencaoController::class, 'update'])->name('ativo.veiculo.manutencao.update');
     Route::post('admin/ativo/veiculo/manutencao/delete/{id}', [VeiculoManutencaoController::class, 'delete'])->name('ativo.veiculo.manutencao.delete');

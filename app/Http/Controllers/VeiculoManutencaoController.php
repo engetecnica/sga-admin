@@ -15,19 +15,22 @@ class VeiculoManutencaoController extends Controller
     public function index($id)
     {
         $fornecedores = CadastroFornecedor::select('id', 'razao_social')->get();
+
         $servicos = Servico::select('id', 'name')->get();
 
         $store = Veiculo::find($id);
+
+        $last = VeiculoManutencao::where('veiculo_id', $id)->orderBy('id', 'desc')->first();
 
         if (!$id or !$store) :
             Alert::error('Que Pena!', 'Esse veículo não foi encontrado.');
             return redirect(route('ativo.veiculo'));
         endif;
 
-        return view('pages.ativos.veiculos.manutencao.index', compact('store', 'fornecedores', 'servicos'));
+        return view('pages.ativos.veiculos.manutencao.index', compact('store', 'fornecedores', 'servicos', 'last'));
     }
 
-    public function edit($id)
+    public function edit($id, $btn)
     {
         $fornecedores = CadastroFornecedor::select('id', 'razao_social')->get();
         $servicos = Servico::select('id', 'name')->get();
@@ -39,7 +42,7 @@ class VeiculoManutencaoController extends Controller
             return redirect(route('ativo.veiculo'));
         endif;
 
-        return view('pages.ativos.veiculos.manutencao.form', compact('store', 'fornecedores', 'servicos'));
+        return view('pages.ativos.veiculos.manutencao.form', compact('store', 'fornecedores', 'servicos', 'btn'));
     }
 
     public function store(Request $request, $id)
@@ -65,7 +68,7 @@ class VeiculoManutencaoController extends Controller
                     'valor_do_servico' => str_replace('R$ ', '', $request->input('valor_do_servico')),
                 ]
             );
-            return redirect()->back()->with('success', 'Sucesso');
+            return redirect()->route('ativo.veiculo.manutencao.index', $id)->with('success', 'Sucesso');
         } catch (\Exception $e) {
 
             return redirect()->back()->withInput();
@@ -88,7 +91,7 @@ class VeiculoManutencaoController extends Controller
             'data_de_vencimento' => $request->data_de_vencimento,
             'valor_do_servico' => str_replace('R$ ', '', $request->valor_do_servico),
         ]);
-        return redirect()->back();
+        return redirect()->route('ativo.veiculo.manutencao.index', $veiculo->veiculo_id)->with('success', 'Sucesso');
         // try {
         //     $veiculo->manutencao->update([
         //         'tipo' => $request->tipo,

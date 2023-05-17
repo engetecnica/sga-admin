@@ -11,11 +11,9 @@
         <nav aria-label="breadcrumb">
             <ul class="breadcrumb">
                 <li class="breadcrumb-item active" aria-current="page">
-                    <button class="btn btn-success">
-                        <a class="text-white" href="{{ route('ativo.veiculo.abastecimento.index', $store->veiculo_id) }}">
-                            <i class="mdi mdi-arrow-left icon-sm align-middle text-white"></i> Voltar
-                        </a>
-                    </button>
+                    <a class="btn btn-success" href="{{ route('ativo.veiculo.abastecimento.index', $store->veiculo_id) }}">
+                        <i class="mdi mdi-arrow-left icon-sm align-middle text-white"></i> Voltar
+                    </a>
                 </li>
             </ul>
         </nav>

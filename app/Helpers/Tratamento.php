@@ -108,4 +108,32 @@ class Tratamento
         return $formatted;
     }
 
+    public static function calculateDepreciationPercentage($original_value, $new_value)
+    {
+        //preparando o valor original (valor_fipe)
+        $original_value = floatval(str_replace(array('.', ','), '', $original_value));
+
+        //preparando o valor atual (valor_atual_fipe)
+        $new_value = round(str_replace(',', '.', preg_replace('/\./', '', $new_value)), 0);
+
+        //calculando a porcentagem
+        $value = (($original_value - $new_value) / $original_value) * 100;
+
+        return round($value, 0);
+    }
+
+    public static function calculateDepreciationValue($original_value, $new_value)
+    {
+        //preparando o valor original (valor_fipe)
+        $original_value = floatval(str_replace(array('.', ','), '', $original_value));
+
+        //preparando o valor atual (valor_atual_fipe)
+        $new_value = round(str_replace(',', '.', preg_replace('/\./', '', $new_value)), 0);
+
+        //calculando a o valor de depreciação e formatando
+        $formatted = number_format(floatval($original_value - $new_value), 2, ',', '.');
+
+        return $formatted;
+    }
+
 }

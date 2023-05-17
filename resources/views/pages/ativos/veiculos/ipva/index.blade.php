@@ -78,7 +78,7 @@
                                     <td>
                                         @foreach ($store->quilometragens as $quilometragem)
                                             @if ($loop->last)
-                                                {{ @$quilometragem->quilometragem_atual }} Km
+                                                {{ @$quilometragem->quilometragem_nova }} Km
                                             @endif
                                         @endforeach
 
@@ -86,7 +86,7 @@
                                     <td>R$
                                         {{ Tratamento::formatFloat($store->valor_fipe) }}
                                     </td>
-                                    <td>{{ strftime('%d/%m/%Y às %H:%M', strtotime(@$store->created_at)) }}</td>
+                                    <td>{{ Tratamento::datetimeBr($last->created_at) }}</td>
                                     <td>editar/excluir</td>
                                 </tr>
                             </tbody>
@@ -112,8 +112,8 @@
                                     <td>R$
                                         {{ Tratamento::formatFloat($ipva->valor) }}
                                     </td>
-                                    <td>{{ strftime('%d/%m/%Y', strtotime(@$ipva->data_de_pagamento)) }}</td>
-                                    <td>{{ strftime('%d/%m/%Y', strtotime(@$ipva->data_de_vencimento)) }}</td>
+                                    <td>{{ Tratamento::dateBr($ipva->data_de_pagamento) }}</td>
+                                    <td>{{ Tratamento::dateBr($ipva->data_de_vencimento) }}</td>
 
                                     <td class="d-flex gap-2">
                                         @if ($loop->last)

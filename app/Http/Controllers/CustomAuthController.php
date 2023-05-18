@@ -21,13 +21,13 @@ class CustomAuthController extends Controller
     use FuncoesAdaptadas;
 
     public function index()
-    {      
+    {
         if(Auth::check()){
             return redirect()->intended('dashboard');
         }
         return view('auth.login');
-    }  
-      
+    }
+
     public function customLogin(Request $request)
     {
         $request->validate([
@@ -37,7 +37,7 @@ class CustomAuthController extends Controller
 
         $credentials = $request->only('email', 'password');
 
-       
+
         if (Auth::attempt($credentials)) {
 
             /** Verificação de Vínculo de Usuário */
@@ -45,7 +45,7 @@ class CustomAuthController extends Controller
             $request->session()->put("usuario_vinculo", $usuario_vinculo);
 
             if (!$usuario_vinculo) {
-                Alert::error('Eita!', 'Infelizmente não encontramos suas credenciais e não podemos permitir seu aceso!');
+
                 return redirect('login');
             }
 
@@ -55,8 +55,7 @@ class CustomAuthController extends Controller
                 $obra_detalhes = [
                     'obra' => [
                         'id' => null,
-                        'razao_social' =>
-                        'SGA Todas as Obras',
+                        'razao_social' => 'SGA Todas as Obras',
                         'codigo_obra' => 'SGAE-OBRA-ADM'
                     ]
                 ];
@@ -71,8 +70,8 @@ class CustomAuthController extends Controller
 
         }
 
-        Alert::error('Urps!', 'Infelizmente os dados digitados não correspondem!');
-        return redirect('login');
+
+        return redirect()->route('login')->with('error', 'Email ou senha inválidos');
     }
 
     public function dashboard()
@@ -84,7 +83,7 @@ class CustomAuthController extends Controller
         Alert::error('Urps!', 'Você não está logado!');
         return redirect('login');
     }
-    
+
     public function signOut() {
         Session::flush();
         Auth::logout();

@@ -80,14 +80,23 @@ class CustomAuthController extends Controller
             return view('pages.dashboard.index');
         }
 
-        Alert::error('Urps!', 'Você não está logado!');
+        Auth::logout();
+
+        session()->invalidate();
+
+        session()->regenerateToken();
+
         return redirect('login');
     }
 
-    public function signOut() {
-        Session::flush();
+    public function signOut(Request $request) {
+
         Auth::logout();
-        Alert::success('Até a Próxima!', 'Logout efetuado com sucesso!');
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
         return redirect('login');
     }
 }

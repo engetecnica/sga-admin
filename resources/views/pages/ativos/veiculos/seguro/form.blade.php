@@ -41,21 +41,21 @@
                         <div class="row mt-3">
                             <div class="col-md-4">
                                 <label class="form-label" for="carencia_inicial">Carência Inicial</label>
-                                <input class="form-control" id="carencia_inicial" name="carencia_inicial" type="date" value="{{ old('carencia_inicial', @$store->carencia_inicial) }}">
+                                <input class="form-control" id="carencia_inicial" name="carencia_inicial" type="date" value="{{ $btn == 'add' ? '' : @$store->carencia_inicial }}">
                             </div>
                         </div>
 
                         <div class="row mt-3">
                             <div class="col-md-4">
                                 <label class="form-label" for="carencia_final">Carência Final</label>
-                                <input class="form-control" id="carencia_final" name="carencia_final" type="date" value="{{ old('carencia_final', @$store->carencia_final) }}">
+                                <input class="form-control" id="carencia_final" name="carencia_final" type="date" value="{{ $btn == 'add' ? '' : @$store->carencia_final }}">
                             </div>
                         </div>
 
                         <div class="row mt-3">
                             <div class="col-md-4">
                                 <label class="form-label" for="valor">Valor</label>
-                                <input class="form-control" id="valor" name="valor" type="text" value="{{ old('valor', @$store->valor) }}" step="any">
+                                <input class="form-control" id="valor" name="valor" type="text" value="{{ $btn == 'add' ? '' : @$store->valor }}" step="any">
                             </div>
                         </div>
 

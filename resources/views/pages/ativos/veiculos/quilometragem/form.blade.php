@@ -41,14 +41,14 @@
                         <div class="row mt-3">
                             <div class="col-md-4">
                                 <label class="form-label" for="quilometragem_atual">Quilometragem Atual</label>
-                                <input class="form-control" id="quilometragem_atual" name="quilometragem_atual" type="number" value="{{ old('quilometragem_nova', @$store->quilometragem_nova) }}">
+                                <input class="form-control" id="quilometragem_atual" name="quilometragem_atual" type="number" value="{{ $btn == 'add' ? '' : @$store->quilometragem_atual }}">
                             </div>
                         </div>
 
                         <div class="row mt-3">
                             <div class="col-md-4">
                                 <label class="form-label" for="quilometragem_nova">Quilometragem Nova</label>
-                                <input class="form-control" id="quilometragem_nova" name="quilometragem_nova" type="number" value="{{ old('quilometragem_nova', @$store->quilometragem_nova) }}">
+                                <input class="form-control" id="quilometragem_nova" name="quilometragem_nova" type="number" value="{{ $btn == 'add' ? '' : @$store->quilometragem_nova }}">
                             </div>
                         </div>
 

@@ -41,22 +41,22 @@
                         <div class="row mt-3">
                             <div class="col-md-4">
                                 <label class="form-label" for="referencia_ano">Ano de Referência</label>
-                                <input class="form-control" id="referencia_ano" name="referencia_ano" type="number" value="{{ old('referencia_ano', @$store->referencia_ano) }}" step="any">
+                                <input class="form-control" id="referencia_ano" name="referencia_ano" type="number" value="{{ $btn == 'add' ? '' : @$store->referencia_ano }}" step="any">
                             </div>
                             <div class="col-md-4">
                                 <label class="form-label" for="valor">Valor</label>
-                                <input class="form-control" id="valor" name="valor" type="text" value="{{ old('valor', @$store->valor) }}" step="any">
+                                <input class="form-control" id="valor" name="valor" type="text" value="{{ $btn == 'add' ? '' : @$store->valor }}" step="any">
                             </div>
                         </div>
 
                         <div class="row mt-3">
                             <div class="col-md-4">
                                 <label class="form-label" for="data_de_vencimento">Data de Vencimento</label>
-                                <input class="form-control" id="data_de_vencimento" name="data_de_vencimento" type="date" value="{{ old('data_de_vencimento', @$store->data_de_vencimento) }}">
+                                <input class="form-control" id="data_de_vencimento" name="data_de_vencimento" type="date" value="{{ $btn == 'add' ? '' : @$store->data_de_vencimento }}">
                             </div>
                             <div class="col-md-4">
                                 <label class="form-label" for="data_de_pagamento">Data de Pagamento</label>
-                                <input class="form-control" id="data_de_pagamento" name="data_de_pagamento" type="date" value="{{ old('data_de_pagamento', @$store->data_de_pagamento) }}">
+                                <input class="form-control" id="data_de_pagamento" name="data_de_pagamento" type="date" value="{{ $btn == 'add' ? '' : @$store->data_de_pagamento }}">
                             </div>
                         </div>
 

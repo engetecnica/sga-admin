@@ -41,7 +41,7 @@
                         <div class="row mt-3">
                             <div class="col-md-4">
                                 <label class="form-label" for="valor_atual">Valor Atual</label>
-                                <input class="form-control" id="valor_atual" name="valor_atual" type="text" value="{{ old('valor_atual', @$store->valor_atual) }}" placeholder="R$ 0,00">
+                                <input class="form-control" id="valor_atual" name="valor_atual" type="text" value="{{ $btn == 'add' ? '' : @$store->valor_atual }}" placeholder="R$ 0,00">
 
                             </div>
                         </div>
@@ -54,10 +54,10 @@
                                         $meses = ['janeiro', 'fevereiro', 'marco', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];
                                     @endphp
 
-                                    <option value="" {{ !isset($store) || !$store->referencia_mes ? 'selected' : '' }}>Selecione</option>
+                                    <option value="">Selecione</option>
 
                                     @foreach ($meses as $mes)
-                                        <option value="{{ $mes }}" {{ isset($store) && old('referencia_mes', $store->referencia_mes) == $mes ? 'selected' : '' }}>
+                                        <option value="{{ $mes }}" {{ ($btn == 'add' ? '' : $store->referencia_mes == $mes) ? 'selected' : '' }}>
                                             {{ ucfirst($mes) }}
                                         </option>
                                     @endforeach
@@ -68,7 +68,7 @@
                         <div class="row mt-3">
                             <div class="col-md-2">
                                 <label class="form-label" for="referencia_ano">Ano de referência</label>
-                                <input class="form-control" id="referencia_ano" name="referencia_ano" type="number" value="{{ old('referencia_ano', @$store->referencia_ano) }}">
+                                <input class="form-control" id="referencia_ano" name="referencia_ano" type="number" value="{{ $btn == 'add' ? '' : @$store->referencia_ano }}">
                             </div>
                         </div>
 

@@ -56,6 +56,7 @@ use App\Http\Controllers\VeiculoIpvaController;
 use App\Http\Controllers\VeiculoManutencaoController;
 use App\Http\Controllers\VeiculoQuilometragemController;
 use App\Http\Controllers\VeiculoSeguroController;
+use App\Http\Controllers\AtivoInternoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -184,6 +185,16 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('admin/ativo/externo/search/{id}', [AtivoExternoController::class, 'searchAtivoID'])->name('ativo.externo.search');
     Route::get('admin/ativo/externo/lista/{id?}', [AtivoExternoController::class, 'searchAtivoLista'])->name('ativo.externo.lista');
 
+    /* Ativo - Interno */
+    Route::get('admin/ativo/interno', [AtivoInternoController::class, 'index'])->name('ativo.interno.index');
+    Route::get('admin/ativo/interno/create', [AtivoInternoController::class, 'create'])->name('ativo.interno.create');
+    Route::post('admin/ativo/interno', [AtivoInternoController::class, 'store'])->name('ativo.interno.store');
+    Route::get('admin/ativo/interno/{ativo}/show', [AtivoInternoController::class, 'show'])->name('ativo.interno.show');
+    Route::get('admin/ativo/interno/{ativo}/edit', [AtivoInternoController::class, 'edit'])->name('ativo.interno.edit');
+    Route::put('admin/ativo/interno/{ativo}', [AtivoInternoController::class, 'update'])->name('ativo.interno.update');
+    Route::delete('admin/ativo/interno/{ativo}', [AtivoInternoController::class, 'destroy'])->name('ativo.interno.destroy');
+
+    Route::post('/admin/ativo/interno/marca/ajax', [AtivoInternoController::class, 'storeMarca'])->name('ativo.interno.marcas.ajax');
 
     /* Ativo - Veículos */
     Route::get('admin/ativo/veiculo', [VeiculoController::class, 'index'])->name('ativo.veiculo');

@@ -6,6 +6,7 @@ use DateTime;
 use App\Models\AtivoExernoStatus;
 use App\Models\FerramentalRetiradaStatus;
 
+use Carbon\Carbon;
 class Tratamento
 {
 
@@ -134,6 +135,22 @@ class Tratamento
         $formatted = number_format(floatval($original_value - $new_value), 2, ',', '.');
 
         return $formatted;
+    }
+
+    public static function currencyFormatBr($number)
+    {
+
+        if (is_float($number)) {
+            return number_format($number, 2, ',', '.');
+        } else {
+            return $number;
+        }
+
+    }
+
+    public static function simpleDate($date)
+    {
+        return Carbon::parse($date)->format('d/m/Y');
     }
 
 }

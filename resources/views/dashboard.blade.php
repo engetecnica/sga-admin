@@ -229,7 +229,7 @@
                                         @foreach ($module['submodulo'] as $sub)
                                             <?php
                                             $item = env('URL_APP_ADMIN') . Request::segment(2) . '/' . Request::segment(3);
-
+                                            
                                             ?>
                                             <li class="nav-item"> <a class="nav-link {{ $item === $sub['url_amigavel'] ? 'active-submodulo' : '' }}" href="{{ url($sub['url_amigavel']) }}">{{ $sub['titulo'] }}</a>
                                             </li>
@@ -769,6 +769,8 @@
         });
 
 
+
+        // EXIBIÇÃO DOS ALERTAS
         @if (Session::get('fail'))
             $('.toastrDefaultError').ready(function() {
                 toastr.error('{{ Session::get('fail') }}')
@@ -780,6 +782,31 @@
                 toastr.success('{{ Session::get('success') }}')
             });
         @endif
+
+        // MODAL ATIVOS INTERNOS MARCAS
+        $(function() {
+            $(document).on('submit', '#marcas-form', function(e) {
+                e.preventDefault();
+                var marca = $("#marcas_modal").val();
+                var _token = $("#_token_modal").val();
+
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ route('ativo.interno.marcas.ajax') }}',
+                    dataType: 'json',
+                    data: {
+                        '_token': _token,
+                        'marca': marca
+                    },
+                    success: function(response) {
+                        $('#marca').append('<option value="' + marca + '" selected="selected">' + marca + '</option>');
+                        $('#modal-marcas').hide();
+                        $('.modal-backdrop').hide();
+                        $('#marcas-form').trigger("reset");
+                    }
+                });
+            });
+        });
     </script>
 
 </body>

@@ -49,7 +49,7 @@
                             <tbody>
 
                                 <tr>
-                                    <td><span class="badge badge-dark">{{ @$store->codigo_da_maquina }}</span></td>
+                                    <td><span class="badge badge-dark">{{ @$veiculo->codigo_da_maquina }}</span></td>
 
                                     <td>{{ @$veiculo->horimetro_inicial }}</td>
                                     <td>{{ @$veiculo->marca }}</td>

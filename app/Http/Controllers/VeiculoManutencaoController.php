@@ -120,6 +120,6 @@ class VeiculoManutencaoController extends Controller
 
         $veiculo->delete();
 
-        return redirect()->back();
+        return redirect()->route('ativo.veiculo.manutencao.index', $veiculo->veiculo_id)->with('success', 'Sucesso');;
     }
 }

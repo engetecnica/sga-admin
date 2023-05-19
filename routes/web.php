@@ -57,6 +57,7 @@ use App\Http\Controllers\VeiculoManutencaoController;
 use App\Http\Controllers\VeiculoQuilometragemController;
 use App\Http\Controllers\VeiculoSeguroController;
 use App\Http\Controllers\AtivoInternoController;
+use App\Http\Controllers\ConfigController;
 
 /*
 |--------------------------------------------------------------------------
@@ -84,7 +85,9 @@ Route::get('admin/signout',                                       [CustomAuthCon
 Route::group(['middleware' => 'auth'], function () {
 
     /* Configurações - Dashboard */
-    Route::get('admin/configuracao',                              [ConfiguracaoController::class, 'index']);
+    Route::get('admin/configuracao', [ConfigController::class, 'edit'])->name('config.edit');
+    Route::post('admin/configuracao', [ConfigController::class, 'update'])->name('config.update');
+
     Route::get('admin/dashboard',                                 [CustomAuthController::class, 'dashboard'])->name('dashboard');
 
     /* Minha Conta */

@@ -4,7 +4,7 @@
 
     <div class="page-header">
         <h3 class="page-title">
-            <span class="page-title-icon bg-gradient-primary text-white me-2">
+            <span class="page-title-icon bg-gradient-primary me-2 text-white">
                 <i class="mdi mdi-access-point-network menu-icon"></i>
             </span> Cadastro de Veículo
         </h3>
@@ -41,8 +41,8 @@
 
                         <div class="row">
                             <div class="col-md-10">
-                                <label for="obra" class="form-label">Obra</label>
-                                <select name="obra" id="obra" class="form-select">
+                                <label class="form-label" for="obra">Obra</label>
+                                <select class="form-select" id="obra" name="obra">
                                     @if (@$store->obra)
                                         <option value="{{ $store->obra }}" selected>{{ $store->obra->razao_social }}
                                         </option>
@@ -56,24 +56,21 @@
                             </div>
                         </div>
 
-                        <div class="row  mt-3">
+                        <div class="row mt-3">
                             <div class="col-md-5">
-                                <label for="periodo_inicial" class="form-label">Período do Veículo Alocado - Inicial</label>
-                                <input type="date" class="form-control" id="periodo_inicial"
-                                    value="{{ old('periodo_inicial', @$store->periodo_inicial) }}" name="periodo_inicial">
+                                <label class="form-label" for="periodo_inicial">Período do Veículo Alocado - Inicial</label>
+                                <input class="form-control" id="periodo_inicial" name="periodo_inicial" type="date" value="{{ old('periodo_inicial', @$store->periodo_inicial) }}">
                             </div>
                             <div class="col-md-5">
-                                <label for="periodo_final" class="form-label">Período do Veículo Alocado - Final</label>
-                                <input type="date" class="form-control" id="periodo_final"
-                                    value="{{ old('periodo_final', @$store->periodo_final) }}" name="periodo_final">
+                                <label class="form-label" for="periodo_final">Período do Veículo Alocado - Final</label>
+                                <input class="form-control" id="periodo_final" name="periodo_final" type="date" value="{{ old('periodo_final', @$store->periodo_final) }}">
                             </div>
                         </div>
 
-                        <div class="row  mt-3">
+                        <div class="row mt-3">
                             <div class="col-md-4">
-                                <label for="tipo" class="form-label">Tipo</label>
-                                <select name="tipo" id="tipo" class="form-select"
-                                    onchange="mostrarEsconderInputs()">
+                                <label class="form-label" for="tipo">Tipo</label>
+                                <select class="form-select" id="tipo" name="tipo" onchange="mostrarEsconderInputs()">
                                     @if (@$store->tipo)
                                         <option value="{{ $store->tipo }}" selected>{{ $store->tipo }}</option>
                                     @else
@@ -86,8 +83,8 @@
                                 </select>
                             </div>
                             <div class="col-md-4" id="marcaVeiculos">
-                                <label for="marca" class="form-label">Marca</label>
-                                <select name="marca" id="marca" class="form-select">
+                                <label class="form-label" for="marca">Marca</label>
+                                <select class="form-select" id="marca" name="marca">
 
                                     @if (@$store->marca)
                                         <option value="{{ $store->marca }}" selected>{{ $store->marca }}</option>
@@ -96,11 +93,11 @@
                                     @endif
 
                                 </select>
-                                <input type="hidden" name="marca_nome" id="marca_nome">
+                                <input id="marca_nome" name="marca_nome" type="hidden">
                             </div>
                             <div class="col-md-4" id="marcaMaquinas" style="display:none;">
-                                <label for="marca" class="form-label">Marca</label>
-                                <select name="marca_da_maquina" id="marca_da_maquina" class="form-select">
+                                <label class="form-label" for="marca">Marca</label>
+                                <select class="form-select" id="marca_da_maquina" name="marca_da_maquina">
                                     @if (@$store->marca_da_maquina)
                                         <option value="{{ $store->marca_da_maquina }}" selected>
                                             {{ $store->marca_da_maquina }}
@@ -115,8 +112,8 @@
                             </div>
 
                             <div class="col-md-4" id="modeloVeiculos">
-                                <label for="modelo" class="form-label">Modelo</label>
-                                <select name="modelo" id="modelo" class="form-select">
+                                <label class="form-label" for="modelo">Modelo</label>
+                                <select class="form-select" id="modelo" name="modelo">
 
                                     @if (@$store->modelo)
                                         <option value="{{ $store->modelo }}" selected>{{ $store->modelo }}</option>
@@ -125,11 +122,11 @@
                                     @endif
 
                                 </select>
-                                <input type="hidden" name="modelo_nome" id="modelo_nome">
+                                <input id="modelo_nome" name="modelo_nome" type="hidden">
                             </div>
                             <div class="col-md-4" id="modeloMaquinas" style="display:none;">
-                                <label for="modelo_da_maquina" class="form-label">Modelo</label>
-                                <select name="modelo_da_maquina" id="modelo_da_maquina" class="form-select">
+                                <label class="form-label" for="modelo_da_maquina">Modelo</label>
+                                <select class="form-select" id="modelo_da_maquina" name="modelo_da_maquina">
                                     @if (@$store->modelo)
                                         <option value="{{ $store->modelo }}" selected>
                                             {{ $store->modelo }}
@@ -144,12 +141,10 @@
                             </div>
                         </div>
 
-
-
                         <div class="row mt-3">
                             <div class="col-md-4" id="anoVeiculos">
-                                <label for="ano" class="form-label">Ano</label>
-                                <select name="ano" id="ano" class="form-select">
+                                <label class="form-label" for="ano">Ano</label>
+                                <select class="form-select" id="ano" name="ano">
                                     @if (@$store->ano)
                                         <option value="{{ $store->ano }}" selected>{{ $store->ano }}</option>
                                     @else
@@ -158,8 +153,8 @@
                                 </select>
                             </div>
                             <div class="col-md-4" id="anoMaquinas" style="display:none;">
-                                <label for="ano_da_maquina" class="form-label">Ano</label>
-                                <select name="ano_da_maquina" id="ano_da_maquina" class="form-select">
+                                <label class="form-label" for="ano_da_maquina">Ano</label>
+                                <select class="form-select" id="ano_da_maquina" name="ano_da_maquina">
                                     @if (@$store->ano)
                                         <option value="{{ $store->ano }}" selected>{{ $store->ano }}</option>
                                     @else
@@ -206,76 +201,57 @@
                                 </select>
                             </div>
                             <div class="col-md-8" id="nomeVeiculos">
-                                <label for="veiculo" class="form-label">Veículo</label>
-                                <input type="veiculo" class="form-control" id="veiculo" readonly
-                                    value="{{ old('veiculo', @$store->veiculo) }}" name="veiculo"
-                                    placeholder="Preenchimento Automático">
+                                <label class="form-label" for="veiculo">Veículo</label>
+                                <input class="form-control" id="veiculo" name="veiculo" type="veiculo" value="{{ old('veiculo', @$store->veiculo) }}" readonly placeholder="Preenchimento Automático">
                             </div>
                             <div class="col-md-8" id="nomeMaquinas">
-                                <label for="veiculo_maquina" class="form-label">Modelo/Ano</label>
-                                <input type="veiculo_maquina" class="form-control" id="veiculo_maquina" readonly
-                                    value="{{ old('veiculo_maquina', @$store->veiculo) }}" name="veiculo_maquina"
-                                    placeholder="Preenchimento Automático">
+                                <label class="form-label" for="veiculo_maquina">Modelo/Ano</label>
+                                <input class="form-control" id="veiculo_maquina" name="veiculo_maquina" type="veiculo_maquina" value="{{ old('veiculo_maquina', @$store->veiculo) }}" readonly placeholder="Preenchimento Automático">
                             </div>
                         </div>
 
-
-                        <div class="row  mt-3">
+                        <div class="row mt-3">
                             <div class="col-md-4">
-                                <label for="valor_fipe" class="form-label">Valor</label>
-                                <input type="text" class="form-control" id="valor_fipe"
-                                    value="{{ old('valor_fipe', @$store->valor_fipe) }}" name="valor_fipe"
-                                    placeholder="Preenchimento Automático">
+                                <label class="form-label" for="valor_fipe">Valor</label>
+                                <input class="form-control" id="valor_fipe" name="valor_fipe" type="text" value="{{ old('valor_fipe', @$store->valor_fipe) }}" placeholder="Preenchimento Automático">
                             </div>
                             <div class="col-md-4">
-                                <label for="codigo_fipe" class="form-label">Código</label>
-                                <input type="text" class="form-control" id="codigo_fipe"
-                                    value="{{ old('codigo_fipe', @$store->codigo_fipe) }}" name="codigo_fipe"
-                                    placeholder="Preenchimento Automático">
+                                <label class="form-label" for="codigo_fipe">Código</label>
+                                <input class="form-control" id="codigo_fipe" name="codigo_fipe" type="text" value="{{ old('codigo_fipe', @$store->codigo_fipe) }}" placeholder="Preenchimento Automático">
                             </div>
                             <div class="col-md-4">
-                                <label for="fipe_mes_referencia" class="form-label">Mês de referência</label>
-                                <input type="text" class="form-control" id="fipe_mes_referencia"
-                                    value="{{ old('fipe_mes_referencia', @$store->fipe_mes_referencia) }}"
-                                    name="fipe_mes_referencia" placeholder="Preenchimento Automático">
+                                <label class="form-label" for="fipe_mes_referencia">Mês de referência</label>
+                                <input class="form-control" id="fipe_mes_referencia" name="fipe_mes_referencia" type="text" value="{{ old('fipe_mes_referencia', @$store->fipe_mes_referencia) }}" placeholder="Preenchimento Automático">
                             </div>
                         </div>
 
                         <div class="row mt-3" id="divPlacaRenavam" style="display:none;">
                             <div class="col-md-4">
-                                <label for="placa" class="form-label">Placa</label>
-                                <input type="text" class="form-control" id="placa"
-                                    value="{{ old('placa', @$store->placa) }}" name="placa">
+                                <label class="form-label" for="placa">Placa</label>
+                                <input class="form-control" id="placa" name="placa" type="text" value="{{ old('placa', @$store->placa) }}">
                             </div>
                             <div class="col-md-4">
-                                <label for="renavam" class="form-label">Renavam</label>
-                                <input type="text" class="form-control" id="renavam"
-                                    value="{{ old('renavam', @$store->renavam) }}" name="renavam">
+                                <label class="form-label" for="renavam">Renavam</label>
+                                <input class="form-control" id="renavam" name="renavam" type="text" value="{{ old('renavam', @$store->renavam) }}">
                             </div>
                             @if (!@$store)
                                 <div class="col-md-4">
-                                    <label for="quilometragem_atual" class="form-label">
+                                    <label class="form-label" for="quilometragem_atual">
                                         Quilometragem Inicial
                                     </label>
-                                    <input type="number" class="form-control" id="quilometragem_atual"
-                                        value="{{ old('quilometragem_atual', @$store->quilometragem->quilometragem_atual) }}"
-                                        name="quilometragem_atual">
+                                    <input class="form-control" id="quilometragem_atual" name="quilometragem_atual" type="number" value="{{ old('quilometragem_atual', @$store->quilometragem->quilometragem_atual) }}">
                                 </div>
                             @endif
                         </div>
 
                         <div class="row mt-3" id="divHorimetro" style="display:none;">
                             <div class="col-md-2">
-                                <label for="horimetro_inicial" class="form-label">Horímetro inicial</label>
-                                <input type="time" step="60" class="form-control" id="horimetro_inicial"
-                                    value="{{ old('horimetro_inicial', @$store->horimetro_inicial) }}"
-                                    name="horimetro_inicial">
+                                <label class="form-label" for="horimetro_inicial">Horímetro inicial</label>
+                                <input class="form-control" id="horimetro_inicial" name="horimetro_inicial" type="number" value="{{ old('horimetro_inicial', @$store->horimetro_inicial) }}" step="60">
                             </div>
                             <div class="col-md-3">
-                                <label for="codigo_da_maquina" class="form-label">ID da Máquina</label>
-                                <input type="text" class="form-control" id="codigo_da_maquina"
-                                    value="{{ old('codigo_da_maquina', @$store->codigo_da_maquina) }}"
-                                    name="codigo_da_maquina">
+                                <label class="form-label" for="codigo_da_maquina">ID da Máquina</label>
+                                <input class="form-control" id="codigo_da_maquina" name="codigo_da_maquina" type="text" value="{{ old('codigo_da_maquina', @$store->codigo_da_maquina) }}">
                             </div>
                             {{-- <div class="col-md-3">
                                 <label for="marca_da_maquina" class="form-label">Marca</label>
@@ -300,17 +276,17 @@
                             </div> --}}
                         </div>
 
-                        <div class="row  mt-3">
+                        <div class="row mt-3">
                             <div class="col-md-8">
-                                <label for="observacao" class="form-label">Observação</label>
-                                <textarea name="observacao" id="observacao" cols="30" rows="6" class="form-control">{{ @$store->observacao }}</textarea>
+                                <label class="form-label" for="observacao">Observação</label>
+                                <textarea class="form-control" id="observacao" name="observacao" cols="30" rows="6">{{ @$store->observacao }}</textarea>
                             </div>
                         </div>
 
-                        <div class="row  mt-3">
+                        <div class="row mt-3">
                             <div class="col-md-2">
-                                <label for="situacao" class="form-label">Situação</label>
-                                <select name="situacao" id="situacao" class="form-select">
+                                <label class="form-label" for="situacao">Situação</label>
+                                <select class="form-select" id="situacao" name="situacao">
                                     <option value="Ativo" selected>Ativo</option>
                                     <option value="Inativo">Inativo</option>
                                 </select>
@@ -318,22 +294,19 @@
                         </div>
 
                         <div class="col-12 mt-5">
-                            <button type="submit"
-                                class="btn btn-gradient-primary btn-lg font-weight-medium">Salvar</button>
+                            <button class="btn btn-gradient-primary btn-lg font-weight-medium" type="submit">Salvar</button>
 
                             <a href="{{ route('ativo.veiculo') }}">
-                                <button type="button"
-                                    class="btn btn-gradient-danger btn-lg font-weight-medium">Cancelar</button>
+                                <button class="btn btn-gradient-danger btn-lg font-weight-medium" type="button">Cancelar</button>
                             </a>
                         </div>
                     </form>
-                    <div class="modal fade" id="addMarcaModal" tabindex="-1" role="dialog"
-                        aria-labelledby="addMarcaModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="addMarcaModal" role="dialog" aria-labelledby="addMarcaModalLabel" aria-hidden="true" tabindex="-1">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="addMarcaModalLabel">Adicionar nova marca</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <button class="close" data-dismiss="modal" type="button" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
@@ -341,11 +314,10 @@
                                     <form action="{{ route('adicionar.marca') }}" method="POST">
                                         @csrf
                                         <div class="form-group">
-                                            <label for="add_marca_da_maquina" class="form-label">Nome da marca</label>
-                                            <input type="text" class="form-control" id="add_marca_da_maquina"
-                                                name="add_marca_da_maquina">
+                                            <label class="form-label" for="add_marca_da_maquina">Nome da marca</label>
+                                            <input class="form-control" id="add_marca_da_maquina" name="add_marca_da_maquina" type="text">
                                         </div>
-                                        <button type="submit" class="btn btn-primary">Adicionar</button>
+                                        <button class="btn btn-primary" type="submit">Adicionar</button>
                                     </form>
                                 </div>
                             </div>

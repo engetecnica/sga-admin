@@ -15,7 +15,7 @@ class AtivoInternoController extends Controller
 
     public function index()
     {
-        $ativos = AtivosInterno::all();
+        $ativos = AtivosInterno::orderBy('id', 'DESC')->get();
 
         return view('pages.ativos.internos.index', compact('ativos'));
     }

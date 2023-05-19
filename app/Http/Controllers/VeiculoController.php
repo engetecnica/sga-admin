@@ -76,7 +76,7 @@ class VeiculoController extends Controller
             'quilometragem_atual' => $request->input('quilometragem_atual')
         ]);
 
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Registro cadastrado com sucesso.');
 
         // try {
         //     $veiculo = Veiculo::create(
@@ -116,13 +116,14 @@ class VeiculoController extends Controller
         $obras = CadastroObra::select('id', 'razao_social')->get();
         $marcas = MarcaMaquina::all();
         $store = Veiculo::find($id);
+        $modelos = ModeloMaquina::all();
 
         if (!$id or !$store) :
             Alert::error('Que Pena!', 'Esse veículo não foi encontrado.');
             return redirect(route('ativo.veiculo'));
         endif;
 
-        return view('pages.ativos.veiculos.form', compact('store', 'obras', 'marcas'));
+        return view('pages.ativos.veiculos.form', compact('store', 'obras', 'marcas', 'modelos'));
     }
 
     public function update(Request $request, $id)

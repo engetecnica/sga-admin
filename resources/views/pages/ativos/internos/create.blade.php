@@ -57,31 +57,3 @@
     @include('pages.ativos.internos.partials.form-marcas')
 
 @endsection
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-<script>
-    $(function() {
-        $(document).on('submit', '#marcas-form', function(e) {
-            e.preventDefault();
-            var marca = $("#marcas_modal").val();
-            var _token = $("#_token_modal").val();
-
-            $.ajax({
-                type: 'POST',
-                url: '{{ route('ativo.interno.marcas.ajax') }}',
-                dataType: 'json',
-                data: {
-                    '_token': _token,
-                    'marca': marca
-                },
-                success: function(response) {
-                    $('#marca').append('<option value="' + marca + '" selected="selected">' + marca + '</option>');
-                    $('#modal-marcas').hide();
-                    $('.modal-backdrop').hide();
-
-                    $('#marcas-form').trigger("reset");
-                }
-            });
-        });
-    });
-</script>

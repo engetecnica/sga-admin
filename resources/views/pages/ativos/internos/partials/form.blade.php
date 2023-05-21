@@ -31,7 +31,7 @@
 
     <div class="col-md-4">
         <label class="form-label" for="patrimonio">Patrimônio</label>
-        <input class="form-control @error('patrimonio') is-invalid @enderror" id="patrimonio" name="patrimonio" type="text" value="{{ $ativo->patrimonio ?? old('patrimonio') }}" placeholder="Patrimônio">
+        <input class="form-control @error('patrimonio') is-invalid @enderror" id="patrimonio" name="patrimonio" type="text" value="{{ $ativo->patrimonio ?? $nextPatrimony }}" placeholder="Patrimônio" readonly>
     </div>
 </div>
 

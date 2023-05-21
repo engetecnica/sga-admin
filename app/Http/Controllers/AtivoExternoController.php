@@ -144,12 +144,12 @@ class AtivoExternoController extends Controller
         }
 
         $detalhes = AtivoExterno::select('ativos_configuracoes.titulo AS categoria', 'ativos_externos.*')->join('ativos_configuracoes', 'ativos_configuracoes.id', '=', 'ativos_externos.id_ativo_configuracao')->where('ativos_externos.id', $id)->first();
-        
+
         if(!$detalhes){
             Alert::error('Atenção', 'Não foi possível localizar este Ativo Externo.');
             return redirect(route('ativo.externo'));
         }
-        
+
         return view('pages.ativos.externos.show', compact('detalhes'));
     }
 
@@ -184,8 +184,8 @@ class AtivoExternoController extends Controller
                 })
                 ->rawColumns(['patrimonio', 'id_obra', 'status'])
                 ->make(true);
-        }   
-        
+        }
+
     }
 
     public function searchAtivoLista(Request $request){
@@ -205,10 +205,10 @@ class AtivoExternoController extends Controller
                 ->editColumn('id_ativo_configuracao', function ($row) {
                     return $row->categoria;
                 })
-                ->editColumn('acoes', function($row){                
+                ->editColumn('acoes', function($row){
                     $btn = '<a href="' . route("ativo.externo.editar", $row->id) . '"><button class="badge badge-info" data-toggle="tooltip" data-placement="top" title="Editar"><i class="mdi mdi-pencil"></i> Editar</button></a>';
                     $btn .= '<a href="' . route("ativo.externo.detalhes", $row->id) . '"><button class="badge badge-dark" style="margin-left: 5px" data-toggle="tooltip" data-placement="top" title="Detalhes"><i class="mdi mdi-list"></i> Detalhes</button></a>';
-                    return $btn;                    
+                    return $btn;
                 })
                 ->rawColumns(['acoes', 'status'])
                 ->make(true);

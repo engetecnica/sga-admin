@@ -20,7 +20,7 @@
     <div class="page-header">
         <h3 class="page-title">
             <a href="{{ route('ativo.interno.create') }}">
-                <button class="btn btn-sm btn-danger">Cadastrar novo patrimônio</button>
+                <button class="btn btn-sm btn-danger">Cadastrar</button>
             </a>
         </h3>
     </div>
@@ -30,7 +30,7 @@
             <div class="card">
                 <div class="card-body">
 
-                    <table class="table-responsive table-hover table-striped table" id="lista-simples">
+                    <table class="table-hover table-striped table" id="lista-simples">
                         <thead>
                             <tr>
                                 <th width="8%">ID</th>

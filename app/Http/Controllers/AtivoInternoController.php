@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AtivoExternoEstoque;
 use App\Models\AtivosInterno;
 use App\Models\CadastroObra;
 use App\Models\MarcaPatrimonio;
@@ -9,6 +10,8 @@ use Illuminate\Http\Request;
 
 use Barryvdh\DomPDF\Facade\Pdf;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
+
+use App\Traits\Configuracao;
 
 class AtivoInternoController extends Controller
 {
@@ -23,16 +26,20 @@ class AtivoInternoController extends Controller
 
     public function create()
     {
+        $nextPatrimony = Configuracao::PatrimonioAtual();
+
         $obras = CadastroObra::select('id', 'razao_social')->get();
         $marcas = MarcaPatrimonio::all();
 
-        return view('pages.ativos.internos.create', compact('obras', 'marcas'));
+        return view('pages.ativos.internos.create', compact('obras', 'marcas', 'nextPatrimony'));
     }
 
 
     public function store(Request $request)
     {
+
         $data = $request->all();
+        $data['patrimonio'] = Configuracao::PatrimonioAtual();
         $data['valor_atribuido'] = str_replace('R$ ', '', $request->valor_atribuido);
         $save = AtivosInterno::create($data);
 

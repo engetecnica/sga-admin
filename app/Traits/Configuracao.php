@@ -2,8 +2,10 @@
 
 namespace App\Traits;
 
+use App\Models\AtivoExternoEstoque;
+use App\Models\AtivosInterno;
 
-/* 
+/*
  * Estrutura de configurações extras que não necessitam do banco de dados
  * @acoes_permitidas
  * @integrador
@@ -20,9 +22,39 @@ Trait Configuracao
 
     static function PatrimonioAtual()
     {
-        $atual = "ENG999";
-        $atual_numero = str_replace(self::PatrimonioSigla(), "", $atual);
-        return $atual_numero;
+        // Obtém o último número da tabela Interno
+        $lastInternal = AtivosInterno::select('patrimonio')
+        ->orderByDesc('patrimonio')
+        ->first();
+
+        // Obtém o último número da tabela Externo
+        $lastExternal = AtivoExternoEstoque::select('patrimonio')
+        ->orderByDesc('patrimonio')
+        ->first();
+
+        // Obtém o maior número entre as tabelas
+        $lastNumber = 0;
+
+        if ($lastInternal && $lastInternal->patrimonio) {
+            $lastNumber = max($lastNumber, intval(str_replace(self::PatrimonioSigla(), '', $lastInternal->patrimonio)));
+        }
+
+        if ($lastExternal && $lastExternal->patrimonio) {
+            $lastNumber = max($lastNumber, intval(str_replace(self::PatrimonioSigla(), '', $lastExternal->patrimonio)));
+        }
+
+        // Incrementa o número para obter o próximo
+        $nextNumber = $lastNumber + 1;
+
+        // Gera o próximo código completo
+        $nextPatrimony = self::PatrimonioSigla() . $nextNumber;
+
+        return $nextPatrimony;
+
+        // $atual = "ENG999";
+        // $atual_numero = str_replace(self::PatrimonioSigla(), "", $atual);
+        // return $atual_numero;
+
     }
 
 
@@ -42,8 +74,8 @@ Trait Configuracao
     static function integrador()
     {
         return [
-            'Cielo', 
-            'Rede', 
+            'Cielo',
+            'Rede',
             'Stone Pagamentos',
             'Mercado Pago'
         ];
@@ -56,7 +88,7 @@ Trait Configuracao
             'Celular',
             'CPF',
             'CNPJ',
-            'E-mail', 
+            'E-mail',
             'Chave Aleatória'
         ];
     }
@@ -94,7 +126,7 @@ Trait Configuracao
                 'SE' => 'Sergipe',
                 'TO' => 'Tocantins'
         ];
-            
+
     }
 
 }

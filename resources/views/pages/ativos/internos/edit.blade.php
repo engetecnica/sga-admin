@@ -54,4 +54,8 @@
             </div>
         </div>
     </div>
+
+    {{-- MODAL CONFIRMATION --}}
+    @include('pages.ativos.internos.partials.form-marcas')
+
 @endsection

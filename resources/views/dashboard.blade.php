@@ -555,6 +555,7 @@
         $('#combustivel').select2();
 
         $('#servico').select2();
+        $('.addItem').select2();
 
 
         $(".money").inputmask('currency', {
@@ -706,39 +707,42 @@
             },
         });
 
+        $('.listar-ativos-remover').on("click", function() {
+            $(".template-row:last").remove();
+        });
 
         $('.listar-ativos-adicionar').click(function() {
             $('#listar-ativos-linha').append($('#listar-ativos-template').html());
-            //$(".listar-ativos.template:last").select2();
-            $(".listar-ativos.template:last").select2({
-                tags: true,
-                multiple: false,
-                tokenSeparators: [",", " "],
-                minimumInputLength: 2,
-                minimumResultsForSearch: 10,
-                ajax: {
-                    url: BASE_URL + '/ferramental/requisicao/lista_ativo',
-                    dataType: "json",
-                    type: "get",
-                    data: function(params) {
-                        var queryParameters = {
-                            term: params.term,
-                        };
-                        return queryParameters;
-                    },
-                    processResults: function(data) {
-                        return {
-                            results: $.map(data, function(item) {
-                                return {
-                                    text: item.titulo + ' - Em Estoque: ' + item
-                                        .quantidade_estoque,
-                                    id: item.id,
-                                };
-                            }),
-                        };
-                    },
-                },
-            });
+            $(".template:last").select2();
+            // $(".listar-ativos.template:last").select2({
+            //     tags: true,
+            //     multiple: false,
+            //     tokenSeparators: [",", " "],
+            //     minimumInputLength: 2,
+            //     minimumResultsForSearch: 10,
+            //     ajax: {
+            //         url: BASE_URL + '/ferramental/requisicao/lista_ativo',
+            //         dataType: "json",
+            //         type: "get",
+            //         data: function(params) {
+            //             var queryParameters = {
+            //                 term: params.term,
+            //             };
+            //             return queryParameters;
+            //         },
+            //         processResults: function(data) {
+            //             return {
+            //                 results: $.map(data, function(item) {
+            //                     return {
+            //                         text: item.titulo + ' - Em Estoque: ' + item
+            //                             .quantidade_estoque,
+            //                         id: item.id,
+            //                     };
+            //                 }),
+            //             };
+            //         },
+            //     },
+            // });
 
 
 

@@ -33,4 +33,11 @@ class AtivoExternoEstoque extends Model
 
         return $estoque;
     }
+
+    public function ativo()
+    {
+        return $this->belongsTo(AtivoExterno::class, 'id_ativo_externo',  'id');
+    }
+
+
 }

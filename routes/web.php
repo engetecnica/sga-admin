@@ -291,12 +291,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('admin/ferramental/retirada/termo_download/{id}', [FerramentalRetiradaController::class, 'termo_download'])->name('ferramental.retirada.download');
 
     /* Ferramental - Requisição */
-    Route::get('admin/ferramental', [FerramentalRequisicaoController::class, 'index'])->name('ferramental');
-    Route::get('admin/ferramental/requisicao', [FerramentalRequisicaoController::class, 'index'])->name('ferramental.requisicao');
-    Route::get('admin/ferramental/requisicao/editar/{id?}', [FerramentalRequisicaoController::class, 'edit'])->name('ferramental.requisicao.editar');
-    Route::get('admin/ferramental/requisicao/adicionar', [FerramentalRequisicaoController::class, 'create'])->name('ferramental.requisicao.adicionar');
-    Route::post('admin/ferramental/requisicao/store', [FerramentalRequisicaoController::class, 'store'])->name('ferramental.requisicao.store');
-    Route::post('admin/ferramental/requisicao/update/{id}', [FerramentalRequisicaoController::class, 'update'])->name('ferramental.requisicao.update');
+    Route::get('admin/ferramental/requisicao', [FerramentalRequisicaoController::class, 'index'])->name('ferramental.requisicao.index');
+    Route::get('admin/ferramental/requisicao/adicionar', [FerramentalRequisicaoController::class, 'create'])->name('ferramental.requisicao.create');
+    Route::post('admin/ferramental/requisicao', [FerramentalRequisicaoController::class, 'store'])->name('ferramental.requisicao.store');
+    Route::get('admin/ferramental/requisicao/{id}', [FerramentalRequisicaoController::class, 'show'])->name('ferramental.requisicao.show');
+    // Route::get('admin/ferramental/requisicao/{id}/editar', [FerramentalRequisicaoController::class, 'edit'])->name('ferramental.requisicao.edit');
+    // Route::put('admin/ferramental/requisicao/{id}', [FerramentalRequisicaoController::class, 'update'])->name('ferramental.requisicao.update');
+    // Route::delete('admin/ferramental/requisicao/{id}', [FerramentalRequisicaoController::class, 'destroy'])->name('ferramental.requisicao.destroy');
 
     /** Ferramental - Requisição API */
     Route::get('admin/ferramental/requisicao/lista_ativo/{term?}', [ApiRequisicao::class, 'lista_ativo'])->name('ferramental.requisicao.lista_ativo');

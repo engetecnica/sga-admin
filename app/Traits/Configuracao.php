@@ -24,12 +24,12 @@ Trait Configuracao
     {
         // Obtém o último número da tabela Interno
         $lastInternal = AtivosInterno::select('patrimonio')
-        ->orderByDesc('patrimonio')
+        ->orderByDesc('id')
         ->first();
 
         // Obtém o último número da tabela Externo
         $lastExternal = AtivoExternoEstoque::select('patrimonio')
-        ->orderByDesc('patrimonio')
+        ->orderByDesc('id')
         ->first();
 
         // Obtém o maior número entre as tabelas
@@ -46,10 +46,7 @@ Trait Configuracao
         // Incrementa o número para obter o próximo
         $nextNumber = $lastNumber + 1;
 
-        // Gera o próximo código completo
-        $nextPatrimony = self::PatrimonioSigla() . $nextNumber;
-
-        return $nextPatrimony;
+        return $nextNumber;
 
         // $atual = "ENG999";
         // $atual_numero = str_replace(self::PatrimonioSigla(), "", $atual);

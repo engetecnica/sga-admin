@@ -26,9 +26,10 @@ class AtivoInternoController extends Controller
 
     public function create()
     {
-        $nextPatrimony = Configuracao::PatrimonioAtual();
+        $nextPatrimony = Configuracao::PatrimonioSigla() . Configuracao::PatrimonioAtual();
 
         $obras = CadastroObra::select('id', 'razao_social')->get();
+
         $marcas = MarcaPatrimonio::all();
 
         return view('pages.ativos.internos.create', compact('obras', 'marcas', 'nextPatrimony'));
@@ -37,9 +38,8 @@ class AtivoInternoController extends Controller
 
     public function store(Request $request)
     {
-
         $data = $request->all();
-        $data['patrimonio'] = Configuracao::PatrimonioAtual();
+        $data['patrimonio'] = Configuracao::PatrimonioSigla() . Configuracao::PatrimonioAtual();
         $data['valor_atribuido'] = str_replace('R$ ', '', $request->valor_atribuido);
         $save = AtivosInterno::create($data);
 
@@ -68,6 +68,7 @@ class AtivoInternoController extends Controller
     public function edit(AtivosInterno $ativo)
     {
         $obras = CadastroObra::select('id', 'razao_social')->get();
+
         $marcas = MarcaPatrimonio::all();
 
         return view('pages.ativos.internos.edit', compact('ativo', 'marcas', 'obras'));

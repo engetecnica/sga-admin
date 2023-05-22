@@ -12,5 +12,10 @@ class AtivoExterno extends Model
     protected $table = "ativos_externos";
     protected $dates = ['deleted_at'];
 
-    
+    public function estoque()
+    {
+        return $this->hasMany(AtivoExternoEstoque::class, 'id_ativo_externo', 'id')->where('status', 4);
+    }
+
+
 }

@@ -16,9 +16,9 @@ return new class extends Migration
         Schema::create('ativos_ferramental_requisicao', function (Blueprint $table) {
             $table->id();
 
-            /** 
+            /**
              * Configurações da Tabela de Requisições
-             * 
+             *
              * id
              * id_solicitante
              * id_obra_origem
@@ -29,7 +29,7 @@ return new class extends Migration
              *      - Liberado
              *          - Liberado Parcialmente
              *      - Recusado (recusado pelo administrador)
-             *      - Em Trânsito 
+             *      - Em Trânsito
              *      - Recebido Parcialmente (recebido parcialmente na obra)
              *      - Finalizado (recebido corretamente)
              * created_at

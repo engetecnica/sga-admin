@@ -9,7 +9,8 @@ use App\Models\MarcaPatrimonio;
 use Illuminate\Http\Request;
 
 use Barryvdh\DomPDF\Facade\Pdf;
-use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 use App\Traits\Configuracao;
 
@@ -42,6 +43,9 @@ class AtivoInternoController extends Controller
         $data['patrimonio'] = Configuracao::PatrimonioSigla() . Configuracao::PatrimonioAtual();
         $data['valor_atribuido'] = str_replace('R$ ', '', $request->valor_atribuido);
         $save = AtivosInterno::create($data);
+
+        $userLog = Auth::user()->email;
+        Log::channel('main')->info($userLog .' | STORE ATIVOS INTERNOS: ' . $save->patrimonio);
 
         if ($save) {
             return redirect()->route('ativo.interno.index')->with('success', 'Registro cadastrado com sucesso.');
@@ -81,6 +85,9 @@ class AtivoInternoController extends Controller
             return redirect()->route('ativo.interno.index')->with('fail', 'Registro atualizado com sucesso.');
         }
 
+        $userLog = Auth::user()->email;
+        Log::channel('main')->info($userLog .' | EDIT ATIVOS INTERNOS: ' . $ativo->patrimonio);
+
         $data = $request->all();
         $save->update($data);
 
@@ -90,6 +97,10 @@ class AtivoInternoController extends Controller
 
     public function destroy(AtivosInterno $ativo)
     {
+
+        $userLog = Auth::user()->email;
+        Log::channel('main')->info($userLog .' | DELETE ATIVOS INTERNOS: ' . $ativo->patrimonio);
+
         if ($ativo->delete()) {
             return redirect()->route('ativo.interno.index')->with('success', 'Registro excluído com sucesso.');
         } else {
@@ -101,6 +112,9 @@ class AtivoInternoController extends Controller
     {
         $data = $request->all();
         $save = MarcaPatrimonio::create($data);
+
+        $userLog = Auth::user()->email;
+        Log::channel('main')->info($userLog .' | ADD MARCA PATRIMONIO: ' . $save->marca);
 
         if ($save) {
             return response()->json(['success' => true]);

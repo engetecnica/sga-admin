@@ -13,6 +13,7 @@ use App\Models\{
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class FerramentalRequisicaoController extends Controller
 {
@@ -60,6 +61,9 @@ class FerramentalRequisicaoController extends Controller
                 $status = false;
             }
         }
+
+        $userLog = Auth::user()->email;
+        Log::channel('main')->info($userLog .' | ADD REQUISICAO | ID: ' . $requisicao->id . ' | STATUS: ' . $status . ' | DATA: ' . date('Y-m-d H:i:s'));
 
         if ($status) {
             return redirect()->route('ferramental.requisicao.index')->with('success', 'Registro cadastrado com sucesso.');

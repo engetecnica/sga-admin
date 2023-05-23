@@ -28,6 +28,8 @@ use App\Traits\{
     FuncoesAdaptadas
 };
 
+use Illuminate\Support\Facades\Log;
+
 use App\Helpers\Tratamento;
 use DataTables;
 use PDF;
@@ -107,6 +109,9 @@ class FerramentalRetiradaController extends Controller
                 }
             }
 
+            $userLog = Auth::user()->email;
+            Log::channel('main')->info($userLog .' | ADD RETIRADA | ID: ' . $id_retirada . ' | DATA: ' . date('Y-m-d H:i:s'));
+
             Alert::success('Muito bem ;)', 'Sua retirada foi registrada com sucesso!');
             return redirect(route('ferramental.retirada.detalhes', $id_retirada));
         } else {
@@ -173,7 +178,7 @@ class FerramentalRetiradaController extends Controller
     }
 
 
-    /** 
+    /**
      * Termo de Responsabilidade
      * Upload do termo automaticamente via storage
      */
@@ -189,6 +194,9 @@ class FerramentalRetiradaController extends Controller
         $termo = FerramentalRetirada::find($id);
         $termo->termo_responsabilidade_gerado = now();
         $termo->save();
+
+        $userLog = Auth::user()->email;
+        Log::channel('main')->info($userLog .' | GEROU TERMO RETIRADA: ' . $termo->termo_responsabilidade_gerado);
 
         // /** Salvar autenticação (upload do termo) */
         // $autenticar = new Autenticar();
@@ -212,7 +220,11 @@ class FerramentalRetiradaController extends Controller
     /** Download do Termo Atual */
     public function termo_download(int $id)
     {
+
         $termo_responsabilidade = (FerramentalRetirada::getRetiradaItems($id)->anexo->arquivo) ?? null;
+
+        $userLog = Auth::user()->email;
+        Log::channel('main')->info($userLog .' | DOWNLOAD TERMO RETIRADA: ' . $termo_responsabilidade);
 
         if ($termo_responsabilidade === null) {
             Alert::error('Atenção', 'Não foi possível localizar o arquivo solicitado.');
@@ -338,6 +350,9 @@ class FerramentalRetiradaController extends Controller
                 $estoque->status = $status;
                 $estoque->save();
             }
+
+            $userLog = Auth::user()->email;
+            Log::channel('main')->info($userLog .' | SALVOU DEVOLUÇÃO: ' . $retirada->devolucao_observacoes);
 
 
 

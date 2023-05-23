@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Veiculo;
 use App\Models\VeiculoIpva;
 use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class VeiculoIpvaController extends Controller
 {
@@ -56,6 +58,10 @@ class VeiculoIpvaController extends Controller
                     'data_de_pagamento' => $request->input('data_de_pagamento')
                 ]
             );
+
+            $userLog = Auth::user()->email;
+            Log::channel('main')->info($userLog .' | STORE IPVA: ' . $veiculo->id);
+
             return redirect()->route('ativo.veiculo.ipva.index', $id)->with('success', 'Sucesso');
         } catch (\Exception $e) {
 
@@ -76,6 +82,9 @@ class VeiculoIpvaController extends Controller
                 'data_de_pagamento' => $request->data_de_pagamento,
             ]);
 
+            $userLog = Auth::user()->email;
+            Log::channel('main')->info($userLog .' | UPDATE IPVA: ' . $veiculo->id);
+
             return redirect()->route('ativo.veiculo.ipva.index', $veiculo->veiculo_id)->with('success', 'Sucesso');
         } catch (\Exception $e) {
 
@@ -85,6 +94,9 @@ class VeiculoIpvaController extends Controller
     public function delete($id)
     {
         $veiculo = VeiculoIpva::findOrFail($id);
+
+        $userLog = Auth::user()->email;
+        Log::channel('main')->info($userLog .' | DELETE IPVA: ' . $veiculo->id);
 
         $veiculo->delete();
 

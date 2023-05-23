@@ -7,6 +7,7 @@ use App\Models\CadastroEmpresa;
 use App\Models\CadastroUsuariosVinculo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use App\Models\ConfiguracaoUsuarioNiveis as Niveis;
 use Illuminate\Support\Facades\Hash;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -93,6 +94,9 @@ class ConfiguracaoUsuarioController extends Controller
             $user_vinculo->save();
         }
 
+        $userLog = Auth::user()->email;
+        Log::channel('main')->info($userLog .' | ADD CONFIGURACAO USUARIO: ' . $user->name .' | -> OBRA: ' .  $user_vinculo->id_obra .' | -> NIVEL: ' . $user_vinculo->id_nivel);
+
         Alert::success('Muito bem ;)', 'Um registro foi adicionado com sucesso!');
         return redirect(route('usuario'));
     }
@@ -164,6 +168,9 @@ class ConfiguracaoUsuarioController extends Controller
         }
 
         $user->save();
+
+        $userLog = Auth::user()->email;
+        Log::channel('main')->info($userLog .' | EDIT CONFIGURACAO USUARIO: ' . $user->name);
 
         Alert::success('Muito bem ;)', 'Registro modificado com sucesso.');
         return redirect(route('usuario'));

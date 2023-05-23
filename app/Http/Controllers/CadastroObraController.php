@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 use App\Models\CadastroObra;
 use App\Models\CadastroEmpresa;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 use App\Traits\Configuracao;
 
@@ -26,7 +28,7 @@ class CadastroObraController extends Controller
     {
         //
         $lista = CadastroObra::all();
-        return view('pages.cadastros.obra.index', compact('lista'));        
+        return view('pages.cadastros.obra.index', compact('lista'));
     }
 
     /**
@@ -64,7 +66,7 @@ class CadastroObraController extends Controller
                 'email' => 'required',
                 'celular' => 'required',
                 'status' => 'required'
-            ], 
+            ],
             [
                 'id_empresa.required' => 'Selecione uma Empresa para vincular esta Obra',
                 'codigo_obra.required' => 'É necessário digitar um código para esta Obra',
@@ -98,6 +100,9 @@ class CadastroObraController extends Controller
 
         $obra->save();
 
+        $userLog = Auth::user()->email;
+        Log::channel('main')->info($userLog .' | ADD OBRA : ' . $obra->razao_social . ' | CÓDIGO : ' . $obra->codigo_obra);
+
         Alert::success('Muito bem ;)', 'Um registro foi adicionado com sucesso!');
         return redirect(route('cadastro.obra'));
 
@@ -127,12 +132,12 @@ class CadastroObraController extends Controller
         $estados = Configuracao::estados();
         $empresas = CadastroEmpresa::where('status', 'Ativo')->get();
 
-            if(!$id or !$store):  
+            if(!$id or !$store):
                 Alert::error('Que Pena!', 'Esse registro não foi encontrado.');
-                return redirect(route('cadastro.obra')); 
+                return redirect(route('cadastro.obra'));
             endif;
 
-            return view('pages.cadastros.obra.form', compact('store', 'estados', 'empresas'));        
+            return view('pages.cadastros.obra.form', compact('store', 'estados', 'empresas'));
     }
 
     /**
@@ -160,7 +165,7 @@ class CadastroObraController extends Controller
                 'email' => 'required',
                 'celular' => 'required',
                 'status' => 'required'
-            ], 
+            ],
             [
                 'id_empresa.required' => 'Selecione uma Empresa para vincular esta Obra',
                 'codigo_obra.required' => 'É necessário digitar um código para esta Obra',
@@ -195,6 +200,9 @@ class CadastroObraController extends Controller
         $obra->celular = $request->celular;
         $obra->status = $request->status;
         $obra->save();
+
+        $userLog = Auth::user()->email;
+        Log::channel('main')->info($userLog .' | EDIT OBRA : ' . $obra->razao_social . ' | CÓDIGO : ' . $obra->codigo_obra);
 
         Alert::success('Muito bem ;)', 'Um registro foi modificado com sucesso!');
         return redirect(route('cadastro.obra.editar', $id));

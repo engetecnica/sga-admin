@@ -6,6 +6,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\ConfiguracaoModulo;
 use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use App\Traits\Configuracao;
 
 
@@ -19,7 +21,7 @@ class ConfiguracaoModuloController extends Controller
 
     use Configuracao;
 
-    
+
     public function index()
     {
         //
@@ -55,7 +57,7 @@ class ConfiguracaoModuloController extends Controller
                 'url_amigavel' => 'required|unique:modulos,url_amigavel',
                 'posicao' => 'required',
                 'acoes_permitidas' => 'required'
-            ], 
+            ],
             [
                 'titulo.required' => 'É necessário preencher o título do Módulo',
                 'url_amigavel.required' => 'É necessário configurar uma URL Amigável para acesso ao Módulo',
@@ -74,8 +76,11 @@ class ConfiguracaoModuloController extends Controller
         $modulo->tipo_de_acao = implode(",", $request->acoes_permitidas);
         $modulo->save();
 
+        $userLog = Auth::user()->email;
+        Log::channel('main')->info($userLog .' | STORE MÓDULO: ' . $modulo->titulo .' | URL: ' .  $modulo->url_amigavel);
+
         Alert::success('Muito bem ;)', 'Um registro foi adicionado com sucesso!');
-        return redirect(route('modulo'));  
+        return redirect(route('modulo'));
 
     }
 
@@ -103,9 +108,9 @@ class ConfiguracaoModuloController extends Controller
         $modulos = ConfiguracaoModulo::all();
         $acoes_permitidas = Configuracao::acoes_permitidas();
 
-            if(!$id or !$store):  
+            if(!$id or !$store):
                 Alert::error('Que Pena!', 'Esse registro não foi encontrado.');
-                return redirect(route('modulo')); 
+                return redirect(route('modulo'));
             endif;
 
             return view('pages.configuracoes.modulo.form', compact('store', 'modulos', 'acoes_permitidas'));
@@ -127,7 +132,7 @@ class ConfiguracaoModuloController extends Controller
                 'url_amigavel' => 'required|unique:modulos,url_amigavel,'.$id,
                 'posicao' => 'required',
                 'acoes_permitidas' => 'required'
-            ], 
+            ],
             [
                 'titulo.required' => 'É necessário preencher o título do Módulo',
                 'url_amigavel.required' => 'É necessário configurar uma URL Amigável para acesso ao Módulo',
@@ -146,8 +151,11 @@ class ConfiguracaoModuloController extends Controller
         $modulo->tipo_de_acao = implode(",", $request->acoes_permitidas);
         $modulo->save();
 
+        $userLog = Auth::user()->email;
+        Log::channel('main')->info($userLog .' | EDIT MODULO: ' . $modulo->titulo .' | URL: ' .  $modulo->url_amigavel);
+
         Alert::success('Muito bem ;)', 'Registro modificado com sucesso.');
-        return redirect(route('modulo.editar', $id));          
+        return redirect(route('modulo.editar', $id));
     }
 
     /**

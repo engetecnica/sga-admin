@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UpdateConfigRequest;
 use App\Models\Config;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class ConfigController extends Controller
 {
@@ -22,6 +24,9 @@ class ConfigController extends Controller
 
             Config::create($request->validated());
 
+            $userLog = Auth::user()->email;
+            Log::channel('main')->info($userLog .' | STORE CONFIGURACAO BÁSICA');
+
             return redirect()->route('config.edit')->with('success', 'Registro atualizado com sucesso.');
         }
 
@@ -30,10 +35,11 @@ class ConfigController extends Controller
 
 
         if ($data) {
+            $userLog = Auth::user()->email;
+            Log::channel('main')->info($userLog .' | EDIT CONFIGURACAO BÁSICA');
+
             return redirect()->route('config.edit')->with('success', 'Registro atualizado com sucesso.');
         }
-
-
     }
 
 }

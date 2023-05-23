@@ -8,6 +8,8 @@ use App\Models\Veiculo;
 use App\Models\VeiculoAbastecimento;
 use App\Models\VeiculoDepreciacao;
 use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class VeiculoAbastecimentoController extends Controller
 {
@@ -61,6 +63,10 @@ class VeiculoAbastecimentoController extends Controller
 
                 ]
             );
+
+            $userLog = Auth::user()->email;
+            Log::channel('main')->info($userLog .' | STORE ABASTECIMENTO | ' . $veiculo->placa . ' | COMBUSTÍVEL: ' . $request->input('combustivel') . ' | QUILOMETRAGEM: ' . $request->input('quilometragem') . ' | VALOR DO LITRO: ' . $request->input('valor_do_litro') );
+
             return redirect()->route('ativo.veiculo.abastecimento.index', $id)->with('success', 'Sucesso');
         } catch (\Exception $e) {
 
@@ -82,6 +88,9 @@ class VeiculoAbastecimentoController extends Controller
                 'valor_total' => str_replace('R$ ', '', $request->valor_total),
             ]);
 
+            $userLog = Auth::user()->email;
+            Log::channel('main')->info($userLog .' | EDIT ABASTECIMENTO | ' . $veiculo->placa . ' | COMBUSTÍVEL: ' . $request->input('combustivel') . ' | QUILOMETRAGEM: ' . $request->input('quilometragem'));
+
             return redirect()->route('ativo.veiculo.abastecimento.index', $veiculo->veiculo_id)->with('success', 'Sucesso');
         } catch (\Exception $e) {
 
@@ -91,6 +100,9 @@ class VeiculoAbastecimentoController extends Controller
     public function delete($id)
     {
         $veiculo = VeiculoAbastecimento::findOrFail($id);
+
+        $userLog = Auth::user()->email;
+        Log::channel('main')->info($userLog .' | DELETE ABASTECIMENTO: ' . $veiculo->placa);
 
         $veiculo->delete();
 

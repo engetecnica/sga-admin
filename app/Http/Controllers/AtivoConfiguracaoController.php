@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 use App\Models\AtivoConfiguracao;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 use App\Traits\Configuracao;
 
@@ -69,6 +71,9 @@ class AtivoConfiguracaoController extends Controller
         $configuracao->status = $request->status;
         $configuracao->save();
 
+        $userLog = Auth::user()->email;
+        Log::channel('main')->info($userLog .' | ADD RELACIONAMENTO : ' . $configuracao->titulo);
+
         Alert::success('Muito bem ;)', 'Um registro foi adicionado com sucesso!');
         return redirect(route('ativo.configuracao'));
     }
@@ -132,6 +137,9 @@ class AtivoConfiguracaoController extends Controller
         $configuracao->titulo = $request->titulo;
         $configuracao->status = $request->status;
         $configuracao->save();
+
+        $userLog = Auth::user()->email;
+        Log::channel('main')->info($userLog .' | EDIT RELACIONAMENTO : ' . $configuracao->titulo);
 
         Alert::success('Muito bem ;)', 'Um registro foi modificado com sucesso!');
         return redirect(route('ativo.configuracao.editar', $id));

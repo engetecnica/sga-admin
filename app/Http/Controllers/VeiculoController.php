@@ -9,6 +9,8 @@ use App\Models\Veiculo;
 use App\Models\VeiculoQuilometragem;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class VeiculoController extends Controller
 {
@@ -75,6 +77,9 @@ class VeiculoController extends Controller
             'veiculo_id' => $veiculo->id,
             'quilometragem_atual' => $request->input('quilometragem_atual')
         ]);
+
+        $userLog = Auth::user()->email;
+        Log::channel('main')->info($userLog .' | ADD VEICULO | Placa: ' . $veiculo->placa);
 
         return redirect()->back()->with('success', 'Registro cadastrado com sucesso.');
 
@@ -162,6 +167,9 @@ class VeiculoController extends Controller
             'situacao' => $request->situacao,
         ]);
 
+        $userLog = Auth::user()->email;
+        Log::channel('main')->info($userLog .' | EDIT VEICULO | Placa: ' . $veiculo->placa);
+
         return redirect()->back()->with('success', 'Sucesso');
     }
 
@@ -170,12 +178,19 @@ class VeiculoController extends Controller
         MarcaMaquina::create([
             'marca' => $request->input('add_marca_da_maquina')
         ]);
+
+        $userLog = Auth::user()->email;
+        Log::channel('main')->info($userLog .' | ADD MARCA MÁQUINA: ' . $request->marca);
+
         return redirect()->back()->withInput();
     }
 
     public function delete($id)
     {
         $veiculo = Veiculo::findOrFail($id);
+
+        $userLog = Auth::user()->email;
+        Log::channel('main')->info($userLog .' | DELETE VEÍCULO: ' . $veiculo->id);
 
         $veiculo->delete();
 

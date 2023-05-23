@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 use App\Models\{CadastroFuncionario, CadastroObra, CadastroFuncao};
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 use App\Traits\Configuracao;
 
@@ -113,6 +115,9 @@ class CadastroFuncionarioController extends Controller
 
         $funcionario->save();
 
+        $userLog = Auth::user()->email;
+        Log::channel('main')->info($userLog .' | ADD FUNCIONÁRIO : ' . $funcionario->nome . ' | CPF : ' . $funcionario->cpf);
+
         Alert::success('Muito bem ;)', 'Um registro foi adicionado com sucesso!');
         return redirect(route('cadastro.funcionario'));
     }
@@ -218,6 +223,9 @@ class CadastroFuncionarioController extends Controller
         $funcionario->celular = $request->celular;
         $funcionario->status = $request->status;
         $funcionario->save();
+
+        $userLog = Auth::user()->email;
+        Log::channel('main')->info($userLog .' | EDIT FUNCIONÁRIO : ' . $funcionario->nome . ' | CPF : ' . $funcionario->cpf);
 
         Alert::success('Muito bem ;)', 'Um registro foi modificado com sucesso!');
         return redirect(route('cadastro.funcionario.editar', $id));

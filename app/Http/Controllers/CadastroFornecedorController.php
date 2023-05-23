@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 use App\Models\CadastroFornecedor;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 use App\Traits\Configuracao;
 
@@ -25,7 +27,7 @@ class CadastroFornecedorController extends Controller
     {
         //
         $lista = CadastroFornecedor::all();
-        return view('pages.cadastros.fornecedor.index', compact('lista'));        
+        return view('pages.cadastros.fornecedor.index', compact('lista'));
     }
 
     /**
@@ -62,7 +64,7 @@ class CadastroFornecedorController extends Controller
                 'email' => 'required',
                 'celular' => 'required',
                 'status' => 'required'
-            ], 
+            ],
             [
                 'razao_social.required' => 'É necessário preencher a Razão Social',
                 'cnpj.required' => 'Este CNPJ não é válido',
@@ -94,6 +96,9 @@ class CadastroFornecedorController extends Controller
 
         $fornecedor->save();
 
+        $userLog = Auth::user()->email;
+        Log::channel('main')->info($userLog .' | ADD FORNECEDOR : ' . $fornecedor->razao_social);
+
         Alert::success('Muito bem ;)', 'Um registro foi adicionado com sucesso!');
         return redirect(route('cadastro.fornecedor'));
 
@@ -122,12 +127,12 @@ class CadastroFornecedorController extends Controller
         $store = CadastroFornecedor::find($id);
         $estados = Configuracao::estados();
 
-            if(!$id or !$store):  
+            if(!$id or !$store):
                 Alert::error('Que Pena!', 'Esse registro não foi encontrado.');
-                return redirect(route('cadastro.fornecedor')); 
+                return redirect(route('cadastro.fornecedor'));
             endif;
 
-            return view('pages.cadastros.fornecedor.form', compact('store', 'estados'));        
+            return view('pages.cadastros.fornecedor.form', compact('store', 'estados'));
     }
 
     /**
@@ -182,6 +187,9 @@ class CadastroFornecedorController extends Controller
         $fornecedor->celular = $request->celular;
         $fornecedor->status = $request->status;
         $fornecedor->save();
+
+        $userLog = Auth::user()->email;
+        Log::channel('main')->info($userLog .' | EDIT FORNECEDOR : ' . $fornecedor->razao_social);
 
         Alert::success('Muito bem ;)', 'Um registro foi modificado com sucesso!');
         return redirect(route('cadastro.fornecedor.editar', $id));

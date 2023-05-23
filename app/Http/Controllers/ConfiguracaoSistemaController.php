@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Models\ConfiguracaoSistema;
 use App\Traits\Configuracao;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -27,10 +29,10 @@ class ConfiguracaoSistemaController extends Controller
         $tiposdepix = Configuracao::tipo_pix();
         $store = ConfiguracaoSistema::find(1);
         return view(
-                        'pages.configuracoes.sistema.index', 
+                        'pages.configuracoes.sistema.index',
                             compact(
-                                'meiosdepagamento', 
-                                'tiposdepix', 
+                                'meiosdepagamento',
+                                'tiposdepix',
                                 'store'
                             )
                     );
@@ -44,7 +46,7 @@ class ConfiguracaoSistemaController extends Controller
     public function create()
     {
         //
-        
+
     }
 
     /**
@@ -62,7 +64,7 @@ class ConfiguracaoSistemaController extends Controller
                 'ti_responsavel_nome' => 'required|min:10',
                 'ti_responsavel_telefone' => 'required',
                 'ti_responsavel_email' => 'required'
-            ], 
+            ],
             [
                 'titulo.required' => 'É necessário preencher o título da Aplicação',
                 'ti_responsavel_nome.required' => 'É necessário preencher o nome do responsável de TI',
@@ -70,7 +72,7 @@ class ConfiguracaoSistemaController extends Controller
                 'ti_responsavel_email.required' => 'Por favor, não esqueça do e-mail do responsável de TI'
             ]
         );
-        
+
         $configuracao = ConfiguracaoSistema::find(1);
         $configuracao->titulo = $request->titulo;
         $configuracao->ti_responsavel_nome = $request->ti_responsavel_nome;
@@ -82,7 +84,7 @@ class ConfiguracaoSistemaController extends Controller
         if(!$configuracao){
             $keys = [];
         } else {
-            $keys = 
+            $keys =
                 [
                     'access_token' => $request->access_token,
                     'client_id' => $request->client_id,
@@ -97,8 +99,11 @@ class ConfiguracaoSistemaController extends Controller
 
         $configuracao->save();
 
+        $userLog = Auth::user()->email;
+        Log::channel('main')->info($userLog .' | ADD CONFIGURACAO SISTEMA: ' . $configuracao->titulo .' | PIX: ' .  $configuracao->pix_nome);
+
         Alert::success('Muito bem ;)', 'Registro modificado com sucesso.');
-        return redirect(route('sistema'));   
+        return redirect(route('sistema'));
 
     }
 

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\ConfiguracaoUsuarioNiveis as UsuarioTipo;
 use App\Models\ConfiguracaoModulo;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -48,8 +50,11 @@ class ConfiguracaoUsuarioTipoController extends Controller
         $tipo->permissoes = json_encode(($request->permission) ?? []);
         $tipo->save();
 
+        $userLog = Auth::user()->email;
+        Log::channel('main')->info($userLog .' | ADD TIPO USUARIO: ' . $tipo->titulo);
+
         Alert::success('Muito bem ;)', 'Um registro foi adicionado com sucesso!');
-        return redirect(route('usuario_tipo'));       
+        return redirect(route('usuario_tipo'));
     }
 
     /**
@@ -74,9 +79,9 @@ class ConfiguracaoUsuarioTipoController extends Controller
         $modulos = ConfiguracaoModulo::get_modulos();
         $store = UsuarioTipo::find($id);
 
-            if(!$id or !$store):  
+            if(!$id or !$store):
                 Alert::error('Que Pena!', 'Esse registro não foi encontrado.');
-                return redirect(route('usuario_tipo')); 
+                return redirect(route('usuario_tipo'));
             endif;
 
         return view('pages.configuracoes.usuario_tipo.form', compact('store', 'modulos'));
@@ -98,8 +103,11 @@ class ConfiguracaoUsuarioTipoController extends Controller
         $tipo->permissoes = json_encode(($request->permission) ?? []);
         $tipo->save();
 
+        $userLog = Auth::user()->email;
+        Log::channel('main')->info($userLog .' | EDIT TIPO USUARIO: ' . $tipo->titulo);
+
         Alert::success('Muito bem ;)', 'Registro modificado com sucesso.');
-        return redirect(route('usuario_tipo'));          
+        return redirect(route('usuario_tipo'));
     }
 
     /**

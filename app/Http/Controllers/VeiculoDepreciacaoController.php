@@ -6,6 +6,8 @@ use App\Models\VeiculoDepreciacao;
 use Illuminate\Http\Request;
 use App\Models\Veiculo;
 use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class VeiculoDepreciacaoController extends Controller
 {
@@ -50,6 +52,10 @@ class VeiculoDepreciacaoController extends Controller
                     'referencia_ano' => $request->input('referencia_ano'),
                 ]
             );
+
+            $userLog = Auth::user()->email;
+            Log::channel('main')->info($userLog .' | STORE DEPRECIACAO: ' . $veiculo->id);
+
             return redirect()->route('ativo.veiculo.depreciacao.index', $id)->with('success', 'Sucesso');
         } catch (\Exception $e) {
 
@@ -68,6 +74,9 @@ class VeiculoDepreciacaoController extends Controller
                 'referencia_ano' => $request->referencia_ano
             ]);
 
+            $userLog = Auth::user()->email;
+            Log::channel('main')->info($userLog .' | UPDATE DEPRECIACAO: ' . $veiculo->id);
+
             return redirect()->route('ativo.veiculo.depreciacao.index', $veiculo->veiculo_id)->with('success', 'Sucesso');
         } catch (\Exception $e) {
 
@@ -77,6 +86,9 @@ class VeiculoDepreciacaoController extends Controller
     public function delete($id)
     {
         $veiculo = VeiculoDepreciacao::findOrFail($id);
+
+        $userLog = Auth::user()->email;
+        Log::channel('main')->info($userLog .' | DELETE DEPRECIACAO: ' . $veiculo->id);
 
         $veiculo->delete();
 

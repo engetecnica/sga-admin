@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Veiculo;
 use App\Models\VeiculoSeguro;
 use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class VeiculoSeguroController extends Controller
 {
@@ -55,6 +57,10 @@ class VeiculoSeguroController extends Controller
                     'valor' => str_replace('R$ ', '', $request->input('valor'))
                 ]
             );
+
+            $userLog = Auth::user()->email;
+        Log::channel('main')->info($userLog .' | STORE SEGURO: ' . $veiculo->id);
+
             return redirect()->route('ativo.veiculo.seguro.index', $id)->with('success', 'Sucesso');
         } catch (\Exception $e) {
 
@@ -73,6 +79,9 @@ class VeiculoSeguroController extends Controller
                 'valor' => str_replace('R$ ', '', $request->valor)
             ]);
 
+            $userLog = Auth::user()->email;
+        Log::channel('main')->info($userLog .' | UPDATE SEGURO: ' . $veiculo->id);
+
             return redirect()->route('ativo.veiculo.seguro.index', $veiculo->veiculo_id)->with('success', 'Sucesso');
         } catch (\Exception $e) {
 
@@ -82,6 +91,9 @@ class VeiculoSeguroController extends Controller
     public function delete($id)
     {
         $veiculo = VeiculoSeguro::findOrFail($id);
+
+        $userLog = Auth::user()->email;
+        Log::channel('main')->info($userLog .' | DELETE SEGURO: ' . $veiculo->id);
 
         $veiculo->delete();
 

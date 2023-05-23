@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+
 use App\Models\ConfiguracaoUsuarioNiveis as Niveis;
 Use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 
 use RealRashid\SweetAlert\Facades\Alert;
@@ -44,12 +46,12 @@ class ConfiguracaoMinhaContaController extends Controller
      */
     public function store(Request $request)
     {
-   
+
         //
         $id_usuario = Auth::user()->id;
 
         if($id_usuario)
-        {         
+        {
 
             $user = User::find($id_usuario);
             $user->name = $request->nome;
@@ -68,6 +70,9 @@ class ConfiguracaoMinhaContaController extends Controller
             }
 
             $user->save();
+
+            $userLog = Auth::user()->email;
+            Log::channel('main')->info($userLog .' | STORE MINHA CONTA: ' . $user->name);
 
             Alert::success('Muito bem ;)', 'Registro modificado com sucesso.');
             return redirect(route('minhaconta'));

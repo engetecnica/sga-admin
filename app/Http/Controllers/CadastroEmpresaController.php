@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 use App\Models\CadastroEmpresa;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 use App\Traits\Configuracao;
 
@@ -25,7 +27,7 @@ class CadastroEmpresaController extends Controller
     {
         //
         $lista = CadastroEmpresa::all();
-        return view('pages.cadastros.empresa.index', compact('lista'));        
+        return view('pages.cadastros.empresa.index', compact('lista'));
     }
 
     /**
@@ -62,7 +64,7 @@ class CadastroEmpresaController extends Controller
                 'email' => 'required',
                 'celular' => 'required',
                 'status' => 'required'
-            ], 
+            ],
             [
                 'razao_social.required' => 'É necessário preencher a Razão Social',
                 'cnpj.required' => 'Este CNPJ não é válido',
@@ -94,6 +96,9 @@ class CadastroEmpresaController extends Controller
 
         $empresa->save();
 
+        $userLog = Auth::user()->email;
+        Log::channel('main')->info($userLog .' | ADD EMPRESA : ' . $empresa->razao_social);
+
         Alert::success('Muito bem ;)', 'Um registro foi adicionado com sucesso!');
         return redirect(route('cadastro.empresa'));
 
@@ -122,12 +127,12 @@ class CadastroEmpresaController extends Controller
         $store = CadastroEmpresa::find($id);
         $estados = Configuracao::estados();
 
-            if(!$id or !$store):  
+            if(!$id or !$store):
                 Alert::error('Que Pena!', 'Esse registro não foi encontrado.');
-                return redirect(route('cadastro.empresa')); 
+                return redirect(route('cadastro.empresa'));
             endif;
 
-            return view('pages.cadastros.empresa.form', compact('store', 'estados'));        
+            return view('pages.cadastros.empresa.form', compact('store', 'estados'));
     }
 
     /**
@@ -182,6 +187,9 @@ class CadastroEmpresaController extends Controller
         $empresa->celular = $request->celular;
         $empresa->status = $request->status;
         $empresa->save();
+
+        $userLog = Auth::user()->email;
+        Log::channel('main')->info($userLog .' | EDIT EMPRESA : ' . $empresa->razao_social);
 
         Alert::success('Muito bem ;)', 'Um registro foi modificado com sucesso!');
         return redirect(route('cadastro.empresa.editar', $id));

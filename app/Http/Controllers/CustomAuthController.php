@@ -3,12 +3,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Hash;
 use Session;
-use Illuminate\Support\Facades\Auth;
 
 use App\Models\{
     CadastroObra,
     CadastroUsuariosVinculo
 };
+
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 use App\Traits\FuncoesAdaptadas;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -65,6 +67,9 @@ class CustomAuthController extends Controller
 
             $request->session()->put("obra", $obra_detalhes);
 
+            $userLog = Auth::user()->email;
+            Log::channel('main')->info($userLog .' | LOGIN NO SISTEMA');
+
             Alert::success('Seja bem vindo ;)', 'Você acabou de fazer o login no sistema!');
             return redirect()->intended('dashboard');
 
@@ -90,6 +95,9 @@ class CustomAuthController extends Controller
     }
 
     public function signOut(Request $request) {
+
+        $userLog = Auth::user()->email;
+        Log::channel('main')->info($userLog .' | SAIU DO SISTEMA');
 
         Auth::logout();
 

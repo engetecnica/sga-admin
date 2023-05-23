@@ -13,6 +13,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
 
+use Illuminate\Support\Facades\Log;
+
 
 class AnexoController extends Controller
 {
@@ -49,6 +51,9 @@ class AnexoController extends Controller
             $anexo->arquivo = $nome_arquivo;
             $anexo->descricao = $request->detalhes ?? null;
 
+            $userLog = Auth::user()->email;
+            Log::channel('main')->info($userLog .' | UPDATE ANEXO: ' . $nome_arquivo);
+
             if ($anexo->save()) {
 
                 $detalhes = FerramentalRetirada::getRetiradaItems($request->id_item);
@@ -73,9 +78,12 @@ class AnexoController extends Controller
                         $estoque->save();
                     }
                 }
+
+
+
                 Alert::success('Muito bem ;)', 'Arquivo enviado com sucesso!');
                 return redirect(route('ferramental.retirada.detalhes', $request->id_item));
-                
+
             } else {
                 Alert::error('Atenção', 'Não foi possível processar sua solicitação de envio. Fale com seu supervisor.');
                 return redirect(route('ferramental.retirada.detalhes', $request->id_item));

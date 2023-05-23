@@ -7,6 +7,8 @@ use App\Models\VeiculoQuilometragem;
 use Database\Seeders\VeiculoSeguroSeeder;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class VeiculoQuilometragemController extends Controller
 {
@@ -51,6 +53,10 @@ class VeiculoQuilometragemController extends Controller
                     'quilometragem_nova' => $request->input('quilometragem_nova')
                 ]
             );
+
+            $userLog = Auth::user()->email;
+        Log::channel('main')->info($userLog .' | STORE QUILOMETRAGEM: ' . $veiculo->id);
+
             return redirect()->route('ativo.veiculo.quilometragem.index', $id)->with('success', 'Sucesso');
         } catch (\Exception $e) {
 
@@ -68,6 +74,9 @@ class VeiculoQuilometragemController extends Controller
                 'quilometragem_nova' => $request->quilometragem_nova
             ]);
 
+            $userLog = Auth::user()->email;
+        Log::channel('main')->info($userLog .' | UPDATEv QUILOMETRAGEM: ' . $veiculo->id);
+
             return redirect()->route('ativo.veiculo.quilometragem.index', $veiculo->veiculo_id)->with('success', 'Sucesso');
         } catch (\Exception $e) {
 
@@ -77,6 +86,9 @@ class VeiculoQuilometragemController extends Controller
     public function delete($id)
     {
         $veiculo = VeiculoQuilometragem::findOrFail($id);
+
+        $userLog = Auth::user()->email;
+        Log::channel('main')->info($userLog .' | DELETE QUILOMETRAGEM: ' . $veiculo->id);
 
         $veiculo->delete();
 

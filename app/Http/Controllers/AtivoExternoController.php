@@ -12,6 +12,8 @@ use App\Models\{
     AtivoExternoEstoqueHistorico,
     CadastroObra
 };
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 use App\Traits\{
     Configuracao,
@@ -121,7 +123,13 @@ class AtivoExternoController extends Controller
         }
 
 
+
+
         if ($externo && $externo_estoque && $externo_estoque_item) {
+
+            $userLog = Auth::user()->email;
+            Log::channel('main')->info($userLog .' | ADD ATIVO EXTERNO: ' . $externo_estoque->patrimonio);
+
             Alert::success('Muito bem ;)', 'Novos ativos foram inseridos no estoque.');
             return redirect(route('ativo.externo.detalhes', $externo->id));
         }

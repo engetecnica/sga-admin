@@ -8,6 +8,8 @@ use App\Models\CadastroFornecedor;
 use App\Models\Servico;
 use App\Models\VeiculoManutencao;
 use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class VeiculoManutencaoController extends Controller
 {
@@ -68,6 +70,10 @@ class VeiculoManutencaoController extends Controller
                     'valor_do_servico' => str_replace('R$ ', '', $request->input('valor_do_servico')),
                 ]
             );
+
+            $userLog = Auth::user()->email;
+            Log::channel('main')->info($userLog .' | STORE MANUTENCAO: ' . $veiculo->id);
+
             return redirect()->route('ativo.veiculo.manutencao.index', $id)->with('success', 'Sucesso');
         } catch (\Exception $e) {
 
@@ -91,6 +97,10 @@ class VeiculoManutencaoController extends Controller
             'data_de_vencimento' => $request->data_de_vencimento,
             'valor_do_servico' => str_replace('R$ ', '', $request->valor_do_servico),
         ]);
+
+        $userLog = Auth::user()->email;
+        Log::channel('main')->info($userLog .' | UPDATE MANUTENCAO: ' . $veiculo->id);
+
         return redirect()->route('ativo.veiculo.manutencao.index', $veiculo->veiculo_id)->with('success', 'Sucesso');
         // try {
         //     $veiculo->manutencao->update([
@@ -117,6 +127,9 @@ class VeiculoManutencaoController extends Controller
     public function delete($id)
     {
         $veiculo = VeiculoManutencao::findOrFail($id);
+
+        $userLog = Auth::user()->email;
+        Log::channel('main')->info($userLog .' | DELETE MANUTENCAO: ' . $veiculo->id);
 
         $veiculo->delete();
 

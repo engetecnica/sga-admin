@@ -44,12 +44,26 @@
                 <a class="navbar-brand brand-logo" href="{{ env('APP_URL') }}"><img src="{{ asset('assets/images/logo-mini.png') }}" alt="{{ env('APP_NAME') }}" /></a>
                 <a class="navbar-brand brand-logo-mini" href="{{ env('APP_URL') }}"><img src="{{ asset('assets/images/logo-mini.png') }}" alt="{{ env('APP_NAME') }}" /></a>
             </div>
-            <div class="navbar-menu-wrapper d-flex align-items-stretch">
+            <div class="navbar-menu-wrapper d-flex align-items-stretch align-middle">
                 <button class="navbar-toggler navbar-toggler align-self-center" data-toggle="minimize" type="button">
                     <span class="mdi mdi-menu"></span>
                 </button>
+                <div class="w-100 mt-3">
+                    <form action="">
+                        <select class="form-select select2 form-control" id="" name="">
+                            @foreach ($obras_lista as $obra_lista)
+                                <option value="{{ $obra_lista->id }}">
+                                    {{ $obra_lista->codigo_obra }} | {{ $obra_lista->razao_social }} | {{ $obra_lista->cnpj }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </form>
+                </div>
 
                 <ul class="navbar-nav navbar-nav-right">
+                    <li class="nav-item w-100">
+
+                    </li>
                     <li class="nav-item nav-profile dropdown">
                         <a class="nav-link dropdown-toggle" id="profileDropdown" data-bs-toggle="dropdown" href="#" aria-expanded="false">
                             <div class="nav-profile-img">
@@ -57,7 +71,7 @@
                                 <span class="availability-status online"></span>
                             </div>
                             <div class="nav-profile-text">
-                                <p class="mb-1 text-black">{{ Auth::user()->name }}</p>
+                                <p class="mb-1 text-black">{{ Auth::user()->name }} {{ Auth::user()->id }} | {{ Session('id_usuario') }}</p>
                             </div>
                         </a>
                         <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
@@ -229,7 +243,7 @@
                                         @foreach ($module['submodulo'] as $sub)
                                             <?php
                                             $item = env('URL_APP_ADMIN') . Request::segment(2) . '/' . Request::segment(3);
-
+                                            
                                             ?>
                                             <li class="nav-item"> <a class="nav-link {{ $item === $sub['url_amigavel'] ? 'active-submodulo' : '' }}" href="{{ url($sub['url_amigavel']) }}">{{ $sub['titulo'] }}</a>
                                             </li>

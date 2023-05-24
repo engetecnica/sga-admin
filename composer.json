@@ -12,6 +12,7 @@
         "barryvdh/laravel-dompdf": "^2.0",
         "guzzlehttp/guzzle": "^7.2",
         "igorescobar/jquery-mask-plugin": "^1.14",
+        "laravel-notification-channels/telegram": "^3.0",
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",

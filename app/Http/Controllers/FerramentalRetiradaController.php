@@ -10,6 +10,7 @@ use App\Models\{
     FerramentalRetiradaItens,
     CadastroFuncionario,
     CadastroObra,
+    Config,
     FerramentalRetiradaItem,
     FerramentalRetiradaItemDevolver
 };
@@ -31,8 +32,17 @@ use App\Traits\{
 use Illuminate\Support\Facades\Log;
 
 use App\Helpers\Tratamento;
+
 use DataTables;
 use PDF;
+
+//Notification mail
+use App\Notifications\NotificaRetirada;
+//Notification telegram
+use NotificationChannels\Telegram\TelegramChannel;
+use Illuminate\Support\Facades\Config as FacadesConfig;
+use App\Notifications\NotificaRetiradaTelegram;
+use Illuminate\Support\Facades\Notification;
 
 class FerramentalRetiradaController extends Controller
 {
@@ -109,8 +119,17 @@ class FerramentalRetiradaController extends Controller
                 }
             }
 
+            //Registro no Log
             $userLog = Auth::user()->email;
             Log::channel('main')->info($userLog .' | ADD RETIRADA | ID: ' . $id_retirada . ' | DATA: ' . date('Y-m-d H:i:s'));
+
+            //Notificação por e-mail no endereço cadastrado
+            $email_config = Config::where('id', 1)->first();
+            $email_config->notify(new NotificaRetirada($email_config->email));
+
+            //Notificação por telegram no canal registrado
+            Notification::route('telegram', env('TELEGRAM_CHAT_ID'))
+            ->notify(new NotificaRetiradaTelegram($email_config->email));
 
             Alert::success('Muito bem ;)', 'Sua retirada foi registrada com sucesso!');
             return redirect(route('ferramental.retirada.detalhes', $id_retirada));
@@ -229,7 +248,10 @@ class FerramentalRetiradaController extends Controller
             $item->delete();
         }
 
-    if($retirada->delete()){
+        $userLog = Auth::user()->email;
+        Log::channel('main')->info($userLog .' | DELETE RETIRADA | ID: ' . $id . ' | DATA: ' . date('Y-m-d H:i:s'));
+
+        if($retirada->delete()){
             return redirect()->route('ferramental.retirada')->with('success', 'Registro deletado com sucesso!');
         } else {
             return redirect()->route('ferramental.retirada')->with('error', 'Não foi possível deletar o registro!');

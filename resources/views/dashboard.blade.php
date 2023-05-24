@@ -477,41 +477,78 @@
             }
         })
 
-        $(".cep").on('keyup', function() {
+        // $(".cep").on('keyup', function() {
 
-            //Nova variável "cep" somente com dígitos.
-            var cep = $("#cep").val().replace(/\D/g, '');
+        //     //Nova variável "cep" somente com dígitos.
+        //     var cep = $("#cep").val().replace(/\D/g, '');
 
-            //Verifica se campo cep possui valor informado.
-            if (cep != "") {
+        //     //Verifica se campo cep possui valor informado.
+        //     if (cep != "") {
 
-                //Expressão regular para validar o CEP.
-                var validacep = /^[0-9]{8}$/;
+        //         //Expressão regular para validar o CEP.
+        //         var validacep = /^[0-9]{8}$/;
 
-                //Valida o formato do CEP.
-                if (validacep.test(cep)) {
+        //         //Valida o formato do CEP.
+        //         if (validacep.test(cep)) {
 
-                    //Consulta o webservice viacep.com.br/
-                    $.getJSON("//viacep.com.br/ws/" + cep + "/json/?callback=?", function(
-                        dados) {
+        //             //Consulta o webservice viacep.com.br/
+        //             $.getJSON("//viacep.com.br/ws/" + cep + "/json/?callback=?", function(
+        //                 dados) {
 
-                        if (!("erro" in dados)) {
-                            //Atualiza os campos com os valores da consulta.
-                            $("#endereco").val(dados.logradouro);
-                            $("#bairro").val(dados.bairro);
-                            $("#cidade").val(dados.localidade);
-                            $("#estado").val(dados.uf);
-                        } //end if.
-                        else {
-                            //CEP pesquisado não foi encontrado.
-                            console.log("CEP não encontrado.");
-                        }
-                    });
-                } //end if.
-                else {
-                    console.log("Formato de CEP inválido.");
+        //                 if (!("erro" in dados)) {
+        //                     //Atualiza os campos com os valores da consulta.
+        //                     $("#endereco").val(dados.logradouro);
+        //                     $("#bairro").val(dados.bairro);
+        //                     $("#cidade").val(dados.localidade);
+        //                     $("#estado").val(dados.uf);
+        //                 } //end if.
+        //                 else {
+        //                     //CEP pesquisado não foi encontrado.
+        //                     console.log("CEP não encontrado.");
+        //                 }
+        //             });
+        //         } //end if.
+        //         else {
+        //             console.log("Formato de CEP inválido.");
+        //         }
+        //     } //end if.
+        // });
+
+        $(document).on('blur', '#cep', function() {
+            const cep = $(this).val();
+            $.ajax({
+                url: 'https://viacep.com.br/ws/' + cep + '/json/',
+                method: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    $('#estado').val(data.uf);
+                    $('#cidade').val(data.localidade);
+                    $('#bairro').val(data.bairro);
+                    $('#endereco').val(data.logradouro);
                 }
-            } //end if.
+            });
+        });
+
+        $(document).on('blur', '#cnpj', function() {
+            const cnpj = $(this).val();
+            const numerosCnpj = cnpj.replace(/\D/g, '');
+
+            $.ajax({
+                url: 'https://publica.cnpj.ws/cnpj/' + numerosCnpj,
+                method: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    $('#razao_social').val(data.razao_social);
+                    $('#nome_fantasia').val(data.estabelecimento.nome_fantasia);
+                    $('#cep').val(data.estabelecimento.cep);
+                    $('#endereco').val(data.estabelecimento.tipo_logradouro + ' ' + data.estabelecimento.logradouro);
+                    $('#numero').val(data.estabelecimento.numero);
+                    $('#bairro').val(data.estabelecimento.bairro);
+                    $('#cidade').val(data.estabelecimento.cidade.nome);
+                    $('#estado').val(data.estabelecimento.estado.sigla);
+                    $('#email').val(data.estabelecimento.email);
+                }
+            });
         });
 
         $(".selecionar_obra").on('change', function() {

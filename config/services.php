@@ -14,7 +14,7 @@ return [
     |
     */
     'telegram-bot-api' => [
-        'token' => env('TELEGRAM_BOT_API', '5841354674:AAGwi9YCPpScV6T3cfp2Q__WPoJ-P4QxbZw'),
+        'token' => env('TELEGRAM_BOT_API'),
     ],
 
     'mailgun' => [

@@ -54,7 +54,7 @@ class CadastroFornecedorController extends Controller
         $request->validate(
             [
                 'razao_social' => 'required|min:5',
-                'cnpj' => 'required',
+                'cnpj' => 'required|cnpj|unique:cadastro_fornecedor,cnpj',
                 'cep' => 'required',
                 'endereco' => 'required',
                 'numero' => 'required',
@@ -68,6 +68,8 @@ class CadastroFornecedorController extends Controller
             [
                 'razao_social.required' => 'É necessário preencher a Razão Social',
                 'cnpj.required' => 'Este CNPJ não é válido',
+                'cnpj.unique' => 'Este CNPJ já está cadastrado',
+                'cnpj.cnpj' => 'Este CNPJ não é válido',
                 'cep.required' => 'O CEP é indispensável',
                 'endereco.required' => 'Preencha o endereço corretamente',
                 'numero.required' => 'Preencha o número da residência',
@@ -148,7 +150,7 @@ class CadastroFornecedorController extends Controller
         $request->validate(
             [
                 'razao_social' => 'required|min:5',
-                'cnpj' => 'required',
+                'cnpj' => 'required|cnpj|unique:cadastro_fornecedor,cnpj',
                 'cep' => 'required',
                 'endereco' => 'required',
                 'numero' => 'required',
@@ -162,6 +164,8 @@ class CadastroFornecedorController extends Controller
             [
                 'razao_social.required' => 'É necessário preencher a Razão Social',
                 'cnpj.required' => 'Este CNPJ não é válido',
+                'cnpj.unique' => 'Este CNPJ já está cadastrado',
+                'cnpj.cnpj' => 'Este CNPJ não é válido',
                 'cep.required' => 'O CEP é indispensável',
                 'endereco.required' => 'Preencha o endereço corretamente',
                 'numero.required' => 'Preencha o número da residência',

@@ -54,7 +54,7 @@ class CadastroEmpresaController extends Controller
         $request->validate(
             [
                 'razao_social' => 'required|min:5',
-                'cnpj' => 'required|unique:cadastro_empresas,cnpj',
+                'cnpj' => 'required|cnpj|unique:cadastro_empresas,cnpj',
                 'cep' => 'required',
                 'endereco' => 'required',
                 'numero' => 'required',
@@ -69,6 +69,7 @@ class CadastroEmpresaController extends Controller
                 'razao_social.required' => 'É necessário preencher a Razão Social',
                 'cnpj.required' => 'Este CNPJ não é válido',
                 'cnpj.unique' => 'Este CNPJ já está cadastrado',
+                'cnpj.cnpj' => 'Este CNPJ não é válido',
                 'cep.required' => 'O CEP é indispensável',
                 'endereco.required' => 'Preencha o endereço corretamente',
                 'numero.required' => 'Preencha o número da residência',

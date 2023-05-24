@@ -149,9 +149,12 @@ class FerramentalRetiradaController extends Controller
      * @param  \App\Models\FerramentalRetirada  $ferramentalRetirada
      * @return \Illuminate\Http\Response
      */
-    public function edit(FerramentalRetirada $ferramentalRetirada)
+    public function edit($id)
     {
-        //
+        $obras = CadastroObra::all();
+        $funcionarios = CadastroFuncionario::all();
+        $itens = FerramentalRetirada::getRetiradaItems($id);
+        return view('pages.ferramental.retirada.edit', compact('obras', 'itens', 'funcionarios'));
     }
 
     /**
@@ -161,9 +164,54 @@ class FerramentalRetiradaController extends Controller
      * @param  \App\Models\FerramentalRetirada  $ferramentalRetirada
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, FerramentalRetirada $ferramentalRetirada)
+    public function update(Request $request, $id)
     {
-        //
+
+        $request->validate(
+            [
+                'id_obra' => 'required',
+                'id_funcionario' => 'required',
+                'id_ativo_externo' => 'required',
+                'devolucao_prevista' => 'required'
+            ],
+            [
+                'id_obra.required' => 'Qual obra você deseja efetivar esta retirada?',
+                'id_funcionario.required' => 'Você precisa selecionar o funcionário.',
+                'id_ativo_externo.required' => 'Nenhum item foi selecionado para retirada.',
+                'devolucao_prevista.required' => 'Preencha a data e hora para devolução.'
+            ]
+        );
+
+        $retirada = FerramentalRetirada::find($id);
+        $retirada->id_relacionamento = null;
+        $retirada->id_obra = $request->id_obra;
+        $retirada->id_usuario = Auth::user()->id ?? 1;
+        $retirada->id_funcionario = $request->id_funcionario;
+        $retirada->data_devolucao_prevista = $request->devolucao_prevista;
+        $retirada->data_devolucao = null;
+        $retirada->status = 1;
+        $retirada->observacoes = $request->observacoes ?? NULL;
+        $retirada->update();
+
+        $id_retirada = $retirada->id;
+
+        if ($id_retirada) {
+
+            if ($request->id_ativo_externo) {
+                foreach ($request->id_ativo_externo as $key => $value) {
+                    FerramentalRetiradaItem::where('id', $value)->delete();
+                }
+            }
+
+            $userLog = Auth::user()->email;
+            Log::channel('main')->info($userLog .' | EDIT RETIRADA | ID: ' . $id_retirada . ' | DATA: ' . date('Y-m-d H:i:s'));
+
+            Alert::success('Muito bem ;)', 'Sua retirada foi modificada com sucesso!');
+            return redirect(route('ferramental.retirada.detalhes', $id_retirada));
+        } else {
+            Alert::error('Que Pena!', 'Não foi possível registrar sua solicitação, entre em contato com suporte.');
+            return redirect(route('ferramental.retirada'));
+        }
     }
 
     /**
@@ -172,9 +220,20 @@ class FerramentalRetiradaController extends Controller
      * @param  \App\Models\FerramentalRetirada  $ferramentalRetirada
      * @return \Illuminate\Http\Response
      */
-    public function destroy(FerramentalRetirada $ferramentalRetirada)
+    public function destroy($id)
     {
-        //
+        $retirada = FerramentalRetirada::findOrFail($id);
+        $itens = FerramentalRetiradaItem::where('id_retirada', $retirada->id)->get();
+
+        foreach ($itens as $item) {
+            $item->delete();
+        }
+
+    if($retirada->delete()){
+            return redirect()->route('ferramental.retirada')->with('success', 'Registro deletado com sucesso!');
+        } else {
+            return redirect()->route('ferramental.retirada')->with('error', 'Não foi possível deletar o registro!');
+        }
     }
 
 
@@ -280,12 +339,12 @@ class FerramentalRetiradaController extends Controller
                 if ($row->status == "1" && !$row->termo_responsabilidade_gerado) {
 
                     /** Modificar Retirada */
-                    $dropdown .= '<li><a class="dropdown-item" href="#"><i class="mdi mdi-pencil"></i> Modificar Retirada</a></li>';
+                    $dropdown .= '<li><a class="dropdown-item" href="' . route('ferramental.retirada.editar', $row->id) . '"><i class="mdi mdi-pencil"></i> Modificar Retirada</a></li>';
 
                     /** Cancelar Retirada */
-                    $dropdown .= '<li><a class="dropdown-item" href="#"><i class="mdi mdi-cancel"></i> Cancelar Retirada</a></li>';
+                    $dropdown .= '<li><form action="' . route('ferramental.retirada.destroy', $row->id) . '" method="POST">'.csrf_field().'<input type="hidden" name="_method" value="DELETE"><button type="submit" class="dropdown-item" onclick="return confirm(\'Deseja realmente cancelar a retirada?\')"><i class="mdi mdi-cancel"></i> Cancelar Retirada</button></form></li>';
 
-                    }
+                }
 
                     $dropdown .= '<li><a class="dropdown-item" href="' . route('ferramental.retirada.detalhes', $row->id) . '"><i class="mdi mdi-minus"></i> Detalhes</a></li> </ul></div>';
 

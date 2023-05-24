@@ -28,7 +28,7 @@ class FerramentalRetirada extends Model
             ->get();
     }
 
-    /** 
+    /**
      * Retirada de Itens de Acordo com o int(id_retirada)
      */
     static function getRetiradaItems(int $id)

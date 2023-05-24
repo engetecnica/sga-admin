@@ -278,10 +278,10 @@ Route::group(['middleware' => 'auth'], function () {
         'admin/ferramental/retirada',
         [FerramentalRetiradaController::class, 'index']
     )->name('ferramental.retirada');
-    Route::get('admin/ferramental/retirada/editar/{id?}', [FerramentalRetiradaController::class, 'edit'])->name('ferramental.retirada.editar');
+    Route::get('admin/ferramental/retirada/editar/{id}', [FerramentalRetiradaController::class, 'edit'])->name('ferramental.retirada.editar');
     Route::get('admin/ferramental/retirada/adicionar', [FerramentalRetiradaController::class, 'create'])->name('ferramental.retirada.adicionar');
     Route::post('admin/ferramental/retirada/store', [FerramentalRetiradaController::class, 'store'])->name('ferramental.retirada.store');
-    Route::post('admin/ferramental/retirada/update/{id}', [FerramentalRetiradaController::class, 'update'])->name('ferramental.retirada.update');
+    Route::put('admin/ferramental/retirada/update/{id}', [FerramentalRetiradaController::class, 'update'])->name('ferramental.retirada.update');
     Route::get('admin/ferramental/retirada/detalhes/{id}', [FerramentalRetiradaController::class, 'show'])->name('ferramental.retirada.detalhes');
     Route::get('admin/ferramental/retirada/termo/{id}', [FerramentalRetiradaController::class, 'termo'])->name('ferramental.retirada.termo');
     Route::get('admin/ferramental/retirada/termo_assinar/{id}', [FerramentalRetiradaController::class, 'termo_assinar'])->name('ferramental.retirada.termo_assinar');
@@ -289,6 +289,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('admin/ferramental/retirada/devolver/{id}', [FerramentalRetiradaController::class, 'devolver'])->name('ferramental.retirada.devolver');
     Route::post('admin/ferramental/retirada/salvar', [FerramentalRetiradaController::class, 'devolver_salvar'])->name('ferramental.retirada.devolver.salvar');
     Route::get('admin/ferramental/retirada/termo_download/{id}', [FerramentalRetiradaController::class, 'termo_download'])->name('ferramental.retirada.download');
+    Route::delete('admin/ferramental/retirada/{id}/destroy', [FerramentalRetiradaController::class, 'destroy'])->name('ferramental.retirada.destroy');
 
     /* Ferramental - Requisição */
     Route::get('admin/ferramental/requisicao', [FerramentalRequisicaoController::class, 'index'])->name('ferramental.requisicao.index');

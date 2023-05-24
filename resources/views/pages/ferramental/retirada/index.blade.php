@@ -2,10 +2,9 @@
 @section('title', 'Retirada de Ferramentas')
 @section('content')
 
-
     <div class="page-header">
         <h3 class="page-title">
-            <span class="page-title-icon bg-gradient-primary text-white me-2">
+            <span class="page-title-icon bg-gradient-primary me-2 text-white">
                 <i class="mdi mdi-access-point-network menu-icon"></i>
             </span> Ferramental
         </h3>
@@ -26,13 +25,12 @@
         </h3>
     </div>
 
-
     <div class="row">
         <div class="col-lg-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
 
-                    <table class="table table-hover table-striped yajra-datatable">
+                    <table class="table-hover table-striped yajra-datatable table">
                         <thead>
                             <tr>
                                 <th width="8%">ID</th>
@@ -45,7 +43,6 @@
                                 <th width="10%">Ações</th>
                             </tr>
                         </thead>
-                        
 
                         </tbody>
                     </table>
@@ -56,8 +53,8 @@
 
 @endsection
 
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
 <script src="//cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
 <script src="//stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 <script src="//cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
@@ -104,12 +101,16 @@
                     searchable: true
                 },
             ],
-            order: [[4, 'DESC']],
+            order: [
+                [4, 'DESC']
+            ],
             language: {
                 search: 'Buscar informação da Lista',
                 url: 'https://cdn.datatables.net/plug-ins/1.11.5/i18n/pt-BR.json',
             },
         });
+
+
 
     });
 </script>

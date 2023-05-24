@@ -6,7 +6,7 @@
         <h3 class="page-title">
             <span class="page-title-icon bg-gradient-primary me-2 text-white">
                 <i class="mdi mdi-access-point-network menu-icon"></i>
-            </span> Retirada de Ferramentas
+            </span> Editar Retirada de Ferramentas
         </h3>
         <nav aria-label="breadcrumb">
             <ul class="breadcrumb">
@@ -33,11 +33,9 @@
                         </div>
                     @endif
 
-                    @php
-                        $action = isset($store) ? route('ferramental.retirada.update', $store->id) : route('ferramental.retirada.store');
-                    @endphp
-                    <form method="post" enctype="multipart/form-data" action="{{ $action }}">
+                    <form method="post" action="{{ route('ferramental.retirada.update', $itens->id) }}">
                         @csrf
+                        @method('put')
 
                         @if (Auth::user()->user_level == 1)
                             <div class="row">
@@ -52,29 +50,46 @@
                         @endif
 
                         <div class="col-12">
-                            @include('components.fields.id_obra')
+                            <label class="form-label" for="{{ $field ?? 'id_obra' }}">{{ $title ?? 'Obra' }}</label>
+                            <select class="form-select select2" id="{{ $field ?? 'id_obra' }}" name="{{ $field ?? 'id_obra' }}">
+                                <option value="">Selecione uma Obra</option>
+                                @foreach ($obras as $obra)
+                                    <option value="{{ $obra->id }}" {{ $itens->id_obra == $obra->id ? 'selected' : '' }}>
+                                        {{ $obra->codigo_obra }} - {{ $obra->razao_social }}
+                                    </option>
+                                @endforeach
+                            </select>
+
                         </div>
 
                         <div class="row mt-3">
                             <div class="col-6">
-                                @include('components.fields.id_funcionario')
+                                <label class="form-label" for="id_funcionario">Funcionário</label>
+                                <select class="form-select select2" id="id_funcionario" name="id_funcionario">
+                                    <option value="">Selecione um Funcionário</option>
+                                    @foreach ($funcionarios as $funcionario)
+                                        <option value="{{ $funcionario->id }}" {{ $itens->id_funcionario == $funcionario->id ? 'selected' : '' }}>
+                                            {{ $funcionario->matricula }} - {{ $funcionario->nome }}
+                                        </option>
+                                    @endforeach
+                                </select>
                             </div>
 
                             <div class="col-3">
                                 <label class="form-label" for="data_solicitacao">Data de Solicitação</label>
-                                <input class="form-control" type="date" value="@php echo date("Y-m-d"); @endphp" disabled>
+                                <input class="form-control" name="data_solicitacao" type="datetime-local" value="{{ $itens->created_at }}" disabled>
                             </div>
 
                             <div class="col-3">
                                 <label class="form-label" for="devolucao_prevista">Devolução Prevista</label>
-                                <input class="form-control" id="devolucao_prevista" name="devolucao_prevista" type="datetime-local" value="">
+                                <input class="form-control" id="devolucao_prevista" name="devolucao_prevista" type="datetime-local" value="{{ $itens->data_devolucao_prevista }}">
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="col-12 mt-3">
                                 <label class="form-label" for="observacoes">Observações</label>
-                                <textarea class="form-control" name="observacoes" rows="3"></textarea>
+                                <textarea class="form-control" name="observacoes" rows="3">{{ $itens->observacoes }}</textarea>
                             </div>
                         </div>
 
@@ -91,15 +106,15 @@
                                     </thead>
 
                                     <tbody>
-                                        @foreach ($estoque as $est)
+                                        @foreach ($itens->itens as $item)
                                             <tr>
-                                                <td><span class="badge badge-primary">{{ $est->patrimonio }}</span></td>
-                                                <td><span class="badge badge-danger">{{ $est->codigo_obra . ' - ' . $est->razao_social }}</span>
+                                                <td><span class="badge badge-primary">{{ $item->item_codigo_patrimonio }}</span></td>
+                                                <td><span class="badge badge-danger">{{ $itens->codigo_obra . ' - ' . $itens->razao_social }}</span>
                                                 </td>
-                                                <td>{{ $est->item }}</td>
+                                                <td>{{ $item->item_nome }}</td>
                                                 <td>
                                                     <div class="form-switch">
-                                                        <input class="form-check-input" id="id_ativo_exerno" name="id_ativo_externo[]" type="checkbox" value="{{ $est->id_ativo_externo_item }}" role="switch">
+                                                        <input class="form-check-input" id="id_ativo_exerno" name="id_ativo_externo[]" type="checkbox" value="{{ $item->id }}" role="switch">
                                                     </div>
                                                 </td>
                                             </tr>
@@ -120,4 +135,5 @@
             </div>
         </div>
     </div>
+
 @endsection

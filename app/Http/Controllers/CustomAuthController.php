@@ -70,7 +70,6 @@ class CustomAuthController extends Controller
             $userLog = Auth::user()->email;
             Log::channel('main')->info($userLog .' | LOGIN NO SISTEMA');
 
-            Alert::success('Seja bem vindo ;)', 'Você acabou de fazer o login no sistema!');
             return redirect()->intended('dashboard');
 
         }

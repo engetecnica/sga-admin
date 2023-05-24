@@ -39,8 +39,6 @@ use PDF;
 //Notification mail
 use App\Notifications\NotificaRetirada;
 //Notification telegram
-use NotificationChannels\Telegram\TelegramChannel;
-use Illuminate\Support\Facades\Config as FacadesConfig;
 use App\Notifications\NotificaRetiradaTelegram;
 use Illuminate\Support\Facades\Notification;
 
@@ -123,13 +121,15 @@ class FerramentalRetiradaController extends Controller
             $userLog = Auth::user()->email;
             Log::channel('main')->info($userLog .' | ADD RETIRADA | ID: ' . $id_retirada . ' | DATA: ' . date('Y-m-d H:i:s'));
 
-            //Notificação por e-mail no endereço cadastrado
+            //Notificação por e-mail no endereço cadastrado nas configurações de notificações
             $email_config = Config::where('id', 1)->first();
             $email_config->notify(new NotificaRetirada($email_config->email));
 
-            //Notificação por telegram no canal registrado
-            Notification::route('telegram', env('TELEGRAM_CHAT_ID'))
-            ->notify(new NotificaRetiradaTelegram($email_config->email));
+            //Notificação por telegram no canal registrado (API depende de https)
+            if (env('APP_ENV') === 'production') {
+                Notification::route('telegram', env('TELEGRAM_CHAT_ID'))
+                    ->notify(new NotificaRetiradaTelegram($email_config->email));
+            }
 
             Alert::success('Muito bem ;)', 'Sua retirada foi registrada com sucesso!');
             return redirect(route('ferramental.retirada.detalhes', $id_retirada));

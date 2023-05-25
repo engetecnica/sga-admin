@@ -13,10 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('empresas', function (Blueprint $table) {
-
-            $table->string('nome_fantasia')->after('razao_social')->nullable();
-
+        Schema::table('empresas', function (Blueprint $table) {
+            $table->string('nome_fantasia')->after('id')->nullable();
         });
     }
 

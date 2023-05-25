@@ -154,7 +154,7 @@ class CadastroEmpresaController extends Controller
             [
                 'razao_social' => 'required|min:5',
                 'nome_fantasia' => 'required',
-                'cnpj' => 'required|unique:empresas,cnpj',
+                'cnpj' => 'required|unique:empresas,cnpj,'.$id,
                 'cep' => 'required',
                 'endereco' => 'required',
                 'numero' => 'required',

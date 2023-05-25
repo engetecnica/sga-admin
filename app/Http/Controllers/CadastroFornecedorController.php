@@ -154,7 +154,7 @@ class CadastroFornecedorController extends Controller
             [
                 'razao_social' => 'required|min:5',
                 'nome_fantasia' => 'required',
-                'cnpj' => 'required|cnpj|unique:fornecedores,cnpj',
+                'cnpj' => 'required|cnpj|unique:fornecedores,cnpj,'.$id,
                 'cep' => 'required',
                 'endereco' => 'required',
                 'numero' => 'required',

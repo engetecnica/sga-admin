@@ -2,151 +2,151 @@
 @section('title', 'funcionarioes')
 @section('content')
 
-<div class="page-header">
-    <h3 class="page-title">
-        <span class="page-title-icon bg-gradient-primary text-white me-2">
-            <i class="mdi mdi-access-point-network menu-icon"></i>
-        </span> Cadastro de funcionarioes
-    </h3>
-    <nav aria-label="breadcrumb">
-        <ul class="breadcrumb">
-            <li class="breadcrumb-item active" aria-current="page">
-                <span></span>Cadastros <i class="mdi mdi-check icon-sm text-primary align-middle"></i>
-            </li>
-        </ul>
-    </nav>
-</div>
+    <div class="page-header">
+        <h3 class="page-title">
+            <span class="page-title-icon bg-gradient-primary me-2 text-white">
+                <i class="mdi mdi-access-point-network menu-icon"></i>
+            </span> Cadastro de funcionários
+        </h3>
+        <nav aria-label="breadcrumb">
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item active" aria-current="page">
+                    <span></span>Cadastros <i class="mdi mdi-check icon-sm text-primary align-middle"></i>
+                </li>
+            </ul>
+        </nav>
+    </div>
 
-<div class="row">
-    <div class="col-md-12 grid-margin stretch-card">
-        <div class="card">
-            <div class="card-body">
+    <div class="row">
+        <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
 
-                @if ($errors->any())
-                <div class="alert alert-danger">
-                    <strong>Ops!</strong><br><br>
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-                @endif
-
-                @php
-                $action = isset($store) ? route('cadastro.funcionario.update', $store->id) : route('cadastro.funcionario.store');
-                @endphp
-                <form method="post" enctype="multipart/form-data" action="{{ $action }}">
-                    @csrf
-
-                    <div class="row">
-                        <div class="col-md-3">
-                            <label for="matricula" class="form-label">Matrícula</label>
-                            <input type="text" class="form-control" id="matricula" value="{{ old('matricula', @$store->matricula) ?? "SGAE-".date("YmI")  }}" name="matricula" readonly>
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <strong>Ops!</strong><br><br>
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
                         </div>
-                        <div class="col-md-3">
-                            <div class="form-check margin-top-digitar-manualmente">
-                                <label class="form-check-label"> Digitar Manualmente
-                                    <input class="checkbox digitar-manualmente" data-field="matricula" type="checkbox"> <i class="input-helper"></i></label>
+                    @endif
+
+                    @php
+                        $action = isset($store) ? route('cadastro.funcionario.update', $store->id) : route('cadastro.funcionario.store');
+                    @endphp
+                    <form method="post" enctype="multipart/form-data" action="{{ $action }}">
+                        @csrf
+
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label class="form-label" for="matricula">Matrícula</label>
+                                <input class="form-control" id="matricula" name="matricula" type="text" value="{{ old('matricula', @$store->matricula) ?? 'SGAE-' . date('YmI') }}" readonly>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-check margin-top-digitar-manualmente">
+                                    <label class="form-check-label"> Digitar Manualmente
+                                        <input class="checkbox digitar-manualmente" data-field="matricula" type="checkbox"> <i class="input-helper"></i></label>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="row mt-3">
-                        @include('components.fields.id_obra')
-                    </div>
+                        <div class="row mt-3">
+                            @include('components.fields.id_obra')
+                        </div>
 
-                    <div class="row mt-3">
-                        <div class="col-md-6">
-                            <label for="nome" class="form-label">Nome Completo</label>
-                            <input type="text" class="form-control" id="razao_social" value="{{ old('nome', @$store->nome) }}" name="nome">
+                        <div class="row mt-3">
+                            <div class="col-md-6">
+                                <label class="form-label" for="nome">Nome Completo</label>
+                                <input class="form-control" id="razao_social" name="nome" type="text" value="{{ old('nome', @$store->nome) }}">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label" for="data_nascimento">Data de Nascimento</label>
+                                <input class="form-control" id="data_nascimento" name="data_nascimento" type="date" value="{{ old('data_nascimento', @$store->data_nascimento) }}">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label" for="cpf">CPF</label>
+                                <input class="form-control cpf" id="cpf" name="cpf" type="text" value="{{ old('cpf', @$store->cpf) }}">
+                            </div>
                         </div>
-                        <div class="col-md-3">
-                            <label for="data_nascimento" class="form-label">Data de Nascimento</label>
-                            <input type="date" class="form-control" id="data_nascimento" value="{{ old('data_nascimento', @$store->data_nascimento) }}" name="data_nascimento">
-                        </div>
-                        <div class="col-md-3">
-                            <label for="cpf" class="form-label">CPF</label>
-                            <input type="text" class="form-control cpf" id="cpf" value="{{ old('cpf', @$store->cpf) }}" name="cpf">
-                        </div>
-                    </div>
 
-                    <div class="row mt-3">
-                        <div class="col-md-3">
-                            <label for="rg" class="form-label">Registro Geral (RG)</label>
-                            <input type="text" class="form-control" id="rg" value="{{ old('rg', @$store->rg) }}" name="rg">
+                        <div class="row mt-3">
+                            <div class="col-md-3">
+                                <label class="form-label" for="rg">Registro Geral (RG)</label>
+                                <input class="form-control" id="rg" name="rg" type="text" value="{{ old('rg', @$store->rg) }}">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label" for="celular">Celular / WhatsApp</label>
+                                <input class="form-control celular" id="celular" name="celular" type="text" value="{{ old('celular', @$store->celular) }}">
+                            </div>
+                            <div class="col-md-6">
+                                @include('components.fields.id_funcao')
+                            </div>
                         </div>
-                        <div class="col-md-3">
-                            <label for="celular" class="form-label">Celular / WhatsApp</label>
-                            <input type="text" class="form-control celular" id="celular" value="{{ old('celular', @$store->celular) }}" name="celular">
-                        </div>
-                        <div class="col-md-6">
-                            @include('components.fields.id_funcao')
-                        </div>
-                    </div>
 
-                    <div class="row mt-3">
-                        <div class="col-md-2">
-                            <label for="cep" class="form-label">CEP</label>
-                            <input type="text" class="form-control cep" id="cep" value="{{ old('cep', @$store->cep) }}" name="cep">
+                        <div class="row mt-3">
+                            <div class="col-md-2">
+                                <label class="form-label" for="cep">CEP</label>
+                                <input class="form-control cep" id="cep" name="cep" type="text" value="{{ old('cep', @$store->cep) }}">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label" for="endereco">Endereço</label>
+                                <input class="form-control" id="endereco" name="endereco" type="text" value="{{ old('endereco', @$store->endereco) }}">
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label" for="numero">Número</label>
+                                <input class="form-control" id="numero" name="numero" type="text" value="{{ old('numero', @$store->numero) }}">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label" for="bairro">Bairro</label>
+                                <input class="form-control" id="bairro" name="bairro" type="text" value="{{ old('bairro', @$store->bairro) }}">
+                            </div>
                         </div>
-                        <div class="col-md-4">
-                            <label for="endereco" class="form-label">Endereço</label>
-                            <input type="text" class="form-control" id="endereco" value="{{ old('endereco', @$store->endereco) }}" name="endereco">
-                        </div>
-                        <div class="col-md-2">
-                            <label for="numero" class="form-label">Número</label>
-                            <input type="text" class="form-control" id="numero" value="{{ old('numero', @$store->numero) }}" name="numero">
-                        </div>
-                        <div class="col-md-4">
-                            <label for="bairro" class="form-label">Bairro</label>
-                            <input type="text" class="form-control" id="bairro" value="{{ old('bairro', @$store->bairro) }}" name="bairro">
-                        </div>
-                    </div>
 
-                    <div class="row mt-3">
-                        <div class="col-md-3">
-                            <label for="cidade" class="form-label">Cidade</label>
-                            <input type="text" class="form-control" id="cidade" value="{{ old('cidade', @$store->cidade) }}" name="cidade">
+                        <div class="row mt-3">
+                            <div class="col-md-3">
+                                <label class="form-label" for="cidade">Cidade</label>
+                                <input class="form-control" id="cidade" name="cidade" type="text" value="{{ old('cidade', @$store->cidade) }}">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label" for="estado">Estado</label>
+                                <select class="form-select" id="estado" name="estado">
+                                    <option value="">Selecione o Estado</option>
+                                    @foreach ($estados as $sigla => $estado)
+                                        <option value="{{ $sigla }}" @php if(@$store->estado==$sigla) echo 'selected' @endphp>{{ $estado }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" for="email">E-mail</label>
+                                <input class="form-control" id="email" name="email" type="email" value="{{ old('email', @$store->email) }}">
+                            </div>
                         </div>
-                        <div class="col-md-3">
-                            <label for="estado" class="form-label">Estado</label>
-                            <select name="estado" id="estado" class="form-select">
-                                <option value="">Selecione o Estado</option>
-                                @foreach ($estados as $sigla => $estado)
-                                <option value="{{ $sigla }}" @php if(@$store->estado==$sigla) echo 'selected' @endphp>{{ $estado }}
-                                </option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="col-md-6">
-                            <label for="email" class="form-label">E-mail</label>
-                            <input type="email" class="form-control" id="email" value="{{ old('email', @$store->email) }}" name="email">
-                        </div>
-                    </div>
 
-                    <div class="row mt-3">
-                        <div class="col-md-3">
-                            <label for="status" class="form-label">Status</label>
-                            <select class="form-select" name="status" id="status">
-                                <option value="Ativo" @php if(@$store->status=="Ativo") echo 'selected' @endphp>Ativo
-                                </option>
-                                <option value="Inativo" @php if(@$store->status=="Inativo") echo 'selected' @endphp>
-                                    Inativo</option>
-                            </select>
+                        <div class="row mt-3">
+                            <div class="col-md-3">
+                                <label class="form-label" for="status">Status</label>
+                                <select class="form-select" id="status" name="status">
+                                    <option value="Ativo" @php if(@$store->status=="Ativo") echo 'selected' @endphp>Ativo
+                                    </option>
+                                    <option value="Inativo" @php if(@$store->status=="Inativo") echo 'selected' @endphp>
+                                        Inativo</option>
+                                </select>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="col-12 mt-5">
-                        <button type="submit" class="btn btn-gradient-primary btn-lg font-weight-medium">Salvar</button>
+                        <div class="col-12 mt-5">
+                            <button class="btn btn-gradient-primary btn-lg font-weight-medium" type="submit">Salvar</button>
 
-                        <a href="{{ route('cadastro.funcionario') }}">
-                            <button type="button" class="btn btn-gradient-danger btn-lg font-weight-medium">Cancelar</button>
-                        </a>
-                    </div>
-                </form>
+                            <a href="{{ route('cadastro.funcionario') }}">
+                                <button class="btn btn-gradient-danger btn-lg font-weight-medium" type="button">Cancelar</button>
+                            </a>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
 @endsection

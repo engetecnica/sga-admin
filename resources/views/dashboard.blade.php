@@ -329,6 +329,7 @@
 
     <!-- toastr:js -->
     <script src="{{ asset('assets/components/js/toastr.min.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bs-custom-file-input/1.3.4/bs-custom-file-input.min.js"></script>
 
     <script>
         dados1 = {};
@@ -862,6 +863,13 @@
                 });
             });
 
+            $('#file-form').on('submit', function() {
+                $('#modal-file').hide();
+                $('.modal-backdrop').hide();
+                $('#marcas-file').trigger("reset");
+            });
+
+            bsCustomFileInput.init();
 
         });
     </script>

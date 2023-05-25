@@ -46,12 +46,12 @@
                                 <input class="form-control cnpj" id="cnpj" name="cnpj" type="text" value="{{ old('cnpj', @$store->cnpj) }}">
                             </div>
                             <div class="col-md-5">
-                                <label class="form-label" for="nome_fantasia">Nome fantasia</label>
-                                <input class="form-control" id="nome_fantasia" name="nome_fantasia" type="text" value="{{ old('nome_fantasia', @$store->nome_fantasia) }}">
-                            </div>
-                            <div class="col-md-5">
                                 <label class="form-label" for="razao_social">Razão Social</label>
                                 <input class="form-control" id="razao_social" name="razao_social" type="text" value="{{ old('razao_social', @$store->razao_social) }}">
+                            </div>
+                            <div class="col-md-5">
+                                <label class="form-label" for="nome_fantasia">Nome fantasia</label>
+                                <input class="form-control" id="nome_fantasia" name="nome_fantasia" type="text" value="{{ old('nome_fantasia', @$store->nome_fantasia) }}">
                             </div>
 
                         </div>

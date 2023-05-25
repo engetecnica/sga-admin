@@ -55,7 +55,56 @@
         </div>
     </div>
 
-    {{-- MODAL CONFIRMATION --}}
+    <div class="row">
+        <div class="col-lg-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between mb-5 flex-row">
+                        <h3>Anexos</h3>
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#modal-file" type="button"><i class="mdi mdi-plus"></i> Adicionar anexo</button>
+                    </div>
+                    <table class="table-hover table-striped table">
+                        <thead>
+                            <tr>
+                                <th>Anexo</th>
+                                <th>Título</th>
+                                <th>Descrição</th>
+                                <th>Tipo</th>
+                                <th>Data</th>
+                                <th width="10%">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($anexos as $anexo)
+                                <tr>
+                                    <td class="align-middle">{{ $anexo->arquivo }}</td>
+                                    <td class="align-middle">{{ $anexo->titulo }}</td>
+                                    <td class="align-middle">{{ $anexo->descricao }}</td>
+                                    <td class="align-middle">{{ $anexo->tipo }}</td>
+                                    <td class="align-middle">{{ Tratamento::datetimeBr($anexo->created_at) }}</td>
+                                    <td class="d-flex gap-2 align-middle">
+                                        <a class="btn btn-primary" href="{{ url('storage/uploads/anexos/' . $anexo->arquivo) }}" target="_blank">Baixar</a>
+                                        {{-- <form action="{{ route('ativo.interno.destroy', $anexo->id) }}" method="POST">
+                                            @csrf
+                                            @method('delete')
+                                            <button class="btn btn-danger" data-toggle="tooltip" data-placement="top" type="submit" title="Excluir">
+                                                <i class="mdi mdi-delete"></i> Excluir
+                                            </button>
+                                        </form> --}}
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- MODAL MARCAS CONFIRMATION --}}
     @include('pages.ativos.internos.partials.form-marcas')
+
+    {{-- MODAL ANEXOS CONFIRMATION --}}
+    @include('pages.ativos.internos.partials.form-anexos')
 
 @endsection

@@ -198,6 +198,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::delete('admin/ativo/interno/{ativo}', [AtivoInternoController::class, 'destroy'])->name('ativo.interno.destroy');
 
     Route::post('/admin/ativo/interno/marca/ajax', [AtivoInternoController::class, 'storeMarca'])->name('ativo.interno.marcas.ajax');
+    Route::post('admin/ativo/interno/create/file', [AtivoInternoController::class, 'fileUpload'])->name('ativo.interno.store.file');
 
     /* Ativo - Veículos */
     Route::get('admin/ativo/veiculo', [VeiculoController::class, 'index'])->name('ativo.veiculo');

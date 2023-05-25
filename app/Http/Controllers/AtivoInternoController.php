@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AnexoAtivoInterno;
 use App\Models\AtivoExternoEstoque;
 use App\Models\AtivosInterno;
 use App\Models\CadastroObra;
@@ -75,7 +76,9 @@ class AtivoInternoController extends Controller
 
         $marcas = MarcaPatrimonio::all();
 
-        return view('pages.ativos.internos.edit', compact('ativo', 'marcas', 'obras'));
+        $anexos = AnexoAtivoInterno::where('id_ativo_interno', $ativo->id)->get();
+
+        return view('pages.ativos.internos.edit', compact('ativo', 'marcas', 'obras', 'anexos'));
     }
 
 
@@ -86,7 +89,7 @@ class AtivoInternoController extends Controller
         }
 
         $userLog = Auth::user()->email;
-        Log::channel('main')->info($userLog .' | EDIT ATIVOS INTERNOS: ' . $ativo->patrimonio);
+        Log::channel('main')->info($userLog .' | EDIT ATIVOS INTERNOS: ' . $save->patrimonio);
 
         $data = $request->all();
         $save->update($data);
@@ -121,5 +124,40 @@ class AtivoInternoController extends Controller
         } else {
             return response()->json(['fail' => true]);
         }
+    }
+
+    //Inserção de arquivo como link no corpo da postagem
+    public function fileUpload(Request $request)
+    {
+
+
+        $data = $request->all();
+
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+
+            $name = $request->file('file')->hashName();
+
+            $path = $file->store('anexos'); // Salva o arquivo no diretório "storage/app/uploads"
+
+            $data['id_usuario'] = Auth::user()->id;
+            $data['id_ativo_interno'] = $request->id_ativo_interno;
+            $data['titulo'] = $request->titulo;
+            $data['arquivo'] = $name;
+            $data['descricao'] = $request->descricao;
+            $data['tipo'] = $request->tipo;
+            $save = AnexoAtivoInterno::create($data);
+
+            $userLog = Auth::user()->email;
+            Log::channel('main')->info($userLog .' | ADD ANEXOS ATIVOS INTERNOS: ' . $save->arquivo);
+
+            if ($save) {
+                return redirect()->route('ativo.interno.edit', $request->id_ativo_interno)->with('success', 'Anexo cadastrado com sucesso.');
+            } else {
+                return redirect()->route('ativo.interno.edit', $request->id_ativo_interno)->with('fail', 'Um erro impediu o cadastro.');
+            }
+        }
+
+
     }
 }

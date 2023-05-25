@@ -54,7 +54,8 @@ class CadastroEmpresaController extends Controller
         $request->validate(
             [
                 'razao_social' => 'required|min:5',
-                'cnpj' => 'required|cnpj|unique:cadastro_empresas,cnpj',
+                'nome_fantasia' => 'required',
+                'cnpj' => 'required|cnpj|unique:empresas,cnpj',
                 'cep' => 'required',
                 'endereco' => 'required',
                 'numero' => 'required',
@@ -67,6 +68,7 @@ class CadastroEmpresaController extends Controller
             ],
             [
                 'razao_social.required' => 'É necessário preencher a Razão Social',
+                'nome_fantasia.required' => 'É necessário preencher o Nome Fantasia',
                 'cnpj.required' => 'Este CNPJ não é válido',
                 'cnpj.unique' => 'Este CNPJ já está cadastrado',
                 'cnpj.cnpj' => 'Este CNPJ não é válido',
@@ -85,6 +87,7 @@ class CadastroEmpresaController extends Controller
 
         $empresa = new CadastroEmpresa();
         $empresa->razao_social = $request->razao_social;
+        $empresa->nome_fantasia = $request->nome_fantasia;
         $empresa->cnpj = $request->cnpj;
         $empresa->cep = $request->cep;
         $empresa->endereco = $request->endereco;
@@ -150,7 +153,8 @@ class CadastroEmpresaController extends Controller
         $request->validate(
             [
                 'razao_social' => 'required|min:5',
-                'cnpj' => 'required|unique:cadastro_empresas,cnpj',
+                'nome_fantasia' => 'required',
+                'cnpj' => 'required|unique:empresas,cnpj',
                 'cep' => 'required',
                 'endereco' => 'required',
                 'numero' => 'required',
@@ -163,6 +167,7 @@ class CadastroEmpresaController extends Controller
             ],
             [
                 'razao_social.required' => 'É necessário preencher a Razão Social',
+                'nome_fantasia.required' => 'É necessário preencher o Nome Fantasia',
                 'cnpj.required' => 'Este CNPJ não é válido',
                 'cnpj.unique' => 'Este CNPJ já está cadastrado',
                 'cep.required' => 'O CEP é indispensável',
@@ -179,6 +184,7 @@ class CadastroEmpresaController extends Controller
 
         $empresa = CadastroEmpresa::find($id);
         $empresa->razao_social = $request->razao_social;
+        $empresa->nome_fantasia = $request->nome_fantasia;
         $empresa->cnpj = $request->cnpj;
         $empresa->cep = $request->cep;
         $empresa->endereco = $request->endereco;

@@ -85,6 +85,7 @@ class CadastroObraController extends Controller
 
         $obra = new CadastroObra();
         $obra->id_empresa = $request->id_empresa;
+        $obra->nome_fantasia = $request->nome_fantasia;
         $obra->codigo_obra = $request->codigo_obra;
         $obra->razao_social = $request->razao_social;
         $obra->cnpj = $request->cnpj;
@@ -187,6 +188,7 @@ class CadastroObraController extends Controller
         $obra = CadastroObra::find($id);
 
         $obra->id_empresa = $request->id_empresa;
+        $obra->nome_fantasia = $request->nome_fantasia;
         $obra->codigo_obra = $request->codigo_obra;
         $obra->razao_social = $request->razao_social;
         $obra->cnpj = $request->cnpj;

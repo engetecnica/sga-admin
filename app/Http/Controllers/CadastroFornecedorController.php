@@ -54,7 +54,8 @@ class CadastroFornecedorController extends Controller
         $request->validate(
             [
                 'razao_social' => 'required|min:5',
-                'cnpj' => 'required|cnpj|unique:cadastro_fornecedor,cnpj',
+                'nome_fantasia' => 'required',
+                'cnpj' => 'required|cnpj|unique:fornecedores,cnpj',
                 'cep' => 'required',
                 'endereco' => 'required',
                 'numero' => 'required',
@@ -67,6 +68,7 @@ class CadastroFornecedorController extends Controller
             ],
             [
                 'razao_social.required' => 'É necessário preencher a Razão Social',
+                'nome_fantasia.required' => 'É necessário preencher o Nome Fantasia',
                 'cnpj.required' => 'Este CNPJ não é válido',
                 'cnpj.unique' => 'Este CNPJ já está cadastrado',
                 'cnpj.cnpj' => 'Este CNPJ não é válido',
@@ -85,6 +87,7 @@ class CadastroFornecedorController extends Controller
 
         $fornecedor = new CadastroFornecedor();
         $fornecedor->razao_social = $request->razao_social;
+        $fornecedor->nome_fantasia = $request->nome_fantasia;
         $fornecedor->cnpj = $request->cnpj;
         $fornecedor->cep = $request->cep;
         $fornecedor->endereco = $request->endereco;
@@ -150,7 +153,8 @@ class CadastroFornecedorController extends Controller
         $request->validate(
             [
                 'razao_social' => 'required|min:5',
-                'cnpj' => 'required|cnpj|unique:cadastro_fornecedor,cnpj',
+                'nome_fantasia' => 'required',
+                'cnpj' => 'required|cnpj|unique:fornecedores,cnpj',
                 'cep' => 'required',
                 'endereco' => 'required',
                 'numero' => 'required',
@@ -163,6 +167,7 @@ class CadastroFornecedorController extends Controller
             ],
             [
                 'razao_social.required' => 'É necessário preencher a Razão Social',
+                'nome_fantasia.required' => 'É necessário preencher o Nome Fantasia',
                 'cnpj.required' => 'Este CNPJ não é válido',
                 'cnpj.unique' => 'Este CNPJ já está cadastrado',
                 'cnpj.cnpj' => 'Este CNPJ não é válido',
@@ -180,6 +185,7 @@ class CadastroFornecedorController extends Controller
 
         $fornecedor = CadastroFornecedor::find($id);
         $fornecedor->razao_social = $request->razao_social;
+        $fornecedor->nome_fantasia = $request->nome_fantasia;
         $fornecedor->cnpj = $request->cnpj;
         $fornecedor->cep = $request->cep;
         $fornecedor->endereco = $request->endereco;

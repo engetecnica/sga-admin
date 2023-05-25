@@ -105,7 +105,7 @@ class AtivoExternoController extends Controller
                 $externo_estoque->id_ativo_externo = $externo->id;
                 $externo_estoque->id_obra = $request->id_obra;
                 $externo_estoque->patrimonio = Configuracao::PatrimonioSigla() . $patrimonio;
-                $externo_estoque->valor = FuncoesAdaptadas::formata_moeda($request->valor) ?? 0;
+                $externo_estoque->valor = str_replace('R$ ', '', $request->valor) ?? 0;
                 $externo_estoque->calibracao = $request->calibracao;
                 $externo_estoque->status = 4; // Em Estoque
                 $externo_estoque->save();

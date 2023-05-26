@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('ativos_externos_estoque', function (Blueprint $table) {
-            $table->varchar('valor')->change();
+            $table->string('valor')->change();
         });
     }
 

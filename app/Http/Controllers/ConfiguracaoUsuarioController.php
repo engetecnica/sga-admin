@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ConfiguracaoUsuario;
 use App\Models\CadastroEmpresa;
+use App\Models\CadastroFuncionario;
 use App\Models\CadastroUsuariosVinculo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -40,18 +41,11 @@ class ConfiguracaoUsuarioController extends Controller
         return view('pages.configuracoes.usuario.index', compact('lista', 'permite_excluir'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        //
         $usuario_niveis = Niveis::all();
-        $funcionarios = [];
-        $obras = [];
-        return view('pages.configuracoes.usuario.form', compact('usuario_niveis', 'funcionarios', 'obras'));
+        $funcionarios = CadastroFuncionario::all();
+        return view('pages.configuracoes.usuario.form', compact('usuario_niveis', 'funcionarios'));
     }
 
     /**
@@ -63,32 +57,35 @@ class ConfiguracaoUsuarioController extends Controller
     public function store(Request $request)
     {
 
-
         $request->validate(
             [
-                'nome' => 'required',
+                'id_funcionario' => 'required',
                 'password' => 'required|min:5',
                 'password_confirm' => 'required|min:5|same:password',
-                'email' => 'required|email|unique:users,email',
-                'nivel' => 'required'
+                'nivel' => 'required',
+                'status' => 'required'
             ],
             [
-                'nome.required' => 'O nome do usuário deve ser preenchido corretamente',
+                'id_funcionario.required' => 'Escolha um funcionário',
                 'password.required' => 'É necessário digitar uma senha que contenha no mínimo 5 caracteres',
                 'password_confirm.required' => 'A confirmação de senha é necessária',
                 'password_confirm.same' => 'As senhas digitadas não são iguais',
-                'email.unique' => 'Este e-mail já está registrado'
+                'nivel.required' => 'Escolha um nível de acesso',
+                'status.required' => 'Escolha um status'
             ]
         );
 
+        $funcionario = CadastroFuncionario::find($request->id_funcionario);
+
         $user = new ConfiguracaoUsuario();
-        $user->name = $request->nome;
+        $user->name = $funcionario->nome;
         $user->password = Hash::make($request->password);
-        $user->email = $request->email;
+        $user->email = $funcionario->email;
         if ($user->save()) {
             $user_vinculo = new CadastroUsuariosVinculo();
             $user_vinculo->id_usuario = $user->id;
-            $user_vinculo->id_obra  = $request->id_obra ?? null;
+            $user_vinculo->id_obra  = $funcionario->id_obra ?? null;
+            $user_vinculo->id_funcionario  = $funcionario->id;
             $user_vinculo->id_nivel  = $request->nivel ?? 1;
             $user_vinculo->status = $request->status ?? 1;
             $user_vinculo->save();

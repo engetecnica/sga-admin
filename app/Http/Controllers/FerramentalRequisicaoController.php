@@ -38,6 +38,18 @@ class FerramentalRequisicaoController extends Controller
         //     'quantidade.*' => 'required',
         // ]);
 
+        $request->validate(
+            [
+                'id_obra_origem' => 'required',
+                'id_obra_destino' => 'required|different:id_obra_origem'
+            ],
+            [
+                'id_obra_origem.required' => 'É necessário selecionar uma Obra de Origem',
+                'id_obra_destino.required' => 'É necessário selecionar uma Obra de Destino',
+                'id_obra_destino.different' => 'A Obra de Destino não pode ser igual a Obra de Origem'
+            ]
+        );
+
         $data = $request->all();
         $requisicao = new FerramentalRequisicao();
         $requisicao->id_solicitante = Auth::user()->id;

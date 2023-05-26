@@ -50,7 +50,7 @@
                 </button>
                 <div class="w-100 mt-3">
                     <form action="">
-                        <select class="form-select select2 form-control" id="" name="">
+                        <select class="form-select select2 form-control" id="id_obra" name="id_obra">
                             @foreach ($obras_lista as $obra_lista)
                                 <option value="{{ $obra_lista->id }}">
                                     {{ $obra_lista->codigo_obra }} | {{ $obra_lista->razao_social }} | {{ $obra_lista->cnpj }}
@@ -548,6 +548,19 @@
                     $('#cidade').val(data.estabelecimento.cidade.nome);
                     $('#estado').val(data.estabelecimento.estado.sigla);
                     $('#email').val(data.estabelecimento.email);
+                }
+            });
+        });
+
+        $(document).on('blur', '#funcao', function() {
+            const funcao = $(this).val();
+
+            $.ajax({
+                url: 'https://sistemas.unasus.gov.br/ws_cbo/cbo.php?words=' + funcao,
+                method: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    $('#cbo').val(data);
                 }
             });
         });

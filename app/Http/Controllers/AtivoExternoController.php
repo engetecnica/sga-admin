@@ -166,6 +166,14 @@ class AtivoExternoController extends Controller
         return view('pages.ativos.externos.show', compact('detalhes'));
     }
 
+    public function edit($id)
+    {
+        //
+        $obras = CadastroObra::all();
+        $ativo_configuracoes = AtivoConfiguracao::get_ativo_configuracoes();
+        return view('pages.ativos.externos.form', compact('ativo_configuracoes', 'obras'));
+    }
+
 
     public function searchAtivoID(Request $request, int $id)
     {

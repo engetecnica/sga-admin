@@ -58,6 +58,7 @@ use App\Http\Controllers\VeiculoQuilometragemController;
 use App\Http\Controllers\VeiculoSeguroController;
 use App\Http\Controllers\AtivoInternoController;
 use App\Http\Controllers\ConfigController;
+use App\Http\Controllers\FuncaoFuncionarioController;
 
 /*
 |--------------------------------------------------------------------------
@@ -167,8 +168,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('admin/cadastro/funcionario/store',                                   [CadastroFuncionarioController::class, 'store'])->name('cadastro.funcionario.store');
     Route::post('admin/cadastro/funcionario/update/{id}',                             [CadastroFuncionarioController::class, 'update'])->name('cadastro.funcionario.update');
 
-
-
+    /* Cadastros - Funções - Funcionário */
+    Route::get('admin/cadastro/funcionario/funcoes', [FuncaoFuncionarioController::class, 'index'])->name('cadastro.funcionario.funcoes.index');
+    Route::get('admin/cadastro/funcionario/funcoes/adicionar', [FuncaoFuncionarioController::class, 'create'])->name('cadastro.funcionario.funcoes.adicionar');
+    Route::post('admin/cadastro/funcionario/funcoes', [FuncaoFuncionarioController::class, 'store'])->name('cadastro.funcionario.funcoes.store');
+    Route::get('admin/cadastro/funcionario/funcoes/editar/{id}', [FuncaoFuncionarioController::class, 'edit'])->name('cadastro.funcionario.funcoes.editar');
+    Route::post('admin/cadastro/funcionario/funcoes/update/{id}', [FuncaoFuncionarioController::class, 'update'])->name('cadastro.funcionario.funcoes.update');
+    Route::delete('admin/cadastro/funcionario/funcoes/{funcao}', [FuncaoFuncionarioController::class, 'destroy'])->name('cadastro.funcionario.funcoes.destroy');
 
     /* Ativo - Configuração */
     Route::get('admin/ativo', [AtivoConfiguracaoController::class, 'index'])->name('ativo');

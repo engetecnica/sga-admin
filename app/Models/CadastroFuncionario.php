@@ -16,4 +16,9 @@ class CadastroFuncionario extends Model
     {
         return $this->belongsTo(CadastroObra::class, 'id_obra', 'id');
     }
+
+    public function funcao()
+    {
+        return $this->belongsTo(FuncaoFuncionario::class, 'id_funcao', 'id');
+    }
 }

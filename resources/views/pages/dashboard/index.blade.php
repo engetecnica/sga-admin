@@ -6,7 +6,7 @@
         <h3 class="page-title">
             <span class="page-title-icon bg-gradient-primary me-2 text-white">
                 <i class="mdi mdi-home menu-icon"></i>
-            </span> Dashboard Administrador
+            </span> Dashboard
         </h3>
         <nav aria-label="breadcrumb">
             <ul class="breadcrumb">

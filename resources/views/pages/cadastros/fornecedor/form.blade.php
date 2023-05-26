@@ -124,4 +124,5 @@
             </div>
         </div>
     </div>
+    @include('pages.cadastros.fornecedor.partials.form-contact')
 @endsection

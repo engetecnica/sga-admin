@@ -146,6 +146,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('admin/cadastro/fornecedor/store',                [CadastroFornecedorController::class, 'store'])->name('cadastro.fornecedor.store');
     Route::post('admin/cadastro/fornecedor/update/{id}',          [CadastroFornecedorController::class, 'update'])->name('cadastro.fornecedor.update');
 
+    //CONTATOS FORNECEDOR
+    Route::post('admin/fornecedor/contato/store', [CadastroFornecedorController::class, 'storeContato'])->name('fornecedor.contato.store');
+    Route::delete('admin/fornecedor/contato/{contato}/destroy', [CadastroFornecedorController::class, 'destroyContato'])->name('fornecedor.contato.destroy');
+
     /* Cadastros - Obra */
     Route::get('admin/obra',                                                   [CadastroObraController::class, 'index'])->name('obra');
     Route::get('admin/cadastro/obra',                                          [CadastroObraController::class, 'index'])->name('cadastro.obra');

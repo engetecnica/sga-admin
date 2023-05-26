@@ -33,4 +33,9 @@ class CadastroFornecedor extends Model
     {
         return $this->hasOne(VeiculoAbastecimento::class);
     }
+
+    public function contatos()
+    {
+        return $this->hasMany(ContatoFornecedor::class, 'id_fornecedor');
+    }
 }

@@ -55,7 +55,7 @@
                                     <td class="align-middle">{{ $ativo->numero_serie }}</td>
                                     <td class="align-middle">{{ $ativo->titulo }}</td>
                                     <td class="align-middle">{{ $ativo->marca }}</td>
-                                    <td class="align-middle">R$ {{ Tratamento::currencyFormatBr($ativo->valor_atribuido) }}</td>
+                                    <td class="align-middle">{{ Tratamento::currencyFormatBr($ativo->valor_atribuido) }}</td>
                                     <td class="align-middle">{{ Tratamento::datetimeBr($ativo->created_at) }}</td>
                                     <td class="text-center align-middle">
                                         @if ($ativo->status == 1)

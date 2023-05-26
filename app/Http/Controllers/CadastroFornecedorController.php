@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreContatoFornecedorRequest;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 use App\Models\CadastroFornecedor;
+use App\Models\ContatoFornecedor;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
@@ -13,28 +15,15 @@ use App\Traits\Configuracao;
 
 class CadastroFornecedorController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-
 
     use Configuracao;
 
-
     public function index()
     {
-        //
-        $lista = CadastroFornecedor::all();
-        return view('pages.cadastros.fornecedor.index', compact('lista'));
+        $fornecedores = CadastroFornecedor::with('contatos')->get();
+        return view('pages.cadastros.fornecedor.index', compact('fornecedores'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         //
@@ -42,12 +31,6 @@ class CadastroFornecedorController extends Controller
         return view('pages.cadastros.fornecedor.form', compact('estados'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         //
@@ -84,7 +67,6 @@ class CadastroFornecedorController extends Controller
             ]
         );
 
-
         $fornecedor = new CadastroFornecedor();
         $fornecedor->razao_social = $request->razao_social;
         $fornecedor->nome_fantasia = $request->nome_fantasia;
@@ -109,47 +91,22 @@ class CadastroFornecedorController extends Controller
 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
-        //
         $store = CadastroFornecedor::find($id);
         $estados = Configuracao::estados();
+        $contatos = ContatoFornecedor::where('id_fornecedor', $id)->get();
 
             if(!$id or !$store):
                 Alert::error('Que Pena!', 'Esse registro não foi encontrado.');
                 return redirect(route('cadastro.fornecedor'));
             endif;
 
-            return view('pages.cadastros.fornecedor.form', compact('store', 'estados'));
+            return view('pages.cadastros.fornecedor.form', compact('store', 'estados', 'contatos'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
-        //
         $request->validate(
             [
                 'razao_social' => 'required|min:5',
@@ -205,15 +162,28 @@ class CadastroFornecedorController extends Controller
         return redirect(route('cadastro.fornecedor.editar', $id));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function storeContato(StoreContatoFornecedorRequest $request)
     {
-        //
+        $data = $request->validated();
+        $save = ContatoFornecedor::create($data);
+
+        if($save) {
+            return redirect()->route('cadastro.fornecedor.editar', $request->id_fornecedor)->with('success', 'Contato adicionado com sucesso!');
+        } else {
+            return redirect()->route('cadastro.fornecedor.editar', $request->id_fornecedor)->with('fail', 'Problemas ao adicionar contato');
+        }
+    }
+
+    public function destroyContato(ContatoFornecedor $contato)
+    {
+        $userLog = Auth::user()->email;
+        Log::channel('main')->info($userLog .' | DELETE CONTATO : ' . $contato->nome);
+
+        if ($contato->delete()) {
+            return redirect()->route('cadastro.fornecedor.editar', $contato->id_fornecedor)->with('success', 'Contato excluído com sucesso.');
+        } else {
+            return redirect()->route('cadastro.fornecedor.editar', $contato->id_fornecedor)->with('fail', 'Um erro ocorreu na tentativa de exclusão do contato');
+        }
     }
 
 }

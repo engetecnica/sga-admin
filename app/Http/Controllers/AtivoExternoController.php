@@ -64,7 +64,8 @@ class AtivoExternoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+
         $request->validate(
             [
                 'id_ativo_configuracao' => 'required',
@@ -92,10 +93,14 @@ class AtivoExternoController extends Controller
         /* Salvar Ativo Estoque */
         $externo_estoque_quantidade = $request->quantidade;
 
+
+
         if ($externo_estoque_quantidade && $externo_estoque_quantidade > 0) {
 
             /* Inclusão de Estoque  */
             for ($i = 1; $i <= $externo_estoque_quantidade; $i++) {
+
+
 
                 /* Contagem de Patrimonio diante do Atual */
                 $patrimonio = Configuracao::PatrimonioAtual() + $i;
@@ -175,7 +180,7 @@ class AtivoExternoController extends Controller
                     return '<span class="badge badge-primary">' . $row->patrimonio  . '</span>';
                 })
                 ->editColumn('valor', function ($row) {
-                    return FuncoesAdaptadas::formata_moeda_reverse($row->valor);
+                    return 'R$ '. $row->valor;
                 })
                 ->editColumn('calibracao', function($row){
                     return $row->calibracao==1 ? "Sim" : "Não";

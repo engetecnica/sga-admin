@@ -552,18 +552,6 @@
             });
         });
 
-        $(document).on('blur', '#funcao', function() {
-            const funcao = $(this).val();
-
-            $.ajax({
-                url: 'https://sistemas.unasus.gov.br/ws_cbo/cbo.php?words=' + funcao,
-                method: 'GET',
-                dataType: 'json',
-                success: function(data) {
-                    $('#cbo').val(data);
-                }
-            });
-        });
 
         $(".selecionar_obra").on('change', function() {
             let id_obra = $(this).val();

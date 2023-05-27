@@ -170,9 +170,9 @@ Route::group(['middleware' => 'auth'], function () {
 
     /* Cadastros - Funções - Funcionário */
     Route::get('admin/cadastro/funcionario/funcoes', [FuncaoFuncionarioController::class, 'index'])->name('cadastro.funcionario.funcoes.index');
-    Route::get('admin/cadastro/funcionario/funcoes/adicionar', [FuncaoFuncionarioController::class, 'create'])->name('cadastro.funcionario.funcoes.adicionar');
+    Route::get('admin/cadastro/funcionario/funcoes/adicionar', [FuncaoFuncionarioController::class, 'create'])->name('cadastro.funcionario.funcoes.create');
     Route::post('admin/cadastro/funcionario/funcoes', [FuncaoFuncionarioController::class, 'store'])->name('cadastro.funcionario.funcoes.store');
-    Route::get('admin/cadastro/funcionario/funcoes/editar/{id}', [FuncaoFuncionarioController::class, 'edit'])->name('cadastro.funcionario.funcoes.editar');
+    Route::get('admin/cadastro/funcionario/funcoes/editar/{id}', [FuncaoFuncionarioController::class, 'edit'])->name('cadastro.funcionario.funcoes.edit');
     Route::post('admin/cadastro/funcionario/funcoes/update/{id}', [FuncaoFuncionarioController::class, 'update'])->name('cadastro.funcionario.funcoes.update');
     Route::delete('admin/cadastro/funcionario/funcoes/{funcao}', [FuncaoFuncionarioController::class, 'destroy'])->name('cadastro.funcionario.funcoes.destroy');
 

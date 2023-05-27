@@ -1,5 +1,5 @@
 @extends('dashboard')
-@section('title', 'funcionarioes')
+@section('title', 'Funcionários')
 @section('content')
 
     <div class="page-header">
@@ -53,7 +53,15 @@
                         </div>
 
                         <div class="row mt-3">
-                            @include('components.fields.id_obra')
+                            <label class="form-label" for="id_obra">Obra</label>
+                            <select class="form-select select2" id="id_obra" name="id_obra" required>
+                                <option value="">Selecione uma Obra</option>
+                                @foreach ($obras as $obra)
+                                    <option value="{{ $obra->id }}" {{ $store->id_obra == $obra->id ? 'selected' : '' }}>
+                                        {{ $obra->codigo_obra }} - {{ $obra->razao_social }}
+                                    </option>
+                                @endforeach
+                            </select>
                         </div>
 
                         <div class="row mt-3">
@@ -81,7 +89,15 @@
                                 <input class="form-control celular" id="celular" name="celular" type="text" value="{{ old('celular', @$store->celular) }}">
                             </div>
                             <div class="col-md-6">
-                                @include('components.fields.id_funcao')
+                                <label class="form-label" for="id_funcao">Função</label>
+                                <select class="form-select" name="id_funcao">
+                                    <option value="">Selecione uma Função</option>
+                                    @foreach ($funcoes as $funcao)
+                                        <option value="{{ $funcao->id }}" {{ $store->id_funcao == $funcao->id ? 'selected' : '' }}>
+                                            {{ $funcao->codigo }} - {{ $funcao->funcao }}
+                                        </option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
 

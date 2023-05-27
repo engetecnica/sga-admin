@@ -1,5 +1,5 @@
 @extends('dashboard')
-@section('title', 'Ativos Externos')
+@section('title', 'Funções CBO')
 @section('content')
 
     <div class="page-header">
@@ -19,7 +19,7 @@
 
     <div class="page-header">
         <h3 class="page-title">
-            <a href="{{ route('cadastro.funcionario.funcoes.adicionar') }}">
+            <a href="{{ route('cadastro.funcionario.funcoes.create') }}">
                 <button class="btn btn-sm btn-danger">Cadastrar</button>
             </a>
         </h3>
@@ -46,17 +46,20 @@
                                     <td class="text-center align-middle"><span class="badge badge-dark">{{ $funcao->id }}</span></td>
                                     <td class="align-middle">{{ $funcao->codigo }}</td>
                                     <td class="align-middle">{{ $funcao->funcao }}</td>
-                                    <td class="align-middle">{{ count($funcao->funcionario) }}</td>
+                                    <td class="align-middle">{{ count($funcao->funcionarios) }}</td>
                                     <td class="d-flex gap-2 align-middle">
-                                        <a class="badge badge-success" href="{{ route('cadastro.funcionario.funcoes.editar', $funcao->id) }}">Editar</a>
+                                        <a class="badge badge-success" href="{{ route('cadastro.funcionario.funcoes.edit', $funcao->id) }}">Editar</a>
 
-                                        <form action="{{ route('cadastro.funcionario.funcoes.destroy', $funcao->id) }}" method="POST">
-                                            @csrf
-                                            @method('delete')
-                                            <button class="badge badge-danger" data-toggle="tooltip" data-placement="top" type="submit" title="Excluir">
-                                                <i class="mdi mdi-delete"></i> Excluir
-                                            </button>
-                                        </form>
+                                        @if (!count($funcao->funcionarios) > 0)
+                                            <form action="{{ route('cadastro.funcionario.funcoes.destroy', $funcao->id) }}" method="POST">
+                                                @csrf
+                                                @method('delete')
+                                                <button class="badge badge-danger" data-toggle="tooltip" data-placement="top" type="submit" title="Excluir">
+                                                    <i class="mdi mdi-delete"></i> Excluir
+                                                </button>
+                                            </form>
+                                        @endif
+
                                     </td>
                                 </tr>
                             @endforeach

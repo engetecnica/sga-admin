@@ -8,6 +8,4 @@
         <label class="form-label" for="codigo">Código CBO</label>
         <input class="form-control @error('codigo') is-invalid @enderror" id="codigo" name="codigo" type="text" value="{{ $funcao->codigo ?? old('codigo') }}" placeholder="Código CBO" required>
     </div>
-
-    <div id="cbo"></div>
 </div>

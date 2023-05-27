@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
-use App\Models\{CadastroFuncionario, CadastroObra, CadastroFuncao};
+use App\Models\{CadastroFuncionario, CadastroObra, CadastroFuncao, FuncaoFuncionario};
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
@@ -42,7 +42,7 @@ class CadastroFuncionarioController extends Controller
         //
         $estados = Configuracao::estados();
         $obras = CadastroObra::where('status', 'Ativo')->get();
-        $funcoes = CadastroFuncao::all();
+        $funcoes = FuncaoFuncionario::all();
         return view('pages.cadastros.funcionario.form', compact('estados', 'obras', 'funcoes'));
     }
 
@@ -56,7 +56,7 @@ class CadastroFuncionarioController extends Controller
     {
         $request->validate(
             [
-                'matricula' => 'required|unique:funcionarios|min:4|max:30',
+                'matricula' => 'required|min:4|max:30|unique:funcionarios,matricula',
                 'id_obra' => 'required',
                 'nome' => 'required',
                 'data_nascimento' => 'required',
@@ -118,8 +118,7 @@ class CadastroFuncionarioController extends Controller
         $userLog = Auth::user()->email;
         Log::channel('main')->info($userLog .' | ADD FUNCIONÁRIO : ' . $funcionario->nome . ' | CPF : ' . $funcionario->cpf);
 
-        Alert::success('Muito bem ;)', 'Um registro foi adicionado com sucesso!');
-        return redirect(route('cadastro.funcionario'));
+        return redirect()->route('cadastro.funcionario')->with('success', 'Funcionário cadastrado com sucesso!');
     }
 
     /**
@@ -142,10 +141,10 @@ class CadastroFuncionarioController extends Controller
     public function edit($id)
     {
         //
-        $store = CadastroFuncionario::find($id);
+        $store = CadastroFuncionario::with('funcao')->where('id', $id)->first();
         $estados = Configuracao::estados();
         $obras = CadastroObra::where('status', 'Ativo')->get();
-        $funcoes = CadastroFuncao::all();
+        $funcoes = FuncaoFuncionario::all();
 
         if (!$id or !$store) :
             Alert::error('Que Pena!', 'Esse registro não foi encontrado.');
@@ -167,11 +166,11 @@ class CadastroFuncionarioController extends Controller
         //
         $request->validate(
             [
-                'matricula' => 'required|unique:funcionarios|min:4|max:30',
+                'matricula' => 'required|min:4|max:30|unique:funcionarios,matricula,' . $id,
                 'id_obra' => 'required',
                 'nome' => 'required',
                 'data_nascimento' => 'required',
-                'cpf' => 'required|unique:funcionarios|cpf',
+                'cpf' => 'required|cpf|unique:funcionarios,cpf,' . $id . '|cpf',
                 'rg' => 'required',
                 'id_funcao' => 'required',
                 'cep' => 'required',
@@ -229,8 +228,7 @@ class CadastroFuncionarioController extends Controller
         $userLog = Auth::user()->email;
         Log::channel('main')->info($userLog .' | EDIT FUNCIONÁRIO : ' . $funcionario->nome . ' | CPF : ' . $funcionario->cpf);
 
-        Alert::success('Muito bem ;)', 'Um registro foi modificado com sucesso!');
-        return redirect(route('cadastro.funcionario.editar', $id));
+        return redirect()->route('cadastro.funcionario.editar', $id)->with('success', 'Funcionário editado com sucesso!');
     }
 
     /**

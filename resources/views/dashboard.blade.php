@@ -51,6 +51,7 @@
                 <div class="w-100 mt-3">
                     <form action="">
                         <select class="form-select select2 form-control" id="id_obra" name="id_obra">
+
                             @foreach ($obras_lista as $obra_lista)
                                 <option value="{{ $obra_lista->id }}">
                                     {{ $obra_lista->codigo_obra }} | {{ $obra_lista->razao_social }} | {{ $obra_lista->cnpj }}
@@ -266,9 +267,9 @@
             <!-- partial -->
             <div class="main-panel">
                 <div class="content-wrapper">
-                    @include('sweetalert::alert', ['cdn' => 'https://cdn.jsdelivr.net/npm/sweetalert2@9'])
-                    @include('sweetalert::alert')
+
                     @yield('content')
+
                 </div>
                 <!-- content-wrapper ends -->
 

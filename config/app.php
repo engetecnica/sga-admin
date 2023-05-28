@@ -220,6 +220,8 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
         'Alert' => RealRashid\SweetAlert\Facades\Alert::class,
         'Tratamento' => App\Helpers\Tratamento::class,
+        'Estatistica' => App\Helpers\Estatistica::class,
+        'Tarefa' => App\Helpers\Tarefa::class,
         'Debugbar' => Barryvdh\Debugbar\Facades\Debugbar::class,
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,

@@ -1,21 +1,22 @@
 <div class="row mt-3">
     <div class="col-md-4">
-        <label class="form-label" for="obra_id">Obra</label>
+        <label for="obra_id">Obra </label> <button class="badge badge-primary" data-toggle="modal" data-target="#modal-add" type="button"><i class="mdi mdi-plus"></i></button>
         <select class="form-select select2 @error('obra_id') is-invalid @enderror" id="obra_id" name="obra_id" required>
             <option value="">Selecione uma obra</option>
 
             @if (url()->current() == route('ativo.interno.create'))
                 @foreach ($obras as $obra)
-                    <option value="{{ $obra->id }}">{{ $obra->razao_social }}</option>
+                    <option value="{{ $obra->id }}">{{ $obra->codigo_obra }} | {{ $obra->razao_social }}</option>
                 @endforeach
             @else
                 @foreach ($obras as $obra)
-                    <option value="{{ $obra->id }}" {{ $ativo->obra_id == $obra->id ? 'selected=selected' : '' }}>{{ $obra->razao_social }}</option>
+                    <option value="{{ $obra->id }}" {{ $ativo->obra_id == $obra->id ? 'selected=selected' : '' }}>{{ $obra->codigo_obra }} | {{ $obra->razao_social }}</option>
                 @endforeach
             @endif
 
         </select>
     </div>
+
 </div>
 
 <div class="row mt-3">

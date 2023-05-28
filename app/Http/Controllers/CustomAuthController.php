@@ -95,6 +95,8 @@ class CustomAuthController extends Controller
 
     public function signOut(Request $request) {
 
+        dd($request->session()->all());
+
         $userLog = Auth::user()->email;
         Log::channel('main')->info($userLog .' | SAIU DO SISTEMA');
 

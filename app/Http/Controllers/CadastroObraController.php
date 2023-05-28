@@ -14,28 +14,16 @@ use App\Traits\Configuracao;
 
 class CadastroObraController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-
 
     use Configuracao;
 
-
     public function index()
     {
-        //
+        $empresas = CadastroEmpresa::where('status', 'Ativo')->get();
         $lista = CadastroObra::all();
-        return view('pages.cadastros.obra.index', compact('lista'));
+        return view('pages.cadastros.obra.index', compact('lista', 'empresas'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         //
@@ -44,12 +32,6 @@ class CadastroObraController extends Controller
         return view('pages.cadastros.obra.form', compact('estados', 'empresas'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         //
@@ -82,7 +64,6 @@ class CadastroObraController extends Controller
             ]
         );
 
-
         $obra = new CadastroObra();
         $obra->id_empresa = $request->id_empresa;
         $obra->nome_fantasia = $request->nome_fantasia;
@@ -104,28 +85,10 @@ class CadastroObraController extends Controller
         $userLog = Auth::user()->email;
         Log::channel('main')->info($userLog .' | ADD OBRA : ' . $obra->razao_social . ' | CÓDIGO : ' . $obra->codigo_obra);
 
-        Alert::success('Muito bem ;)', 'Um registro foi adicionado com sucesso!');
-        return redirect(route('cadastro.obra'));
+        return redirect()->route('cadastro.obra')->with('success', 'Um registro foi adicionado com sucesso!');
 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         //
@@ -141,13 +104,6 @@ class CadastroObraController extends Controller
             return view('pages.cadastros.obra.form', compact('store', 'estados', 'empresas'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         //
@@ -184,9 +140,7 @@ class CadastroObraController extends Controller
             ]
         );
 
-
         $obra = CadastroObra::find($id);
-
         $obra->id_empresa = $request->id_empresa;
         $obra->nome_fantasia = $request->nome_fantasia;
         $obra->codigo_obra = $request->codigo_obra;
@@ -210,15 +164,21 @@ class CadastroObraController extends Controller
         return redirect(route('cadastro.obra.editar', $id));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function fastStore(Request $request)
     {
-        //
+        $data = $request->all();
+        $data['status'] = 'Ativo';
+        $save = CadastroObra::create($data);
+
+        $userLog = Auth::user()->email;
+        Log::channel('main')->info($userLog .' | ADD OBRA RÁPIDO: ' . $save->razao_social . ' | CÓDIGO OBRA : ' . $save->codigo_obra);
+
+        if ($save) {
+            return redirect()->back()->with('success', 'Um registro foi adicionado com sucesso!');
+        } else {
+            return redirect()->back()->with('fail', 'Um erro impediu o cadastro.');
+        }
+
     }
 
 }

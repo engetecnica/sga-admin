@@ -41,16 +41,16 @@
 
                         <div class="row">
                             <div class="col-md-10">
-                                <label class="form-label" for="obra">Obra</label>
+                                <label class="form-label" for="obra">Obra</label> <button class="badge badge-primary" data-toggle="modal" data-target="#modal-add" type="button"><i class="mdi mdi-plus"></i></button>
                                 <select class="form-select" id="obra" name="obra">
                                     @if (@$store->obra)
-                                        <option value="{{ $store->obra }}" selected>{{ $store->obra->razao_social }}
+                                        <option value="{{ $store->obra }}" selected>{{ $store->obra->codigo_obra }} | {{ $store->obra->razao_social }}
                                         </option>
                                     @else
                                         <option value="" selected>Selecione</option>
                                     @endif
                                     @foreach ($obras as $obra)
-                                        <option value="{{ $obra->id }}">{{ $obra->razao_social }}</option>
+                                        <option value="{{ $obra->id }}">{{ $obra->codigo_obra }} | {{ $obra->razao_social }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -328,6 +328,10 @@
             </div>
         </div>
     </div>
+
+    {{-- MODAL INCLUSAO RAPIDA DE OBRAS --}}
+    @include('pages.cadastros.obra.partials.inclusao-rapida')
+
 @endsection
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>

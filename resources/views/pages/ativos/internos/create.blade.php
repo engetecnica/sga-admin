@@ -56,4 +56,7 @@
     {{-- MODAL CONFIRMATION --}}
     @include('pages.ativos.internos.partials.form-marcas')
 
+    {{-- MODAL INCLUSAO RAPIDA DE OBRAS --}}
+    @include('pages.cadastros.obra.partials.inclusao-rapida')
+
 @endsection

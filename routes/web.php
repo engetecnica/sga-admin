@@ -159,6 +159,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('admin/cadastro/obra/store',                                   [CadastroObraController::class, 'store'])->name('cadastro.obra.store');
     Route::post('admin/cadastro/obra/update/{id}',                             [CadastroObraController::class, 'update'])->name('cadastro.obra.update');
 
+    Route::post('admin/cadastro/obra', [CadastroObraController::class, 'fastStore'])->name('cadastro.obra.fast.store');
 
     /* Cadastros - Funcionário */
     Route::get('admin/funcionario',                                                   [CadastroFuncionarioController::class, 'index'])->name('funcionario');

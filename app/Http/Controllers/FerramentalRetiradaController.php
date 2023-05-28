@@ -6,6 +6,7 @@ use App\Models\{
     Anexo,
     AtivoExterno,
     AtivoExternoEstoque,
+    CadastroEmpresa,
     FerramentalRetirada,
     FerramentalRetiradaItens,
     CadastroFuncionario,
@@ -65,7 +66,8 @@ class FerramentalRetiradaController extends Controller
         $obras = CadastroObra::all();
         $funcionarios = CadastroFuncionario::all();
         $estoque = AtivoExternoEstoque::getAtivosExternoEstoque();
-        return view('pages.ferramental.retirada.form', compact('funcionarios', 'estoque', 'obras'));
+        $empresas = CadastroEmpresa::where('status', 'Ativo')->get();
+        return view('pages.ferramental.retirada.form', compact('funcionarios', 'estoque', 'obras', 'empresas'));
     }
 
     /**
@@ -173,7 +175,8 @@ class FerramentalRetiradaController extends Controller
         $obras = CadastroObra::all();
         $funcionarios = CadastroFuncionario::all();
         $itens = FerramentalRetirada::getRetiradaItems($id);
-        return view('pages.ferramental.retirada.edit', compact('obras', 'itens', 'funcionarios'));
+        $empresas = CadastroEmpresa::where('status', 'Ativo')->get();
+        return view('pages.ferramental.retirada.edit', compact('obras', 'itens', 'funcionarios', 'empresas'));
     }
 
     /**

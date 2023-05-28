@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\AnexoAtivoInterno;
 use App\Models\AtivoExternoEstoque;
 use App\Models\AtivosInterno;
+use App\Models\CadastroEmpresa;
 use App\Models\CadastroObra;
 use App\Models\MarcaPatrimonio;
 use Illuminate\Http\Request;
@@ -30,11 +31,13 @@ class AtivoInternoController extends Controller
     {
         $nextPatrimony = Configuracao::PatrimonioSigla() . Configuracao::PatrimonioAtual();
 
-        $obras = CadastroObra::select('id', 'razao_social')->get();
+        $obras = CadastroObra::where('status', 'Ativo')->orderByDesc('id')->get();
 
         $marcas = MarcaPatrimonio::all();
 
-        return view('pages.ativos.internos.create', compact('obras', 'marcas', 'nextPatrimony'));
+        $empresas = CadastroEmpresa::where('status', 'Ativo')->get();
+
+        return view('pages.ativos.internos.create', compact('obras', 'marcas', 'nextPatrimony', 'empresas'));
     }
 
 
@@ -72,13 +75,15 @@ class AtivoInternoController extends Controller
 
     public function edit(AtivosInterno $ativo)
     {
-        $obras = CadastroObra::select('id', 'razao_social')->get();
+        $obras = CadastroObra::where('status', 'Ativo')->orderByDesc('id')->get();
 
         $marcas = MarcaPatrimonio::all();
 
         $anexos = AnexoAtivoInterno::where('id_ativo_interno', $ativo->id)->get();
 
-        return view('pages.ativos.internos.edit', compact('ativo', 'marcas', 'obras', 'anexos'));
+        $empresas = CadastroEmpresa::where('status', 'Ativo')->get();
+
+        return view('pages.ativos.internos.edit', compact('ativo', 'marcas', 'obras', 'anexos', 'empresas'));
     }
 
 

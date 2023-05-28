@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CadastroEmpresa;
 use App\Models\CadastroObra;
 use App\Models\MarcaMaquina;
 use App\Models\ModeloMaquina;
@@ -22,10 +23,11 @@ class VeiculoController extends Controller
 
     public function create()
     {
-        $obras = CadastroObra::select('id', 'razao_social')->get();
+        $obras = CadastroObra::select('id', 'codigo_obra', 'razao_social')->orderByDesc('id')->get();
         $marcas = MarcaMaquina::all();
         $modelos = ModeloMaquina::all();
-        return view('pages.ativos.veiculos.form', compact('obras', 'marcas', 'modelos'));
+        $empresas = CadastroEmpresa::where('status', 'Ativo')->get();
+        return view('pages.ativos.veiculos.form', compact('obras', 'marcas', 'modelos', 'empresas'));
     }
 
     public function store(Request $request)
@@ -118,17 +120,17 @@ class VeiculoController extends Controller
 
     public function edit($id)
     {
-        $obras = CadastroObra::select('id', 'razao_social')->get();
+        $obras = CadastroObra::select('id', 'codigo_obra', 'razao_social')->orderByDesc('id')->get();
         $marcas = MarcaMaquina::all();
         $store = Veiculo::find($id);
         $modelos = ModeloMaquina::all();
-
+        $empresas = CadastroEmpresa::where('status', 'Ativo')->get();
         if (!$id or !$store) :
             Alert::error('Que Pena!', 'Esse veículo não foi encontrado.');
             return redirect(route('ativo.veiculo'));
         endif;
 
-        return view('pages.ativos.veiculos.form', compact('store', 'obras', 'marcas', 'modelos'));
+        return view('pages.ativos.veiculos.form', compact('store', 'obras', 'marcas', 'modelos', 'empresas'));
     }
 
     public function update(Request $request, $id)

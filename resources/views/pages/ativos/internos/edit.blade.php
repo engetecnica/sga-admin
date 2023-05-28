@@ -107,4 +107,7 @@
     {{-- MODAL ANEXOS CONFIRMATION --}}
     @include('pages.ativos.internos.partials.form-anexos')
 
+    {{-- MODAL INCLUSAO RAPIDA DE OBRAS --}}
+    @include('pages.cadastros.obra.partials.inclusao-rapida')
+
 @endsection

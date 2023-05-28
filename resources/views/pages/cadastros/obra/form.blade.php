@@ -53,7 +53,7 @@
                         <div class="row mt-3">
                             <div class="col-md-3">
                                 <label class="form-label" for="cnpj">CNPJ</label>
-                                <input class="form-control cnpj" id="celular" name="cnpj" type="text" value="{{ old('cnpj', @$store->cnpj) }}">
+                                <input class="form-control cnpj" id="cnpj" name="cnpj" type="text" value="{{ old('cnpj', @$store->cnpj) }}">
                             </div>
                             <div class="col-md-5">
                                 <label class="form-label" for="nome_fantasia">Nome fantasia</label>
@@ -91,7 +91,7 @@
                             </div>
                             <div class="col-md-3">
                                 <label class="form-label" for="estado">Estado</label>
-                                <select class="form-select select2" id="estado" name="estado">
+                                <select class="form-select" id="estado" name="estado">
                                     <option value="">Selecione o Estado</option>
                                     @foreach ($estados as $sigla => $estado)
                                         <option value="{{ $sigla }}" @php if(@$store->estado==$sigla) echo 'selected' @endphp>{{ $estado }}
@@ -136,4 +136,5 @@
             </div>
         </div>
     </div>
+
 @endsection

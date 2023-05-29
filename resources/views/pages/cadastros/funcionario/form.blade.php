@@ -102,11 +102,19 @@
                                 <label class="form-label" for="id_funcao">Função</label>
                                 <select class="form-select" name="id_funcao">
                                     <option value="">Selecione uma Função</option>
-                                    @foreach ($funcoes as $funcao)
-                                        <option value="{{ $funcao->id }}" {{ $store->id_funcao == $funcao->id ? 'selected' : '' }}>
-                                            {{ $funcao->codigo }} - {{ $funcao->funcao }}
-                                        </option>
-                                    @endforeach
+                                    @if (url()->current() == route('cadastro.funcionario.adicionar'))
+                                        @foreach ($funcoes as $funcao)
+                                            <option value="{{ $funcao->id }}">
+                                                {{ $funcao->codigo }} - {{ $funcao->funcao }}
+                                            </option>
+                                        @endforeach
+                                    @else
+                                        @foreach ($funcoes as $funcao)
+                                            <option value="{{ $funcao->id }}" {{ $store->id_funcao == $funcao->id ? 'selected' : '' }}>
+                                                {{ $funcao->codigo }} - {{ $funcao->funcao }}
+                                            </option>
+                                        @endforeach
+                                    @endif
                                 </select>
                             </div>
                         </div>
@@ -139,10 +147,17 @@
                                 <label class="form-label" for="estado">Estado</label>
                                 <select class="form-select" id="estado" name="estado">
                                     <option value="">Selecione o Estado</option>
-                                    @foreach ($estados as $sigla => $estado)
-                                        <option value="{{ $sigla }}" @php if(@$store->estado==$sigla) echo 'selected' @endphp>{{ $estado }}
-                                        </option>
-                                    @endforeach
+                                    @if (url()->current() == route('cadastro.funcionario.adicionar'))
+                                        @foreach ($estados as $sigla => $estado)
+                                            <option value="{{ $sigla }}">{{ $estado }}
+                                            </option>
+                                        @endforeach
+                                    @else
+                                        @foreach ($estados as $sigla => $estado)
+                                            <option value="{{ $sigla }}" @php if(@$store->estado==$sigla) echo 'selected' @endphp>{{ $estado }}
+                                            </option>
+                                        @endforeach
+                                    @endif
                                 </select>
                             </div>
                             <div class="col-md-6">

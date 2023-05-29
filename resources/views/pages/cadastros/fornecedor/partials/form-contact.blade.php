@@ -23,7 +23,7 @@
                                 <form action="{{ route('fornecedor.contato.destroy', $contato->id) }}" method="POST">
                                     @csrf
                                     @method('delete')
-                                    <button class="badge badge-danger" data-toggle="tooltip" data-placement="top" type="submit" title="Excluir">
+                                    <button class="badge badge-danger" data-toggle="tooltip" data-placement="top" type="submit" title="Excluir" onclick="return confirm('Tem certeza que deseja excluir o registro?')">
                                         <i class="mdi mdi-delete"></i> Excluir contato
                                     </button>
                                 </form>

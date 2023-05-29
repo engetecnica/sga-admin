@@ -2,10 +2,9 @@
 @section('title', 'Ativos Externos')
 @section('content')
 
-
     <div class="page-header">
         <h3 class="page-title">
-            <span class="page-title-icon bg-gradient-primary text-white me-2">
+            <span class="page-title-icon bg-gradient-primary me-2 text-white">
                 <i class="mdi mdi-access-point-network menu-icon"></i>
             </span> Veículos
         </h3>
@@ -26,13 +25,12 @@
         </h3>
     </div>
 
-
     <div class="row">
         <div class="col-lg-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
 
-                    <table class="table table-hover table-striped" id="lista-simples">
+                    <table class="table-hover table-striped table" id="lista-simples">
                         <thead>
                             <tr>
                                 <th width="8%">ID</th>
@@ -85,31 +83,23 @@
                                     </td>
                                     <td class="d-flex gap-2">
                                         <div class="dropdown">
-                                            <button class="badge badge-info" type="button" id="dropdownMenuButton1"
-                                                data-bs-toggle="dropdown" aria-expanded="false">
+                                            <button class="badge badge-info" id="dropdownMenuButton1" data-bs-toggle="dropdown" type="button" aria-expanded="false">
                                                 <i class="mdi mdi-pencil"></i> Gerenciar
                                             </button>
                                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                <li><a class="dropdown-item"
-                                                        href="{{ route('ativo.veiculo.editar', $veiculo->id) }}">Editar</a>
+                                                <li><a class="dropdown-item" href="{{ route('ativo.veiculo.editar', $veiculo->id) }}">Editar</a>
                                                 </li>
-                                                <li><a class="dropdown-item"
-                                                        href="{{ route('ativo.veiculo.quilometragem.index', $veiculo->id) }}">Quilometragem</a>
+                                                <li><a class="dropdown-item" href="{{ route('ativo.veiculo.quilometragem.index', $veiculo->id) }}">Quilometragem</a>
                                                 </li>
-                                                <li><a class="dropdown-item"
-                                                        href="{{ route('ativo.veiculo.abastecimento.index', $veiculo->id) }}">Abastecimento</a>
+                                                <li><a class="dropdown-item" href="{{ route('ativo.veiculo.abastecimento.index', $veiculo->id) }}">Abastecimento</a>
                                                 </li>
-                                                <li><a class="dropdown-item"
-                                                        href="{{ route('ativo.veiculo.manutencao.index', $veiculo->id) }}">Manutenção</a>
+                                                <li><a class="dropdown-item" href="{{ route('ativo.veiculo.manutencao.index', $veiculo->id) }}">Manutenção</a>
                                                 </li>
-                                                <li><a class="dropdown-item"
-                                                        href="{{ route('ativo.veiculo.ipva.index', $veiculo->id) }}">IPVA</a>
+                                                <li><a class="dropdown-item" href="{{ route('ativo.veiculo.ipva.index', $veiculo->id) }}">IPVA</a>
                                                 </li>
-                                                <li><a class="dropdown-item"
-                                                        href="{{ route('ativo.veiculo.seguro.index', $veiculo->id) }}">Seguro</a>
+                                                <li><a class="dropdown-item" href="{{ route('ativo.veiculo.seguro.index', $veiculo->id) }}">Seguro</a>
                                                 </li>
-                                                <li><a class="dropdown-item"
-                                                        href="{{ route('ativo.veiculo.depreciacao.index', $veiculo->id) }}">Depreciação</a>
+                                                <li><a class="dropdown-item" href="{{ route('ativo.veiculo.depreciacao.index', $veiculo->id) }}">Depreciação</a>
                                                 </li>
                                                 <li><a class="dropdown-item" href="#">Anexos</a></li>
                                             </ul>
@@ -117,11 +107,8 @@
 
                                         <form action="{{ route('ativo.veiculo.delete', $veiculo->id) }}" method="POST">
                                             @csrf
-                                            <a class="excluir-padrao" data-id="{{ $veiculo->id }}" data-table="empresas"
-                                                data-module="cadastro/empresa">
-                                                <button class="badge badge-danger" data-toggle="tooltip"
-                                                    data-placement="top" title="Excluir" type="submit"><i
-                                                        class="mdi mdi-delete"></i>
+                                            <a class="excluir-padrao" data-id="{{ $veiculo->id }}" data-table="empresas" data-module="cadastro/empresa">
+                                                <button class="badge badge-danger" data-toggle="tooltip" data-placement="top" type="submit" title="Excluir" onclick="return confirm('Tem certeza que deseja exluir o registro?')"><i class="mdi mdi-delete"></i>
                                                     Excluir</button>
                                             </a>
                                         </form>
@@ -136,7 +123,6 @@
     </div>
 
 @endsection
-
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script src="//cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>

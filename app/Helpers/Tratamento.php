@@ -10,7 +10,6 @@ use Carbon\Carbon;
 class Tratamento
 {
 
-
     /* Formatação do Número do celular com link para WhatsApp */
     public static function SetURLWhatsApp(string $celular)
     {

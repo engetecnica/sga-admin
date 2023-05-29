@@ -2,11 +2,7 @@
 
 namespace App\Helpers;
 
-use App\Models\CadastroEmpresa;
-use App\Models\CadastroFornecedor;
-use App\Models\CadastroFuncionario;
 use App\Models\CadastroObra;
-use App\Models\User;
 
 class Tarefa
 {

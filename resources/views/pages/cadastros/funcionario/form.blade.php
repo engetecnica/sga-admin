@@ -56,11 +56,21 @@
                             <label class="form-label" for="id_obra">Obra</label>
                             <select class="form-select select2" id="id_obra" name="id_obra" required>
                                 <option value="">Selecione uma Obra</option>
-                                @foreach ($obras as $obra)
-                                    <option value="{{ $obra->id }}" {{ $store->id_obra == $obra->id ? 'selected' : '' }}>
-                                        {{ $obra->codigo_obra }} - {{ $obra->razao_social }}
-                                    </option>
-                                @endforeach
+                                @if (url()->current() == route('cadastro.funcionario.adicionar'))
+                                    @foreach ($obras as $obra)
+                                        <option value="{{ $obra->id }}">
+                                            {{ $obra->codigo_obra }} - {{ $obra->razao_social }}
+                                        </option>
+                                    @endforeach
+                                @else
+                                    @foreach ($obras as $obra)
+                                        <option value="{{ $obra->id }}" {{ $store->id_obra == $obra->id ? 'selected' : '' }}>
+                                            {{ $obra->codigo_obra }} - {{ $obra->razao_social }}
+                                        </option>
+                                    @endforeach
+
+                                @endif
+
                             </select>
                         </div>
 

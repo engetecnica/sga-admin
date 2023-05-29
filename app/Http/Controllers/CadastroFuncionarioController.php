@@ -185,4 +185,13 @@ class CadastroFuncionarioController extends Controller
         return redirect()->route('cadastro.funcionario.editar', $id)->with('success', 'Funcionário editado com sucesso!');
     }
 
+    public function destroy(CadastroFuncionario $id)
+    {
+        if($id->delete()) {
+            return redirect()->route('cadastro.funcionario')->with('success', 'Funcionário excluído com sucesso!');
+        } else {
+            return redirect()->route('cadastro.funcionario')->with('fail', 'Funcionário excluído com sucesso!');
+        }
+    }
+
 }

@@ -68,11 +68,11 @@
                     <li class="nav-item nav-profile dropdown">
                         <a class="nav-link dropdown-toggle" id="profileDropdown" data-bs-toggle="dropdown" href="#" aria-expanded="false">
                             <div class="nav-profile-img">
-                                <img src="{{ asset('assets/images/faces/face1.jpg') }}" alt="image">
+                                <img src="https://ui-avatars.com/api/?name={{ Auth::user()->name }}" alt="image">
                                 <span class="availability-status online"></span>
                             </div>
                             <div class="nav-profile-text">
-                                <p class="mb-1 text-black">{{ Auth::user()->name }} {{ Auth::user()->id }} | {{ Session('id_usuario') }}</p>
+                                <p class="mb-1 text-black">{{ Auth::user()->name }}</p>
                             </div>
                         </a>
                         <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
@@ -205,7 +205,7 @@
                     <li class="nav-item nav-profile">
                         <a class="nav-link" href="#">
                             <div class="nav-profile-image">
-                                <img src="{{ asset('assets/images/faces/face1.jpg') }}" alt="profile">
+                                <img src="https://ui-avatars.com/api/?name={{ Auth::user()->name }}" alt="profile">
                                 <span class="login-status online"></span>
                                 <!--change to offline or busy as needed-->
                             </div>
@@ -244,7 +244,7 @@
                                         @foreach ($module['submodulo'] as $sub)
                                             <?php
                                             $item = env('URL_APP_ADMIN') . Request::segment(2) . '/' . Request::segment(3);
-                                            
+
                                             ?>
                                             <li class="nav-item"> <a class="nav-link {{ $item === $sub['url_amigavel'] ? 'active-submodulo' : '' }}" href="{{ url($sub['url_amigavel']) }}">{{ $sub['titulo'] }}</a>
                                             </li>

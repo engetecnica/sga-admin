@@ -124,5 +124,9 @@
             </div>
         </div>
     </div>
-    @include('pages.cadastros.fornecedor.partials.form-contact')
+    @if (url()->current() == route('cadastro.fornecedor.adicionar'))
+    @else
+        @include('pages.cadastros.fornecedor.partials.form-contact')
+    @endif
+
 @endsection

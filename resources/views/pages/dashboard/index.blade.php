@@ -176,7 +176,19 @@
         <div class="col-xl-6 col-sm-12">
             <div class="card">
                 <div class="card-body">
-                    <h5>Lista de tarefas</h5>
+                    <h5>Funcionários bloqueados ({{ count(Tarefa::funcionariosBloqueados()) }})</h5>
+                    <table class="table-border table-responsive table">
+                        @foreach (Tarefa::funcionariosBloqueados() as $bloqueado)
+                            <tr>
+                                <td>
+                                    {{ $bloqueado->funcionario->matricula }} - {{ $bloqueado->funcionario->nome }}
+                                </td>
+                                <td style="width: 20%">
+                                    <a href="{{ route('cadastro.funcionario.editar', $bloqueado->funcionario->id) }}"><span class="badge badge-success">Visualizar dados de contato</span></a>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </table>
                 </div>
             </div>
         </div>

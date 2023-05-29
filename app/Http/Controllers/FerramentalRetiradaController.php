@@ -320,6 +320,8 @@ class FerramentalRetiradaController extends Controller
                     }
 
 
+
+
                 if ($row->status == "1" && !$row->termo_responsabilidade_gerado) {
 
                     /** Modificar Retirada */
@@ -330,7 +332,12 @@ class FerramentalRetiradaController extends Controller
 
                 }
 
-                    $dropdown .= '<li><a class="dropdown-item" href="' . route('ferramental.retirada.detalhes', $row->id) . '"><i class="mdi mdi-minus"></i> Detalhes</a></li> </ul></div>';
+                    $dropdown .= '<li><a class="dropdown-item" href="' . route('ferramental.retirada.detalhes', $row->id) . '"><i class="mdi mdi-minus"></i> Detalhes</a></li> ';
+
+                         /** Ver Termo */
+                if ($row->status == "3" or $row->status == "4" && $row->termo_responsabilidade_gerado) {
+                    $dropdown .= '<li><a class="dropdown-item" href="' . route('ferramental.retirada.termo', $row->id) . '"><i class="mdi mdi-printer"></i> Ver Termo</a></li></ul></div>';
+                }
 
                     return $dropdown;
                 })
@@ -367,34 +374,42 @@ class FerramentalRetiradaController extends Controller
     public function devolver_salvar(Request $request)
     {
 
+
         if ($request->id_ativo_externo) {
+
+            $status_retirada = null;
+
             foreach ($request->id_ativo_externo as $key => $value) {
 
-                dd($request->id_ativo_externo);
+                if($value == 2) {
+                    $status_retirada = 2;
+                } else {
+                    $status_retirada = $value;
+                }
 
                 /** Salvar Retirada Item */
                 $item = FerramentalRetiradaItemDevolver::find($key);
                 $item->status = $value ?? 1;
                 $item->save();
 
-                /** Salvar Retirada */
-                $retirada = FerramentalRetirada::find($item->id_retirada);
-                $retirada->devolucao_observacoes = $request->observacoes ?? null;
-                $retirada->data_devolucao = now();
-                $retirada->updated_at = now();
-                $retirada->status = 2;
-                $retirada->save();
-
                 /** Salvar Ativo Externo */
                 $estoque = AtivoExternoEstoque::find($item->id_ativo_externo);
-                $estoque->status = $status;
+                $estoque->status = $value;
                 $estoque->save();
             }
+
+            /** Salvar Retirada */
+            $retirada = FerramentalRetirada::find($item->id_retirada);
+            $retirada->devolucao_observacoes = $request->observacoes ?? null;
+            $retirada->data_devolucao = now();
+            $retirada->updated_at = now();
+            $retirada->status = $status_retirada;
+            $retirada->save();
 
             $userLog = Auth::user()->email;
             Log::channel('main')->info($userLog .' | SALVOU DEVOLUÇÃO: ' . $retirada->devolucao_observacoes);
 
-            echo "Salvou essa porra.";
+            return redirect()->back()->with('success', 'Retirada salva com sucesso!');
         }
     }
 }

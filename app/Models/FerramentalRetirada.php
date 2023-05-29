@@ -77,5 +77,10 @@ class FerramentalRetirada extends Model
         return $retirada;
     }
 
+    public function funcionario()
+    {
+        return $this->belongsTo(CadastroFuncionario::class, 'id_funcionario', 'id');
+    }
+
 
 }

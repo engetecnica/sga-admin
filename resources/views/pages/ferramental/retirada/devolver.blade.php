@@ -2,10 +2,9 @@
 @section('title', 'Retirada - Devolução')
 @section('content')
 
-
     <div class="page-header">
         <h3 class="page-title">
-            <span class="page-title-icon bg-gradient-primary text-white me-2">
+            <span class="page-title-icon bg-gradient-primary me-2 text-white">
                 <i class="mdi mdi-access-point-network menu-icon"></i>
             </span> Devolução de Itens
         </h3>
@@ -37,15 +36,15 @@
 
                     <div class="col-lg-12 grid-margin stretch-card">
                         <div class="card">
-                            <form action="{{ route('ferramental.retirada.devolver.salvar') }}" method="post" enctype="multipart/form-data" name="devolverItem">
+                            <form name="devolverItem" action="{{ route('ferramental.retirada.devolver.salvar') }}" method="post" enctype="multipart/form-data">
                                 @csrf
-                                <div class="card-body">                             
-                                    
-                                    <button type="button" class="btn btn-outline-warning btn-fw">
+                                <div class="card-body">
+
+                                    <a class="btn btn-outline-warning btn-fw" type="button" href="{{ route('ferramental.retirada.detalhes', $detalhes->id) }}">
                                         RETIRADA <span class="mdi mdi-pound"></span>{{ $detalhes->id }}
-                                    </button>                               
+                                    </a>
                                     <hr>
-                                    <table class="table table-bordered table-striped table-houver">
+                                    <table class="table-bordered table-striped table-houver table">
                                         <thead>
                                             <tr>
                                                 <th> Obra </th>
@@ -68,44 +67,44 @@
                                                         <div class="badge badge-info">{{ $item->item_nome }}</div>
                                                     </td>
                                                     <td>{{ Tratamento::FormatarData($detalhes->created_at) }}</td>
-                                                    
+
                                                     <td>
-                                                        <select class="form-select-sm" id="id_ativo_externo" name="id_ativo_externo[{{$item->id}}]" @if($item->status!=2) disabled @endif>
+                                                        <select class="form-select-sm" id="id_ativo_externo" name="id_ativo_externo[{{ $item->id }}]" @if ($item->status != 2) disabled @endif>
                                                             <option value="{{ $item->status }}">{{ Tratamento::getStatusRetirada($item->status)['titulo'] }}</option>
-                                                            @if(!$item->status==3) <option value="3">Devolvido</option> @endif
+                                                            @if ($item->status == 2)
+                                                                <option value="3">Devolvido</option>
+                                                            @endif
                                                             <option value="4">Devolvido com Defeito</option>
-                                                        </select>                                                    
+                                                        </select>
                                                     </td>
                                                 </tr>
                                             @endforeach
                                         </tbody>
                                     </table>
 
-
-                                
                                     <hr>
-                                    
+
                                     <div class="row">
                                         <div class="col-md-12">
 
                                             <div class="row">
                                                 <div class="col-12 mt-3">
-                                                    <label for="observacoes" class="form-label">Observações</label>
-                                                    <textarea rows="3" class="form-control" name="observacoes" id="observacoes"  @if($item->status!=2) disabled @endif></textarea>
+                                                    <label class="form-label" for="observacoes">Observações</label>
+                                                    <textarea class="form-control" id="observacoes" name="observacoes" rows="3" @if ($item->status != 2) disabled @endif>{{ $detalhes->devolucao_observacoes }}</textarea>
                                                 </div>
                                             </div>
 
                                         </div>
                                     </div>
-                                
-                                     @if($item->status==2)
-                                    <div class="mt-2">
-                                        <button type="submit" class="btn btn-gradient-primary font-weight-medium">Devolver Itens</button>
 
-                                        <a href="{{ route('ferramental.retirada') }}">
-                                            <button type="button" class="btn btn-gradient-danger font-weight-medium">Cancelar</button>
-                                        </a>
-                                    </div>
+                                    @if ($item->status == 2)
+                                        <div class="mt-2">
+                                            <button class="btn btn-gradient-primary font-weight-medium" type="submit">Devolver Itens</button>
+
+                                            <a href="{{ route('ferramental.retirada') }}">
+                                                <button class="btn btn-gradient-danger font-weight-medium" type="button">Cancelar</button>
+                                            </a>
+                                        </div>
                                     @endif
                                 </div>
                             </form>

@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\VeiculoDepreciacao;
 use Illuminate\Http\Request;
 use App\Models\Veiculo;
-use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
@@ -15,12 +14,11 @@ class VeiculoDepreciacaoController extends Controller
     {
         $store = Veiculo::find($id);
 
-        $last = VeiculoDepreciacao::where('veiculo_id', $id)->orderBy('id', 'DESC')->first();
+        $last = VeiculoDepreciacao::where('veiculo_id', $id)->orderByDesc('id')->first();
 
-        if (!$id or !$store) :
-            Alert::error('Que Pena!', 'Esse veículo não foi encontrado.');
-            return redirect(route('ativo.veiculo'));
-        endif;
+        if (!$id or !$store) {
+            return redirect()->route('ativo.veiculo')->with('fail', 'Esse veículo não foi encontrado.');
+        }
 
         return view('pages.ativos.veiculos.depreciacao.index', compact('store', 'last'));
     }
@@ -29,18 +27,15 @@ class VeiculoDepreciacaoController extends Controller
     {
         $store = VeiculoDepreciacao::find($id);
 
-        if (!$id or !$store) :
-            Alert::error('Que Pena!', 'Esse veículo não foi encontrado.');
-            return redirect(route('ativo.veiculo'));
-        endif;
+        if (!$id or !$store) {
+            return redirect()->route('ativo.veiculo')->with('fail', 'Esse veículo não foi encontrado.');
+        }
 
         return view('pages.ativos.veiculos.depreciacao.form', compact('store', 'btn'));
     }
 
     public function store(Request $request, $id)
     {
-        // dd($request);
-
         $veiculo = Veiculo::findOrFail($id);
 
         try {
@@ -65,8 +60,8 @@ class VeiculoDepreciacaoController extends Controller
 
     public function update(Request $request, $id)
     {
-        // dd($request);
         $veiculo = VeiculoDepreciacao::findOrFail($id);
+
         try {
             $veiculo->update([
                 'valor_atual' => str_replace('R$ ', '', $request->valor_atual),
@@ -77,7 +72,7 @@ class VeiculoDepreciacaoController extends Controller
             $userLog = Auth::user()->email;
             Log::channel('main')->info($userLog .' | UPDATE DEPRECIACAO: ' . $veiculo->id);
 
-            return redirect()->route('ativo.veiculo.depreciacao.index', $veiculo->veiculo_id)->with('success', 'Sucesso');
+            return redirect()->route('ativo.veiculo.depreciacao.editar', $veiculo->veiculo_id)->with('success', 'Sucesso');
         } catch (\Exception $e) {
 
             return redirect()->back()->withInput();
@@ -92,6 +87,6 @@ class VeiculoDepreciacaoController extends Controller
 
         $veiculo->delete();
 
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Sucesso');
     }
 }

@@ -3,54 +3,32 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use RealRashid\SweetAlert\Facades\Alert;
 use App\Models\CadastroEmpresa;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 use App\Traits\Configuracao;
 
-
 class CadastroEmpresaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-
-
     use Configuracao;
-
 
     public function index()
     {
-        //
         $lista = CadastroEmpresa::all();
+
         return view('pages.cadastros.empresa.index', compact('lista'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        //
         $estados = Configuracao::estados();
+
         return view('pages.cadastros.empresa.form', compact('estados'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
         $request->validate(
             [
                 'razao_social' => 'required|min:5',
@@ -84,7 +62,6 @@ class CadastroEmpresaController extends Controller
             ]
         );
 
-
         $empresa = new CadastroEmpresa();
         $empresa->razao_social = $request->razao_social;
         $empresa->nome_fantasia = $request->nome_fantasia;
@@ -104,52 +81,25 @@ class CadastroEmpresaController extends Controller
         $userLog = Auth::user()->email;
         Log::channel('main')->info($userLog .' | ADD EMPRESA : ' . $empresa->razao_social);
 
-        Alert::success('Muito bem ;)', 'Um registro foi adicionado com sucesso!');
-        return redirect(route('cadastro.empresa'));
+        return redirect()->route('cadastro.empresa')->with('success', 'Um registro foi adicionado com sucesso!');
 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
-        //
         $store = CadastroEmpresa::find($id);
+
         $estados = Configuracao::estados();
 
-            if(!$id or !$store):
-                Alert::error('Que Pena!', 'Esse registro não foi encontrado.');
-                return redirect(route('cadastro.empresa'));
-            endif;
+        if(!$id or !$store) {
+            return redirect()->route('cadastro.empresa')->with('fail', 'Esse registro não foi encontrado.');
+        }
 
-            return view('pages.cadastros.empresa.form', compact('store', 'estados'));
+        return view('pages.cadastros.empresa.form', compact('store', 'estados'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
-        //
         $request->validate(
             [
                 'razao_social' => 'required|min:5',
@@ -200,19 +150,7 @@ class CadastroEmpresaController extends Controller
         $userLog = Auth::user()->email;
         Log::channel('main')->info($userLog .' | EDIT EMPRESA : ' . $empresa->razao_social);
 
-        Alert::success('Muito bem ;)', 'Um registro foi modificado com sucesso!');
-        return redirect(route('cadastro.empresa.editar', $id));
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        return redirect()->route('cadastro.empresa.editar', $id)->with('success', 'Um registro foi modificado com sucesso!');
     }
 
 }

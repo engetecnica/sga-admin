@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdateConfigRequest;
 use App\Models\Config;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
@@ -32,7 +31,6 @@ class ConfigController extends Controller
 
         $data = $request->validated();
         $data = $save->update($data);
-
 
         if ($data) {
             $userLog = Auth::user()->email;

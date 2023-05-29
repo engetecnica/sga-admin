@@ -9,7 +9,6 @@ use App\Models\ModeloMaquina;
 use App\Models\Veiculo;
 use App\Models\VeiculoQuilometragem;
 use Illuminate\Http\Request;
-use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
@@ -18,15 +17,20 @@ class VeiculoController extends Controller
     public function index()
     {
         $veiculos = Veiculo::all();
+
         return view('pages.ativos.veiculos.index', compact('veiculos'));
     }
 
     public function create()
     {
         $obras = CadastroObra::select('id', 'codigo_obra', 'razao_social')->orderByDesc('id')->get();
+
         $marcas = MarcaMaquina::all();
+
         $modelos = ModeloMaquina::all();
+
         $empresas = CadastroEmpresa::where('status', 'Ativo')->get();
+
         return view('pages.ativos.veiculos.form', compact('obras', 'marcas', 'modelos', 'empresas'));
     }
 
@@ -38,7 +42,6 @@ class VeiculoController extends Controller
             'periodo_final' => 'required|date',
             // 'quilometragem_atual' => 'numeric|min:1',
         ]);
-        // dd($request->tipo);
 
         if ($request->tipo === 'maquinas') {
             $modelo = $request->input('modelo_da_maquina');
@@ -121,14 +124,18 @@ class VeiculoController extends Controller
     public function edit($id)
     {
         $obras = CadastroObra::select('id', 'codigo_obra', 'razao_social')->orderByDesc('id')->get();
+
         $marcas = MarcaMaquina::all();
+
         $store = Veiculo::find($id);
+
         $modelos = ModeloMaquina::all();
+
         $empresas = CadastroEmpresa::where('status', 'Ativo')->get();
-        if (!$id or !$store) :
-            Alert::error('Que Pena!', 'Esse veículo não foi encontrado.');
-            return redirect(route('ativo.veiculo'));
-        endif;
+
+        if (!$id or !$store) {
+            return redirect()->route('ativo.veiculo')->with('fail', 'Esse veículo não foi encontrado.');
+        }
 
         return view('pages.ativos.veiculos.form', compact('store', 'obras', 'marcas', 'modelos', 'empresas'));
     }
@@ -196,6 +203,6 @@ class VeiculoController extends Controller
 
         $veiculo->delete();
 
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Sucesso');
     }
 }

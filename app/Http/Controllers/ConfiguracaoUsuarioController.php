@@ -11,19 +11,13 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use App\Models\ConfiguracaoUsuarioNiveis as Niveis;
 use Illuminate\Support\Facades\Hash;
-use RealRashid\SweetAlert\Facades\Alert;
-
 
 class ConfiguracaoUsuarioController extends Controller
 {
     public function index()
     {
-        //
         $permite_excluir = 0;
-        $lista = ConfiguracaoUsuario::select(
-            "usuarios_niveis.titulo as nivel",
-            "users.*"
-        )
+        $lista = ConfiguracaoUsuario::select("usuarios_niveis.titulo as nivel", "users.*")
             ->join(
                 "usuarios_vinculos",
                 "usuarios_vinculos.id_usuario",
@@ -44,19 +38,14 @@ class ConfiguracaoUsuarioController extends Controller
     public function create()
     {
         $usuario_niveis = Niveis::all();
+
         $funcionarios = CadastroFuncionario::all();
+
         return view('pages.configuracoes.usuario.form', compact('usuario_niveis', 'funcionarios'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-
         $request->validate(
             [
                 'id_funcionario' => 'required',
@@ -94,27 +83,9 @@ class ConfiguracaoUsuarioController extends Controller
         $userLog = Auth::user()->email;
         Log::channel('main')->info($userLog .' | ADD CONFIGURACAO USUARIO: ' . $user->name .' | -> OBRA: ' .  $user_vinculo->id_obra .' | -> NIVEL: ' . $user_vinculo->id_nivel);
 
-        Alert::success('Muito bem ;)', 'Um registro foi adicionado com sucesso!');
-        return redirect(route('usuario'));
+        return redirect()->route('usuario')->with('success', 'Um registro foi adicionado com sucesso!');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id = null)
     {
 
@@ -123,28 +94,18 @@ class ConfiguracaoUsuarioController extends Controller
         $empresas = CadastroEmpresa::all();
 
         if (!$id or !$store) :
-            Alert::error('Que Pena!', 'Esse registro não foi encontrado.');
-            return redirect(route('usuario'));
+            return redirect()->route('usuario')->with('fail', 'Esse registro não foi encontrado.');
         endif;
 
         if ($id == Auth::user()->id) :
-            Alert::error('Que Pena!', 'Você não poderá modificar seu próprio usuário!');
-            return redirect(route('usuario'));
+            return redirect()->route('usuario')->with('fail', 'Você não pode modificar seu próprio usuário.');
         endif;
 
         return view('pages.configuracoes.usuario.form', compact('store', 'usuario_niveis', 'empresas'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
-
         $user = ConfiguracaoUsuario::find($id);
         $user->name = $request->nome;
         $user->email = $request->email;
@@ -159,8 +120,7 @@ class ConfiguracaoUsuarioController extends Controller
             if ($request->password === $request->password_confirm) {
                 $user->password = Hash::make($request->password);
             } else {
-                Alert::error('Erro', 'As senhas digitadas devem ser iguais.');
-                return redirect(route('usuario.adicionar'));
+                return redirect()->route('usuario.adicionar')->with('fail', 'As senhas digitadas devem ser iguais.');
             }
         }
 
@@ -169,18 +129,7 @@ class ConfiguracaoUsuarioController extends Controller
         $userLog = Auth::user()->email;
         Log::channel('main')->info($userLog .' | EDIT CONFIGURACAO USUARIO: ' . $user->name);
 
-        Alert::success('Muito bem ;)', 'Registro modificado com sucesso.');
-        return redirect(route('usuario'));
+        return redirect()->route('usuario')->with('success', 'Um registro foi modificado com sucesso!');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

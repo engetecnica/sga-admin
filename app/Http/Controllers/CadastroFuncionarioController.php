@@ -3,55 +3,37 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use RealRashid\SweetAlert\Facades\Alert;
 use App\Models\{CadastroFuncionario, CadastroObra, CadastroFuncao, FuncaoFuncionario};
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 use App\Traits\Configuracao;
 
-
 class CadastroFuncionarioController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-
 
     use Configuracao;
 
-
     public function index()
     {
-        //
-        $lista = CadastroFuncionario::select('obras.razao_social', 'funcionarios.*')->join('obras', 'obras.id', '=', 'funcionarios.id_obra')->get();
+        $lista = CadastroFuncionario::select('obras.razao_social', 'funcionarios.*')
+        ->join('obras', 'obras.id', '=', 'funcionarios.id_obra')
+        ->get();
 
-       // dd($lista);
         return view('pages.cadastros.funcionario.index', compact('lista'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        //
         $estados = Configuracao::estados();
+
         $obras = CadastroObra::where('status', 'Ativo')->get();
+
         $funcoes = FuncaoFuncionario::all();
+
         return view('pages.cadastros.funcionario.form', compact('estados', 'obras', 'funcoes'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $request->validate(
@@ -93,7 +75,6 @@ class CadastroFuncionarioController extends Controller
             ]
         );
 
-
         $funcionario = new CadastroFuncionario();
         $funcionario->matricula = $request->matricula;
         $funcionario->id_obra = $request->id_obra;
@@ -102,7 +83,6 @@ class CadastroFuncionarioController extends Controller
         $funcionario->cpf = $request->cpf;
         $funcionario->rg = $request->rg;
         $funcionario->id_funcao = $request->id_funcao;
-
         $funcionario->cep = $request->cep;
         $funcionario->endereco = $request->endereco;
         $funcionario->numero = $request->numero;
@@ -112,7 +92,6 @@ class CadastroFuncionarioController extends Controller
         $funcionario->email = $request->email ?? null;
         $funcionario->celular = $request->celular;
         $funcionario->status = $request->status;
-
         $funcionario->save();
 
         $userLog = Auth::user()->email;
@@ -121,49 +100,25 @@ class CadastroFuncionarioController extends Controller
         return redirect()->route('cadastro.funcionario')->with('success', 'Funcionário cadastrado com sucesso!');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
-        //
         $store = CadastroFuncionario::with('funcao')->where('id', $id)->first();
+
         $estados = Configuracao::estados();
+
         $obras = CadastroObra::where('status', 'Ativo')->get();
+
         $funcoes = FuncaoFuncionario::all();
 
-        if (!$id or !$store) :
-            Alert::error('Que Pena!', 'Esse registro não foi encontrado.');
-            return redirect(route('cadastro.funcionario'));
-        endif;
+        if (!$id or !$store) {
+            return redirect()->route('cadastro.funcionario')->with('fail', 'Esse registro não foi encontrado.');
+        }
 
         return view('pages.cadastros.funcionario.form', compact('store', 'estados', 'obras', 'funcoes'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
-        //
         $request->validate(
             [
                 'matricula' => 'required|min:4|max:30|unique:funcionarios,matricula,' . $id,
@@ -213,7 +168,6 @@ class CadastroFuncionarioController extends Controller
         $funcionario->cpf = $request->cpf;
         $funcionario->rg = $request->rg;
         $funcionario->id_funcao = $request->id_funcao;
-
         $funcionario->cep = $request->cep;
         $funcionario->endereco = $request->endereco;
         $funcionario->numero = $request->numero;
@@ -231,14 +185,4 @@ class CadastroFuncionarioController extends Controller
         return redirect()->route('cadastro.funcionario.editar', $id)->with('success', 'Funcionário editado com sucesso!');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

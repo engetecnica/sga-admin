@@ -11,10 +11,7 @@ use App\Models\{
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use RealRashid\SweetAlert\Facades\Alert;
-
 use Illuminate\Support\Facades\Log;
-
 
 class AnexoController extends Controller
 {
@@ -79,20 +76,15 @@ class AnexoController extends Controller
                     }
                 }
 
-
-
-                Alert::success('Muito bem ;)', 'Arquivo enviado com sucesso!');
-                return redirect(route('ferramental.retirada.detalhes', $request->id_item));
+                return redirect()->route('ferramental.retirada.detalhes', $request->id_item)->with('success', 'Arquivo enviado com sucesso.');
 
             } else {
-                Alert::error('Atenção', 'Não foi possível processar sua solicitação de envio. Fale com seu supervisor.');
-                return redirect(route('ferramental.retirada.detalhes', $request->id_item));
+
+                return redirect()->route('ferramental.retirada.detalhes', $request->id_item)->with('fail',  'Não foi possível processar sua solicitação de envio. Fale com seu supervisor.');
             }
         }
 
-        Alert::error('Atenção', 'Input form upload está vazio.');
-        return redirect(route('ferramental.retirada.detalhes', $request->id_item));
-
+        return redirect()->route('ferramental.retirada.detalhes', $request->id_item)->with('fail',  'Não foi possível processar sua solicitação de envio. Fale com seu supervisor.');
 
     }
 }

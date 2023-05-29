@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use RealRashid\SweetAlert\Facades\Alert;
 use App\Models\{
     AtivoConfiguracao,
     AtivoExternoEstoque,
@@ -22,50 +21,31 @@ use App\Traits\{
 
 use App\Helpers\Tratamento;
 
-use DataTables;
+use Yajra\DataTables\DataTables;
 
 class AtivoExternoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-
 
     use Configuracao, FuncoesAdaptadas;
 
-
     public function index()
     {
-        //
         $lista = [];
+
         return view('pages.ativos.externos.index', compact('lista'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        //
         $obras = CadastroObra::all();
+
         $ativo_configuracoes = AtivoConfiguracao::get_ativo_configuracoes();
+
         return view('pages.ativos.externos.form', compact('ativo_configuracoes', 'obras'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-
-
         $request->validate(
             [
                 'id_ativo_configuracao' => 'required',
@@ -93,14 +73,10 @@ class AtivoExternoController extends Controller
         /* Salvar Ativo Estoque */
         $externo_estoque_quantidade = $request->quantidade;
 
-
-
         if ($externo_estoque_quantidade && $externo_estoque_quantidade > 0) {
 
             /* Inclusão de Estoque  */
             for ($i = 1; $i <= $externo_estoque_quantidade; $i++) {
-
-
 
                 /* Contagem de Patrimonio diante do Atual */
                 $patrimonio = Configuracao::PatrimonioAtual() + $i;
@@ -127,40 +103,30 @@ class AtivoExternoController extends Controller
             $externo_estoque_item->save();
         }
 
-
-
-
         if ($externo && $externo_estoque && $externo_estoque_item) {
 
             $userLog = Auth::user()->email;
             Log::channel('main')->info($userLog .' | ADD ATIVO EXTERNO: ' . $externo_estoque->patrimonio);
 
-            Alert::success('Muito bem ;)', 'Novos ativos foram inseridos no estoque.');
-            return redirect(route('ativo.externo.detalhes', $externo->id));
+            return redirect()->route('ativo.externo.detalhes', $externo->id)->with('success', 'Novos ativos foram inseridos no estoque.');
         }
 
-        Alert::error('Atenção', 'Não foi possível processar os ativos solicitados. Fale com seu supervisor.');
-        return redirect(route('ativo.externo'));
+        return redirect()->route('ativo.externo')->with('fail', 'Não foi possível processar os ativos solicitados. Fale com seu supervisor.');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Relatorio  $relatorio
-     * @return \Illuminate\Http\Response
-     */
     public function show(int $id)
     {
         if (!$id) {
-            Alert::error('Atenção', 'Não foi possível localizar este Ativo Externo.');
-            return redirect(route('ativo.externo'));
+            return redirect()->route('ativo.externo')->with('fail', 'Não foi possível processar os ativos solicitados. Fale com seu supervisor.');
         }
 
-        $detalhes = AtivoExterno::select('ativos_configuracoes.titulo AS categoria', 'ativos_externos.*')->join('ativos_configuracoes', 'ativos_configuracoes.id', '=', 'ativos_externos.id_ativo_configuracao')->where('ativos_externos.id', $id)->first();
+        $detalhes = AtivoExterno::select('ativos_configuracoes.titulo AS categoria', 'ativos_externos.*')
+            ->join('ativos_configuracoes', 'ativos_configuracoes.id', '=', 'ativos_externos.id_ativo_configuracao')
+            ->where('ativos_externos.id', $id)
+            ->first();
 
         if(!$detalhes){
-            Alert::error('Atenção', 'Não foi possível localizar este Ativo Externo.');
-            return redirect(route('ativo.externo'));
+            return redirect()->route('ativo.externo')->with('fail', 'Não foi possível processar os ativos solicitados. Fale com seu supervisor.');
         }
 
         return view('pages.ativos.externos.show', compact('detalhes'));
@@ -168,18 +134,22 @@ class AtivoExternoController extends Controller
 
     public function edit($id)
     {
-        //
         $obras = CadastroObra::all();
+
         $ativo_configuracoes = AtivoConfiguracao::get_ativo_configuracoes();
+
         return view('pages.ativos.externos.form', compact('ativo_configuracoes', 'obras'));
     }
-
 
     public function searchAtivoID(Request $request, int $id)
     {
 
         if ($request->ajax()) {
-            $ativosPesquisar = AtivoExternoEstoque::select('obras.razao_social', 'obras.cnpj', 'obras.codigo_obra', 'ativos_externos_estoque.*')->join('obras', 'obras.id', '=', 'ativos_externos_estoque.id_obra')->where('ativos_externos_estoque.id_ativo_externo', $id)->get();
+            $ativosPesquisar = AtivoExternoEstoque::select('obras.razao_social', 'obras.cnpj', 'obras.codigo_obra', 'ativos_externos_estoque.*')
+                ->join('obras', 'obras.id', '=', 'ativos_externos_estoque.id_obra')
+                ->where('ativos_externos_estoque.id_ativo_externo', $id)
+                ->get();
+
             return DataTables::of($ativosPesquisar)
                 ->editColumn('id_obra', function ($row) {
                     return '<span class="badge badge-danger">'.$row->codigo_obra . ' - ' . $row->razao_social . '</span>';
@@ -213,7 +183,10 @@ class AtivoExternoController extends Controller
 
         if ($request->ajax()) {
 
-            $listaAtivos = AtivoExterno::select('ativos_configuracoes.titulo AS categoria', 'ativos_externos.*')->join('ativos_configuracoes', 'ativos_configuracoes.id', '=', 'ativos_externos.id_ativo_configuracao')->orderBy('ativos_externos.titulo', 'ASC')->get();
+            $listaAtivos = AtivoExterno::select('ativos_configuracoes.titulo AS categoria', 'ativos_externos.*')
+                ->join('ativos_configuracoes', 'ativos_configuracoes.id', '=', 'ativos_externos.id_ativo_configuracao')
+                ->orderBy('ativos_externos.titulo', 'ASC')
+                ->get();
 
             return DataTables::of($listaAtivos)
 

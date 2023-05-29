@@ -3,15 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\{Auth, Log};
-
+use Illuminate\Support\Facades\{Auth, Log, Session};
 use App\Models\{CadastroObra, ConfiguracaoModulo};
-use RealRashid\SweetAlert\Facades\Alert;
-
-
 use App\Traits\{Api, FuncoesAdaptadas};
-
-use Session;
 
 class ApiController extends Controller
 {
@@ -30,7 +24,7 @@ class ApiController extends Controller
                 'obra',
                 $obra
             );
-            
+
             echo "alterado";
         } else {
             echo "erro";

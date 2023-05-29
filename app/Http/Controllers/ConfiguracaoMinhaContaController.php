@@ -10,48 +10,21 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
-
-use RealRashid\SweetAlert\Facades\Alert;
-
 class ConfiguracaoMinhaContaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
-
-        //
         $usuario_niveis = Niveis::all();
+
         return view('pages.configuracoes.minhaconta.index', compact('usuario_niveis'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-
-        //
         $id_usuario = Auth::user()->id;
 
-        if($id_usuario)
-        {
+        if ($id_usuario) {
 
             $user = User::find($id_usuario);
             $user->name = $request->nome;
@@ -64,8 +37,7 @@ class ConfiguracaoMinhaContaController extends Controller
                 if($request->password === $request->password_confirm){
                     $user->password = Hash::make($request->password);
                 } else {
-                    Alert::error('Erro', 'As senhas digitadas devem ser iguais.');
-                    return redirect(route('minhaconta'));
+                    return redirect()->route('minhaconta')->with('fail', 'Problemas para alterar o registro');
                 }
             }
 
@@ -74,56 +46,11 @@ class ConfiguracaoMinhaContaController extends Controller
             $userLog = Auth::user()->email;
             Log::channel('main')->info($userLog .' | STORE MINHA CONTA: ' . $user->name);
 
-            Alert::success('Muito bem ;)', 'Registro modificado com sucesso.');
-            return redirect(route('minhaconta'));
+            return redirect()->route('minhaconta')->with('success', 'Registro modificado com sucesso.');
 
         } else {
-
+            return redirect()->route('minhaconta')->with('fail', 'Problemas para alterar o registro');
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

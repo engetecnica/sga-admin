@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Veiculo;
 use App\Models\VeiculoIpva;
-use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
@@ -20,10 +19,9 @@ class VeiculoIpvaController extends Controller
 
         $last = VeiculoIpva::where('veiculo_id', $store->id)->orderBy('id', 'desc')->first();
 
-        if (!$id or !$store) :
-            Alert::error('Que Pena!', 'Esse veículo não foi encontrado.');
-            return redirect(route('ativo.veiculo'));
-        endif;
+        if (!$id or !$store) {
+            return redirect()->route('ativo.veiculo')->with('fail', 'Esse veículo não foi encontrado.');
+        }
 
         return view('pages.ativos.veiculos.ipva.index', compact('store', 'last'));
     }
@@ -34,10 +32,9 @@ class VeiculoIpvaController extends Controller
 
         $store = VeiculoIpva::find($id);
 
-        if (!$id or !$store) :
-            Alert::error('Que Pena!', 'Esse veículo não foi encontrado.');
-            return redirect(route('ativo.veiculo'));
-        endif;
+        if (!$id or !$store) {
+            return redirect()->route('ativo.veiculo')->with('fail', 'Esse veículo não foi encontrado.');
+        }
 
         return view('pages.ativos.veiculos.ipva.form', compact('store', 'btn'));
     }
@@ -85,7 +82,7 @@ class VeiculoIpvaController extends Controller
             $userLog = Auth::user()->email;
             Log::channel('main')->info($userLog .' | UPDATE IPVA: ' . $veiculo->id);
 
-            return redirect()->route('ativo.veiculo.ipva.index', $veiculo->veiculo_id)->with('success', 'Sucesso');
+            return redirect()->route('ativo.veiculo.ipva.editar', $veiculo->veiculo_id)->with('success', 'Sucesso');
         } catch (\Exception $e) {
 
             return redirect()->back()->withInput();
@@ -100,6 +97,6 @@ class VeiculoIpvaController extends Controller
 
         $veiculo->delete();
 
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Sucesso');
     }
 }

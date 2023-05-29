@@ -2,55 +2,37 @@
 
 namespace App\Http\Controllers;
 
-
 use Illuminate\Http\Request;
 use App\Models\ConfiguracaoModulo;
-use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use App\Traits\Configuracao;
 
-
 class ConfiguracaoModuloController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
 
     use Configuracao;
 
-
     public function index()
     {
-        //
-        $lista = ConfiguracaoModulo::select("modulos.*", "m2.titulo as vinculo")->join("modulos as m2", "m2.id", "=", "modulos.id_modulo", "left")->get();
+        $lista = ConfiguracaoModulo::select("modulos.*", "m2.titulo as vinculo")
+        ->join("modulos as m2", "m2.id", "=", "modulos.id_modulo", "left")
+        ->get();
+
         return view('pages.configuracoes.modulo.index', compact('lista'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        //
         $modulos = ConfiguracaoModulo::get_modulos();
+
         $acoes_permitidas = Configuracao::acoes_permitidas();
+
         return view('pages.configuracoes.modulo.form', compact('modulos', 'acoes_permitidas'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
         $request->validate(
             [
                 'titulo' => 'required|min:5',
@@ -79,53 +61,26 @@ class ConfiguracaoModuloController extends Controller
         $userLog = Auth::user()->email;
         Log::channel('main')->info($userLog .' | STORE MÓDULO: ' . $modulo->titulo .' | URL: ' .  $modulo->url_amigavel);
 
-        Alert::success('Muito bem ;)', 'Um registro foi adicionado com sucesso!');
-        return redirect(route('modulo'));
-
+        return redirect()->route('modulo')->with('success', 'Um registro foi adicionado com sucesso!');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
-        //
         $store = ConfiguracaoModulo::find($id);
+
         $modulos = ConfiguracaoModulo::all();
+
         $acoes_permitidas = Configuracao::acoes_permitidas();
 
-            if(!$id or !$store):
-                Alert::error('Que Pena!', 'Esse registro não foi encontrado.');
-                return redirect(route('modulo'));
-            endif;
+        if (!$id or !$store) {
+            return redirect()->route('modulo')->with('fail', 'Esse registro não foi encontrado.');
+        }
 
-            return view('pages.configuracoes.modulo.form', compact('store', 'modulos', 'acoes_permitidas'));
+        return view('pages.configuracoes.modulo.form', compact('store', 'modulos', 'acoes_permitidas'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
-        //
         $request->validate(
             [
                 'titulo' => 'required|min:5',
@@ -154,18 +109,7 @@ class ConfiguracaoModuloController extends Controller
         $userLog = Auth::user()->email;
         Log::channel('main')->info($userLog .' | EDIT MODULO: ' . $modulo->titulo .' | URL: ' .  $modulo->url_amigavel);
 
-        Alert::success('Muito bem ;)', 'Registro modificado com sucesso.');
-        return redirect(route('modulo.editar', $id));
+        return redirect()->route('modulo.editar', $id)->with('success', 'Registro modificado com sucesso.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

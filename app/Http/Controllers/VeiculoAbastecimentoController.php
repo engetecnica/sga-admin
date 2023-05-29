@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use App\Models\Veiculo;
 use App\Models\VeiculoAbastecimento;
 use App\Models\VeiculoDepreciacao;
-use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
@@ -21,10 +20,9 @@ class VeiculoAbastecimentoController extends Controller
 
         $last = VeiculoAbastecimento::where('veiculo_id', $id)->orderBy('id', 'desc')->first();
 
-        if (!$id or !$store) :
-            Alert::error('Que Pena!', 'Esse veículo não foi encontrado.');
-            return redirect(route('ativo.veiculo'));
-        endif;
+        if (!$id or !$store) {
+            return redirect()->route('ativo.veiculo')->with('fail', 'Esse veículo não foi encontrado.');
+        }
 
         return view('pages.ativos.veiculos.abastecimento.index', compact('store', 'last', 'fornecedores'));
     }
@@ -35,17 +33,15 @@ class VeiculoAbastecimentoController extends Controller
 
         $store = VeiculoAbastecimento::find($id);
 
-        if (!$id or !$store) :
-            Alert::error('Que Pena!', 'Esse veículo não foi encontrado.');
-            return redirect(route('ativo.veiculo'));
-        endif;
+        if (!$id or !$store) {
+            return redirect()->route('ativo.veiculo')->with('fail', 'Esse veículo não foi encontrado.');
+        }
 
         return view('pages.ativos.veiculos.abastecimento.form', compact('store', 'fornecedores', 'btn'));
     }
 
     public function store(Request $request, $id)
     {
-        // dd($request);
 
         $veiculo = Veiculo::findOrFail($id);
 
@@ -76,7 +72,6 @@ class VeiculoAbastecimentoController extends Controller
 
     public function update(Request $request, $id)
     {
-        // dd($request);
         $veiculo = VeiculoAbastecimento::findOrFail($id);
         try {
             $veiculo->update([
@@ -91,7 +86,7 @@ class VeiculoAbastecimentoController extends Controller
             $userLog = Auth::user()->email;
             Log::channel('main')->info($userLog .' | EDIT ABASTECIMENTO | ' . $veiculo->placa . ' | COMBUSTÍVEL: ' . $request->input('combustivel') . ' | QUILOMETRAGEM: ' . $request->input('quilometragem'));
 
-            return redirect()->route('ativo.veiculo.abastecimento.index', $veiculo->veiculo_id)->with('success', 'Sucesso');
+            return redirect()->route('ativo.veiculo.abastecimento.editar', $veiculo->veiculo_id)->with('success', 'Sucesso');
         } catch (\Exception $e) {
 
             return redirect()->back()->withInput();
@@ -106,6 +101,6 @@ class VeiculoAbastecimentoController extends Controller
 
         $veiculo->delete();
 
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Sucesso');
     }
 }

@@ -45,40 +45,27 @@ use Illuminate\Support\Facades\Notification;
 
 class FerramentalRetiradaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         return view('pages.ferramental.retirada.index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        //
-        $obras = CadastroObra::all();
-        $funcionarios = CadastroFuncionario::all();
+        $obras = CadastroObra::where('status', 'Ativo')->get();
+
+        $funcionarios = CadastroFuncionario::where('status', 'Ativo')->get();
+
         $estoque = AtivoExternoEstoque::getAtivosExternoEstoque();
+
         $empresas = CadastroEmpresa::where('status', 'Ativo')->get();
+
         return view('pages.ferramental.retirada.form', compact('funcionarios', 'estoque', 'obras', 'empresas'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
         $request->validate(
             [
                 'id_obra' => 'required',
@@ -133,62 +120,42 @@ class FerramentalRetiradaController extends Controller
                     ->notify(new NotificaRetiradaTelegram($email_config->email));
             }
 
-            Alert::success('Muito bem ;)', 'Sua retirada foi registrada com sucesso!');
-            return redirect(route('ferramental.retirada.detalhes', $id_retirada));
+            return redirect()->route('ferramental.retirada.detalhes', $id_retirada)->with('success', 'Sua retirada foi registrada com sucesso!');
         } else {
-            Alert::error('Que Pena!', 'Não foi possível registrar sua solicitação, entre em contato com suporte.');
-            return redirect(route('ferramental.retirada'));
+            return redirect()->route('ferramental.retirada')->with('error', 'Não foi possível registrar sua solicitação, entre em contato com suporte.');
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\FerramentalRetirada  $ferramentalRetirada
-     * @return \Illuminate\Http\Response
-     */
     public function show(int $id)
     {
         if (!$id) {
-            Alert::error('Atenção', 'Não foi possível localizar esta Retirada.');
-            return redirect(route('ferramental.retirada'));
+            return redirect()->route('ferramental.retirada')->with('fail', 'Não foi possível localizar esta Retirada.');
         }
 
         $detalhes = FerramentalRetirada::getRetiradaItems($id);
 
         if (!$detalhes) {
-            Alert::error('Atenção', 'Não foi possível localizar esta Retirada.');
-            return redirect(route('ferramental.retirada'));
+            return redirect()->route('ferramental.retirada')->with('fail', 'Não foi possível localizar esta Retirada.');
         }
 
         return view('pages.ferramental.retirada.show', compact('detalhes'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\FerramentalRetirada  $ferramentalRetirada
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
-        $obras = CadastroObra::all();
-        $funcionarios = CadastroFuncionario::all();
+        $obras = CadastroObra::where('status', 'Ativo')->get();
+
+        $funcionarios = CadastroFuncionario::where('status', 'Ativo')->get();
+
         $itens = FerramentalRetirada::getRetiradaItems($id);
+
         $empresas = CadastroEmpresa::where('status', 'Ativo')->get();
+
         return view('pages.ferramental.retirada.edit', compact('obras', 'itens', 'funcionarios', 'empresas'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\FerramentalRetirada  $ferramentalRetirada
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
-
         $request->validate(
             [
                 'id_obra' => 'required',
@@ -228,23 +195,16 @@ class FerramentalRetiradaController extends Controller
             $userLog = Auth::user()->email;
             Log::channel('main')->info($userLog .' | EDIT RETIRADA | ID: ' . $id_retirada . ' | DATA: ' . date('Y-m-d H:i:s'));
 
-            Alert::success('Muito bem ;)', 'Sua retirada foi modificada com sucesso!');
-            return redirect(route('ferramental.retirada.detalhes', $id_retirada));
+            return redirect()->route('ferramental.retirada.detalhes', $id_retirada)->with('success', 'Sua retirada foi modificada com sucesso!');
         } else {
-            Alert::error('Que Pena!', 'Não foi possível registrar sua solicitação, entre em contato com suporte.');
-            return redirect(route('ferramental.retirada'));
+            return redirect()->route('ferramental.retirada')->with('fail', 'Não foi possível registrar sua solicitação, entre em contato com suporte.');
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\FerramentalRetirada  $ferramentalRetirada
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         $retirada = FerramentalRetirada::findOrFail($id);
+
         $itens = FerramentalRetiradaItem::where('id_retirada', $retirada->id)->get();
 
         foreach ($itens as $item) {
@@ -266,7 +226,6 @@ class FerramentalRetiradaController extends Controller
      * Termo de Responsabilidade
      * Upload do termo automaticamente via storage
      */
-
     public function termo(int $id)
     {
         /** Get Detalhes */
@@ -413,9 +372,6 @@ class FerramentalRetiradaController extends Controller
 
                 dd($request->id_ativo_externo);
 
-
-
-
                 /** Salvar Retirada Item */
                 $item = FerramentalRetiradaItemDevolver::find($key);
                 $item->status = $value ?? 1;
@@ -437,8 +393,6 @@ class FerramentalRetiradaController extends Controller
 
             $userLog = Auth::user()->email;
             Log::channel('main')->info($userLog .' | SALVOU DEVOLUÇÃO: ' . $retirada->devolucao_observacoes);
-
-
 
             echo "Salvou essa porra.";
         }

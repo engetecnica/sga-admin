@@ -20,13 +20,16 @@ class FerramentalRequisicaoController extends Controller
     public function index()
     {
         $requisicoes = FerramentalRequisicao::with('solicitante', 'obraOrigem', 'obraDestino', 'situacao')->get();
+
         return view('pages.ferramental.requisicao.index', compact('requisicoes'));
     }
 
     public function create()
     {
         $obras = CadastroObra::all();
+
         $itens = AtivoExterno::with('estoque')->get();
+
         return view('pages.ferramental.requisicao.create', compact('obras', 'itens'));
     }
 
@@ -58,7 +61,6 @@ class FerramentalRequisicaoController extends Controller
         $requisicao->observacoes = $data['observacoes'];
         $requisicao->status = 1;
         $requisicao->save();
-
         $status = true;
 
         foreach ($request->id_ativo_externo as $index => $idAtivoExterno) {
@@ -86,8 +88,12 @@ class FerramentalRequisicaoController extends Controller
 
     public function show($id)
     {
-        $ferramentalRequisicao = FerramentalRequisicao::with('solicitante', 'obraOrigem', 'obraDestino', 'situacao')->where('id', $id)->first();
+        $ferramentalRequisicao = FerramentalRequisicao::with('solicitante', 'obraOrigem', 'obraDestino', 'situacao')
+            ->where('id', $id)
+            ->first();
+
         $itens = FerramentalRequisicaoItem::with('ativo', 'requisicao')->where('id_requisicao', $id)->get();
+
         return view('pages.ferramental.requisicao.show', compact('ferramentalRequisicao', 'itens'));
     }
 

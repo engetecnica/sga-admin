@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Veiculo;
 use App\Models\VeiculoSeguro;
-use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
@@ -20,10 +19,9 @@ class VeiculoSeguroController extends Controller
 
         $last = VeiculoSeguro::where('veiculo_id', $id)->orderBy('id', 'desc')->first();
 
-        if (!$id or !$store) :
-            Alert::error('Que Pena!', 'Esse veículo não foi encontrado.');
-            return redirect(route('ativo.veiculo'));
-        endif;
+        if (!$id or !$store) {
+            return redirect()->route('ativo.veiculo')->with('fail', 'Esse veículo não foi encontrado.');
+        }
 
         return view('pages.ativos.veiculos.seguro.index', compact('store', 'last'));
     }
@@ -34,10 +32,9 @@ class VeiculoSeguroController extends Controller
 
         $store = VeiculoSeguro::find($id);
 
-        if (!$id or !$store) :
-            Alert::error('Que Pena!', 'Esse veículo não foi encontrado.');
-            return redirect(route('ativo.veiculo'));
-        endif;
+        if (!$id or !$store) {
+            return redirect()->route('ativo.veiculo')->with('fail', 'Esse veículo não foi encontrado.');
+        }
 
         return view('pages.ativos.veiculos.seguro.form', compact('store', 'btn'));
     }
@@ -59,7 +56,7 @@ class VeiculoSeguroController extends Controller
             );
 
             $userLog = Auth::user()->email;
-        Log::channel('main')->info($userLog .' | STORE SEGURO: ' . $veiculo->id);
+            Log::channel('main')->info($userLog .' | STORE SEGURO: ' . $veiculo->id);
 
             return redirect()->route('ativo.veiculo.seguro.index', $id)->with('success', 'Sucesso');
         } catch (\Exception $e) {
@@ -80,9 +77,9 @@ class VeiculoSeguroController extends Controller
             ]);
 
             $userLog = Auth::user()->email;
-        Log::channel('main')->info($userLog .' | UPDATE SEGURO: ' . $veiculo->id);
+            Log::channel('main')->info($userLog .' | UPDATE SEGURO: ' . $veiculo->id);
 
-            return redirect()->route('ativo.veiculo.seguro.index', $veiculo->veiculo_id)->with('success', 'Sucesso');
+            return redirect()->route('ativo.veiculo.seguro.editar', $veiculo->veiculo_id)->with('success', 'Sucesso');
         } catch (\Exception $e) {
 
             return redirect()->back()->withInput();

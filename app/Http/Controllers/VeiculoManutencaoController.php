@@ -7,7 +7,6 @@ use App\Models\Veiculo;
 use App\Models\CadastroFornecedor;
 use App\Models\Servico;
 use App\Models\VeiculoManutencao;
-use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
@@ -24,10 +23,9 @@ class VeiculoManutencaoController extends Controller
 
         $last = VeiculoManutencao::where('veiculo_id', $id)->orderBy('id', 'desc')->first();
 
-        if (!$id or !$store) :
-            Alert::error('Que Pena!', 'Esse veículo não foi encontrado.');
-            return redirect(route('ativo.veiculo'));
-        endif;
+        if (!$id or !$store) {
+            return redirect()->route('ativo.veiculo')->with('fail', 'Esse veículo não foi encontrado.');
+        }
 
         return view('pages.ativos.veiculos.manutencao.index', compact('store', 'fornecedores', 'servicos', 'last'));
     }
@@ -35,22 +33,20 @@ class VeiculoManutencaoController extends Controller
     public function edit($id, $btn)
     {
         $fornecedores = CadastroFornecedor::select('id', 'razao_social')->get();
+
         $servicos = Servico::select('id', 'name')->get();
 
         $store = VeiculoManutencao::find($id);
 
-        if (!$id or !$store) :
-            Alert::error('Que Pena!', 'Esse veículo não foi encontrado.');
-            return redirect(route('ativo.veiculo'));
-        endif;
+        if (!$id or !$store) {
+            return redirect()->route('ativo.veiculo')->with('fail', 'Esse veículo não foi encontrado.');
+        }
 
         return view('pages.ativos.veiculos.manutencao.form', compact('store', 'fornecedores', 'servicos', 'btn'));
     }
 
     public function store(Request $request, $id)
     {
-        // dd($request);
-
         $veiculo = Veiculo::findOrFail($id);
 
         try {
@@ -83,7 +79,6 @@ class VeiculoManutencaoController extends Controller
 
     public function update(Request $request, $id)
     {
-        // dd($request);
         $veiculo = VeiculoManutencao::findOrFail($id);
         $veiculo->update([
             'tipo' => $request->tipo,
@@ -101,7 +96,7 @@ class VeiculoManutencaoController extends Controller
         $userLog = Auth::user()->email;
         Log::channel('main')->info($userLog .' | UPDATE MANUTENCAO: ' . $veiculo->id);
 
-        return redirect()->route('ativo.veiculo.manutencao.index', $veiculo->veiculo_id)->with('success', 'Sucesso');
+        return redirect()->route('ativo.veiculo.manutencao.editar', $veiculo->veiculo_id)->with('success', 'Sucesso');
         // try {
         //     $veiculo->manutencao->update([
         //         'tipo' => $request->tipo,

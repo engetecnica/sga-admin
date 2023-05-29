@@ -9,25 +9,19 @@ use App\Traits\Configuracao;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
-use RealRashid\SweetAlert\Facades\Alert;
-
-
 class ConfiguracaoSistemaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
 
     use Configuracao;
 
     public function index()
     {
-        //
         $meiosdepagamento = Configuracao::integrador();
+
         $tiposdepix = Configuracao::tipo_pix();
+
         $store = ConfiguracaoSistema::find(1);
+
         return view(
                         'pages.configuracoes.sistema.index',
                             compact(
@@ -38,26 +32,8 @@ class ConfiguracaoSistemaController extends Controller
                     );
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
         $request->validate(
             [
                 'titulo' => 'required|min:5',
@@ -96,59 +72,13 @@ class ConfiguracaoSistemaController extends Controller
         $configuracao->pix_nome = $request->pix_nome;
         $configuracao->pix_tipo = $request->pix_tipo;
         $configuracao->pix_chave = $request->pix_chave;
-
         $configuracao->save();
 
         $userLog = Auth::user()->email;
         Log::channel('main')->info($userLog .' | ADD CONFIGURACAO SISTEMA: ' . $configuracao->titulo .' | PIX: ' .  $configuracao->pix_nome);
 
-        Alert::success('Muito bem ;)', 'Registro modificado com sucesso.');
-        return redirect(route('sistema'));
+        return redirect()->route('sistema')->with('success', 'Registro modificado com sucesso.');
 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

@@ -21,7 +21,7 @@ class AtivoInternoController extends Controller
 
     public function index()
     {
-        $ativos = AtivosInterno::orderBy('id', 'DESC')->get();
+        $ativos = AtivosInterno::orderByDesc('id')->get();
 
         return view('pages.ativos.internos.index', compact('ativos'));
     }
@@ -60,17 +60,15 @@ class AtivoInternoController extends Controller
 
     public function show($id)
     {
-
         $data = AtivosInterno::where('id', $id)->first();
 
         $pdf = Pdf::loadView('pages.ativos.internos.show', ['data' => $data]);
 
         return $pdf->setPaper('a4', 'landscape')->stream('ativo.pdf');
 
+        // configurações especificas para dimensões do arquivo pdf
         // setPaper array(0.0, 0.0, 165.00, 300.00)
-
         // return view('pages.ativos.internos.show', compact('data'));
-
     }
 
     public function edit(AtivosInterno $ativo)
@@ -135,15 +133,12 @@ class AtivoInternoController extends Controller
     public function fileUpload(Request $request)
     {
 
-
         $data = $request->all();
 
         if ($request->hasFile('file')) {
             $file = $request->file('file');
-
             $name = $request->file('file')->hashName();
-
-            $path = $file->store('anexos'); // Salva o arquivo no diretório "storage/app/uploads"
+            $path = $file->store('anexos');
 
             $data['id_usuario'] = Auth::user()->id;
             $data['id_ativo_interno'] = $request->id_ativo_interno;
@@ -162,7 +157,6 @@ class AtivoInternoController extends Controller
                 return redirect()->route('ativo.interno.edit', $request->id_ativo_interno)->with('fail', 'Um erro impediu o cadastro.');
             }
         }
-
 
     }
 }

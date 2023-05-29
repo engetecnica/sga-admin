@@ -6,20 +6,17 @@ use Session;
 
 use App\Models\{
     CadastroObra,
-    CadastroUsuariosVinculo
+    CadastroUsuariosVinculo,
+    User
 };
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 use App\Traits\FuncoesAdaptadas;
-use RealRashid\SweetAlert\Facades\Alert;
-
-
 
 class CustomAuthController extends Controller
 {
-
     use FuncoesAdaptadas;
 
     public function index()
@@ -38,7 +35,6 @@ class CustomAuthController extends Controller
         ]);
 
         $credentials = $request->only('email', 'password');
-
 
         if (Auth::attempt($credentials)) {
 
@@ -74,7 +70,6 @@ class CustomAuthController extends Controller
 
         }
 
-
         return redirect()->route('login')->with('error', 'Email ou senha inválidos');
     }
 
@@ -95,9 +90,11 @@ class CustomAuthController extends Controller
 
     public function signOut(Request $request) {
 
-        dd($request->session()->all());
+        $usuarioVinculo = $request->session()->get('usuario_vinculo');
+        $idUsuario = $usuarioVinculo['id_usuario'];
+        $usuario = User::find($idUsuario);
+        $userLog = $usuario->email;
 
-        $userLog = Auth::user()->email;
         Log::channel('main')->info($userLog .' | SAIU DO SISTEMA');
 
         Auth::logout();

@@ -39,9 +39,9 @@ class AtivoExternoController extends Controller
     {
         $obras = CadastroObra::all();
 
-        $ativo_configuracoes = AtivoConfiguracao::get_ativo_configuracoes();
+        $ativo_configuracoes = AtivoConfiguracao::where('id_relacionamento', '>', 0)->get();
 
-        return view('pages.ativos.externos.form', compact('ativo_configuracoes', 'obras'));
+        return view('pages.ativos.externos.create', compact('ativo_configuracoes', 'obras'));
     }
 
     public function store(Request $request)
@@ -134,11 +134,17 @@ class AtivoExternoController extends Controller
 
     public function edit($id)
     {
+        $ativo = AtivoExternoEstoque::with('ativo')->find($id);
+
+        $item = AtivoExternoEstoqueItem::where('id_ativo_externo', $id)->first();
+
         $obras = CadastroObra::all();
 
-        $ativo_configuracoes = AtivoConfiguracao::get_ativo_configuracoes();
+        $ativo_configuracoes = AtivoConfiguracao::all();
 
-        return view('pages.ativos.externos.form', compact('ativo_configuracoes', 'obras'));
+        $ativo_configuracao = AtivoConfiguracao::where('id', $ativo->ativo->id_ativo_configuracao)->first();
+
+        return view('pages.ativos.externos.edit', compact('ativo_configuracao', 'ativo_configuracoes', 'obras', 'ativo', 'item'));
     }
 
     public function searchAtivoID(Request $request, int $id)

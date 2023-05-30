@@ -16,8 +16,8 @@ class AtivoExterno extends Model
 
     public function estoque()
     {
-        return $this->hasMany(AtivoExternoEstoque::class, 'id_ativo_externo', 'id')->where('status', 4);
+        return $this->hasMany(AtivoExternoEstoque::class, 'id_ativo_externo', 'id')
+        ->where('status', 4);
     }
-
 
 }

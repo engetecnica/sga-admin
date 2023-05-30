@@ -34,7 +34,6 @@ use Illuminate\Support\Facades\Log;
 
 use App\Helpers\Tratamento;
 
-use DataTables;
 use PDF;
 
 //Notification mail
@@ -42,6 +41,7 @@ use App\Notifications\NotificaRetirada;
 //Notification telegram
 use App\Notifications\NotificaRetiradaTelegram;
 use Illuminate\Support\Facades\Notification;
+use Yajra\DataTables\DataTables;
 
 class FerramentalRetiradaController extends Controller
 {
@@ -319,9 +319,6 @@ class FerramentalRetiradaController extends Controller
                         $dropdown .= '<li><a class="dropdown-item" href="' . route('ferramental.retirada.termo', $row->id) . '"><i class="mdi mdi-download"></i> Baixar Termo</a></li>';
                     }
 
-
-
-
                 if ($row->status == "1" && !$row->termo_responsabilidade_gerado) {
 
                     /** Modificar Retirada */
@@ -334,7 +331,7 @@ class FerramentalRetiradaController extends Controller
 
                     $dropdown .= '<li><a class="dropdown-item" href="' . route('ferramental.retirada.detalhes', $row->id) . '"><i class="mdi mdi-minus"></i> Detalhes</a></li> ';
 
-                         /** Ver Termo */
+                    /** Ver Termo */
                 if ($row->status == "3" or $row->status == "4" && $row->termo_responsabilidade_gerado) {
                     $dropdown .= '<li><a class="dropdown-item" href="' . route('ferramental.retirada.termo', $row->id) . '"><i class="mdi mdi-printer"></i> Ver Termo</a></li></ul></div>';
                 }

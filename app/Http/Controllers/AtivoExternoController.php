@@ -114,22 +114,25 @@ class AtivoExternoController extends Controller
         return redirect()->route('ativo.externo')->with('fail', 'Não foi possível processar os ativos solicitados. Fale com seu supervisor.');
     }
 
-    public function show(int $id)
+    public function show($id)
     {
-        if (!$id) {
-            return redirect()->route('ativo.externo')->with('fail', 'Não foi possível processar os ativos solicitados. Fale com seu supervisor.');
-        }
+        // if (!$id) {
+        //     return redirect()->route('ativo.externo')->with('fail', 'Não foi possível processar os ativos solicitados. Fale com seu supervisor.');
+        // }
 
-        $detalhes = AtivoExterno::select('ativos_configuracoes.titulo AS categoria', 'ativos_externos.*')
-            ->join('ativos_configuracoes', 'ativos_configuracoes.id', '=', 'ativos_externos.id_ativo_configuracao')
-            ->where('ativos_externos.id', $id)
-            ->first();
+        // $detalhes = AtivoExterno::select('ativos_configuracoes.titulo AS categoria', 'ativos_externos.*')
+        //     ->join('ativos_configuracoes', 'ativos_configuracoes.id', '=', 'ativos_externos.id_ativo_configuracao')
+        //     ->where('ativos_externos.id', $id)
+        //     ->first();
 
-        if(!$detalhes){
-            return redirect()->route('ativo.externo')->with('fail', 'Não foi possível processar os ativos solicitados. Fale com seu supervisor.');
-        }
+        // if(!$detalhes){
+        //     return redirect()->route('ativo.externo')->with('fail', 'Não foi possível processar os ativos solicitados. Fale com seu supervisor.');
+        // }
 
-        return view('pages.ativos.externos.show', compact('detalhes'));
+        $detalhes = AtivoExterno::with('categoria')->find($id);
+        $itens = AtivoExternoEstoque::with('obra', 'situacao')->where('id_ativo_externo', $id)->get();
+
+        return view('pages.ativos.externos.show', compact('detalhes', 'itens'));
     }
 
     public function edit($id)

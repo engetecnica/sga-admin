@@ -49,7 +49,7 @@
                                 <tr>
                                     <td class="text-center align-middle"><span class="badge badge-dark">{{ $requisicao->id }}</span></td>
                                     <td class="align-middle">{{ $requisicao->solicitante->name }}</td>
-                                    <td class="align-middle">{{ $requisicao->obraOrigem->razao_social }}</td>
+                                    <td class="align-middle">{{ $requisicao->obraOrigem->razao_social ?? null }}</td>
                                     <td class="align-middle">{{ $requisicao->obraDestino->razao_social }}</td>
                                     <td class="align-middle">{{ Tratamento::datetimeBR($requisicao->created_at) }}</td>
                                     <td class="align-middle">{{ $requisicao->data_liberacao }}</td>

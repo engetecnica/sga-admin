@@ -24,82 +24,99 @@
             Detalhes da Requisição
         </h3>
     </div>
-
-    <div class="row">
-        <div class="col-lg-12 grid-margin stretch-card">
-            <div class="card">
-                <div class="card-body">
-                    <table class="table-striped table">
-                        <tr>
-                            <th>ID Requisição</th>
-                            <th>Solicitação</th>
-                            <th>Status</th>
-                        </tr>
-                        <tr>
-                            <td>{{ $ferramentalRequisicao->id }}</td>
-                            <td>{{ Tratamento::datetimeBR($ferramentalRequisicao->created_at) }}</td>
-                            <td><span class="badge badge-{{ $ferramentalRequisicao->situacao->classe }}">{{ $ferramentalRequisicao->situacao->titulo }}</span></td>
-                        </tr>
-                    </table>
-
-                    <table class="table-striped mt-5 table">
-                        <tr>
-                            <th>Despachante</th>
-                            <th>Origem</th>
-                            <th>Solicitante</th>
-                            <th>Destino</th>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td>{{ $ferramentalRequisicao->obraOrigem->razao_social }}</td>
-                            <td>{{ $ferramentalRequisicao->solicitante->name }}</td>
-                            <td>{{ $ferramentalRequisicao->obraDestino->razao_social }}</td>
-                        </tr>
-                    </table>
-
-                    <table class="table-striped mt-5 table">
-                        <tr>
-                            <th>Solicitado</th>
-                            <th>Liberado</th>
-                            <th>Transferido</th>
-                            <th>Recebido</th>
-                        </tr>
-                        <tr>
-                            <td>{{ Tratamento::datetimeBR($ferramentalRequisicao->created_at) }}</td>
-                            <td>{{ Tratamento::datetimeBR($ferramentalRequisicao->data_liberacao) }}</td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                    </table>
-
-                    <table class="table-striped mt-5 table">
-                        <tr>
-                            <th>ID</th>
-                            <th>Item</th>
-                            <th>Estoque</th>
-                            <th>Qtde. Solicitada</th>
-                            <th>Qtde. Liberada</th>
-                            <th>Liberar</th>
-                            <th>Situação</th>
-                            <th>Opções</th>
-                        </tr>
-
-                        @foreach ($itens as $item)
+    <form action="{{ route('ferramental.requisicao.update', $ferramentalRequisicao->id) }}" method="post">
+        @csrf
+        @method('PUT')
+        <input name="id_requisicao" type="hidden" value="{{ $ferramentalRequisicao->id }}">
+        <div class="row">
+            <div class="col-lg-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <table class="table-striped table">
                             <tr>
-                                <td>{{ $item->id }}</td>
-                                <td>{{ $item->ativo->titulo }}</td>
+                                <th>ID Requisição</th>
+                                <th>Solicitação</th>
+                                <th>Status</th>
+                                <th style="width: 100px">Ações</th>
+                            </tr>
+                            <tr>
+                                <td>{{ $ferramentalRequisicao->id }}</td>
+                                <td>{{ Tratamento::datetimeBR($ferramentalRequisicao->created_at) }}</td>
+                                <td><span class="badge badge-{{ $ferramentalRequisicao->situacao->classe }}">{{ $ferramentalRequisicao->situacao->titulo }}</span></td>
+                                <td><button class="btn btn-xs btn-{{ $ferramentalRequisicao->status != 1 ? 'danger' : 'success' }}" type="submit" {{ $ferramentalRequisicao->status != 1 ? 'disabled' : '' }}>{{ $ferramentalRequisicao->status != 1 ? 'REQUISIÇÃO FINALIZADA' : 'SALVAR REQUISIÇÃO' }}</button></td>
+                            </tr>
+                        </table>
+
+                        <table class="table-striped mt-5 table">
+                            <tr>
+                                <th>Despachante</th>
+                                <th>Origem</th>
+                                <th>Solicitante</th>
+                                <th>Destino</th>
+                            </tr>
+                            <tr>
                                 <td></td>
-                                <td>{{ $item->quantidade_solicitada }}</td>
-                                <td></td>
-                                <td></td>
+                                <td>{{ $ferramentalRequisicao->obraOrigem->razao_social ?? null }}</td>
+                                <td>{{ $ferramentalRequisicao->solicitante->name }}</td>
+                                <td>{{ $ferramentalRequisicao->obraDestino->razao_social }}</td>
+                            </tr>
+                        </table>
+
+                        <table class="table-striped mt-5 table">
+                            <tr>
+                                <th>Solicitado</th>
+                                <th>Liberado</th>
+                                <th>Transferido</th>
+                                <th>Recebido</th>
+                            </tr>
+                            <tr>
+                                <td>{{ Tratamento::datetimeBR($ferramentalRequisicao->created_at) }}</td>
+                                <td>{{ Tratamento::datetimeBR($ferramentalRequisicao->data_liberacao) ?? null }}</td>
                                 <td></td>
                                 <td></td>
                             </tr>
-                        @endforeach
-                    </table>
+                        </table>
+
+                        <table class="table-striped mt-5 table">
+                            <tr>
+                                <th>ID</th>
+                                <th>Item</th>
+                                <th>Estoque</th>
+                                <th>Qtde. Solicitada</th>
+                                <th>Liberar</th>
+                                <th>Qtde. Liberada</th>
+                                <th>Situação</th>
+                                {{-- <th>Opções</th> --}}
+                            </tr>
+
+                            @foreach ($itens as $item)
+                                <tr>
+                                    <td>{{ $item->id }}</td>
+                                    <td>
+                                        <span class="badge badge-danger">{{ $item->ativo_externo_estoque->patrimonio }}</span>
+                                        {{ $item->ativo_externo_estoque->ativo->titulo }}
+                                    </td>
+                                    <td class="text-center">{{ count($item->ativo_externo_estoque->ativo->estoque_requisicao) }}</td>
+                                    <td class="text-center">1</td>
+                                    <td>
+
+                                        <input name="id_item[]" type="hidden" value="{{ $item->id }}">
+                                        <input name="id_ativo[]" type="hidden" value="{{ $item->ativo_externo_estoque->id }}">
+                                        <input name="id_ativo_estoque[]" type="hidden" value="{{ $item->ativo_externo_estoque->id_ativo_externo }}">
+                                        <input name="quantidade_solicitada[]" type="hidden" value="{{ $item->quantidade_solicitada }}">
+                                        <input name="quantidade_liberada[]" type="number" value="0" max="1" {{ $ferramentalRequisicao->status != 1 ? 'disabled' : '' }}>
+                                    </td>
+                                    <td>{{ $item->quantidade_liberada }}</td>
+                                    <td><span class="badge badge-{{ $item->situacao->classe }}">{{ $item->situacao->titulo }}</span></td>
+                                    {{-- <td><button class="badge badge-success">Atender</button> <button class="badge badge-danger">Rejeitar</button></td> --}}
+                                </tr>
+                            @endforeach
+
+                        </table>
+
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-
+    </form>
 @endsection

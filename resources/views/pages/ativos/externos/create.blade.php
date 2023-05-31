@@ -33,7 +33,7 @@
                         </div>
                     @endif
 
-                    <form method="post" action="route('ativo.externo.store')">
+                    <form method="post" action="{{ route('ativo.externo.store') }}">
                         @csrf
 
                         @include('pages.ativos.externos.partials.form')

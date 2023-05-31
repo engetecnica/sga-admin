@@ -14,6 +14,7 @@ class AtivoExternoEstoqueItem extends Model
 
     protected $table = "ativos_externos_estoque_item";
 
+    protected $fillable = ['quantidade_em_transito'];
 
     static function getEstoqueItemLista($termo = null)
     {

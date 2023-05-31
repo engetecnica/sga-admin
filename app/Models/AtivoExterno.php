@@ -13,11 +13,21 @@ class AtivoExterno extends Model
 
     protected $table = "ativos_externos";
 
+    public function categoria()
+    {
+        return $this->belongsTo(AtivoConfiguracao::class, 'id_ativo_configuracao', 'id');
+    }
 
     public function estoque()
     {
         return $this->hasMany(AtivoExternoEstoque::class, 'id_ativo_externo', 'id')
         ->where('status', 4);
+    }
+
+    public function estoque_requisicao()
+    {
+        return $this->hasMany(AtivoExternoEstoque::class, 'id_ativo_externo', 'id')
+        ->whereIn('status', [4, 11]);
     }
 
 }

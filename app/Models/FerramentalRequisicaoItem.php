@@ -18,16 +18,22 @@ class FerramentalRequisicaoItem extends Model
         'id_ativo_externo',
         'id_requisicao',
         'quantidade_solicitada',
+        'quantidade_liberada',
         'status',
     ];
 
-    public function ativo()
+    public function ativo_externo_estoque()
     {
-        return $this->belongsTo(AtivoExterno::class, 'id_ativo_externo');
+        return $this->belongsTo(AtivoExternoEstoque::class,'id_ativo_externo');
     }
 
     public function requisicao()
     {
         return $this->belongsTo(FerramentalRequisicao::class, 'id_requisicao');
+    }
+
+    public function situacao()
+    {
+        return $this->belongsTo(FerramentalRequisicaoStatus::class, 'status');
     }
 }

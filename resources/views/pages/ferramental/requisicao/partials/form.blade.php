@@ -1,14 +1,14 @@
 <div class="row mt-3">
-    <div class="col-6">
+    {{-- <div class="col-6">
         <select class="form-select select2" name="id_obra_origem" required>
-            <option value="">Selecione uma Obra</option>
+            <option value="">Selecione uma obra</option>
             @foreach ($obras as $obra)
                 <option value="{{ $obra->id }}">
                     {{ $obra->codigo_obra }} - {{ $obra->razao_social }}
                 </option>
             @endforeach
         </select>
-    </div>
+    </div> --}}
 
     <div class="col-6">
         <select class="form-select select2" name="id_obra_destino" required>
@@ -29,7 +29,9 @@
             <select class="form-control form-select select2" name="id_ativo_externo[]" required>
                 <option>Pesquise o Item desejado</option>
                 @foreach ($itens as $item)
-                    <option value="{{ $item->id }}">{{ $item->titulo }} - em estoque {{ count($item->estoque) }}</option>
+                    @if (count($item->estoque) > 0)
+                        <option value="{{ $item->id }}">{{ $item->titulo }} - em estoque {{ count($item->estoque) }}</option>
+                    @endif
                 @endforeach
             </select>
 

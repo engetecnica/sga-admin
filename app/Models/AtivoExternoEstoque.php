@@ -13,7 +13,7 @@ class AtivoExternoEstoque extends Model
 
     protected $table = "ativos_externos_estoque";
 
-
+    protected $fillable = ['status'];
 
     static function getAtivosExternoEstoque()
     {
@@ -37,6 +37,16 @@ class AtivoExternoEstoque extends Model
     public function ativo()
     {
         return $this->belongsTo(AtivoExterno::class, 'id_ativo_externo',  'id');
+    }
+
+    public function obra()
+    {
+        return $this->belongsTo(CadastroObra::class, 'id_obra',  'id');
+    }
+
+    public function situacao()
+    {
+        return $this->belongsTo(AtivoExernoStatus::class, 'status',  'id');
     }
 
 

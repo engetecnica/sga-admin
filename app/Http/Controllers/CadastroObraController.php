@@ -162,6 +162,18 @@ class CadastroObraController extends Controller
         return redirect()->route('cadastro.obra.editar', $id)->with('success', 'Um registro foi modificado com sucesso!');
     }
 
+    public function destroy(CadastroObra $id)
+    {
+        $userLog = Auth::user()->email;
+        Log::channel('main')->info($userLog .' | DELETE OBRA : ' . $id->nome);
+
+        if($id->delete()) {
+            return redirect()->route('cadastro.obra')->with('success', 'Obra excluída com sucesso!');
+        } else {
+            return redirect()->route('cadastro.obra')->with('fail', 'Obra excluída com sucesso!');
+        }
+    }
+
     public function fastStore(Request $request)
     {
         $data = $request->all();

@@ -53,25 +53,27 @@
                         </div>
 
                         <div class="row mt-3">
-                            <label class="form-label" for="id_obra">Obra</label>
-                            <select class="form-select select2" id="id_obra" name="id_obra" required>
-                                <option value="">Selecione uma Obra</option>
-                                @if (url()->current() == route('cadastro.funcionario.adicionar'))
-                                    @foreach ($obras as $obra)
-                                        <option value="{{ $obra->id }}">
-                                            {{ $obra->codigo_obra }} - {{ $obra->razao_social }}
-                                        </option>
-                                    @endforeach
-                                @else
-                                    @foreach ($obras as $obra)
-                                        <option value="{{ $obra->id }}" {{ $store->id_obra == $obra->id ? 'selected' : '' }}>
-                                            {{ $obra->codigo_obra }} - {{ $obra->razao_social }}
-                                        </option>
-                                    @endforeach
+                            <div class="col-md-6">
+                                <label class="form-label" for="id_obra">Obra </label> <a class="badge badge-success text-white" data-toggle="modal" data-target="#modal-add">Adicionar Obra</a>
+                                <select class="form-select select2" id="id_obra" name="id_obra" required>
+                                    <option value="">Selecione uma Obra</option>
+                                    @if (url()->current() == route('cadastro.funcionario.adicionar'))
+                                        @foreach ($obras as $obra)
+                                            <option value="{{ $obra->id }}">
+                                                {{ $obra->codigo_obra }} - {{ $obra->razao_social }}
+                                            </option>
+                                        @endforeach
+                                    @else
+                                        @foreach ($obras as $obra)
+                                            <option value="{{ $obra->id }}" {{ $store->id_obra == $obra->id ? 'selected' : '' }}>
+                                                {{ $obra->codigo_obra }} - {{ $obra->razao_social }}
+                                            </option>
+                                        @endforeach
 
-                                @endif
+                                    @endif
 
-                            </select>
+                                </select>
+                            </div>
                         </div>
 
                         <div class="row mt-3">
@@ -99,7 +101,7 @@
                                 <input class="form-control celular" id="celular" name="celular" type="text" value="{{ old('celular', @$store->celular) }}">
                             </div>
                             <div class="col-md-6">
-                                <label class="form-label" for="id_funcao">Função</label>
+                                <label class="form-label" for="id_funcao">Função</label> <a class="badge badge-success text-white" data-toggle="modal" data-target="#modal-funcao">Adicionar função</a>
                                 <select class="form-select" name="id_funcao">
                                     <option value="">Selecione uma Função</option>
                                     @if (url()->current() == route('cadastro.funcionario.adicionar'))
@@ -190,4 +192,8 @@
             </div>
         </div>
     </div>
+
+    @include('pages.cadastros.obra.partials.inclusao-rapida')
+
+    @include('pages.cadastros.funcionario.funcoes.partials.inclusao-rapida')
 @endsection

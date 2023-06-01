@@ -71,4 +71,21 @@ class FuncaoFuncionarioController extends Controller
         }
 
     }
+
+    public function fastStore(Request $request)
+    {
+        $data = $request->all();
+        $data['status'] = 'Ativo';
+        $save = FuncaoFuncionario::create($data);
+
+        $userLog = Auth::user()->email;
+        Log::channel('main')->info($userLog .' | ADD OBRA RÁPIDO: ' . $save->razao_social . ' | CÓDIGO OBRA : ' . $save->codigo_obra);
+
+        if ($save) {
+            return redirect()->back()->with('success', 'Um registro foi adicionado com sucesso!');
+        } else {
+            return redirect()->back()->with('fail', 'Um erro impediu o cadastro.');
+        }
+
+    }
 }

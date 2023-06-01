@@ -158,6 +158,18 @@ class CadastroFornecedorController extends Controller
         return redirect()->route('cadastro.fornecedor.editar', $id)->with('success', 'Um registro foi modificado com sucesso!');
     }
 
+    public function destroy(CadastroFornecedor $id)
+    {
+        $userLog = Auth::user()->email;
+        Log::channel('main')->info($userLog .' | DELETE FORNECEDOR : ' . $id->razao_social);
+
+        if($id->delete()) {
+            return redirect()->route('cadastro.fornecedor')->with('success', 'Fornecedor excluído com sucesso!');
+        } else {
+            return redirect()->route('cadastro.fornecedor')->with('fail', 'Fornecedor excluído com sucesso!');
+        }
+    }
+
     public function storeContato(StoreContatoFornecedorRequest $request)
     {
         $data = $request->validated();

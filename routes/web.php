@@ -135,6 +135,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('admin/cadastro/empresa/adicionar',                [CadastroEmpresaController::class, 'create'])->name('cadastro.empresa.adicionar');
     Route::post('admin/cadastro/empresa/store',                   [CadastroEmpresaController::class, 'store'])->name('cadastro.empresa.store');
     Route::post('admin/cadastro/empresa/update/{id}',             [CadastroEmpresaController::class, 'update'])->name('cadastro.empresa.update');
+    Route::delete('admin/cadastro/empresa/{id}',             [CadastroEmpresaController::class, 'destroy'])->name('cadastro.empresa.destroy');
 
 
 
@@ -146,6 +147,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('admin/cadastro/fornecedor/adicionar',             [CadastroFornecedorController::class, 'create'])->name('cadastro.fornecedor.adicionar');
     Route::post('admin/cadastro/fornecedor/store',                [CadastroFornecedorController::class, 'store'])->name('cadastro.fornecedor.store');
     Route::post('admin/cadastro/fornecedor/update/{id}',          [CadastroFornecedorController::class, 'update'])->name('cadastro.fornecedor.update');
+    Route::delete('admin/cadastro/fornecedor{id}',          [CadastroFornecedorController::class, 'destroy'])->name('cadastro.fornecedor.destroy');
 
     //CONTATOS FORNECEDOR
     Route::post('admin/fornecedor/contato/store', [CadastroFornecedorController::class, 'storeContato'])->name('fornecedor.contato.store');
@@ -158,6 +160,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('admin/cadastro/obra/adicionar',                                [CadastroObraController::class, 'create'])->name('cadastro.obra.adicionar');
     Route::post('admin/cadastro/obra/store',                                   [CadastroObraController::class, 'store'])->name('cadastro.obra.store');
     Route::post('admin/cadastro/obra/update/{id}',                             [CadastroObraController::class, 'update'])->name('cadastro.obra.update');
+    Route::delete('admin/cadastro/obra/{id}',                             [CadastroObraController::class, 'destroy'])->name('cadastro.obra.destroy');
 
     Route::post('admin/cadastro/obra', [CadastroObraController::class, 'fastStore'])->name('cadastro.obra.fast.store');
 
@@ -177,6 +180,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('admin/cadastro/funcionario/funcoes/editar/{id}', [FuncaoFuncionarioController::class, 'edit'])->name('cadastro.funcionario.funcoes.edit');
     Route::post('admin/cadastro/funcionario/funcoes/update/{id}', [FuncaoFuncionarioController::class, 'update'])->name('cadastro.funcionario.funcoes.update');
     Route::delete('admin/cadastro/funcionario/funcoes/{funcao}', [FuncaoFuncionarioController::class, 'destroy'])->name('cadastro.funcionario.funcoes.destroy');
+    Route::post('admin/cadastro/funcionario', [FuncaoFuncionarioController::class, 'fastStore'])->name('cadastro.funcoes.fast.store');
+
 
     /* Ativo - Configuração */
     Route::get('admin/ativo', [AtivoConfiguracaoController::class, 'index'])->name('ativo');

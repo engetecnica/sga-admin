@@ -61,9 +61,13 @@
                                             <button class="badge badge-info" data-toggle="tooltip" data-placement="top" title="Editar"><i class="mdi mdi-pencil"></i> Editar</button>
                                         </a>
 
-                                        <a class="excluir-padrao" data-id="{{ $v->id }}" data-table="obras" data-module="cadastro/obra" data-redirect="{{ route('obra') }}" href="javascript:void(0)">
-                                            <button class="badge badge-danger" data-toggle="tooltip" data-placement="top" title="Excluir"><i class="mdi mdi-delete"></i> Excluir</button>
-                                        </a>
+                                        <form action="{{ route('cadastro.obra.destroy', $v->id) }}" method="POST">
+                                            @csrf
+                                            @method('delete')
+                                            <button class="badge badge-danger" data-toggle="tooltip" data-placement="top" type="submit" title="Excluir" onclick="return confirm('Tem certeza que deseja excluir o registro?')">
+                                                <i class="mdi mdi-delete"></i> Excluir
+                                            </button>
+                                        </form>
                                     </td>
                                 </tr>
                             @endforeach

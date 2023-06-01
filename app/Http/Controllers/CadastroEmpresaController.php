@@ -153,4 +153,18 @@ class CadastroEmpresaController extends Controller
         return redirect()->route('cadastro.empresa.editar', $id)->with('success', 'Um registro foi modificado com sucesso!');
     }
 
+    public function destroy($id)
+    {
+        $empresa = CadastroEmpresa::find($id);
+
+        $userLog = Auth::user()->email;
+        Log::channel('main')->info($userLog .' | DELETE EMPRESA: ' . $empresa->razao_social);
+
+        if ($empresa->delete()) {
+            return redirect()->route('cadastro.empresa')->with('success', 'Registro excluído com sucesso.');
+        } else {
+            return redirect()->route('cadastro.empresa')->with('fail', 'Um erro ocorreu na tentativa de exclusão');
+        }
+    }
+
 }

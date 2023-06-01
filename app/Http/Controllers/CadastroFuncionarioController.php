@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\{CadastroFuncionario, CadastroObra, CadastroFuncao, FuncaoFuncionario};
+use App\Models\{CadastroEmpresa, CadastroFuncionario, CadastroObra, CadastroFuncao, FuncaoFuncionario};
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
@@ -16,6 +16,8 @@ class CadastroFuncionarioController extends Controller
 
     public function index()
     {
+
+
         $lista = CadastroFuncionario::select('obras.razao_social', 'funcionarios.*')
         ->join('obras', 'obras.id', '=', 'funcionarios.id_obra')
         ->get();
@@ -25,13 +27,15 @@ class CadastroFuncionarioController extends Controller
 
     public function create()
     {
+        $empresas = CadastroEmpresa::where('status', 'Ativo')->get();
+
         $estados = Configuracao::estados();
 
         $obras = CadastroObra::where('status', 'Ativo')->get();
 
         $funcoes = FuncaoFuncionario::all();
 
-        return view('pages.cadastros.funcionario.form', compact('estados', 'obras', 'funcoes'));
+        return view('pages.cadastros.funcionario.form', compact('estados', 'obras', 'funcoes', 'empresas'));
     }
 
     public function store(Request $request)
@@ -187,6 +191,9 @@ class CadastroFuncionarioController extends Controller
 
     public function destroy(CadastroFuncionario $id)
     {
+        $userLog = Auth::user()->email;
+        Log::channel('main')->info($userLog .' | DELETE FUNCIONÁRIO : ' . $id->nome . ' | CPF : ' . $id->cpf);
+
         if($id->delete()) {
             return redirect()->route('cadastro.funcionario')->with('success', 'Funcionário excluído com sucesso!');
         } else {

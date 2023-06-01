@@ -19,9 +19,8 @@
 
     <div class="page-header">
         <h3 class="page-title">
-            <a href="{{ route('cadastro.funcionario.funcoes.create') }}">
-                <button class="btn btn-sm btn-danger">Cadastrar</button>
-            </a>
+            <a class="btn btn-sm btn-danger" href="{{ route('cadastro.funcionario.funcoes.create') }}">Cadastrar</a>
+            <a class="btn btn-sm btn-danger" href="{{ route('cadastro.funcionario.adicionar') }}">Incluir Funcionário</a>
         </h3>
     </div>
 
@@ -54,7 +53,7 @@
                                             <form action="{{ route('cadastro.funcionario.funcoes.destroy', $funcao->id) }}" method="POST">
                                                 @csrf
                                                 @method('delete')
-                                                <button class="badge badge-danger" data-toggle="tooltip" data-placement="top" type="submit" title="Excluir">
+                                                <button class="badge badge-danger" data-toggle="tooltip" data-placement="top" type="submit" title="Excluir" onclick="return confirm('Tem certeza que deseja excluir o registro?')">
                                                     <i class="mdi mdi-delete"></i> Excluir
                                                 </button>
                                             </form>

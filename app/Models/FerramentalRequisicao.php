@@ -17,14 +17,25 @@ class FerramentalRequisicao extends Model
 
     protected $fillable = [
         'id_solicitante',
+        'id_despachante',
+        'id_recebedor',
         'id_obra_origem',
         'id_obra_destino',
         'data_liberacao',
+        'observacoes',
         'status'
     ];
 
     public function solicitante() {
         return $this->belongsTo(User::class, 'id_solicitante', 'id');
+    }
+
+    public function despachante() {
+        return $this->belongsTo(User::class, 'id_despachante', 'id');
+    }
+
+    public function recebedor() {
+        return $this->belongsTo(User::class, 'id_recebedor', 'id');
     }
 
     public function obraOrigem() {
@@ -37,6 +48,7 @@ class FerramentalRequisicao extends Model
 
     public function situacao() {
         return $this->belongsTo(FerramentalRequisicaoStatus::class, 'status', 'id');
-
     }
+
+
 }

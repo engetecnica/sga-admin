@@ -20,7 +20,7 @@ class FerramentalRequisicaoController extends Controller
 {
     public function index()
     {
-        $requisicoes = FerramentalRequisicao::with('solicitante', 'obraOrigem', 'obraDestino', 'situacao')->get();
+        $requisicoes = FerramentalRequisicao::with('solicitante', 'obraOrigem', 'obraDestino', 'situacao')->orderByDesc('id')->get();
 
 
         return view('pages.ferramental.requisicao.index', compact('requisicoes'));
@@ -99,11 +99,11 @@ class FerramentalRequisicaoController extends Controller
 
     public function show($id)
     {
-        $ferramentalRequisicao = FerramentalRequisicao::with('solicitante', 'obraOrigem', 'obraDestino', 'situacao')
+        $ferramentalRequisicao = FerramentalRequisicao::with('solicitante', 'despachante', 'recebedor', 'obraOrigem', 'obraDestino', 'situacao')
             ->where('id', $id)
             ->first();
 
-        $itens = FerramentalRequisicaoItem::with('ativo_externo_estoque', 'situacao')->where('id_requisicao', $id)->get();
+        $itens = FerramentalRequisicaoItem::with('ativo_externo_estoque', 'situacao', 'situacao_recebido')->where('id_requisicao', $id)->get();
 
         return view('pages.ferramental.requisicao.show', compact('ferramentalRequisicao', 'itens'));
     }
@@ -119,6 +119,7 @@ class FerramentalRequisicaoController extends Controller
         Log::channel('main')->info($userLog .' | EDIT REQUISICAO | ID: ' . $save->id);
 
         $data = $request->all();
+        $data['id_despachante'] = Auth::user()->id;
         $data['data_liberacao'] = date('Y-m-d H:i:s');
 
         // $liberado = 0;
@@ -197,8 +198,7 @@ class FerramentalRequisicaoController extends Controller
 
             if ($total_liberado == $total_solicitado) {
                 // Status 2: Liberado igual ao solicitado
-                $item = AtivoExternoEstoqueItem::where('id_ativo_externo', $id)->first();
-                $item->update(['quantidade_em_transito' => $total_liberado]);
+                $item = AtivoExternoEstoqueItem::where('id_ativo_externo', $id)->increment('quantidade_em_transito');
 
             } elseif ($total_liberado == 0) {
                 // Status 4: Não liberado (Recusado)
@@ -210,6 +210,67 @@ class FerramentalRequisicaoController extends Controller
         return redirect()->route('ferramental.requisicao.index')->with('success', 'Registro atualizado com sucesso.');
 
 
+    }
+
+    public function recept(Request $request, $id)
+    {
+        if (! $save = FerramentalRequisicao::find($id)) {
+            return redirect()->route('ferramental.requisicao.show', $id)->with('fail', 'Registro não encontrado.');
+        }
+
+        $userLog = Auth::user()->email;
+        Log::channel('main')->info($userLog .' | RECEBENDO REQUISICAO | ID: ' . $save->id);
+
+        $data = $request->all();
+        $data['id_recebedor'] = Auth::user()->id;
+        $data['data_recebimento'] = date('Y-m-d H:i:s');
+        $data['status'] = 6; //Recebido
+        $save->update($data);
+
+        foreach ($request->id_item as $key => $id) {
+            $status_recebido = $request->status_recebido[$key];
+            $observacao_recebido = $request->observacao_recebido[$key];
+
+            $item = FerramentalRequisicaoItem::find($id);
+            $item->update(['status_recebido' => $status_recebido, 'observacao_recebido' => $observacao_recebido]);
+
+        }
+
+        foreach ($request->id_ativo as $key => $id) {
+            $status_recebido = $request->status_recebido[$key];
+
+            if ($status_recebido == 6) {
+            $item = AtivoExternoEstoque::find($id);
+            $item->update(['status' => 5, 'id_obra' => $request->id_obra_destino]);
+
+            } elseif ($status_recebido == 7) {
+                // Status 7: Recebido com defeito
+                $item = AtivoExternoEstoque::find($id);
+                $item->update(['status' => 12, 'id_obra' => $request->id_obra_destino]);
+
+            } else {
+                // Outro status não previsto
+            }
+        }
+
+        foreach ($request->id_ativo_estoque as $key => $id) {
+            $status_recebido = $request->status_recebido[$key];
+
+            if ($status_recebido == 6) {
+                // Status 6: Recebido
+                $item = AtivoExternoEstoqueItem::where('id_ativo_externo', $id)->increment('quantidade_em_operacao');
+                $item = AtivoExternoEstoqueItem::where('id_ativo_externo', $id)->decrement('quantidade_em_transito');
+
+            } elseif ($status_recebido == 7) {
+                // Status 7: Recebido com defeito
+                $item = AtivoExternoEstoqueItem::where('id_ativo_externo', $id)->increment('quantidade_com_defeito');
+                $item = AtivoExternoEstoqueItem::where('id_ativo_externo', $id)->decrement('quantidade_em_transito');
+            } else {
+                // Outro status não previsto
+            }
+        }
+
+        return redirect()->route('ferramental.requisicao.index')->with('success', 'Registro atualizado com sucesso.');
     }
 
 }

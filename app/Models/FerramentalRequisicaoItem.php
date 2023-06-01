@@ -20,6 +20,8 @@ class FerramentalRequisicaoItem extends Model
         'quantidade_solicitada',
         'quantidade_liberada',
         'status',
+        'status_recebido',
+        'observacao_recebido'
     ];
 
     public function ativo_externo_estoque()
@@ -35,5 +37,10 @@ class FerramentalRequisicaoItem extends Model
     public function situacao()
     {
         return $this->belongsTo(FerramentalRequisicaoStatus::class, 'status');
+    }
+
+    public function situacao_recebido()
+    {
+        return $this->belongsTo(FerramentalRequisicaoStatus::class, 'status_recebido', 'id');
     }
 }

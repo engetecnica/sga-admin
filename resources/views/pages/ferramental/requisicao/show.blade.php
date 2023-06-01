@@ -24,10 +24,24 @@
             Detalhes da Requisição
         </h3>
     </div>
-    <form action="{{ route('ferramental.requisicao.update', $ferramentalRequisicao->id) }}" method="post">
+    @php
+        if ($ferramentalRequisicao->status != 1) {
+            $action = 'recept';
+            $method = 'patch';
+        } else {
+            $action = 'update';
+            $method = 'put';
+        }
+    @endphp
+    <form action="{{ route('ferramental.requisicao.' . $action . '', $ferramentalRequisicao->id) }}" method="post">
+
         @csrf
-        @method('PUT')
+
+        @method('' . $method . '')
+
         <input name="id_requisicao" type="hidden" value="{{ $ferramentalRequisicao->id }}">
+        <input name="id_obra_destino" type="hidden" value="{{ $ferramentalRequisicao->obraDestino->id }}">
+
         <div class="row">
             <div class="col-lg-12 grid-margin stretch-card">
                 <div class="card">
@@ -43,20 +57,18 @@
                                 <td>{{ $ferramentalRequisicao->id }}</td>
                                 <td>{{ Tratamento::datetimeBR($ferramentalRequisicao->created_at) }}</td>
                                 <td><span class="badge badge-{{ $ferramentalRequisicao->situacao->classe }}">{{ $ferramentalRequisicao->situacao->titulo }}</span></td>
-                                <td><button class="btn btn-xs btn-{{ $ferramentalRequisicao->status != 1 ? 'danger' : 'success' }}" type="submit" {{ $ferramentalRequisicao->status != 1 ? 'disabled' : '' }}>{{ $ferramentalRequisicao->status != 1 ? 'REQUISIÇÃO FINALIZADA' : 'SALVAR REQUISIÇÃO' }}</button></td>
+                                <td><button class="btn btn-xs btn-{{ $ferramentalRequisicao->status != 1 ? 'danger' : 'success' }}" type="submit" {{ $ferramentalRequisicao->status != 1 ? 'disabled' : '' }} onclick="return confirm('Tem certeza que deseja submeter a Requisição?')">{{ $ferramentalRequisicao->status != 1 ? 'REQUISIÇÃO FINALIZADA' : 'SALVAR REQUISIÇÃO' }}</button></td>
                             </tr>
                         </table>
 
                         <table class="table-striped mt-5 table">
                             <tr>
                                 <th>Despachante</th>
-                                <th>Origem</th>
                                 <th>Solicitante</th>
                                 <th>Destino</th>
                             </tr>
                             <tr>
-                                <td></td>
-                                <td>{{ $ferramentalRequisicao->obraOrigem->razao_social ?? null }}</td>
+                                <td>{{ $ferramentalRequisicao->despachante->name ?? null }}</td>
                                 <td>{{ $ferramentalRequisicao->solicitante->name }}</td>
                                 <td>{{ $ferramentalRequisicao->obraDestino->razao_social }}</td>
                             </tr>
@@ -83,10 +95,18 @@
                                 <th>Item</th>
                                 <th>Estoque</th>
                                 <th>Qtde. Solicitada</th>
-                                <th>Liberar</th>
-                                <th>Qtde. Liberada</th>
+                                @if ($ferramentalRequisicao->status == 1)
+                                    <th>Liberar</th>
+                                    {{-- <th>Qtde. Liberada</th> --}}
+                                @endif
+                                @if ($ferramentalRequisicao->status > 1)
+                                    <th>Qtde. Liberada</th>
+                                    <th>Defeito?</th>
+                                @endif
                                 <th>Situação</th>
-                                {{-- <th>Opções</th> --}}
+                                @if ($ferramentalRequisicao->status > 1)
+                                    <th>Opções</th>
+                                @endif
                             </tr>
 
                             @foreach ($itens as $item)
@@ -98,22 +118,46 @@
                                     </td>
                                     <td class="text-center">{{ count($item->ativo_externo_estoque->ativo->estoque_requisicao) }}</td>
                                     <td class="text-center">1</td>
-                                    <td>
+                                    @if ($ferramentalRequisicao->status == 1)
+                                        <td>
 
-                                        <input name="id_item[]" type="hidden" value="{{ $item->id }}">
-                                        <input name="id_ativo[]" type="hidden" value="{{ $item->ativo_externo_estoque->id }}">
-                                        <input name="id_ativo_estoque[]" type="hidden" value="{{ $item->ativo_externo_estoque->id_ativo_externo }}">
-                                        <input name="quantidade_solicitada[]" type="hidden" value="{{ $item->quantidade_solicitada }}">
-                                        <input name="quantidade_liberada[]" type="number" value="0" max="1" {{ $ferramentalRequisicao->status != 1 ? 'disabled' : '' }}>
+                                            <input name="id_item[]" type="hidden" value="{{ $item->id }}">
+                                            <input name="id_ativo[]" type="hidden" value="{{ $item->ativo_externo_estoque->id }}">
+                                            <input name="id_ativo_estoque[]" type="hidden" value="{{ $item->ativo_externo_estoque->id_ativo_externo }}">
+                                            <input name="quantidade_solicitada[]" type="hidden" value="{{ $item->quantidade_solicitada }}">
+                                            <input name="quantidade_liberada[]" type="number" value="0" max="1" {{ $ferramentalRequisicao->status != 1 ? 'disabled' : '' }}>
+                                        </td>
+                                        {{-- <td>{{ $item->quantidade_liberada }}</td> --}}
+                                    @endif
+                                    @if ($ferramentalRequisicao->status > 1)
+                                        <td>{{ $item->quantidade_liberada }}</td>
+                                        <td>
+                                            <input name="id_item[]" type="hidden" value="{{ $item->id }}">
+                                            <input name="id_ativo[]" type="hidden" value="{{ $item->ativo_externo_estoque->id }}">
+                                            <input name="id_ativo_estoque[]" type="hidden" value="{{ $item->ativo_externo_estoque->id_ativo_externo }}">
+                                            <input name="observacao_recebido[]" type="text" value="" {{ $ferramentalRequisicao->status == 4 ? 'disabled' : '' }}>
+                                        </td>
+                                    @endif
+                                    <td>
+                                        <span class="badge badge-{{ $item->situacao->classe }}">{{ $item->situacao->titulo }}</span>
                                     </td>
-                                    <td>{{ $item->quantidade_liberada }}</td>
-                                    <td><span class="badge badge-{{ $item->situacao->classe }}">{{ $item->situacao->titulo }}</span></td>
-                                    {{-- <td><button class="badge badge-success">Atender</button> <button class="badge badge-danger">Rejeitar</button></td> --}}
+                                    @if ($ferramentalRequisicao->status > 1)
+                                        <td>
+                                            <select name="status_recebido[]" {{ $ferramentalRequisicao->status == 4 ? 'disabled' : '' }}>
+                                                <option value="6">Recebido</option>
+                                                <option value="7">Recebido com defeito</option>
+                                            </select><br>
+                                        </td>
+                                    @endif
+
                                 </tr>
                             @endforeach
-
                         </table>
-
+                        <div class="text-right">
+                            @if ($ferramentalRequisicao->status > 1 and $ferramentalRequisicao->status < 4)
+                                <button class="btn btn-xs btn-{{ $ferramentalRequisicao->status != 1 ? 'success' : 'danger' }}" type="submit" {{ $ferramentalRequisicao->status != 1 ? '' : 'disabled' }} onclick="return confirm('Tem certeza que deseja submeter os Recebimentos?')">{{ $ferramentalRequisicao->status != 1 ? 'SALVAR RECEBIMENTO' : 'RECEBIMENTO RESOLVIDO' }}</button>
+                            @endif
+                        </div>
                     </div>
                 </div>
             </div>

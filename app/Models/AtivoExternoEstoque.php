@@ -13,7 +13,10 @@ class AtivoExternoEstoque extends Model
 
     protected $table = "ativos_externos_estoque";
 
-    protected $fillable = ['status'];
+    protected $fillable = [
+        'id_obra',
+        'status'
+    ];
 
     static function getAtivosExternoEstoque()
     {

@@ -42,11 +42,11 @@ class CadastroFuncionarioController extends Controller
     {
         $request->validate(
             [
-                'matricula' => 'required|min:4|max:30|unique:funcionarios,matricula',
+                'matricula' => 'required|min:4|max:30|unique:funcionarios,matricula,NULL,id,deleted_at,NULL',
                 'id_obra' => 'required',
                 'nome' => 'required',
                 'data_nascimento' => 'required',
-                'cpf' => 'required|unique:funcionarios|cpf',
+                'cpf' => 'required|cpf|unique:funcionarios,cpf,NULL,id,deleted_at,NULL',
                 'rg' => 'required',
                 'id_funcao' => 'required',
                 'cep' => 'required',
@@ -62,11 +62,13 @@ class CadastroFuncionarioController extends Controller
             [
                 'matricula.required' => 'Digite corretamente a matrícula',
                 'id_obra.required' => 'É necessário selecionar uma obra para este Funcionário',
-                'nome' => 'Digite corretamente o nome',
-                'data_nascimento' => 'Data de Nascimento Inválida',
-                'cpf' => 'Preencha corretamente o campo CPF',
-                'rg' => 'Este RG não é válido',
-                'id_funcao' => 'É necessário selecionar uma função para este Funcionário',
+                'nome.required' => 'Digite corretamente o nome',
+                'data_nascimento.required' => 'Data de Nascimento Inválida',
+                'cpf.required' => 'Campo CPF é obrigatório',
+                'cpf.cpf' => 'Este CPF não é válido',
+                'cpf.unique' => 'Este CPF já está cadastrado',
+                'rg.required' => 'Este RG não é válido',
+                'id_funcao.required' => 'É necessário selecionar uma função para este Funcionário',
                 'cep.required' => 'O CEP é indispensável',
                 'endereco.required' => 'Preencha o endereço corretamente',
                 'numero.required' => 'Preencha o número da residência',
@@ -106,6 +108,8 @@ class CadastroFuncionarioController extends Controller
 
     public function edit($id)
     {
+        $empresas = CadastroEmpresa::where('status', 'Ativo')->get();
+
         $store = CadastroFuncionario::with('funcao')->where('id', $id)->first();
 
         $estados = Configuracao::estados();
@@ -118,18 +122,19 @@ class CadastroFuncionarioController extends Controller
             return redirect()->route('cadastro.funcionario')->with('fail', 'Esse registro não foi encontrado.');
         }
 
-        return view('pages.cadastros.funcionario.form', compact('store', 'estados', 'obras', 'funcoes'));
+        return view('pages.cadastros.funcionario.form', compact('store', 'estados', 'obras', 'funcoes', 'empresas'));
     }
 
     public function update(Request $request, $id)
     {
+        $funcionario = CadastroFuncionario::find($id);
         $request->validate(
             [
-                'matricula' => 'required|min:4|max:30|unique:funcionarios,matricula,' . $id,
+                'matricula' => 'required|min:4|max:30|unique:funcionarios,matricula,null,'.$funcionario->id.',deleted_at,null',
                 'id_obra' => 'required',
                 'nome' => 'required',
                 'data_nascimento' => 'required',
-                'cpf' => 'required|cpf|unique:funcionarios,cpf,' . $id . '|cpf',
+                'cpf' => 'required|cpf|unique:funcionarios,cpf,null,'.$funcionario->id.',deleted_at,null',
                 'rg' => 'required',
                 'id_funcao' => 'required',
                 'cep' => 'required',
@@ -144,15 +149,18 @@ class CadastroFuncionarioController extends Controller
             ],
             [
                 'matricula.required' => 'Digite corretamente a matrícula',
+                'matricula.min' => 'A matrícula deve conter no mínimo 4 caracteres',
+                'matricula.max' => 'A matrícula deve conter no máximo 30 caracteres',
+                'matricula.unique' => 'Esta matrícula já está cadastrada',
                 'id_obra.required' => 'É necessário selecionar uma obra para este Funcionário',
-                'nome' => 'Digite corretamente o nome',
-                'data_nascimento' => 'Data de Nascimento Inválida',
+                'nome.required' => 'Digite corretamente o nome',
+                'data_nascimento.required' => 'Data de Nascimento requerida',
                 'cpf.require' => 'Preencha corretamente o campo CPF',
                 'cpf.unique' => 'Este CPF já está cadastrado',
                 'cpf.cpf' => 'Preencha corretamente o campo CPF',
-                'rg' => 'Este RG não é válido',
-                'id_funcao' => 'É necessário selecionar uma função para este Funcionário',
-                'cep.required' => 'O CEP é indispensável',
+                'rg.required' => 'Este RG não é válido',
+                'id_funcao.required' => 'É necessário selecionar uma função para este Funcionário',
+                'cep.required.required' => 'O CEP é requerido',
                 'endereco.required' => 'Preencha o endereço corretamente',
                 'numero.required' => 'Preencha o número da residência',
                 'bairro.required' => 'Preencha o Bairro corretamente',
@@ -164,7 +172,7 @@ class CadastroFuncionarioController extends Controller
             ]
         );
 
-        $funcionario = CadastroFuncionario::find($id);
+
         $funcionario->matricula = $request->matricula;
         $funcionario->id_obra = $request->id_obra;
         $funcionario->nome = $request->nome;

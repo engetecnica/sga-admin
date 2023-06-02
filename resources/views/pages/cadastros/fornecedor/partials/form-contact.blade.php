@@ -2,7 +2,7 @@
     <div class="col-md-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <h4>Contatos</h4>
+                <h4 id="contatos">Contatos</h4>
 
                 <table class="table-striped mb-5 table">
                     <tr>

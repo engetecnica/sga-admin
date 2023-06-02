@@ -1,5 +1,5 @@
 @extends('dashboard')
-@section('title', 'Veículo')
+@section('title', 'Ativos Internos')
 @section('content')
 
     <div class="page-header">
@@ -83,7 +83,7 @@
                                     <td class="align-middle">{{ $anexo->tipo }}</td>
                                     <td class="align-middle">{{ Tratamento::datetimeBr($anexo->created_at) }}</td>
                                     <td class="d-flex gap-2 align-middle">
-                                        <a class="btn btn-primary" href="{{ url('storage/uploads/anexos/' . $anexo->arquivo) }}" target="_blank">Baixar</a>
+                                        <a class="btn btn-primary" href="{{ url('uploads/anexos/' . $anexo->arquivo) }}" target="_blank">Baixar</a>
                                         {{-- <form action="{{ route('ativo.interno.destroy', $anexo->id) }}" method="POST">
                                             @csrf
                                             @method('delete')

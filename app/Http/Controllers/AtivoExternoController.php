@@ -9,6 +9,7 @@ use App\Models\{
     AtivoExterno,
     AtivoExternoEstoqueItem,
     AtivoExternoEstoqueHistorico,
+    AtivosExternosStatus,
     CadastroObra
 };
 use Illuminate\Support\Facades\Auth;
@@ -50,7 +51,7 @@ class AtivoExternoController extends Controller
             [
                 'id_ativo_configuracao' => 'required',
                 'titulo' => 'required',
-                'quantidade' => 'required',
+                'quantidade' => 'required|min:1',
                 'status' => 'required'
             ],
             [
@@ -68,50 +69,47 @@ class AtivoExternoController extends Controller
         $externo->id_ativo_configuracao = $request->id_ativo_configuracao;
         $externo->titulo = $request->titulo;
         $externo->status = $request->status;
-        $externo->save();
+        $save_externo = $externo->save();
+
+        /* Inclusão de Estoque - Item */
+        $externo_estoque_item = new AtivoExternoEstoqueItem();
+        $externo_estoque_item->id_ativo_externo = $externo->id;
+        $externo_estoque_item->quantidade_estoque = $request->quantidade;
+        $externo_estoque_item->quantidade_em_transito = 0;
+        $externo_estoque_item->quantidade_em_operacao = 0;
+        $externo_estoque_item->quantidade_com_defeito = 0;
+        $externo_estoque_item->quantidade_fora_de_operacao = 0;
+        $save_externo_estoque = $externo_estoque_item->save();
 
         /* Salvar Ativo Estoque */
         $externo_estoque_quantidade = $request->quantidade;
 
-        if ($externo_estoque_quantidade && $externo_estoque_quantidade > 0) {
+        /* Inclusão de Estoque  */
+        for ($i = 1; $i <= $externo_estoque_quantidade; $i++) {
 
-            /* Inclusão de Estoque  */
-            for ($i = 1; $i <= $externo_estoque_quantidade; $i++) {
+            /* Contagem de Patrimonio diante do Atual */
+            $patrimonio = Configuracao::PatrimonioAtual();
 
-                /* Contagem de Patrimonio diante do Atual */
-                $patrimonio = Configuracao::PatrimonioAtual() + $i;
-
-                /* Dados para Salvar no Estoque */
-                $externo_estoque = new AtivoExternoEstoque();
-                $externo_estoque->id_ativo_externo = $externo->id;
-                $externo_estoque->id_obra = $request->id_obra;
-                $externo_estoque->patrimonio = Configuracao::PatrimonioSigla() . $patrimonio;
-                $externo_estoque->valor = str_replace('R$ ', '', $request->valor) ?? 0;
-                $externo_estoque->calibracao = $request->calibracao;
-                $externo_estoque->status = 4; // Em Estoque
-                $externo_estoque->save();
-            }
-
-            /* Inclusão de Estoque - Item */
-            $externo_estoque_item = new AtivoExternoEstoqueItem();
-            $externo_estoque_item->id_ativo_externo = $externo->id;
-            $externo_estoque_item->quantidade_estoque = $externo_estoque_quantidade;
-            $externo_estoque_item->quantidade_em_transito = 0;
-            $externo_estoque_item->quantidade_em_operacao = 0;
-            $externo_estoque_item->quantidade_com_defeito = 0;
-            $externo_estoque_item->quantidade_fora_de_operacao = 0;
-            $externo_estoque_item->save();
+            /* Dados para Salvar no Estoque */
+            $externo_estoque = new AtivoExternoEstoque();
+            $externo_estoque->id_ativo_externo = $externo->id;
+            $externo_estoque->id_obra = $request->id_obra;
+            $externo_estoque->patrimonio = Configuracao::PatrimonioSigla() . $patrimonio;
+            $externo_estoque->valor = str_replace('R$ ', '', $request->valor) ?? 0;
+            $externo_estoque->calibracao = $request->calibracao;
+            $externo_estoque->status = 4; // Em Estoque
+            $externo_estoque->save();
         }
 
-        if ($externo && $externo_estoque && $externo_estoque_item) {
+        $userLog = Auth::user()->email;
+        Log::channel('main')->info($userLog .' | ADD ATIVO EXTERNO: ' . $externo_estoque->patrimonio);
 
-            $userLog = Auth::user()->email;
-            Log::channel('main')->info($userLog .' | ADD ATIVO EXTERNO: ' . $externo_estoque->patrimonio);
-
+        if($save_externo && $save_externo_estoque){
             return redirect()->route('ativo.externo.detalhes', $externo->id)->with('success', 'Novos ativos foram inseridos no estoque.');
+        } else {
+            return redirect()->route('ativo.externo')->with('fail', 'Não foi possível processar os ativos solicitados. Fale com seu supervisor.');
         }
 
-        return redirect()->route('ativo.externo')->with('fail', 'Não foi possível processar os ativos solicitados. Fale com seu supervisor.');
     }
 
     public function show($id)
@@ -137,17 +135,13 @@ class AtivoExternoController extends Controller
 
     public function edit($id)
     {
-        $ativo = AtivoExternoEstoque::with('ativo')->find($id);
 
-        $item = AtivoExternoEstoqueItem::where('id_ativo_externo', $id)->first();
-
+        $estoques = AtivoExternoEstoque::with('obra', 'situacao', 'ativo')->where('id_ativo_externo', $id)->get();
         $obras = CadastroObra::all();
+        $categorias = AtivoConfiguracao::where('id_relacionamento', '>', 0)->get();
+        $situacoes = AtivosExternosStatus::all();
 
-        $ativo_configuracoes = AtivoConfiguracao::all();
-
-        $ativo_configuracao = AtivoConfiguracao::where('id', $ativo->ativo->id_ativo_configuracao)->first();
-
-        return view('pages.ativos.externos.edit', compact('ativo_configuracao', 'ativo_configuracoes', 'obras', 'ativo', 'item'));
+        return view('pages.ativos.externos.edit', compact('estoques', 'obras', 'categorias', 'situacoes'));
     }
 
     public function searchAtivoID(Request $request, int $id)

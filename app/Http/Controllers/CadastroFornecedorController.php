@@ -35,7 +35,7 @@ class CadastroFornecedorController extends Controller
             [
                 'razao_social' => 'required|min:5',
                 'nome_fantasia' => 'required',
-                'cnpj' => 'required|cnpj|unique:fornecedores,cnpj',
+                'cnpj' => 'required|cnpj|unique:fornecedores,cnpj,NULL,id,deleted_at,NULL',
                 'cep' => 'required',
                 'endereco' => 'required',
                 'numero' => 'required',
@@ -104,11 +104,13 @@ class CadastroFornecedorController extends Controller
 
     public function update(Request $request, $id)
     {
+        $fornecedor = CadastroFornecedor::find($id);
+
         $request->validate(
             [
                 'razao_social' => 'required|min:5',
                 'nome_fantasia' => 'required',
-                'cnpj' => 'required|cnpj|unique:fornecedores,cnpj,'.$id,
+                'cnpj' => 'required|cnpj|unique:fornecedores,cnpj,null,'. $fornecedor->id .',deleted_at,null',
                 'cep' => 'required',
                 'endereco' => 'required',
                 'numero' => 'required',
@@ -137,7 +139,7 @@ class CadastroFornecedorController extends Controller
             ]
         );
 
-        $fornecedor = CadastroFornecedor::find($id);
+
         $fornecedor->razao_social = $request->razao_social;
         $fornecedor->nome_fantasia = $request->nome_fantasia;
         $fornecedor->cnpj = $request->cnpj;

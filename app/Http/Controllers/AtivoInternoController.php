@@ -97,7 +97,7 @@ class AtivoInternoController extends Controller
         $data = $request->all();
         $save->update($data);
 
-        return redirect()->route('ativo.interno.index')->with('success', 'Registro atualizado com sucesso.');
+        return redirect()->route('ativo.interno.edit', $ativo)->with('success', 'Registro atualizado com sucesso.');
     }
 
 
@@ -138,7 +138,7 @@ class AtivoInternoController extends Controller
         if ($request->hasFile('file')) {
             $file = $request->file('file');
             $name = $request->file('file')->hashName();
-            $path = $file->store('anexos');
+            $path = $file->store('public/uploads/anexos');
 
             $data['id_usuario'] = Auth::user()->id;
             $data['id_ativo_interno'] = $request->id_ativo_interno;

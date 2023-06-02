@@ -24,6 +24,7 @@ class CustomAuthController extends Controller
         if(Auth::check()){
             return redirect()->intended('dashboard');
         }
+
         return view('auth.login');
     }
 
@@ -39,12 +40,12 @@ class CustomAuthController extends Controller
         if (Auth::attempt($credentials)) {
 
             /** Verificação de Vínculo de Usuário */
-            $usuario_vinculo = CadastroUsuariosVinculo::find(Auth::user()->id)->toArray();
+            $usuario_vinculo = CadastroUsuariosVinculo::find(Auth::user()->id);
             $request->session()->put("usuario_vinculo", $usuario_vinculo);
 
             if (!$usuario_vinculo) {
 
-                return redirect('login');
+                return redirect()->route('login')->with('error', 'Usuário não possui vínculo com Obra');
             }
 
             $id_obra = $usuario_vinculo->id_obra ?? null;
@@ -89,13 +90,6 @@ class CustomAuthController extends Controller
     }
 
     public function signOut(Request $request) {
-
-        $usuarioVinculo = $request->session()->get('usuario_vinculo');
-        $idUsuario = $usuarioVinculo['id_usuario'];
-        $usuario = User::find($idUsuario);
-        $userLog = $usuario->email;
-
-        Log::channel('main')->info($userLog .' | SAIU DO SISTEMA');
 
         Auth::logout();
 

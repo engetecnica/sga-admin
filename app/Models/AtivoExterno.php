@@ -30,4 +30,9 @@ class AtivoExterno extends Model
         ->whereIn('status', [4, 11]);
     }
 
+    public function configuracao()
+    {
+        return $this->belongsTo(AtivoConfiguracao::class, 'id_ativo_configuracao', 'id');
+    }
+
 }

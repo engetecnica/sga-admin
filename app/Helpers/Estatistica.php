@@ -8,6 +8,8 @@ use App\Models\CadastroFuncionario;
 use App\Models\CadastroObra;
 use App\Models\User;
 
+use Carbon\Carbon;
+
 class Estatistica
 {
     public static function users()
@@ -33,5 +35,12 @@ class Estatistica
     public static function obras()
     {
         return CadastroObra::where('status', 'Ativo')->count();
+    }
+
+    public static function aniversariantes()
+    {
+        $now = Carbon::now();
+
+        return CadastroFuncionario::whereMonth('data_nascimento', $now->month)->get();
     }
 }

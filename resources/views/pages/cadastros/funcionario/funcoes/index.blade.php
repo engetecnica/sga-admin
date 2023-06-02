@@ -20,7 +20,7 @@
     <div class="page-header">
         <h3 class="page-title">
             <a class="btn btn-sm btn-danger" href="{{ route('cadastro.funcionario.funcoes.create') }}">Cadastrar</a>
-            <a class="btn btn-sm btn-danger" href="{{ route('cadastro.funcionario.adicionar') }}">Incluir Funcionário</a>
+            <a class="btn btn-sm btn-primary" href="{{ route('cadastro.funcionario.adicionar') }}">Incluir Funcionário</a>
         </h3>
     </div>
 

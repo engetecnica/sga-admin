@@ -51,9 +51,10 @@
                                     <td>{{ $fornecedor->celular }}</td>
                                     <td>{{ $fornecedor->email }}</td>
                                     <td>{{ $fornecedor->status }} </td>
-                                    <td>
-                                        <button class="badge badge-success" data-toggle="modal" data-target="#modal-contato-{{ $fornecedor->id }}"><i class="mdi mdi-pencil"></i> Ver contatos</button>
+                                    <td class="d-flex">
+                                        <button class="badge badge-success mr-2" data-toggle="modal" data-target="#modal-contato-{{ $fornecedor->id }}"><i class="mdi mdi-pencil"></i> Ver contatos</button>
 
+                                        {{-- MODAL CONTATOS --}}
                                         <div class="modal fade" id="modal-contato-{{ $fornecedor->id }}" aria-hidden="true" tabindex="-1">
                                             <div class="modal-dialog modal-dialog-centered modal-lg">
                                                 <div class="modal-content">
@@ -61,9 +62,11 @@
                                                         <p class="text-primary text-center"><strong>{{ $fornecedor->razao_social }} ({{ $fornecedor->cnpj ?? '-' }})</strong></p>
                                                         <p><strong>Contatos</strong></p>
                                                         <ul>
+
                                                             @foreach ($fornecedor->contatos as $contato)
-                                                                <li class=""><strong>Setor: {{ $contato->setor }}</strong> <br>
-                                                                    <table class="w-100 table">
+                                                                <li class="">
+                                                                    <strong>Setor: {{ $contato->setor }}</strong> <br>
+                                                                    <table class="table">
                                                                         <tr>
                                                                             <td style="width: 33%">{{ $contato->nome }}</td>
                                                                             <td style="width: 33%">{{ $contato->email }}</td>
@@ -74,21 +77,22 @@
                                                             @endforeach
                                                         </ul>
                                                         <div class="text-right">
-                                                            <button class="btn btn-secondary" data-dismiss="modal" type="button">Fechar</button>
+                                                            <a class="btn btn-gradient-primary btn-lg font-weight-medium" href="{{ route('cadastro.fornecedor.editar', $fornecedor->id) }}#contatos">Adicionar contatos</a>
+                                                            <button class="btn btn-gradient-danger btn-lg font-weight-medium" data-dismiss="modal" type="button">Fechar</button>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
 
-                                        <a href="{{ route('cadastro.fornecedor.editar', $fornecedor->id) }}">
-                                            <button class="badge badge-info" data-toggle="tooltip" data-placement="top" title="Editar"><i class="mdi mdi-pencil"></i> Editar</button>
+                                        <a class="badge badge-info mr-2" href="{{ route('cadastro.fornecedor.editar', $fornecedor->id) }}">
+                                            <i class="mdi mdi-pencil"></i> Editar
                                         </a>
 
                                         <form action="{{ route('cadastro.fornecedor.destroy', $fornecedor->id) }}" method="POST">
                                             @csrf
                                             @method('delete')
-                                            <button class="badge badge-danger" data-toggle="tooltip" data-placement="top" type="submit" title="Excluir" onclick="return confirm('Tem certeza que deseja excluir o registro?')">
+                                            <button class="badge badge-danger mr-2" data-toggle="tooltip" data-placement="top" type="submit" title="Excluir" onclick="return confirm('Tem certeza que deseja excluir o registro?')">
                                                 <i class="mdi mdi-delete"></i> Excluir
                                             </button>
                                         </form>

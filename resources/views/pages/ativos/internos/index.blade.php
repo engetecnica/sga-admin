@@ -1,5 +1,5 @@
 @extends('dashboard')
-@section('title', 'Ativos Externos')
+@section('title', 'Ativos Internos')
 @section('content')
 
     <div class="page-header">

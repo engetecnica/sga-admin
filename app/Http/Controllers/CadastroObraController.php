@@ -38,6 +38,7 @@ class CadastroObraController extends Controller
         $request->validate(
             [
                 'id_empresa' => 'required',
+                'cnpj' => 'cnpj',
                 'codigo_obra' => 'required|min:4',
                 'cep' => 'required',
                 'endereco' => 'required',
@@ -51,6 +52,7 @@ class CadastroObraController extends Controller
             ],
             [
                 'id_empresa.required' => 'Selecione uma Empresa para vincular esta Obra',
+                'cnpj.cnpj' => 'Digite um CNPJ válido',
                 'codigo_obra.required' => 'É necessário digitar um código para esta Obra',
                 'cep.required' => 'O CEP é indispensável',
                 'endereco.required' => 'Preencha o endereço corretamente',
@@ -111,7 +113,7 @@ class CadastroObraController extends Controller
                 'id_empresa' => 'required',
                 'codigo_obra' => 'required|min:4',
                 //'razao_social' => 'required|min:5',
-                //'cnpj' => 'required',
+                'cnpj' => 'cnpj',
                 'cep' => 'required',
                 'endereco' => 'required',
                 'numero' => 'required',
@@ -126,7 +128,7 @@ class CadastroObraController extends Controller
                 'id_empresa.required' => 'Selecione uma Empresa para vincular esta Obra',
                 'codigo_obra.required' => 'É necessário digitar um código para esta Obra',
                 //'razao_social.required' => 'É necessário preencher a Razão Social',
-                //'cnpj.required' => 'Este CNPJ não é válido',
+                'cnpj.cnpj' => 'Este CNPJ não é válido',
                 'cep.required' => 'O CEP é indispensável',
                 'endereco.required' => 'Preencha o endereço corretamente',
                 'numero.required' => 'Preencha o número da residência',

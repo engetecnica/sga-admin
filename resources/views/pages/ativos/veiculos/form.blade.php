@@ -213,7 +213,7 @@
                         <div class="row mt-3">
                             <div class="col-md-4">
                                 <label class="form-label" for="valor_fipe">Valor</label>
-                                <input class="form-control" id="valor_fipe" name="valor_fipe" type="text" value="{{ old('valor_fipe', @$store->valor_fipe) }}" placeholder="Preenchimento Automático">
+                                <input class="form-control" id="valor_fipe1" name="valor_fipe" type="text" value="{{ old('valor_fipe', @$store->valor_fipe) }}" placeholder="Preenchimento Automático">
                             </div>
                             <div class="col-md-4">
                                 <label class="form-label" for="codigo_fipe">Código</label>
@@ -438,8 +438,8 @@
                     dataType: "json",
                     success: function(data) {
                         $('#veiculo').val(data.Modelo);
-                        $('#valor_fipe').val(data.Valor.replace(/[^\d\,]/g, '').replace(',',
-                            '.'));
+                        $('#valor_fipe').val(data.Valor.replace(/[^\d\,]/g, '').replace(',', '.'));
+                        $('#valor_fipe1').val(data.Valor);
                         $('#codigo_fipe').val(data.CodigoFipe);
                         $('#fipe_mes_referencia').val(data.MesReferencia);
                     }

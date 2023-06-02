@@ -72,14 +72,10 @@
                                         @endisset
                                     </td> --}}
                                     <td>
-                                        @isset($veiculo->quilometragem)
-                                            {{ $veiculo->quilometragem->quilometragem_atual }}Km
-                                        @endisset
+                                        {{ $quilometragem->quilometragem_atual }}Km
                                     </td>
                                     <td>
-                                        @isset($veiculo->horimetro_inicial)
-                                            {{ $veiculo->horimetro_inicial }}Hr
-                                        @endisset
+                                        {{-- {{ $veiculo->horimetro_inicial }}Hr --}}
                                     </td>
                                     <td class="d-flex gap-2">
                                         <div class="dropdown">

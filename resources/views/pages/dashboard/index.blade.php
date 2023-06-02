@@ -99,7 +99,7 @@
     </style>
 
     <div class="row mb-5">
-        <div class="col-xl-3 mb-50">
+        {{-- <div class="col-xl-3 mb-50 mb-2">
             <div class="gradient-style1 box-shadow border-radius-10 height-100-p widget-style3 text-white">
                 <div class="d-flex align-items-center flex-wrap">
                     <div class="widget-data">
@@ -111,8 +111,8 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-xl-3 mb-50">
+        </div> --}}
+        <div class="col-xl-3 mb-50 mb-2">
             <div class="gradient-style2 box-shadow border-radius-10 height-100-p widget-style3 text-white">
                 <div class="d-flex align-items-center flex-wrap">
                     <div class="widget-data">
@@ -125,7 +125,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-xl-3 mb-50">
+        {{-- <div class="col-xl-3 mb-50 mb-2">
             <div class="gradient-style3 box-shadow border-radius-10 height-100-p widget-style3 text-white">
                 <div class="d-flex align-items-center flex-wrap">
                     <div class="widget-data">
@@ -137,8 +137,8 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-xl-3 mb-50">
+        </div> --}}
+        <div class="col-xl-3 mb-50 mb-2">
             <div class="gradient-style4 box-shadow border-radius-10 height-100-p widget-style3 text-white">
                 <div class="d-flex align-items-center flex-wrap">
                     <div class="widget-data">
@@ -154,7 +154,7 @@
     </div>
 
     <div class="row">
-        <div class="col-xl-6 col-sm-12">
+        <div class="col-xl-6 col-sm-12 mb-4">
             <div class="card">
                 <div class="card-body">
                     <h5>Finalizar cadastros ({{ Tarefa::countObras() }})</h5>
@@ -173,7 +173,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-xl-6 col-sm-12">
+        <div class="col-xl-6 col-sm-12 mb-4">
             <div class="card">
                 <div class="card-body">
                     <h5>Funcionários bloqueados ({{ count(Tarefa::funcionariosBloqueados()) }})</h5>
@@ -185,6 +185,25 @@
                                 </td>
                                 <td style="width: 20%">
                                     <a href="{{ route('cadastro.funcionario.editar', $bloqueado->funcionario->id) }}"><span class="badge badge-success">Visualizar dados de contato</span></a>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-6 col-sm-12 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5>Aniversariantes do mês ({{ count(Estatistica::aniversariantes()) }})</h5>
+                    <table class="table-border table-responsive table">
+                        @foreach (Estatistica::aniversariantes() as $aniversariante)
+                            <tr>
+                                <td>
+                                    {{ $aniversariante->matricula }} - {{ $aniversariante->nome }} | {{ Tratamento::dateBr($aniversariante->data_nascimento) }}
+                                </td>
+                                <td style="width: 20%">
+                                    <a href="{{ route('cadastro.funcionario.editar', $aniversariante->id) }}"><span class="badge badge-success">Visualizar dados de contato</span></a>
                                 </td>
                             </tr>
                         @endforeach

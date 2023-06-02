@@ -111,14 +111,14 @@ class FerramentalRetiradaController extends Controller
             Log::channel('main')->info($userLog .' | ADD RETIRADA | ID: ' . $id_retirada . ' | DATA: ' . date('Y-m-d H:i:s'));
 
             //Notificação por e-mail no endereço cadastrado nas configurações de notificações
-            $email_config = Config::where('id', 1)->first();
-            $email_config->notify(new NotificaRetirada($email_config->email));
+            // $email_config = Config::where('id', 1)->first();
+            // $email_config->notify(new NotificaRetirada($email_config->email));
 
             //Notificação por telegram no canal registrado (API depende de https)
-            if (env('APP_ENV') === 'production') {
-                Notification::route('telegram', env('TELEGRAM_CHAT_ID'))
-                    ->notify(new NotificaRetiradaTelegram($email_config->email));
-            }
+            // if (env('APP_ENV') === 'production') {
+            //     Notification::route('telegram', env('TELEGRAM_CHAT_ID'))
+            //         ->notify(new NotificaRetiradaTelegram($email_config->email));
+            // }
 
             return redirect()->route('ferramental.retirada.detalhes', $id_retirada)->with('success', 'Sua retirada foi registrada com sucesso!');
         } else {

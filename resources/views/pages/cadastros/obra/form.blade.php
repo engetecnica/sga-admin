@@ -93,10 +93,15 @@
                                 <label class="form-label" for="estado">Estado</label>
                                 <select class="form-select" id="estado" name="estado">
                                     <option value="">Selecione o Estado</option>
-                                    @foreach ($estados as $sigla => $estado)
-                                        <option value="{{ $sigla }}" @php if(@$store->estado==$sigla) echo 'selected' @endphp>{{ $estado }}
-                                        </option>
-                                    @endforeach
+                                    @if (url()->current() == route('cadastro.obra.adicionar'))
+                                        @foreach ($estados as $sigla => $estado)
+                                            <option value="{{ $sigla }}" {{ old('estado') == $sigla ? 'selected' : '' }}>{{ $estado }}</option>
+                                        @endforeach
+                                    @else
+                                        @foreach ($estados as $sigla => $estado)
+                                            <option value="{{ $sigla }}" @php if(@$store->estado==$sigla) echo 'selected' @endphp>{{ $estado }}</option>
+                                        @endforeach
+                                    @endif
                                 </select>
                             </div>
                             <div class="col-md-6">

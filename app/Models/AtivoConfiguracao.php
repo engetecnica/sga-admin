@@ -15,7 +15,7 @@ class AtivoConfiguracao extends Model
     protected $dates = ['deleted_at'];
 
     static function get_ativo_configuracoes(){
-        
+
         $configuracoes = new AtivoConfiguracao();
         $configuracoes = $configuracoes->where('id_relacionamento', 0)->orderBy('titulo', 'ASC')->get();
         foreach ($configuracoes as &$configs) {
@@ -26,7 +26,7 @@ class AtivoConfiguracao extends Model
                 ->get();
         }
 
-       
+
         return $configuracoes;
     }
 }

@@ -36,7 +36,7 @@ class AtivoConfiguracaoController extends Controller
             ],
             [
                 'id_relacionamento.required' => 'É necessário selecionar o Relacionamento desta Categoria',
-                'titulo.required' => 'Preencha o Título da sua Categoria',
+                'titulo.required' => 'Preencha o Título da sua Sub Categoria',
                 'status.required' => 'Selecione o Status'
             ]
         );

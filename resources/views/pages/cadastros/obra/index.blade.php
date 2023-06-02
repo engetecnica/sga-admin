@@ -23,7 +23,7 @@
                 <button class="btn btn-sm btn-danger">Novo Registro</button>
             </a>
 
-            <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-add"><i class="mdi mdi-plus"></i></button>
+            <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-add">Inclusão rápida</button>
         </h3>
     </div>
 
@@ -55,10 +55,9 @@
                                     <td>{{ $v->celular }}</td>
                                     <td>{{ $v->email }}</td>
                                     <td>{{ $v->status }} </td>
-                                    <td>
-
-                                        <a href="{{ route('cadastro.obra.editar', $v->id) }}">
-                                            <button class="badge badge-info" data-toggle="tooltip" data-placement="top" title="Editar"><i class="mdi mdi-pencil"></i> Editar</button>
+                                    <td class="d-flex">
+                                        <a class="badge badge-info mr-2" href="{{ route('cadastro.obra.editar', $v->id) }}">
+                                            <i class="mdi mdi-pencil"></i> Editar
                                         </a>
 
                                         <form action="{{ route('cadastro.obra.destroy', $v->id) }}" method="POST">

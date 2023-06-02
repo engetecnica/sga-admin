@@ -33,7 +33,7 @@ class CadastroEmpresaController extends Controller
             [
                 'razao_social' => 'required|min:5',
                 'nome_fantasia' => 'required',
-                'cnpj' => 'required|cnpj|unique:empresas,cnpj',
+                'cnpj' => 'required|cnpj|unique:empresas,cnpj,NULL,id,deleted_at,NULL',
                 'cep' => 'required',
                 'endereco' => 'required',
                 'numero' => 'required',
@@ -100,11 +100,13 @@ class CadastroEmpresaController extends Controller
 
     public function update(Request $request, $id)
     {
+        $empresa = CadastroEmpresa::find($id);
+
         $request->validate(
             [
                 'razao_social' => 'required|min:5',
                 'nome_fantasia' => 'required',
-                'cnpj' => 'required|unique:empresas,cnpj,'.$id,
+                'cnpj' => 'required|unique:empresas,cnpj,null,'.$empresa->id.',deleted_at,null',
                 'cep' => 'required',
                 'endereco' => 'required',
                 'numero' => 'required',
@@ -132,7 +134,7 @@ class CadastroEmpresaController extends Controller
             ]
         );
 
-        $empresa = CadastroEmpresa::find($id);
+
         $empresa->razao_social = $request->razao_social;
         $empresa->nome_fantasia = $request->nome_fantasia;
         $empresa->cnpj = $request->cnpj;

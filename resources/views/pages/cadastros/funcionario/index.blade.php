@@ -23,7 +23,7 @@
                 <button class="btn btn-sm btn-danger">Novo Registro</button>
             </a>
             <a href="{{ route('cadastro.funcionario.funcoes.index') }}">
-                <button class="btn btn-sm btn-danger">Funções</button>
+                <button class="btn btn-sm btn-primary">Cadastrar Funções</button>
             </a>
         </h3>
     </div>
@@ -56,10 +56,10 @@
                                     <td>{{ $v->celular }}</td>
                                     <td>{{ $v->email }}</td>
                                     <td>{{ $v->status }} </td>
-                                    <td>
+                                    <td class="d-flex justify-itens-between">
 
-                                        <a href="{{ route('cadastro.funcionario.editar', $v->id) }}">
-                                            <button class="badge badge-info" data-toggle="tooltip" data-placement="top" title="Editar"><i class="mdi mdi-pencil"></i> Editar</button>
+                                        <a class="badge badge-info mr-2" href="{{ route('cadastro.funcionario.editar', $v->id) }}">
+                                            <i class="mdi mdi-pencil"></i> Editar
                                         </a>
 
                                         <form action="{{ route('cadastro.funcionario.destroy', $v->id) }}" method="POST">

@@ -18,7 +18,9 @@ class VeiculoController extends Controller
     {
         $veiculos = Veiculo::all();
 
-        return view('pages.ativos.veiculos.index', compact('veiculos'));
+        $quilometragem = VeiculoQuilometragem::where('veiculo_id', $veiculos->id)->first();
+
+        return view('pages.ativos.veiculos.index', compact('veiculos', 'quilometragem'));
     }
 
     public function create()
@@ -86,7 +88,7 @@ class VeiculoController extends Controller
         $userLog = Auth::user()->email;
         Log::channel('main')->info($userLog .' | ADD VEICULO | Placa: ' . $veiculo->placa);
 
-        return redirect()->back()->with('success', 'Registro cadastrado com sucesso.');
+        return redirect()->route('ativo.veiculo')->with('success', 'Registro cadastrado com sucesso.');
 
         // try {
         //     $veiculo = Veiculo::create(

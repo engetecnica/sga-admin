@@ -12,95 +12,80 @@ use Illuminate\Support\Facades\Log;
 
 class VeiculoAbastecimentoController extends Controller
 {
-    public function index($id)
+    public function index(Veiculo $veiculo)
     {
         $fornecedores = CadastroFornecedor::select('id', 'razao_social')->get();
 
-        $store = Veiculo::find($id);
+        $abastecimentos = VeiculoAbastecimento::with('veiculo')->where('veiculo_id', $veiculo->id)->orderByDesc('id')->get();
 
-        $last = VeiculoAbastecimento::where('veiculo_id', $id)->orderBy('id', 'desc')->first();
+        $last = VeiculoAbastecimento::where('veiculo_id', $veiculo->id)->orderByDesc('id')->first();
 
-        if (!$id or !$store) {
-            return redirect()->route('ativo.veiculo')->with('fail', 'Esse veículo não foi encontrado.');
-        }
-
-        return view('pages.ativos.veiculos.abastecimento.index', compact('store', 'last', 'fornecedores'));
+        return view('pages.ativos.veiculos.abastecimento.index', compact('veiculo', 'abastecimentos', 'last', 'fornecedores'));
     }
 
-    public function edit($id, $btn)
+    public function create(Veiculo $veiculo)
     {
         $fornecedores = CadastroFornecedor::select('id', 'razao_social')->get();
-
-        $store = VeiculoAbastecimento::find($id);
-
-        if (!$id or !$store) {
-            return redirect()->route('ativo.veiculo')->with('fail', 'Esse veículo não foi encontrado.');
-        }
-
-        return view('pages.ativos.veiculos.abastecimento.form', compact('store', 'fornecedores', 'btn'));
+        return view('pages.ativos.veiculos.abastecimento.create', compact('veiculo', 'fornecedores'));
     }
 
-    public function store(Request $request, $id)
+    public function store(Request $request)
     {
+        // dd($request->all());
 
-        $veiculo = Veiculo::findOrFail($id);
+        $data = $request->all();
+        $data['valor_total'] = str_replace('R$ ', '', $request->valor_total);
+        $data['valor_do_litro'] = str_replace('R$ ', '', $request->valor_do_litro);
+        $save = VeiculoAbastecimento::create($data);
 
-        try {
-            VeiculoAbastecimento::create(
-                [
-                    'veiculo_id' => $veiculo->id,
-                    'fornecedor_id' => $request->input('fornecedor'),
-                    'combustivel' => $request->input('combustivel'),
-                    'quilometragem' => $request->input('quilometragem'),
-                    'valor_do_litro' => str_replace('R$ ', '', $request->input('valor_do_litro')),
-                    'quantidade' => $request->input('quantidade'),
+        $userLog = Auth::user()->email;
+        Log::channel('main')->info($userLog .' | STORE ABASTECIMENTO | ' . $save->id . ' | COMBUSTÍVEL: ' . $request->input('combustivel') . ' | QUILOMETRAGEM: ' . $request->input('quilometragem') . ' | VALOR DO LITRO: ' . $request->input('valor_do_litro') );
 
-                    'valor_total' => str_replace('R$ ', '', $request->input('valor_total')),
-
-                ]
-            );
-
-            $userLog = Auth::user()->email;
-            Log::channel('main')->info($userLog .' | STORE ABASTECIMENTO | ' . $veiculo->placa . ' | COMBUSTÍVEL: ' . $request->input('combustivel') . ' | QUILOMETRAGEM: ' . $request->input('quilometragem') . ' | VALOR DO LITRO: ' . $request->input('valor_do_litro') );
-
-            return redirect()->route('ativo.veiculo.abastecimento.index', $id)->with('success', 'Sucesso');
-        } catch (\Exception $e) {
-
-            return redirect()->back()->withInput();
+        if ($save) {
+            return redirect()->route('ativo.veiculo.abastecimento.index', $save->veiculo_id)->with('success', 'O registro foi adicionado com sucesso.');
+        } else {
+            return redirect()->route('ativo.veiculo.abastecimento.index', $save->veiculo_id)->with('fail', 'Problemas para adicionar o registro.');
         }
+
+    }
+
+    public function edit($id)
+    {
+        $abastecimento = VeiculoAbastecimento::with('veiculo', 'fornecedor')->findOrFail($id);
+
+        $fornecedores = CadastroFornecedor::select('id', 'razao_social')->get();
+
+        return view('pages.ativos.veiculos.abastecimento.edit', compact('abastecimento', 'fornecedores'));
     }
 
     public function update(Request $request, $id)
     {
-        $veiculo = VeiculoAbastecimento::findOrFail($id);
-        try {
-            $veiculo->update([
-                'fornecedor_id' => $request->fornecedor,
-                'combustivel' => $request->combustivel,
-                'quilometragem' => $request->quilometragem,
-                'valor_do_litro' => str_replace('R$ ', '', $request->valor_do_litro),
-                'quantidade' => $request->quantidade,
-                'valor_total' => str_replace('R$ ', '', $request->valor_total),
-            ]);
-
-            $userLog = Auth::user()->email;
-            Log::channel('main')->info($userLog .' | EDIT ABASTECIMENTO | ' . $veiculo->placa . ' | COMBUSTÍVEL: ' . $request->input('combustivel') . ' | QUILOMETRAGEM: ' . $request->input('quilometragem'));
-
-            return redirect()->route('ativo.veiculo.abastecimento.editar', $veiculo->veiculo_id)->with('success', 'Sucesso');
-        } catch (\Exception $e) {
-
-            return redirect()->back()->withInput();
+        if (! $abastecimento = VeiculoAbastecimento::find($id)) {
+            return redirect()->route('ativo.veiculo.abastecimento.editar', $id)->with('fail', 'Problemas para localizar o registro.');
         }
+
+        $data = $request->all();
+        $data['valor_total'] = str_replace('R$ ', '', $request->valor_total);
+        $data['valor_do_litro'] = str_replace('R$ ', '', $request->valor_do_litro);
+        $abastecimento->update($data);
+
+        $userLog = Auth::user()->email;
+        Log::channel('main')->info($userLog .' | EDIT ABASTECIMENTO: ' . $abastecimento->id);
+
+        return redirect()->route('ativo.veiculo.abastecimento.editar', $abastecimento->id)->with('success', 'O registro foi alterado com sucesso');
     }
+
     public function delete($id)
     {
         $veiculo = VeiculoAbastecimento::findOrFail($id);
 
         $userLog = Auth::user()->email;
-        Log::channel('main')->info($userLog .' | DELETE ABASTECIMENTO: ' . $veiculo->placa);
+        Log::channel('main')->info($userLog .' | DELETE ABASTECIMENTO: ' . $veiculo->id);
 
-        $veiculo->delete();
-
-        return redirect()->back()->with('success', 'Sucesso');
+        if($veiculo->delete()) {
+            return redirect()->back()->with('success', 'O registro foi deletado com sucesso');
+        } else {
+            return redirect()->back()->with('fail', 'Problemas para deletar o registro.');
+        }
     }
 }

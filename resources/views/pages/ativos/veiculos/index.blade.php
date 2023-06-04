@@ -6,7 +6,7 @@
         <h3 class="page-title">
             <span class="page-title-icon bg-gradient-primary me-2 text-white">
                 <i class="mdi mdi-access-point-network menu-icon"></i>
-            </span> Veículos
+            </span> Veículos & Máquinas
         </h3>
         <nav aria-label="breadcrumb">
             <ul class="breadcrumb">
@@ -19,8 +19,8 @@
 
     <div class="page-header">
         <h3 class="page-title">
-            <a href="{{ route('ativo.veiculo.adicionar') }}">
-                <button class="btn btn-sm btn-danger">Inclusão de Novos Veículos</button>
+            <a class="btn btn-sm btn-danger" href="{{ route('ativo.veiculo.adicionar') }}">
+                Adicionar
             </a>
         </h3>
     </div>
@@ -34,82 +34,111 @@
                         <thead>
                             <tr>
                                 <th width="8%">ID</th>
-                                <th>Tipo</th>
                                 <th>Obra</th>
-                                {{-- <th>Período de Vigência</th> --}}
-                                <th>Placa / Nome do veículo</th>
-                                {{-- <th>Combustível</th> --}}
+                                <th>Tipo</th>
+                                <th>Placa/ID Interna</th>
+                                <th>Veículo</th>
                                 <th>KM atual</th>
                                 <th>HR Atual</th>
                                 <th width="10%">Ações</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($veiculos as $veiculo)
-                                <tr>
-                                    <td><span class="badge badge-dark">{{ $veiculo->id }}</span></td>
+                            @foreach ($veiculos->groupBy('id') as $veiculoId => $veiculosGrupo)
+                                @foreach ($veiculosGrupo as $veiculo)
+                                    <tr>
+                                        <td><span class="badge badge-dark">{{ $veiculo->id }}</span></td>
+                                        <td><span class="badge badge-secondary">{{ $veiculo->obra->razao_social }}</span></td>
+                                        @php
+                                            $tiposVeiculos = [
+                                                'motos' => 'Moto',
+                                                'caminhoes' => 'Caminhão',
+                                                'carros' => 'Carro',
+                                                'maquinas' => 'Máquina',
+                                            ];
+                                        @endphp
+                                        <td>
+                                            @if ($veiculo->tipo == 'motos')
+                                                <span class="badge badge-primary">{{ $tiposVeiculos[$veiculo->tipo] }}</span>
+                                            @elseif ($veiculo->tipo == 'caminhoes')
+                                                <span class="badge badge-danger">{{ $tiposVeiculos[$veiculo->tipo] }}</span>
+                                            @elseif ($veiculo->tipo == 'carros')
+                                                <span class="badge badge-success">{{ $tiposVeiculos[$veiculo->tipo] }}</span>
+                                            @elseif ($veiculo->tipo == 'maquinas')
+                                                <span class="badge badge-warning">{{ $tiposVeiculos[$veiculo->tipo] }}</span>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if ($veiculo->tipo == 'maquinas')
+                                                <span class="badge badge-secondary">{{ $veiculo->codigo_da_maquina }}</span>
+                                            @else
+                                                <span class="badge badge-secondary">{{ $veiculo->placa }}</span>
+                                            @endif
+                                        </td>
+                                        <td class="text-uppercase">
+                                            {{-- {{ $veiculo->marca }} | {{ $veiculo->modelo }} |  --}}
+                                            {{ $veiculo->veiculo }}
 
-                                    @php
-                                        $tiposVeiculos = [
-                                            'motos' => 'Moto',
-                                            'caminhoes' => 'Caminhão',
-                                            'carros' => 'Carro',
-                                            'maquinas' => 'Máquina',
-                                        ];
-                                    @endphp
+                                        </td>
+                                        <td>
+                                            @if ($veiculo->tipo != 'maquinas')
+                                                @php
+                                                    $ultimaQuilometragem = $veiculo->quilometragens->last();
+                                                @endphp
+                                                @if ($ultimaQuilometragem)
+                                                    {{ $ultimaQuilometragem->quilometragem_nova }} KM
+                                                @else
+                                                    {{ $veiculo->quilometragem_inicial }} KM
+                                                @endif
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if ($veiculo->tipo == 'maquinas')
+                                                @php
+                                                    $ultimaQuilometragem = $veiculo->quilometragens->last();
+                                                @endphp
+                                                @if ($ultimaQuilometragem)
+                                                    {{ $ultimaQuilometragem->quilometragem_nova }} HR
+                                                @else
+                                                    {{ Tratamento::simpleHour($veiculo->horimetro_inicial) }} HR
+                                                @endif
+                                            @endif
+                                        </td>
+                                        <td class="d-flex gap-2">
+                                            <div class="dropdown">
+                                                <button class="badge badge-info" id="dropdownMenuButton1" data-bs-toggle="dropdown" type="button" aria-expanded="false">
+                                                    <i class="mdi mdi-pencil"></i> Gerenciar
+                                                </button>
+                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                                    <li><a class="dropdown-item" href="{{ route('ativo.veiculo.editar', $veiculo->id) }}">Editar</a></li>
+                                                    <li>
+                                                        <a class="dropdown-item" href="{{ route('ativo.veiculo.quilometragem.index', $veiculo->id) }}">
+                                                            @if ($veiculo->tipo == 'maquinas')
+                                                                Horímetro
+                                                            @else
+                                                                Quilometragem
+                                                            @endif
+                                                        </a>
+                                                    </li>
+                                                    <li><a class="dropdown-item" href="{{ route('ativo.veiculo.abastecimento.index', $veiculo->id) }}">Abastecimento</a></li>
+                                                    <li><a class="dropdown-item" href="{{ route('ativo.veiculo.manutencao.index', $veiculo->id) }}">Manutenção</a></li>
+                                                    <li><a class="dropdown-item" href="{{ route('ativo.veiculo.ipva.index', $veiculo->id) }}">IPVA</a></li>
+                                                    <li><a class="dropdown-item" href="{{ route('ativo.veiculo.seguro.index', $veiculo->id) }}">Seguro</a></li>
+                                                    <li><a class="dropdown-item" href="{{ route('ativo.veiculo.depreciacao.index', $veiculo->id) }}">Depreciação</a></li>
+                                                    <li><a class="dropdown-item" href="#">Anexos</a></li>
+                                                </ul>
+                                            </div>
 
-                                    <td>{{ @$tiposVeiculos[$veiculo->tipo] }}</td>
-                                    <td>{{ @$veiculo->obra->razao_social }}</td>
-                                    {{-- <td>
-                                        {{ date('d/m/Y', strtotime($veiculo->periodo_inicial)) }} até
-                                        {{ date('d/m/Y', strtotime($veiculo->periodo_final)) }}
-                                    </td> --}}
-
-                                    <td>{{ @$veiculo->placa }}/{{ @$veiculo->veiculo }}</td>
-                                    {{-- <td>
-                                        @isset($veiculo->abastecimento)
-                                            {{ $veiculo->abastecimento->combustivel }}
-                                        @endisset
-                                    </td> --}}
-                                    <td>
-                                        {{ $quilometragem->quilometragem_atual }}Km
-                                    </td>
-                                    <td>
-                                        {{-- {{ $veiculo->horimetro_inicial }}Hr --}}
-                                    </td>
-                                    <td class="d-flex gap-2">
-                                        <div class="dropdown">
-                                            <button class="badge badge-info" id="dropdownMenuButton1" data-bs-toggle="dropdown" type="button" aria-expanded="false">
-                                                <i class="mdi mdi-pencil"></i> Gerenciar
-                                            </button>
-                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                <li><a class="dropdown-item" href="{{ route('ativo.veiculo.editar', $veiculo->id) }}">Editar</a>
-                                                </li>
-                                                <li><a class="dropdown-item" href="{{ route('ativo.veiculo.quilometragem.index', $veiculo->id) }}">Quilometragem</a>
-                                                </li>
-                                                <li><a class="dropdown-item" href="{{ route('ativo.veiculo.abastecimento.index', $veiculo->id) }}">Abastecimento</a>
-                                                </li>
-                                                <li><a class="dropdown-item" href="{{ route('ativo.veiculo.manutencao.index', $veiculo->id) }}">Manutenção</a>
-                                                </li>
-                                                <li><a class="dropdown-item" href="{{ route('ativo.veiculo.ipva.index', $veiculo->id) }}">IPVA</a>
-                                                </li>
-                                                <li><a class="dropdown-item" href="{{ route('ativo.veiculo.seguro.index', $veiculo->id) }}">Seguro</a>
-                                                </li>
-                                                <li><a class="dropdown-item" href="{{ route('ativo.veiculo.depreciacao.index', $veiculo->id) }}">Depreciação</a>
-                                                </li>
-                                                <li><a class="dropdown-item" href="#">Anexos</a></li>
-                                            </ul>
-                                        </div>
-
-                                        <form action="{{ route('ativo.veiculo.delete', $veiculo->id) }}" method="POST">
-                                            @csrf
-                                            <a class="excluir-padrao" data-id="{{ $veiculo->id }}" data-table="empresas" data-module="cadastro/empresa">
-                                                <button class="badge badge-danger" data-toggle="tooltip" data-placement="top" type="submit" title="Excluir" onclick="return confirm('Tem certeza que deseja exluir o registro?')"><i class="mdi mdi-delete"></i>
-                                                    Excluir</button>
-                                            </a>
-                                        </form>
-                                    </td>
-                                </tr>
+                                            <form action="{{ route('ativo.veiculo.delete', $veiculo->id) }}" method="POST">
+                                                @csrf
+                                                <a class="excluir-padrao" data-id="{{ $veiculo->id }}" data-table="empresas" data-module="cadastro/empresa">
+                                                    <button class="badge badge-danger" data-toggle="tooltip" data-placement="top" type="submit" title="Excluir" onclick="return confirm('Tem certeza que deseja exluir o veículo?')"><i class="mdi mdi-delete"></i>
+                                                        Excluir</button>
+                                                </a>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
                             @endforeach
                         </tbody>
                     </table>

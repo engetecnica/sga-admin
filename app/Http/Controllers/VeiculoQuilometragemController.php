@@ -15,20 +15,16 @@ class VeiculoQuilometragemController extends Controller
     {
         $veiculo = Veiculo::find($id);
 
-        $store = VeiculoQuilometragem::with('veiculo')->where('veiculo_id', $id)->get();
+        $quilometragens = VeiculoQuilometragem::with('veiculo')->where('veiculo_id', $id)->orderByDesc('id')->get();
 
         $last = VeiculoQuilometragem::where('veiculo_id', $id)->orderByDesc('id')->first();
 
-        if (!$id or !$store) {
-            return redirect()->route('ativo.veiculo')->with('fail', 'Esse veículo não foi encontrado.');
-        }
-
-        return view('pages.ativos.veiculos.quilometragem.index', compact('veiculo', 'store', 'last'));
+        return view('pages.ativos.veiculos.quilometragem.index', compact('veiculo', 'quilometragens', 'last'));
     }
 
     public function edit($id, $btn)
     {
-        $store = VeiculoQuilometragem::find($id);
+        $store = VeiculoQuilometragem::with('veiculo')->find($id);
 
         if (!$id or !$store) {
             return redirect()->route('ativo.veiculo')->with('fail', 'Esse veículo não foi encontrado.');
@@ -71,7 +67,7 @@ class VeiculoQuilometragemController extends Controller
             ]);
 
             $userLog = Auth::user()->email;
-            Log::channel('main')->info($userLog .' | UPDATEv QUILOMETRAGEM: ' . $veiculo->id);
+            Log::channel('main')->info($userLog .' | UPDATEv QUILOMETRAGEM/HORIMETRO: ' . $veiculo->id);
 
             return redirect()->route('ativo.veiculo.quilometragem.editar', $veiculo->veiculo_id)->with('success', 'Sucesso');
         } catch (\Exception $e) {
@@ -84,10 +80,10 @@ class VeiculoQuilometragemController extends Controller
         $veiculo = VeiculoQuilometragem::findOrFail($id);
 
         $userLog = Auth::user()->email;
-        Log::channel('main')->info($userLog .' | DELETE QUILOMETRAGEM: ' . $veiculo->id);
+        Log::channel('main')->info($userLog .' | DELETE QUILOMETRAGEM/HORIMETRO: ' . $veiculo->id);
 
         $veiculo->delete();
 
-        return redirect()->back()->with('success', 'Sucesso');
+        return redirect()->back()->with('success', 'Registro excluído com sucesso.');
     }
 }

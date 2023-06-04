@@ -88,7 +88,7 @@ class AtivoInternoController extends Controller
     public function update(Request $request, $ativo)
     {
         if (! $save = AtivosInterno::find($ativo)) {
-            return redirect()->route('ativo.interno.index')->with('fail', 'Registro atualizado com sucesso.');
+            return redirect()->route('ativo.interno.index')->with('fail', 'Problemas para localizar o ativo.');
         }
 
         $userLog = Auth::user()->email;

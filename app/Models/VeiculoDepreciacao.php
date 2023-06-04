@@ -12,16 +12,16 @@ class VeiculoDepreciacao extends Model
     use SoftDeletes;
 
     protected $dates = ['deleted_at'];
-    
+
     protected $fillable = [
         'veiculo_id',
         'valor_atual',
         'referencia_mes',
         'referencia_ano'
     ];
-    
+
     public function veiculo()
     {
-        return $this->belongsTo(Veiculo::class);
+        return $this->belongsTo(Veiculo::class, 'veiculo_id');
     }
 }

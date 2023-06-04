@@ -8,85 +8,75 @@ use App\Models\Veiculo;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
+use function PHPUnit\Framework\returnCallback;
+
 class VeiculoDepreciacaoController extends Controller
 {
-    public function index($id)
+    public function index(Veiculo $veiculo)
     {
-        $store = Veiculo::find($id);
+        $depreciacoes = VeiculoDepreciacao::where('veiculo_id', $veiculo->id)->orderByDesc('id')->get();
 
-        $last = VeiculoDepreciacao::where('veiculo_id', $id)->orderByDesc('id')->first();
-
-        if (!$id or !$store) {
-            return redirect()->route('ativo.veiculo')->with('fail', 'Esse veículo não foi encontrado.');
-        }
-
-        return view('pages.ativos.veiculos.depreciacao.index', compact('store', 'last'));
+        return view('pages.ativos.veiculos.depreciacao.index', compact('veiculo', 'depreciacoes'));
     }
 
-    public function edit($id, $btn)
+    public function create(Veiculo $veiculo)
     {
-        $store = VeiculoDepreciacao::find($id);
-
-        if (!$id or !$store) {
-            return redirect()->route('ativo.veiculo')->with('fail', 'Esse veículo não foi encontrado.');
-        }
-
-        return view('pages.ativos.veiculos.depreciacao.form', compact('store', 'btn'));
+        return view('pages.ativos.veiculos.depreciacao.create', compact('veiculo'));
     }
 
-    public function store(Request $request, $id)
+    public function store(Request $request)
     {
-        $veiculo = Veiculo::findOrFail($id);
+        // dd($request->all());
 
-        try {
-            VeiculoDepreciacao::create(
-                [
-                    'veiculo_id' => $veiculo->id,
-                    'valor_atual' => str_replace('R$ ', '', $request->input('valor_atual')),
-                    'referencia_mes' => $request->input('referencia_mes'),
-                    'referencia_ano' => $request->input('referencia_ano'),
-                ]
-            );
+        $data = $request->all();
+        $data['valor_atual'] = str_replace('R$ ', '', $request->valor_atual);
+        $save = VeiculoDepreciacao::create($data);
 
-            $userLog = Auth::user()->email;
-            Log::channel('main')->info($userLog .' | STORE DEPRECIACAO: ' . $veiculo->id);
-
-            return redirect()->route('ativo.veiculo.depreciacao.index', $id)->with('success', 'Sucesso');
-        } catch (\Exception $e) {
-
-            return redirect()->back()->withInput();
+        if($save){
+            return redirect()->route('ativo.veiculo.depreciacao.index', $request->veiculo_id)->with('success', 'Registro salvo com sucesso');
+        } else {
+            return redirect()->route('ativo.veiculo.depreciacao.index', $request->veiculo_id)->with('fail', 'Erro ao salvar registro');
         }
+    }
+
+    public function edit($id)
+    {
+        $depreciacao = VeiculoDepreciacao::with('veiculo')->where('id', $id)->first();
+
+        return view('pages.ativos.veiculos.depreciacao.edit', compact('depreciacao'));
     }
 
     public function update(Request $request, $id)
     {
-        $veiculo = VeiculoDepreciacao::findOrFail($id);
+        // dd($request->all());
 
-        try {
-            $veiculo->update([
-                'valor_atual' => str_replace('R$ ', '', $request->valor_atual),
-                'referencia_mes' => $request->referencia_mes,
-                'referencia_ano' => $request->referencia_ano
-            ]);
-
-            $userLog = Auth::user()->email;
-            Log::channel('main')->info($userLog .' | UPDATE DEPRECIACAO: ' . $veiculo->id);
-
-            return redirect()->route('ativo.veiculo.depreciacao.editar', $veiculo->veiculo_id)->with('success', 'Sucesso');
-        } catch (\Exception $e) {
-
-            return redirect()->back()->withInput();
+        if (! $depreciacao = VeiculoDepreciacao::find($id)) {
+            return redirect()->route('ativo.veiculo.depreciacao.editar', $id)->with('fail', 'Problemas para localizar o registro.');
         }
+
+        $data = $request->all();
+        $data['valor_atual'] = str_replace('R$ ', '', $request->valor_atual);
+        $depreciacao->update($data);
+
+        $userLog = Auth::user()->email;
+        Log::channel('main')->info($userLog .' | EDIT DEPRECIACAO: ' . $id);
+
+        return redirect()->route('ativo.veiculo.depreciacao.editar', $id)->with('success', 'O registro foi alterado com sucesso');
     }
+
     public function delete($id)
     {
         $veiculo = VeiculoDepreciacao::findOrFail($id);
 
-        $userLog = Auth::user()->email;
-        Log::channel('main')->info($userLog .' | DELETE DEPRECIACAO: ' . $veiculo->id);
+        if($veiculo->delete()){
 
-        $veiculo->delete();
+            $userLog = Auth::user()->email;
+            Log::channel('main')->info($userLog .' | DELETE DEPRECIACAO: ' . $veiculo->id);
 
-        return redirect()->back()->with('success', 'Sucesso');
+            return redirect()->route('ativo.veiculo.depreciacao.index', $veiculo->veiculo_id)->with('success', 'Registro excluído com sucesso');
+        } else {
+            return redirect()->route('ativo.veiculo.depreciacao.index', $veiculo->veiculo_id)->with('fail', 'Erro ao excluir registro');
+        }
+
     }
 }

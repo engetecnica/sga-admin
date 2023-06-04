@@ -11,6 +11,8 @@ class Veiculo extends Model
 
     use SoftDeletes;
 
+    protected $table = 'veiculos';
+
     protected $dates = ['deleted_at'];
 
     protected $fillable = [
@@ -29,13 +31,14 @@ class Veiculo extends Model
         'placa',
         'renavam',
         'horimetro_inicial',
+        'quilometragem_inicial',
         'observacao',
         'situacao'
     ];
 
     public function quilometragens()
     {
-        return $this->hasMany(VeiculoQuilometragem::class);
+        return $this->hasMany(VeiculoQuilometragem::class, 'veiculo_id');
     }
 
     public function abastecimentos()

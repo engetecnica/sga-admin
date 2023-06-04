@@ -22,6 +22,6 @@ class VeiculoIpva extends Model
     ];
     public function veiculo()
     {
-        return $this->belongsTo(Veiculo::class);
+        return $this->belongsTo(Veiculo::class, 'veiculo_id');
     }
 }

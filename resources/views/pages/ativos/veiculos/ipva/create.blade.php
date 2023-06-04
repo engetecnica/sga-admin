@@ -7,12 +7,11 @@
             <span class="page-title-icon bg-gradient-primary me-2 text-white">
                 <i class="mdi mdi-access-point-network menu-icon"></i>
             </span>
-            @if ($store->veiculo->tipo == 'maquinas')
-                Holímetro da máquina
+            @if ($veiculo->tipo == 'maquinas')
+                IPVA da Máquina
             @else
-                Quilometragem do veículo
+                IPVA do Veículo
             @endif
-
         </h3>
         <nav aria-label="breadcrumb">
             <ul class="breadcrumb">
@@ -39,37 +38,32 @@
                         </div>
                     @endif
 
-                    {{-- @dd($store) --}}
-
-                    <form method="post" action="{{ $btn == 'add' ? route('ativo.veiculo.quilometragem.store', $store->veiculo_id) : route('ativo.veiculo.quilometragem.update', $store->id) }}">
+                    <form method="post" action="{{ route('ativo.veiculo.ipva.store') }}">
                         @csrf
                         <div class="jumbotron p-3">
-                            <span class="font-weight-bold">{{ $store->veiculo->marca }} | {{ $store->veiculo->modelo }} | {{ $store->veiculo->veiculo }}</span>
+                            <span class="font-weight-bold">{{ $veiculo->marca }} | {{ $veiculo->modelo }} | {{ $veiculo->veiculo }}</span>
                         </div>
                         <div class="row mt-3">
-                            <div class="col-md-4">
-                                <label class="form-label" for="quilometragem_atual">
-                                    @if ($store->veiculo->tipo == 'maquinas')
-                                        Holímetro atual
-                                    @else
-                                        Quilometragem Atual
-                                    @endif
-                                </label>
-                                <input class="form-control" id="quilometragem_atual" name="quilometragem_atual" type="number" value="{{ $btn == 'add' ? $store->quilometragem_nova : $store->quilometragem_atual }}" {{ $btn == 'add' ? 'readonly' : 'readonly' }}>
+                            <div class="col-md-3">
+                                <label class="form-label" for="referencia_ano">Ano de Referência</label>
+                                <input class="form-control" id="referencia_ano" name="referencia_ano" type="number" value="{{ old('referencia_ano') }}">
                             </div>
-                            <div class="col-md-4">
-                                <label class="form-label" for="quilometragem_nova">
-                                    @if ($store->veiculo->tipo == 'maquinas')
-                                        Holímetro novo
-                                    @else
-                                        Quilometragem Nova
-                                    @endif
-                                </label>
-                                <input class="form-control" id="quilometragem_nova" name="quilometragem_nova" type="number" value="{{ $btn == 'add' ? '' : $store->quilometragem_nova }}">
+                            <div class="col-md-3">
+                                <label class="form-label" for="valor">Valor</label>
+                                <input class="form-control" id="valor" name="valor" type="text" value="{{ old('valor') }}">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label" for="data_de_vencimento">Data de Vencimento</label>
+                                <input class="form-control" id="data_de_vencimento" name="data_de_vencimento" type="date" value="{{ old('data_de_vencimento') }}">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label" for="data_de_pagamento">Data de Pagamento</label>
+                                <input class="form-control" id="data_de_pagamento" name="data_de_pagamento" type="date" value="{{ old('data_de_pagamento') }}">
                             </div>
                         </div>
 
                         <div class="col-12 mt-5">
+                            <input name="veiculo_id" type="hidden" value="{{ $veiculo->id }}">
                             <button class="btn btn-gradient-primary btn-lg font-weight-medium" type="submit">Salvar</button>
 
                             <a href="{{ route('ativo.veiculo') }}">

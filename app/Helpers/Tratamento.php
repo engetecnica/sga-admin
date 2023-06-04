@@ -111,29 +111,29 @@ class Tratamento
     public static function calculateDepreciationPercentage($original_value, $new_value)
     {
         //preparando o valor original (valor_fipe)
-        $original_value = floatval(str_replace(array('.', ','), '', $original_value));
+        $original_value = str_replace(',', '.', str_replace('.', '', $original_value));
 
         //preparando o valor atual (valor_atual_fipe)
-        $new_value = round(str_replace(',', '.', preg_replace('/\./', '', $new_value)), 0);
+        $new_value = str_replace(',', '.', str_replace('.', '', $new_value));
 
         //calculando a porcentagem
-        $value = (($original_value - $new_value) / $original_value) * 100;
+        $value = (($new_value - $original_value) / $original_value) * 100;
 
-        return round($value, 0);
+        return number_format($value, 2);
     }
 
     public static function calculateDepreciationValue($original_value, $new_value)
     {
         //preparando o valor original (valor_fipe)
-        $original_value = floatval(str_replace(array('.', ','), '', $original_value));
+        $original_value = str_replace(',', '.', str_replace('.', '', $original_value));
 
         //preparando o valor atual (valor_atual_fipe)
-        $new_value = round(str_replace(',', '.', preg_replace('/\./', '', $new_value)), 0);
+        $new_value = str_replace(',', '.', str_replace('.', '', $new_value));
 
         //calculando a o valor de depreciação e formatando
-        $formatted = number_format(floatval($original_value - $new_value), 2, ',', '.');
+        $value = $new_value - $original_value;
 
-        return $formatted;
+        return number_format($value, 2, ',', '.');
     }
 
     public static function currencyFormatBr($number)
@@ -150,6 +150,11 @@ class Tratamento
     public static function simpleDate($date)
     {
         return Carbon::parse($date)->format('d/m/Y');
+    }
+
+    public static function simpleHour($time)
+    {
+        return substr($time, 0, 5);
     }
 
 }

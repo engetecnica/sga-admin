@@ -6,17 +6,28 @@
         <h3 class="page-title">
             <span class="page-title-icon bg-gradient-primary me-2 text-white">
                 <i class="mdi mdi-access-point-network menu-icon"></i>
-            </span> Abastecimento do Veículo
+            </span>
+            @if ($veiculo->tipo == 'maquinas')
+                Abastecimento da Máquina
+            @else
+                Abastecimento do Veículo
+            @endif
         </h3>
         <nav aria-label="breadcrumb">
             <ul class="breadcrumb">
                 <li class="breadcrumb-item active" aria-current="page">
-                    <a class="btn btn-success" href="{{ route('ativo.veiculo.abastecimento.editar', [$last->id, 'add']) }}">
-                        Adicionar
-                    </a>
+                    Ativos <i class="mdi mdi-check icon-sm text-primary align-middle"></i>
                 </li>
             </ul>
         </nav>
+    </div>
+
+    <div class="page-header">
+        <h3 class="page-title">
+            <a class="btn btn-sm btn-danger" href="{{ route('ativo.veiculo.abastecimento.adicionar', $veiculo->id) }}">
+                Adicionar
+            </a>
+        </h3>
     </div>
 
     <div class="row">
@@ -35,59 +46,10 @@
                         </div>
                     @endif
 
-                    @if ($store->tipo == 'maquinas')
-                        <table class="table-hover table-striped table">
-                            <thead>
-                                <tr>
-                                    <th width="8%">ID Máquina</th>
-                                    <th>Horímetro Atual</th>
-                                    <th>Marca</th>
-                                    <th>Data</th>
-                                </tr>
-                            </thead>
-                            <tbody>
+                    {{-- DADOS DO VEÍCULO/MÁQUINA --}}
+                    @include('pages.ativos.veiculos.partials.header')
 
-                                <tr>
-                                    <td><span class="badge badge-dark">{{ @$store->codigo_da_maquina }}</span></td>
-
-                                    <td>{{ @$store->horimetro_inicial }}</td>
-                                    <td>{{ @$store->marca }}</td>
-                                    <td>{{ @$store->created_at }}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    @else
-                        <table class="table-hover table-striped table">
-                            <thead>
-                                <tr>
-                                    <th>Placa</th>
-                                    <th>KM atual</th>
-                                    <th>Valor</th>
-                                    <th>Data</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><span class="badge badge-dark">{{ @$store->placa }}</span></td>
-                                    <td>
-                                        @foreach ($store->quilometragens as $quilometragem)
-                                            @if ($loop->last)
-                                                {{ @$quilometragem->quilometragem_atual }} Km
-                                            @endif
-                                        @endforeach
-
-                                    </td>
-                                    <td>R$
-                                        {{ Tratamento::formatFloat($store->valor_fipe) }}
-                                    </td>
-                                    <td>{{ Tratamento::datetimeBr($store->created_at) }}</td>
-
-                                </tr>
-                            </tbody>
-                        </table>
-                    @endif
-
-                    <table class="table-hover table-striped table" id="lista-simples">
+                    <table class="table-hover table-striped table">
                         <thead>
                             <tr>
                                 <th width="8%">ID</th>
@@ -99,29 +61,34 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($store->abastecimentos as $abastecimento)
+                            @foreach ($abastecimentos as $abastecimento)
                                 <tr>
-                                    <td><span class="badge badge-dark">{{ @$abastecimento->id }}</span></td>
-                                    <td>{{ @$abastecimento->combustivel }}</td>
-                                    <td>{{ @$abastecimento->quantidade }} M³</td>
+                                    <td><span class="badge badge-dark">{{ $abastecimento->id }}</span></td>
+                                    <td>{{ $abastecimento->combustivel }}</td>
+                                    <td>{{ $abastecimento->quantidade }} M³</td>
                                     <td>R$
                                         {{ Tratamento::formatFloat($abastecimento->valor_total) }}
                                     </td>
                                     <td>{{ Tratamento::datetimeBr($abastecimento->created_at) }}</td>
                                     <td class="d-flex gap-2">
-                                        @if ($loop->last)
-                                            <a href="{{ route('ativo.veiculo.abastecimento.editar', [$abastecimento->id, 'edit']) }}">
-                                                <button class="badge badge-info" data-toggle="tooltip" data-placement="top" title="Editar"><i class="mdi mdi-pencil"></i> Editar
-                                                </button>
-                                            </a>
+
+                                        <a href="{{ route('ativo.veiculo.abastecimento.editar', $abastecimento->id) }}">
+                                            <button class="badge badge-info" data-toggle="tooltip" data-placement="top" title="Editar">
+                                                <i class="mdi mdi-pencil"></i> Editar
+                                            </button>
+                                        </a>
+
+                                        @if ($loop->first)
+                                            <form action="{{ route('ativo.veiculo.abastecimento.delete', $abastecimento->id) }}" method="POST">
+                                                @csrf
+                                                @method('delete')
+                                                <a class="excluir-padrao" data-id="{{ $abastecimento->id }}" data-table="empresas" data-module="cadastro/empresa">
+                                                    <button class="badge badge-danger" data-toggle="tooltip" data-placement="top" type="submit" title="Excluir" onclick="return confirm('Tem certeza que deseja excluir o registro?')">
+                                                        <i class="mdi mdi-delete"></i>
+                                                        Excluir</button>
+                                                </a>
+                                            </form>
                                         @endif
-                                        <form action="{{ route('ativo.veiculo.abastecimento.delete', $abastecimento->id) }}" method="POST">
-                                            @csrf
-                                            <a class="excluir-padrao" data-id="{{ $abastecimento->id }}" data-table="empresas" data-module="cadastro/empresa">
-                                                <button class="badge badge-danger" data-toggle="tooltip" data-placement="top" type="submit" title="Excluir"><i class="mdi mdi-delete"></i>
-                                                    Excluir</button>
-                                            </a>
-                                        </form>
                                     </td>
                                 </tr>
                             @endforeach
@@ -133,4 +100,3 @@
         </div>
     </div>
 @endsection
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

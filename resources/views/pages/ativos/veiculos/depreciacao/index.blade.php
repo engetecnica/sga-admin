@@ -6,17 +6,28 @@
         <h3 class="page-title">
             <span class="page-title-icon bg-gradient-primary me-2 text-white">
                 <i class="mdi mdi-access-point-network menu-icon"></i>
-            </span> Depreciação do Veículo
+            </span>
+            @if ($veiculo->tipo == 'maquinas')
+                Depreciação da Máquina
+            @else
+                Depreciação do Veículo
+            @endif
         </h3>
         <nav aria-label="breadcrumb">
             <ul class="breadcrumb">
                 <li class="breadcrumb-item active" aria-current="page">
-                    <a class="btn btn-success" href="{{ route('ativo.veiculo.depreciacao.editar', [$last->id, 'add']) }}">
-                        Adicionar
-                    </a>
+                    Ativos <i class="mdi mdi-check icon-sm text-primary align-middle"></i>
                 </li>
             </ul>
         </nav>
+    </div>
+
+    <div class="page-header">
+        <h3 class="page-title">
+            <a class="btn btn-sm btn-danger" href="{{ route('ativo.veiculo.depreciacao.adicionar', $veiculo->id) }}">
+                Adicionar
+            </a>
+        </h3>
     </div>
 
     <div class="row">
@@ -35,61 +46,10 @@
                         </div>
                     @endif
 
-                    @if ($store->tipo == 'maquinas')
-                        <table class="table-hover table-striped table">
-                            <thead>
-                                <tr>
-                                    <th width="8%">ID Máquina</th>
-                                    <th>Horímetro Atual</th>
-                                    <th>Marca</th>
-                                    <th>Data</th>
-                                    <th width="10%">Ações</th>
-                                </tr>
-                            </thead>
-                            <tbody>
+                    {{-- DADOS DO VEÍCULO/MÁQUINA --}}
+                    @include('pages.ativos.veiculos.partials.header')
 
-                                <tr>
-                                    <td><span class="badge badge-dark">{{ @$store->codigo_da_maquina }}</span></td>
-
-                                    <td>{{ @$store->horimetro_inicial }}</td>
-                                    <td>{{ @$store->marca }}</td>
-                                    <td>{{ @$store->created_at }}</td>
-
-                                    <td>editar/excluir</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    @else
-                        <table class="table-hover table-striped table">
-                            <thead>
-                                <tr>
-                                    <th>Placa</th>
-                                    <th>KM atual</th>
-                                    <th>Valor</th>
-                                    <th>Data</th>
-                                    <th width="10%">Ações</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><span class="badge badge-dark">{{ @$store->placa }}</span></td>
-                                    <td>
-                                        @foreach ($store->quilometragens as $quilometragem)
-                                            @if ($loop->last)
-                                                {{ @$quilometragem->quilometragem_atual }} Km
-                                            @endif
-                                        @endforeach
-
-                                    </td>
-                                    <td>R$ {{ Tratamento::formatFloat($store->valor_fipe) }}</td>
-                                    <td>{{ Tratamento::datetimeBr($store->created_at) }}</td>
-                                    <td>editar/excluir</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    @endif
-
-                    <table class="table-hover table-striped table" id="lista-simples">
+                    <table class="table-hover table-striped table">
                         <thead>
                             <tr>
                                 <th width="8%">ID</th>
@@ -102,29 +62,27 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($store->depreciacaos as $depreciacao)
+                            @foreach ($depreciacoes as $depreciacao)
                                 <tr>
-                                    <td><span class="badge badge-dark">{{ @$depreciacao->id }}</span></td>
+                                    <td><span class="badge badge-dark">{{ $depreciacao->id }}</span></td>
                                     <td>{{ ucfirst($depreciacao->referencia_mes) }}/{{ $depreciacao->referencia_ano }}</td>
-
-                                    <td>R$
-                                        {{ Tratamento::formatFloat($depreciacao->valor_atual) }}
-                                    </td>
-
-                                    <td>{{ Tratamento::calculateDepreciationPercentage($store->valor_fipe, $depreciacao->valor_atual) }}%</td>
-                                    <td>R$ {{ Tratamento::calculateDepreciationValue($store->valor_fipe, $depreciacao->valor_atual) }}</td>
+                                    <td>R$ {{ Tratamento::formatFloat($depreciacao->valor_atual) }}</td>
+                                    <td>{{ Tratamento::calculateDepreciationPercentage($veiculo->valor_fipe, $depreciacao->valor_atual) }}%</td>
+                                    <td>R$ {{ Tratamento::calculateDepreciationValue($veiculo->valor_fipe, $depreciacao->valor_atual) }}</td>
                                     <td>{{ Tratamento::dateBr($depreciacao->created_at) }}</td>
                                     <td class="d-flex gap-2">
-                                        @if ($loop->last)
-                                            <a href="{{ route('ativo.veiculo.depreciacao.editar', [$depreciacao->id, 'edit']) }}">
-                                                <button class="badge badge-info" data-toggle="tooltip" data-placement="top" title="Editar"><i class="mdi mdi-pencil"></i> Editar
-                                                </button>
-                                            </a>
-                                        @endif
+
+                                        <a href="{{ route('ativo.veiculo.depreciacao.editar', $depreciacao->id) }}">
+                                            <button class="badge badge-info" data-toggle="tooltip" data-placement="top" title="Editar"><i class="mdi mdi-pencil"></i> Editar
+                                            </button>
+                                        </a>
+
                                         <form action="{{ route('ativo.veiculo.depreciacao.delete', $depreciacao->id) }}" method="POST">
                                             @csrf
+                                            @method('delete')
                                             <a class="excluir-padrao" data-id="{{ $depreciacao->id }}" data-table="empresas" data-module="cadastro/empresa">
-                                                <button class="badge badge-danger" data-toggle="tooltip" data-placement="top" type="submit" title="Excluir"><i class="mdi mdi-delete"></i>
+                                                <button class="badge badge-danger" data-toggle="tooltip" data-placement="top" type="submit" title="Excluir" onclick="return confirm('Tem certeza que deseja excluir o registro?')">
+                                                    <i class="mdi mdi-delete"></i>
                                                     Excluir</button>
                                             </a>
                                         </form>

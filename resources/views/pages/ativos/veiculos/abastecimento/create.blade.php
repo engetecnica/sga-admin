@@ -6,14 +6,17 @@
         <h3 class="page-title">
             <span class="page-title-icon bg-gradient-primary me-2 text-white">
                 <i class="mdi mdi-access-point-network menu-icon"></i>
-            </span> Abastecimento do Veículo
+            </span>
+            @if ($veiculo->tipo == 'maquinas')
+                Abastecimento da Máquina
+            @else
+                Abastecimento do Veículo
+            @endif
         </h3>
         <nav aria-label="breadcrumb">
             <ul class="breadcrumb">
                 <li class="breadcrumb-item active" aria-current="page">
-                    <a class="btn btn-success" href="{{ route('ativo.veiculo.abastecimento.index', $store->veiculo_id) }}">
-                        <i class="mdi mdi-arrow-left icon-sm align-middle text-white"></i> Voltar
-                    </a>
+                    Ativos
                 </li>
             </ul>
         </nav>
@@ -35,26 +38,22 @@
                         </div>
                     @endif
 
-                    <form method="post" enctype="multipart/form-data" action="{{ $btn == 'add' ? route('ativo.veiculo.abastecimento.store', $store->veiculo_id) : route('ativo.veiculo.abastecimento.update', $store->id) }}">
+                    <form method="post" action="{{ route('ativo.veiculo.abastecimento.store') }}">
                         @csrf
-                        <div class="row mt-3">
+                        <div class="jumbotron p-3">
+                            <span class="font-weight-bold">{{ $veiculo->marca }} | {{ $veiculo->modelo }} | {{ $veiculo->veiculo }}</span>
+                        </div>
+
+                        <div class="row mt-5">
                             <div class="col-md-4">
-                                <label class="form-label" for="combustivel">Fornecedor</label>
-                                {{-- retorna o nome do fornecedor relacionado com o abastecimento de veiculo --}}
-                                {{-- {{ $store->fornecedor->razao_social }} --}}
-                                <select class="form-select" id="fornecedor" name="fornecedor">
+                                <label class="form-label" for="fornecedor_id">Fornecedor</label>
+                                <select class="form-select select2" id="fornecedor_id" name="fornecedor_id">
                                     <option value="" selected>Selecione</option>
-                                    @if ($btn == 'add')
-                                        @foreach ($fornecedores as $fornecedor)
-                                            <option value="{{ $fornecedor->id }}">
-                                                {{ $fornecedor->razao_social }}</option>
-                                        @endforeach
-                                    @else
-                                        @foreach ($fornecedores as $fornecedor)
-                                            <option value="{{ $fornecedor->id }}" {{ $store->fornecedor->id == $fornecedor->id ? 'selected' : '' }}>
-                                                {{ $fornecedor->razao_social }}</option>
-                                        @endforeach
-                                    @endif
+                                    @foreach ($fornecedores as $fornecedor)
+                                        <option value="{{ $fornecedor->id }}" {{ old('fornecedor_id') == $fornecedor->id ? 'selected' : '' }}>
+                                            {{ $fornecedor->razao_social }}</option>
+                                    @endforeach
+
                                 </select>
 
                             </div>
@@ -63,37 +62,36 @@
                                 <label class="form-label" for="combustivel">Tipo de Combustível</label>
                                 <select class="form-select" id="combustivel" name="combustivel">
                                     <option value="">Selecione</option>
-                                    <option value="etanol_alcool" {{ ($btn == 'add' ? '' : $store->combustivel == 'etanol_alcool') ? 'selected' : '' }}>Etanol/Alcool</option>
-                                    <option value="gasolina" {{ ($btn == 'add' ? '' : $store->combustivel == 'gasolina') ? 'selected' : '' }}>Gasolina</option>
-                                    <option value="diesel" {{ ($btn == 'add' ? '' : $store->combustivel == 'diesel') ? 'selected' : '' }}>Diesel</option>
-                                    <option value="gnv" {{ ($btn == 'add' ? '' : $store->combustivel == 'gnv') ? 'selected' : '' }}>GNV</option>
+                                    <option value="etanol_alcool" {{ old('combustivel') == 'etanol_alcool' ? 'selected' : '' }}>Etanol/Alcool</option>
+                                    <option value="gasolina" {{ old('combustivel') == 'gasolina' ? 'selected' : '' }}>Gasolina</option>
+                                    <option value="diesel" {{ old('combustivel') == 'diesel' ? 'selected' : '' }}>Diesel</option>
+                                    <option value="gnv" {{ old('combustivel') == 'gnv' ? 'selected' : '' }}>GNV</option>
                                 </select>
                             </div>
+
+                            <div class="col-md-4">
+                                <label class="form-label" for="quilometragem">{{ $veiculo->tipo == 'maquinas' ? 'Horímetro' : 'Quilometragem' }} Atual</label>
+                                <input class="form-control" id="quilometragem" name="quilometragem" type="number" value="{{ old('quilometragem') }}" step="any">
+                            </div>
                         </div>
 
                         <div class="row mt-3">
-                            <div class="col-md-4">
-                                <label class="form-label" for="quilometragem">Quilometragem Atual</label>
-                                <input class="form-control" id="quilometragem" name="quilometragem" type="number" value="{{ $btn == 'add' ? '' : @$store->quilometragem }}" step="any">
-                            </div>
                             <div class="col-md-4">
                                 <label class="form-label" for="valor_do_litro">Valor do litro</label>
-                                <input class="form-control" id="valor_do_litro" name="valor_do_litro" type="text" value="{{ $btn == 'add' ? '' : @$store->valor_do_litro }}" step="any">
+                                <input class="form-control" id="valor_do_litro" name="valor_do_litro" type="text" value="{{ old('valor_do_litro') }}" step="any">
                             </div>
-                        </div>
-
-                        <div class="row mt-3">
                             <div class="col-md-4">
                                 <label class="form-label" for="quantidade">Quantidade</label>
-                                <input class="form-control" id="quantidade" name="quantidade" type="number" value="{{ $btn == 'add' ? '' : @$store->quantidade }}">
+                                <input class="form-control" id="quantidade" name="quantidade" type="number" value="{{ old('quantidade') }}">
                             </div>
                             <div class="col-md-4">
                                 <label class="form-label" for="valor_total">Valor total</label>
-                                <input class="form-control" id="valor_total" name="valor_total" type="text" value="{{ $btn == 'add' ? '' : @$store->valor_total }}" step="any" readonly>
+                                <input class="form-control" id="valor_total" name="valor_total" type="text" value="{{ old('valor_total') }}" step="any" readonly>
                             </div>
                         </div>
 
                         <div class="col-12 mt-5">
+                            <input name="veiculo_id" type="hidden" value="{{ $veiculo->id }}">
                             <button class="btn btn-gradient-primary btn-lg font-weight-medium" type="submit">Salvar</button>
 
                             <a href="{{ route('ativo.veiculo') }}">

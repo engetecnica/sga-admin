@@ -219,39 +219,43 @@ Route::group(['middleware' => 'auth'], function () {
 
     /* Ativo - Veículos */
     Route::get('admin/ativo/veiculo', [VeiculoController::class, 'index'])->name('ativo.veiculo');
-    Route::get('admin/ativo/veiculo/adicionar', [VeiculoController::class, 'create'])->name('ativo.veiculo.adicionar');
+    Route::get('admin/ativo/veiculo/adicionar/', [VeiculoController::class, 'create'])->name('ativo.veiculo.adicionar');
     Route::post('admin/ativo/veiculo/store', [VeiculoController::class, 'store'])->name('ativo.veiculo.store');
     Route::get('admin/ativo/veiculo/editar/{id}', [VeiculoController::class, 'edit'])->name('ativo.veiculo.editar');
     Route::post('admin/ativo/veiculo/update/{id}', [VeiculoController::class, 'update'])->name('ativo.veiculo.update');
     Route::post('admin/ativo/veiculo/delete/{id}', [VeiculoController::class, 'delete'])->name('ativo.veiculo.delete');
 
     /* Ativo - Veículos - Abastecimento */
-    Route::get('admin/ativo/veiculo/abastecimento/{id}', [VeiculoAbastecimentoController::class, 'index'])->name('ativo.veiculo.abastecimento.index');
-    Route::get('admin/ativo/veiculo/abastecimento/editar/{id}/{btn}', [VeiculoAbastecimentoController::class, 'edit'])->name('ativo.veiculo.abastecimento.editar');
-    Route::post('admin/ativo/veiculo/abastecimento/store/{id}', [VeiculoAbastecimentoController::class, 'store'])->name('ativo.veiculo.abastecimento.store');
-    Route::post('admin/ativo/veiculo/abastecimento/update/{id}', [VeiculoAbastecimentoController::class, 'update'])->name('ativo.veiculo.abastecimento.update');
-    Route::post('admin/ativo/veiculo/abastecimento/delete/{id}', [VeiculoAbastecimentoController::class, 'delete'])->name('ativo.veiculo.abastecimento.delete');
+    Route::get('admin/ativo/veiculo/abastecimento/{veiculo}', [VeiculoAbastecimentoController::class, 'index'])->name('ativo.veiculo.abastecimento.index');
+    Route::get('admin/ativo/veiculo/abastecimento/adicionar/{veiculo}', [VeiculoAbastecimentoController::class, 'create'])->name('ativo.veiculo.abastecimento.adicionar');
+    Route::post('admin/ativo/veiculo/abastecimento', [VeiculoAbastecimentoController::class, 'store'])->name('ativo.veiculo.abastecimento.store');
+    Route::get('admin/ativo/veiculo/abastecimento/editar/{id}', [VeiculoAbastecimentoController::class, 'edit'])->name('ativo.veiculo.abastecimento.editar');
+    Route::put('admin/ativo/veiculo/abastecimento/{id}', [VeiculoAbastecimentoController::class, 'update'])->name('ativo.veiculo.abastecimento.update');
+    Route::delete('admin/ativo/veiculo/abastecimento/delete/{id}', [VeiculoAbastecimentoController::class, 'delete'])->name('ativo.veiculo.abastecimento.delete');
 
     /* Ativo - Veículos - Depreciacao */
-    Route::get('admin/ativo/veiculo/depreciacao/{id}', [VeiculoDepreciacaoController::class, 'index'])->name('ativo.veiculo.depreciacao.index');
-    Route::get('admin/ativo/veiculo/depreciacao/editar/{id}/{btn}', [VeiculoDepreciacaoController::class, 'edit'])->name('ativo.veiculo.depreciacao.editar');
-    Route::post('admin/ativo/veiculo/depreciacao/store/{id}', [VeiculoDepreciacaoController::class, 'store'])->name('ativo.veiculo.depreciacao.store');
-    Route::post('admin/ativo/veiculo/depreciacao/update/{id}', [VeiculoDepreciacaoController::class, 'update'])->name('ativo.veiculo.depreciacao.update');
-    Route::post('admin/ativo/veiculo/depreciacao/delete/{id}', [VeiculoDepreciacaoController::class, 'delete'])->name('ativo.veiculo.depreciacao.delete');
+    Route::get('admin/ativo/veiculo/depreciacao/{veiculo}', [VeiculoDepreciacaoController::class, 'index'])->name('ativo.veiculo.depreciacao.index');
+    Route::get('admin/ativo/veiculo/depreciacao/adicionar/{veiculo}', [VeiculoDepreciacaoController::class, 'create'])->name('ativo.veiculo.depreciacao.adicionar');
+    Route::post('admin/ativo/veiculo/depreciacao', [VeiculoDepreciacaoController::class, 'store'])->name('ativo.veiculo.depreciacao.store');
+    Route::get('admin/ativo/veiculo/depreciacao/editar/{id}', [VeiculoDepreciacaoController::class, 'edit'])->name('ativo.veiculo.depreciacao.editar');
+    Route::put('admin/ativo/veiculo/depreciacao/{id}', [VeiculoDepreciacaoController::class, 'update'])->name('ativo.veiculo.depreciacao.update');
+    Route::delete('admin/ativo/veiculo/depreciacao/delete/{id}', [VeiculoDepreciacaoController::class, 'delete'])->name('ativo.veiculo.depreciacao.delete');
 
     /* Ativo - Veículos - Ipva */
-    Route::get('admin/ativo/veiculo/ipva/{id}', [VeiculoIpvaController::class, 'index'])->name('ativo.veiculo.ipva.index');
-    Route::get('admin/ativo/veiculo/ipva/editar/{id}/{btn}', [VeiculoIpvaController::class, 'edit'])->name('ativo.veiculo.ipva.editar');
-    Route::post('admin/ativo/veiculo/ipva/store/{id}', [VeiculoIpvaController::class, 'store'])->name('ativo.veiculo.ipva.store');
-    Route::post('admin/ativo/veiculo/ipva/update/{id}', [VeiculoIpvaController::class, 'update'])->name('ativo.veiculo.ipva.update');
-    Route::post('admin/ativo/veiculo/ipva/delete/{id}', [VeiculoIpvaController::class, 'delete'])->name('ativo.veiculo.ipva.delete');
+    Route::get('admin/ativo/veiculo/ipva/{veiculo}', [VeiculoIpvaController::class, 'index'])->name('ativo.veiculo.ipva.index');
+    Route::get('admin/ativo/veiculo/ipva/adicionar/{veiculo}', [VeiculoIpvaController::class, 'create'])->name('ativo.veiculo.ipva.adicionar');
+    Route::post('admin/ativo/veiculo/ipva', [VeiculoIpvaController::class, 'store'])->name('ativo.veiculo.ipva.store');
+    Route::get('admin/ativo/veiculo/ipva/editar/{id}', [VeiculoIpvaController::class, 'edit'])->name('ativo.veiculo.ipva.editar');
+    Route::put('admin/ativo/veiculo/ipva/{id}', [VeiculoIpvaController::class, 'update'])->name('ativo.veiculo.ipva.update');
+    Route::delete('admin/ativo/veiculo/ipva/delete/{id}', [VeiculoIpvaController::class, 'delete'])->name('ativo.veiculo.ipva.delete');
 
     /* Ativo - Veículos - Manutencao */
-    Route::get('admin/ativo/veiculo/manutencao/{id}', [VeiculoManutencaoController::class, 'index'])->name('ativo.veiculo.manutencao.index');
-    Route::get('admin/ativo/veiculo/manutencao/editar/{id}/{btn}', [VeiculoManutencaoController::class, 'edit'])->name('ativo.veiculo.manutencao.editar');
-    Route::post('admin/ativo/veiculo/manutencao/store/{id}', [VeiculoManutencaoController::class, 'store'])->name('ativo.veiculo.manutencao.store');
-    Route::post('admin/ativo/veiculo/manutencao/update/{id}', [VeiculoManutencaoController::class, 'update'])->name('ativo.veiculo.manutencao.update');
-    Route::post('admin/ativo/veiculo/manutencao/delete/{id}', [VeiculoManutencaoController::class, 'delete'])->name('ativo.veiculo.manutencao.delete');
+    Route::get('admin/ativo/veiculo/manutencao/{veiculo}', [VeiculoManutencaoController::class, 'index'])->name('ativo.veiculo.manutencao.index');
+    Route::get('admin/ativo/veiculo/manutencao/adicionar/{veiculo}', [VeiculoManutencaoController::class, 'create'])->name('ativo.veiculo.manutencao.adicionar');
+    Route::post('admin/ativo/veiculo/manutencao', [VeiculoManutencaoController::class, 'store'])->name('ativo.veiculo.manutencao.store');
+    Route::get('admin/ativo/veiculo/manutencao/editar/{id}', [VeiculoManutencaoController::class, 'edit'])->name('ativo.veiculo.manutencao.editar');
+    Route::put('admin/ativo/veiculo/manutencao/{id}', [VeiculoManutencaoController::class, 'update'])->name('ativo.veiculo.manutencao.update');
+    Route::delete('admin/ativo/veiculo/manutencao/delete/{id}', [VeiculoManutencaoController::class, 'delete'])->name('ativo.veiculo.manutencao.delete');
 
     /* Ativo - Veículos - Quilometragem */
     Route::get('admin/ativo/veiculo/quilometragem/{id}', [VeiculoQuilometragemController::class, 'index'])->name('ativo.veiculo.quilometragem.index');
@@ -261,11 +265,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('admin/ativo/veiculo/quilometragem/delete/{id}', [VeiculoQuilometragemController::class, 'delete'])->name('ativo.veiculo.quilometragem.delete');
 
     /* Ativo - Veículos - Seguro */
-    Route::get('admin/ativo/veiculo/seguro/{id}', [VeiculoSeguroController::class, 'index'])->name('ativo.veiculo.seguro.index');
-    Route::get('admin/ativo/veiculo/seguro/editar/{id}/{btn}', [VeiculoSeguroController::class, 'edit'])->name('ativo.veiculo.seguro.editar');
-    Route::post('admin/ativo/veiculo/seguro/store/{id}', [VeiculoSeguroController::class, 'store'])->name('ativo.veiculo.seguro.store');
-    Route::post('admin/ativo/veiculo/seguro/update/{id}', [VeiculoSeguroController::class, 'update'])->name('ativo.veiculo.seguro.update');
-    Route::post('admin/ativo/veiculo/seguro/delete/{id}', [VeiculoSeguroController::class, 'delete'])->name('ativo.veiculo.seguro.delete');
+    Route::get('admin/ativo/veiculo/seguro/{veiculo}', [VeiculoSeguroController::class, 'index'])->name('ativo.veiculo.seguro.index');
+    Route::get('admin/ativo/veiculo/seguro/adicionar/{veiculo}', [VeiculoSeguroController::class, 'create'])->name('ativo.veiculo.seguro.adicionar');
+    Route::post('admin/ativo/veiculo/seguro', [VeiculoSeguroController::class, 'store'])->name('ativo.veiculo.seguro.store');
+    Route::get('admin/ativo/veiculo/seguro/editar/{id}', [VeiculoSeguroController::class, 'edit'])->name('ativo.veiculo.seguro.editar');
+    Route::put('admin/ativo/veiculo/seguro/{id}', [VeiculoSeguroController::class, 'update'])->name('ativo.veiculo.seguro.update');
+    Route::delete('admin/ativo/veiculo/seguro/delete/{id}', [VeiculoSeguroController::class, 'delete'])->name('ativo.veiculo.seguro.delete');
 
     /* Relatórios - Funcionários */
     Route::get('admin/relatorio/funcionarios', [RelatorioFuncionarioController::class, 'index'])->name('relatorio.funcionario.index');

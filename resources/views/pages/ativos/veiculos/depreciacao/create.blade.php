@@ -7,12 +7,11 @@
             <span class="page-title-icon bg-gradient-primary me-2 text-white">
                 <i class="mdi mdi-access-point-network menu-icon"></i>
             </span>
-            @if ($store->veiculo->tipo == 'maquinas')
-                Holímetro da máquina
+            @if ($veiculo->tipo == 'maquinas')
+                Depreciação da Máquina
             @else
-                Quilometragem do veículo
+                Depreciação do Veículo
             @endif
-
         </h3>
         <nav aria-label="breadcrumb">
             <ul class="breadcrumb">
@@ -39,37 +38,42 @@
                         </div>
                     @endif
 
-                    {{-- @dd($store) --}}
-
-                    <form method="post" action="{{ $btn == 'add' ? route('ativo.veiculo.quilometragem.store', $store->veiculo_id) : route('ativo.veiculo.quilometragem.update', $store->id) }}">
+                    <form method="post" action="{{ route('ativo.veiculo.depreciacao.store') }}">
                         @csrf
                         <div class="jumbotron p-3">
-                            <span class="font-weight-bold">{{ $store->veiculo->marca }} | {{ $store->veiculo->modelo }} | {{ $store->veiculo->veiculo }}</span>
+                            <span class="font-weight-bold">{{ $veiculo->marca }} | {{ $veiculo->modelo }} | {{ $veiculo->veiculo }}</span>
                         </div>
                         <div class="row mt-3">
                             <div class="col-md-4">
-                                <label class="form-label" for="quilometragem_atual">
-                                    @if ($store->veiculo->tipo == 'maquinas')
-                                        Holímetro atual
-                                    @else
-                                        Quilometragem Atual
-                                    @endif
-                                </label>
-                                <input class="form-control" id="quilometragem_atual" name="quilometragem_atual" type="number" value="{{ $btn == 'add' ? $store->quilometragem_nova : $store->quilometragem_atual }}" {{ $btn == 'add' ? 'readonly' : 'readonly' }}>
+                                <label class="form-label" for="valor_atual">Valor Atual</label>
+                                <input class="form-control" id="valor_atual" name="valor_atual" type="text" value="">
                             </div>
-                            <div class="col-md-4">
-                                <label class="form-label" for="quilometragem_nova">
-                                    @if ($store->veiculo->tipo == 'maquinas')
-                                        Holímetro novo
-                                    @else
-                                        Quilometragem Nova
-                                    @endif
-                                </label>
-                                <input class="form-control" id="quilometragem_nova" name="quilometragem_nova" type="number" value="{{ $btn == 'add' ? '' : $store->quilometragem_nova }}">
+
+                            <div class="col-md-2">
+                                <label class="form-label" for="referencia_mes">Mês de referência</label>
+                                <select class="form-control form-select" id="referencia_mes" name="referencia_mes">
+                                    @php
+                                        $meses = ['janeiro', 'fevereiro', 'marco', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];
+                                    @endphp
+
+                                    <option value="">Selecione</option>
+
+                                    @foreach ($meses as $mes)
+                                        <option value="{{ $mes }}">
+                                            {{ ucfirst($mes) }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div class="col-md-2">
+                                <label class="form-label" for="referencia_ano">Ano de referência</label>
+                                <input class="form-control" id="referencia_ano" name="referencia_ano" type="number" value="">
                             </div>
                         </div>
 
                         <div class="col-12 mt-5">
+                            <input name="veiculo_id" type="hidden" value="{{ $veiculo->id }}">
                             <button class="btn btn-gradient-primary btn-lg font-weight-medium" type="submit">Salvar</button>
 
                             <a href="{{ route('ativo.veiculo') }}">

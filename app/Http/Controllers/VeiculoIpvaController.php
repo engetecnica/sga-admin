@@ -11,91 +11,66 @@ use Illuminate\Support\Facades\Log;
 class VeiculoIpvaController extends Controller
 {
 
-    public function index($id)
+    public function index(Veiculo $veiculo)
     {
-        // $fornecedores = CadastroFornecedor::all();
+        $ipvas = VeiculoIpva::where('veiculo_id', $veiculo->id)->orderByDesc('id')->get();
 
-        $store = Veiculo::find($id);
-
-        $last = VeiculoIpva::where('veiculo_id', $store->id)->orderBy('id', 'desc')->first();
-
-        if (!$id or !$store) {
-            return redirect()->route('ativo.veiculo')->with('fail', 'Esse veículo não foi encontrado.');
-        }
-
-        return view('pages.ativos.veiculos.ipva.index', compact('store', 'last'));
+        return view('pages.ativos.veiculos.ipva.index', compact('veiculo', 'ipvas'));
     }
 
-    public function edit($id, $btn)
+    public function create(Veiculo $veiculo)
     {
-        // $fornecedores = CadastroFornecedor::all();
-
-        $store = VeiculoIpva::find($id);
-
-        if (!$id or !$store) {
-            return redirect()->route('ativo.veiculo')->with('fail', 'Esse veículo não foi encontrado.');
-        }
-
-        return view('pages.ativos.veiculos.ipva.form', compact('store', 'btn'));
+        return view('pages.ativos.veiculos.ipva.create', compact('veiculo'));
     }
 
-    public function store(Request $request, $id)
+    public function store(Request $request)
     {
-        // dd($request);
+        $data = $request->all();
+        $data['valor'] = str_replace('R$ ', '', $request->valor);
+        $save = VeiculoIpva::create($data);
 
-        $veiculo = Veiculo::findOrFail($id);
-
-        try {
-            Veiculoipva::create(
-                [
-                    'veiculo_id' => $veiculo->id,
-                    'referencia_ano' => $request->input('referencia_ano'),
-                    'valor' => str_replace('R$ ', '', $request->input('valor')),
-                    'data_de_vencimento' => $request->input('data_de_vencimento'),
-                    'data_de_pagamento' => $request->input('data_de_pagamento')
-                ]
-            );
-
+        if($save){
             $userLog = Auth::user()->email;
-            Log::channel('main')->info($userLog .' | STORE IPVA: ' . $veiculo->id);
+            Log::channel('main')->info($userLog .' | STORE IPVA: ' . $request->veiculo_id);
 
-            return redirect()->route('ativo.veiculo.ipva.index', $id)->with('success', 'Sucesso');
-        } catch (\Exception $e) {
-
-            return redirect()->back()->withInput();
+            return redirect()->route('ativo.veiculo.ipva.index', $request->veiculo_id)->with('success', 'Registro salvo com sucesso');
+        } else {
+            return redirect()->route('ativo.veiculo.ipva.index', $request->veiculo_id)->with('fail', 'Erro ao salvar registro');
         }
+    }
+
+    public function edit($id)
+    {
+        $ipva = VeiculoIpva::with('veiculo')->where('id', $id)->first();
+
+        return view('pages.ativos.veiculos.ipva.edit', compact('ipva'));
     }
 
     public function update(Request $request, $id)
     {
-
-        $veiculo = VeiculoIpva::findOrFail($id);
-
-        try {
-            $veiculo->update([
-                'referencia_ano' => $request->referencia_ano,
-                'valor' => str_replace('R$ ', '', $request->valor),
-                'data_de_vencimento' => $request->data_de_vencimento,
-                'data_de_pagamento' => $request->data_de_pagamento,
-            ]);
-
-            $userLog = Auth::user()->email;
-            Log::channel('main')->info($userLog .' | UPDATE IPVA: ' . $veiculo->id);
-
-            return redirect()->route('ativo.veiculo.ipva.editar', $veiculo->veiculo_id)->with('success', 'Sucesso');
-        } catch (\Exception $e) {
-
-            return redirect()->back()->withInput();
+        if (! $ipva = VeiculoIpva::find($id)) {
+            return redirect()->route('ativo.veiculo.ipva.editar', $id)->with('fail', 'Problemas para localizar o registro.');
         }
-    }
-    public function delete($id)
-    {
-        $veiculo = VeiculoIpva::findOrFail($id);
+
+        $data = $request->all();
+        $data['valor'] = str_replace('R$ ', '', $request->valor);
+        $ipva->update($data);
 
         $userLog = Auth::user()->email;
-        Log::channel('main')->info($userLog .' | DELETE IPVA: ' . $veiculo->id);
+        Log::channel('main')->info($userLog .' | EDIT IPVA: ' . $id);
 
-        $veiculo->delete();
+        return redirect()->route('ativo.veiculo.ipva.editar', $id)->with('success', 'O registro foi alterado com sucesso');
+
+    }
+
+    public function delete($id)
+    {
+        $ipva = VeiculoIpva::findOrFail($id);
+
+        $userLog = Auth::user()->email;
+        Log::channel('main')->info($userLog .' | DELETE IPVA: ' . $ipva->id);
+
+        $ipva->delete();
 
         return redirect()->back()->with('success', 'Sucesso');
     }

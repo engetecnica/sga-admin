@@ -11,80 +11,57 @@ use Illuminate\Support\Facades\Log;
 class VeiculoSeguroController extends Controller
 {
 
-    public function index($id)
+    public function index(Veiculo $veiculo)
     {
-        // $fornecedores = CadastroFornecedor::all();
+        $seguros = VeiculoSeguro::where('veiculo_id', $veiculo->id)->orderByDesc('id')->get();
 
-        $store = Veiculo::find($id);
-
-        $last = VeiculoSeguro::where('veiculo_id', $id)->orderBy('id', 'desc')->first();
-
-        if (!$id or !$store) {
-            return redirect()->route('ativo.veiculo')->with('fail', 'Esse veículo não foi encontrado.');
-        }
-
-        return view('pages.ativos.veiculos.seguro.index', compact('store', 'last'));
+        return view('pages.ativos.veiculos.seguro.index', compact('veiculo', 'seguros'));
     }
 
-    public function edit($id, $btn)
+    public function create(Veiculo $veiculo)
     {
-        // $fornecedores = CadastroFornecedor::all();
-
-        $store = VeiculoSeguro::find($id);
-
-        if (!$id or !$store) {
-            return redirect()->route('ativo.veiculo')->with('fail', 'Esse veículo não foi encontrado.');
-        }
-
-        return view('pages.ativos.veiculos.seguro.form', compact('store', 'btn'));
+        return view('pages.ativos.veiculos.seguro.create', compact('veiculo'));
     }
 
-    public function store(Request $request, $id)
+    public function store(Request $request)
     {
-        // dd($request);
+        $data = $request->all();
+        $data['valor'] = str_replace('R$ ', '', $request->valor);
+        $save = VeiculoSeguro::create($data);
 
-        $veiculo = Veiculo::findOrFail($id);
-
-        try {
-            VeiculoSeguro::create(
-                [
-                    'veiculo_id' => $veiculo->id,
-                    'carencia_inicial' => $request->input('carencia_inicial'),
-                    'carencia_final' => $request->input('carencia_final'),
-                    'valor' => str_replace('R$ ', '', $request->input('valor'))
-                ]
-            );
-
-            $userLog = Auth::user()->email;
-            Log::channel('main')->info($userLog .' | STORE SEGURO: ' . $veiculo->id);
-
-            return redirect()->route('ativo.veiculo.seguro.index', $id)->with('success', 'Sucesso');
-        } catch (\Exception $e) {
-
-            return redirect()->back()->withInput();
+        if($save) {
+            return redirect()->route('ativo.veiculo.seguro.index', $save->veiculo_id)->with('success', 'Registro cadastrado com sucesso');
+        } else {
+            return redirect()->route('ativo.veiculo.seguro.index', $save->veiculo_id)->with('fail', 'Problema para cadastrar o registro');
         }
+
+    }
+
+    public function edit($id)
+    {
+        $seguro = VeiculoSeguro::with('veiculo')->where('id', $id)->first();
+
+        return view('pages.ativos.veiculos.seguro.edit', compact('seguro'));
     }
 
     public function update(Request $request, $id)
     {
         // dd($request->all());
-        $veiculo = VeiculoSeguro::findOrFail($id);
-        try {
-            $veiculo->update([
-                'carencia_inicial' => $request->carencia_inicial,
-                'carencia_final' => $request->carencia_final,
-                'valor' => str_replace('R$ ', '', $request->valor)
-            ]);
 
-            $userLog = Auth::user()->email;
-            Log::channel('main')->info($userLog .' | UPDATE SEGURO: ' . $veiculo->id);
-
-            return redirect()->route('ativo.veiculo.seguro.editar', $veiculo->veiculo_id)->with('success', 'Sucesso');
-        } catch (\Exception $e) {
-
-            return redirect()->back()->withInput();
+        if (! $seguro = VeiculoSeguro::find($id)) {
+            return redirect()->route('ativo.veiculo.seguro.editar', $id)->with('fail', 'Problemas para localizar o registro.');
         }
+
+        $data = $request->all();
+        $data['valor'] = str_replace('R$ ', '', $request->valor);
+        $seguro->update($data);
+
+        $userLog = Auth::user()->email;
+        Log::channel('main')->info($userLog .' | EDIT DEPRECIACAO: ' . $id);
+
+        return redirect()->route('ativo.veiculo.seguro.editar', $id)->with('success', 'O registro foi alterado com sucesso');
     }
+
     public function delete($id)
     {
         $veiculo = VeiculoSeguro::findOrFail($id);

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Veiculo;
 use App\Models\CadastroFornecedor;
+use App\Models\Preventiva;
 use App\Models\Servico;
 use App\Models\VeiculoManutencao;
 use Illuminate\Support\Facades\Auth;
@@ -13,121 +14,120 @@ use Illuminate\Support\Facades\Log;
 class VeiculoManutencaoController extends Controller
 {
 
-    public function index($id)
+    public function index(Veiculo $veiculo)
     {
         $fornecedores = CadastroFornecedor::select('id', 'razao_social')->get();
 
         $servicos = Servico::select('id', 'name')->get();
 
-        $store = Veiculo::find($id);
+        $manutencoes = VeiculoManutencao::where('veiculo_id', $veiculo->id)->orderByDesc('id')->get();
 
-        $last = VeiculoManutencao::where('veiculo_id', $id)->orderBy('id', 'desc')->first();
-
-        if (!$id or !$store) {
-            return redirect()->route('ativo.veiculo')->with('fail', 'Esse veículo não foi encontrado.');
-        }
-
-        return view('pages.ativos.veiculos.manutencao.index', compact('store', 'fornecedores', 'servicos', 'last'));
+        return view('pages.ativos.veiculos.manutencao.index', compact('veiculo', 'fornecedores', 'servicos', 'manutencoes'));
     }
 
-    public function edit($id, $btn)
+    public function create(Veiculo $veiculo)
     {
         $fornecedores = CadastroFornecedor::select('id', 'razao_social')->get();
 
         $servicos = Servico::select('id', 'name')->get();
 
-        $store = VeiculoManutencao::find($id);
-
-        if (!$id or !$store) {
-            return redirect()->route('ativo.veiculo')->with('fail', 'Esse veículo não foi encontrado.');
-        }
-
-        return view('pages.ativos.veiculos.manutencao.form', compact('store', 'fornecedores', 'servicos', 'btn'));
+        return view('pages.ativos.veiculos.manutencao.create', compact('veiculo', 'fornecedores', 'servicos'));
     }
 
-    public function store(Request $request, $id)
+    public function store(Request $request)
     {
-        $veiculo = Veiculo::findOrFail($id);
+        // dd($request->all());
 
-        try {
-            VeiculoManutencao::create(
-                [
-                    'veiculo_id' => $veiculo->id,
-                    'tipo' => $request->input('tipo'),
-                    'fornecedor_id' => $request->input('fornecedor'),
-                    'servico_id' => $request->input('servico'),
-                    'quilometragem_atual' => $request->input('quilometragem_atual'),
-                    'quilometragem_proxima' => $request->input('quilometragem_proxima'),
-                    'horimetro_atual' => $request->input('horimetro_atual'),
-                    'horimetro_proximo' => $request->input('horimetro_proximo'),
-                    'data_de_execucao' => $request->input('data_de_execucao'),
-                    'data_de_vencimento' => $request->input('data_de_vencimento'),
-                    'descricao' => $request->input('descricao'),
-                    'valor_do_servico' => str_replace('R$ ', '', $request->input('valor_do_servico')),
-                ]
-            );
+        $data = $request->all();
+        $data['valor_do_servico'] = str_replace('R$ ', '', $request->valor_do_servico);
+        $save = VeiculoManutencao::create($data);
 
-            $userLog = Auth::user()->email;
-            Log::channel('main')->info($userLog .' | STORE MANUTENCAO: ' . $veiculo->id);
-
-            return redirect()->route('ativo.veiculo.manutencao.index', $id)->with('success', 'Sucesso');
-        } catch (\Exception $e) {
-
-            return redirect()->back()->withInput();
+        $preventiva['veiculo_id'] = $request->veiculo_id;
+        $preventiva['manutencao_id'] = $save->id;
+        if($request->veiculo_tipo == 'maquinas') {
+            $preventiva['preventiva'] = $request->horimetro_proximo;
+        } else {
+            $preventiva['preventiva'] = $request->quilometragem_proxima;
         }
+
+        $servico = Servico::find($request->servico_id);
+        $preventiva['descricao'] = 'Serviço realizado: ' . $servico->name . ' | Preventiva: ' . $request->tipo;
+        $alerta = Preventiva::create($preventiva);
+
+
+        $userLog = Auth::user()->email;
+        Log::channel('main')->info($userLog .' | STORE MANUTENCAO: ' . $save->id);
+
+        if($save && $alerta) {
+            return redirect()->route('ativo.veiculo.manutencao.index', $request->veiculo_id)->with('success', 'Registro salvo com sucesso.');
+        } else {
+            return redirect()->route('ativo.veiculo.manutencao.index', $request->veiculo_id)->with('fail', 'Erro ao salvar registro.');
+        }
+    }
+
+    public function edit($id)
+    {
+        if (!$manutencao = VeiculoManutencao::with('veiculo', 'fornecedor', 'servico')->find($id)) {
+            return redirect()->route('ativo.veiculo')->with('fail', 'Manutenção não encontrada');
+        }
+
+        $fornecedores = CadastroFornecedor::select('id', 'razao_social')->get();
+
+        $servicos = Servico::select('id', 'name')->get();
+
+        return view('pages.ativos.veiculos.manutencao.edit', compact('manutencao', 'fornecedores', 'servicos'));
     }
 
     public function update(Request $request, $id)
     {
-        $veiculo = VeiculoManutencao::findOrFail($id);
-        $veiculo->update([
-            'tipo' => $request->tipo,
-            'fornecedor_id' => $request->fornecedor,
-            'servico_id' => $request->servico,
-            'quilometragem_atual' => $request->quilometragem_atual,
-            'quilometragem_proxima' => $request->quilometragem_proxima,
-            'horimetro_atual' => $request->horimetro_atual,
-            'horimetro_proximo' => $request->horimetro_proximo,
-            'data_de_execucao' => $request->data_de_execucao,
-            'data_de_vencimento' => $request->data_de_vencimento,
-            'valor_do_servico' => str_replace('R$ ', '', $request->valor_do_servico),
-        ]);
+        // dd($request->all());
+
+        if (! $save = VeiculoManutencao::find($id)) {
+            return redirect()->route('ativo.veiculo.manutencao.editar', $id)->with('fail', 'Problemas para localizar o registro.');
+        }
+        $data = $request->all();
+        $data['valor_do_servico'] = str_replace('R$ ', '', $request->valor_do_servico);
+        $save->update($data);
+
+        $servico = Servico::find($request->servico_id);
+
+        $up_preventiva = Preventiva::where('manutencao_id', $save->id)->first();
+        $preventiva['veiculo_id'] = $request->veiculo_id;
+        $preventiva['manutencao_id'] = $save->id;
+        if($request->veiculo_tipo == 'maquinas') {
+            $preventiva['preventiva'] = $request->horimetro_proximo;
+        } else {
+            $preventiva['preventiva'] = $request->quilometragem_proxima;
+        }
+        $preventiva['descricao'] = 'Serviço realizado: ' . $servico->name . ' | Preventiva: ' . $request->tipo;
+        $up_preventiva->update($preventiva);
+
 
         $userLog = Auth::user()->email;
-        Log::channel('main')->info($userLog .' | UPDATE MANUTENCAO: ' . $veiculo->id);
+        Log::channel('main')->info($userLog .' | EDIT MANUTENCAO: ' . $save->id);
 
-        return redirect()->route('ativo.veiculo.manutencao.editar', $veiculo->veiculo_id)->with('success', 'Sucesso');
-        // try {
-        //     $veiculo->manutencao->update([
-        //         'tipo' => $request->tipo,
-        //         'fornecedor_id' => $request->fornecedor,
-        //         'servico_id' => $request->servico,
-        //         'quilometragem_atual' => $request->quilometragem_atual,
-        //         'quilometragem_proxima' => $request->quilometragem_proxima,
-        //         'horimetro_atual' => $request->horimetro_atual,
-        //         'horimetro_proximo' => $request->horimetro_proximo,
-        //         'data_de_execucao' => $request->data_de_execucao,
-        //         'data_de_vencimento' => $request->data_de_vencimento,
-        //         'descricao' => $request->descricao,
-        //         'valor_do_servico' => $request->valor_do_servico
-        //     ]);
-
-        //     return redirect()->back()->with('success', 'Sucesso');
-        // } catch (\Exception $e) {
-
-        //     return redirect()->back()->withInput();
-        // }
+        if($save && $up_preventiva) {
+            return redirect()->route('ativo.veiculo.manutencao.index', $request->veiculo_id)->with('success', 'Registro salvo com sucesso.');
+        } else {
+            return redirect()->route('ativo.veiculo.manutencao.index', $request->veiculo_id)->with('fail', 'Erro ao salvar registro.');
+        }
     }
 
     public function delete($id)
     {
-        $veiculo = VeiculoManutencao::findOrFail($id);
 
-        $userLog = Auth::user()->email;
-        Log::channel('main')->info($userLog .' | DELETE MANUTENCAO: ' . $veiculo->id);
+        $manutencao = VeiculoManutencao::findOrFail($id);
 
-        $veiculo->delete();
+        Preventiva::where('manutencao_id', $manutencao->id)->delete();
 
-        return redirect()->route('ativo.veiculo.manutencao.index', $veiculo->veiculo_id)->with('success', 'Sucesso');;
+        if($manutencao->delete()) {
+
+            $userLog = Auth::user()->email;
+            Log::channel('main')->info($userLog .' | DELETE MANUTENCAO: ' . $manutencao->id);
+
+            return redirect()->route('ativo.veiculo.manutencao.index', $manutencao->veiculo_id)->with('success', 'Registro excluído com sucesso');
+        } else {
+            return redirect()->route('ativo.veiculo.manutencao.index', $manutencao->veiculo_id)->with('fail', 'Problema nas exclusão do registro');
+        }
     }
 }

@@ -244,7 +244,7 @@
                                         @foreach ($module['submodulo'] as $sub)
                                             <?php
                                             $item = env('URL_APP_ADMIN') . Request::segment(2) . '/' . Request::segment(3);
-                                            
+
                                             ?>
                                             <li class="nav-item"> <a class="nav-link {{ $item === $sub['url_amigavel'] ? 'active-submodulo' : '' }}" href="{{ url($sub['url_amigavel']) }}">{{ $sub['titulo'] }}</a>
                                             </li>
@@ -701,8 +701,6 @@
         $("#placa").inputmask({
             mask: 'AAA-9*99'
         });
-
-
 
         /* Exclusão Padrão */
         $('.excluir-padrao').on('click', function() {

@@ -6,17 +6,28 @@
         <h3 class="page-title">
             <span class="page-title-icon bg-gradient-primary me-2 text-white">
                 <i class="mdi mdi-access-point-network menu-icon"></i>
-            </span> Seguro do Veículo
+            </span>
+            @if ($veiculo->tipo == 'maquinas')
+                Seguro da Máquina
+            @else
+                Seguro do Veículo
+            @endif
         </h3>
         <nav aria-label="breadcrumb">
             <ul class="breadcrumb">
                 <li class="breadcrumb-item active" aria-current="page">
-                    <a class="btn btn-success" href="{{ route('ativo.veiculo.seguro.editar', [$last->id, 'add']) }}">
-                        Adicionar
-                    </a>
+                    Ativos <i class="mdi mdi-check icon-sm text-primary align-middle"></i>
                 </li>
             </ul>
         </nav>
+    </div>
+
+    <div class="page-header">
+        <h3 class="page-title">
+            <a class="btn btn-sm btn-danger" href="{{ route('ativo.veiculo.seguro.adicionar', $veiculo->id) }}">
+                Adicionar
+            </a>
+        </h3>
     </div>
 
     <div class="row">
@@ -35,61 +46,10 @@
                         </div>
                     @endif
 
-                    @if ($store->tipo == 'maquinas')
-                        <table class="table-hover table-striped table">
-                            <thead>
-                                <tr>
-                                    <th width="8%">ID Máquina</th>
-                                    <th>Horímetro Atual</th>
-                                    <th>Marca</th>
-                                    <th>Data</th>
-                                    <th width="10%">Ações</th>
-                                </tr>
-                            </thead>
-                            <tbody>
+                    {{-- DADOS DO VEÍCULO/MÁQUINA --}}
+                    @include('pages.ativos.veiculos.partials.header')
 
-                                <tr>
-                                    <td><span class="badge badge-dark">{{ @$store->codigo_da_maquina }}</span></td>
-
-                                    <td>{{ @$store->horimetro_inicial }}</td>
-                                    <td>{{ @$store->marca }}</td>
-                                    <td>{{ @$store->created_at }}</td>
-
-                                    <td>editar/excluir</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    @else
-                        <table class="table-hover table-striped table">
-                            <thead>
-                                <tr>
-                                    <th>Placa</th>
-                                    <th>KM atual</th>
-                                    <th>Valor</th>
-                                    <th>Data</th>
-                                    <th width="10%">Ações</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><span class="badge badge-dark">{{ @$store->placa }}</span></td>
-                                    <td>
-                                        @foreach ($store->quilometragens as $quilometragem)
-                                            @if ($loop->last)
-                                                {{ @$quilometragem->quilometragem_atual }} Km
-                                            @endif
-                                        @endforeach
-
-                                    </td>
-                                    <td>R$ {{ Tratamento::formatFloat($store->valor_fipe) }} </td>
-                                    <td>{{ Tratamento::datetimeBr($store->created_at) }}</td>
-                                    <td>editar/excluir</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    @endif
-
-                    <table class="table-hover table-striped table" id="lista-simples">
+                    <table class="table-hover table-striped table">
                         <thead>
                             <tr>
                                 <th width="8%">ID</th>
@@ -100,19 +60,17 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($store->seguros as $seguro)
+                            @foreach ($seguros as $seguro)
                                 <tr>
-                                    <td><span class="badge badge-dark">{{ @$seguro->id }}</span></td>
+                                    <td><span class="badge badge-dark">{{ $seguro->id }}</span></td>
                                     <td>R$ {{ Tratamento::formatFloat($seguro->valor) }} </td>
                                     <td>{{ Tratamento::dateBr($seguro->carencia_inicial) }}</td>
                                     <td>{{ Tratamento::dateBr($seguro->carencia_final) }}</td>
                                     <td class="d-flex gap-2">
-                                        @if ($loop->last)
-                                            <a href="{{ route('ativo.veiculo.seguro.editar', [$seguro->id, 'edit']) }}">
-                                                <button class="badge badge-info" data-toggle="tooltip" data-placement="top" title="Editar"><i class="mdi mdi-pencil"></i> Editar
-                                                </button>
-                                            </a>
-                                        @endif
+                                        <a href="{{ route('ativo.veiculo.seguro.editar', [$seguro->id, 'edit']) }}">
+                                            <button class="badge badge-info" data-toggle="tooltip" data-placement="top" title="Editar"><i class="mdi mdi-pencil"></i> Editar
+                                            </button>
+                                        </a>
                                         <form action="{{ route('ativo.veiculo.seguro.delete', $seguro->id) }}" method="POST">
                                             @csrf
                                             <a class="excluir-padrao" data-id="{{ $seguro->id }}" data-table="empresas" data-module="cadastro/empresa">
@@ -131,4 +89,3 @@
         </div>
     </div>
 @endsection
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

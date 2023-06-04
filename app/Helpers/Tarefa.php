@@ -5,7 +5,7 @@ namespace App\Helpers;
 use App\Models\CadastroFornecedor;
 use App\Models\CadastroObra;
 use App\Models\FerramentalRetirada;
-
+use App\Models\Preventiva;
 use Carbon\Carbon;
 class Tarefa
 {
@@ -29,5 +29,11 @@ class Tarefa
         ->get();
 
         return $bloqueio;
+    }
+
+    public static function preventivas()
+    {
+        $preventivas = Preventiva::with('veiculo', 'manutencao')->limit(10)->get();
+        return $preventivas;
     }
 }

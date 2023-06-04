@@ -1,0 +1,153 @@
+@extends('dashboard')
+@section('title', 'Veículo')
+@section('content')
+
+    <div class="page-header">
+        <h3 class="page-title">
+            <span class="page-title-icon bg-gradient-primary me-2 text-white">
+                <i class="mdi mdi-access-point-network menu-icon"></i>
+            </span>
+            @if ($manutencao->veiculo->tipo == 'maquinas')
+                Manutenção da Máquina
+            @else
+                Manutenção do Veículo
+            @endif
+        </h3>
+        <nav aria-label="breadcrumb">
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item active" aria-current="page">
+                    Ativos
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <strong>Ops!</strong><br><br>
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
+                    <form method="post" action="{{ route('ativo.veiculo.manutencao.update', $manutencao->id) }}">
+                        @csrf
+                        @method('put')
+                        <div class="jumbotron p-3">
+                            <span class="font-weight-bold">{{ $manutencao->veiculo->marca }} | {{ $manutencao->veiculo->modelo }} | {{ $manutencao->veiculo->veiculo }}</span>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-md-4">
+                                <label class="form-label" for="fornecedor_id">Fornecedor</label>
+                                <select class="form-select select2" id="fornecedor_id" name="fornecedor_id">
+                                    <option value="">Selecione</option>
+                                    @foreach ($fornecedores as $fornecedor)
+                                        <option value="{{ $fornecedor->id }}" {{ $manutencao->fornecedor_id == $fornecedor->id ? 'selected' : '' }}>
+                                            {{ $fornecedor->razao_social }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label" for="servico_id">Serviço</label>
+                                <select class="form-control select2" id="servico_id" name="servico_id">
+                                    <option value="">Selecione</option>
+                                    @foreach ($servicos as $servico)
+                                        <option value="{{ $servico->id }}" {{ $manutencao->servico_id == $servico->id ? 'selected' : '' }}>
+                                            {{ $servico->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label" for="tipo">Método da Preventiva</label>
+                                <select class="form-select select2" id="tipo" name="tipo">
+                                    @if ($manutencao->veiculo->tipo == 'maquinas')
+                                        <option value="horas" {{ $manutencao->tipo == 'horas' ? 'selected' : '' }}>Horas</option>
+                                    @else
+                                        <option value="">Selecione</option>
+                                        <option value="quilometragem" {{ $manutencao->tipo == 'quilometragem' ? 'selected' : '' }}>Quilometragem</option>
+                                        <option value="tempo" {{ $manutencao->tipo == 'tempo' ? 'selected' : '' }}>Tempo</option>
+                                    @endif
+                                </select>
+                            </div>
+                        </div>
+
+                        @if ($manutencao->veiculo->tipo == 'maquinas')
+                            <div class="row mt-3">
+                                <div class="col-md-4">
+                                    <label class="form-label" for="horimetro_atual">Horímetro atual da máquina</label>
+                                    @php
+                                        $ultima_quilometragem = $manutencao->veiculo->quilometragens->last();
+                                    @endphp
+                                    <input class="form-control" id="horimetro_atual" name="horimetro_atual" type="number" value="{{ $ultima_quilometragem->quilometragem_nova ?? old('horimetro_atual') }}">
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label" for="horimetro_proximo">Próximo Horímetro (Preventiva)</label>
+                                    <input class="form-control" id="horimetro_proximo" name="horimetro_proximo" type="number" value="{{ $manutencao->horimetro_proximo }}">
+                                </div>
+                            </div>
+                        @else
+                            <div class="row mt-3">
+                                <div class="col-md-4">
+                                    <label class="form-label" for="quilometragem_atual">Quilometragem atual do veículo</label>
+                                    @php
+                                        $ultima_quilometragem = $manutencao->veiculo->quilometragens->last();
+                                    @endphp
+                                    <input class="form-control" id="quilometragem_atual" name="quilometragem_atual" type="number" value="{{ $ultima_quilometragem->quilometragem_nova ?? old('quilometragem_atual') }}">
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label class="form-label" for="quilometragem_proxima">Próxima Quilometragem (Preventiva)</label>
+                                    <input class="form-control" id="quilometragem_proxima" name="quilometragem_proxima" type="number" value="{{ $manutencao->quilometragem_proxima }}">
+                                </div>
+                            </div>
+                        @endif
+
+                        <div class="row mt-3">
+                            <div class="col-md-4">
+                                <label class="form-label" for="data_de_execucao">Data de Execução</label>
+                                <input class="form-control" id="data_de_execucao" name="data_de_execucao" type="date" value="{{ $manutencao->data_de_execucao }}">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label" for="data_de_vencimento">Data de Vencimento</label>
+                                <input class="form-control" id="data_de_vencimento" name="data_de_vencimento" type="date" value="{{ $manutencao->data_de_vencimento }}">
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="form-label" for="valor_do_servico">Valor do Serviço</label>
+                                <input class="form-control" id="valor_do_servico" name="valor_do_servico" type="text" value="{{ $manutencao->valor_do_servico }}">
+                            </div>
+
+                        </div>
+
+                        <div class="row mt-3">
+                            <div class="col-md-8">
+                                <label class="form-label" for="descricao">Descrição</label>
+                                <textarea class="form-control" id="descricao" name="descricao" cols="30" rows="6">{{ $manutencao->descricao }}</textarea>
+                            </div>
+                        </div>
+
+                        <div class="col-12 mt-5">
+                            <input name="veiculo_id" type="hidden" value="{{ $manutencao->veiculo_id }}">
+                            <input name="veiculo_tipo" type="hidden" value="{{ $manutencao->veiculo->tipo }}">
+                            <button class="btn btn-gradient-primary btn-lg font-weight-medium" type="submit">Salvar</button>
+
+                            <a href="{{ route('ativo.veiculo') }}">
+                                <button class="btn btn-gradient-danger btn-lg font-weight-medium" type="button">Cancelar</button>
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection

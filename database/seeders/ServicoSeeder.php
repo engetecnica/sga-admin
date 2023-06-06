@@ -15,14 +15,34 @@ class ServicoSeeder extends Seeder
      */
     public function run()
     {
-        $faker = \Faker\Factory::create();
+        DB::table('servicos')->insert([
+            'name' => 'Troca de Óleo',
+            'created_at'    => now(),
+            'updated_at'    => now()
+        ]);
 
-        foreach (range(1, 50) as $index) {
-            DB::table('servicos')->insert([
-                'name'      => $faker->name,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
-        }
+        DB::table('servicos')->insert([
+            'name' => 'Substituição de peças',
+            'created_at'    => now(),
+            'updated_at'    => now()
+        ]);
+
+        DB::table('servicos')->insert([
+            'name' => 'Substituição de pneus',
+            'created_at'    => now(),
+            'updated_at'    => now()
+        ]);
+
+        DB::table('servicos')->insert([
+            'name' => 'Preventiva',
+            'created_at'    => now(),
+            'updated_at'    => now()
+        ]);
+
+        DB::table('servicos')->insert([
+            'name' => 'Elétrica',
+            'created_at'    => now(),
+            'updated_at'    => now()
+        ]);
     }
 }

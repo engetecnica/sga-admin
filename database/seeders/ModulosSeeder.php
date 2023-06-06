@@ -57,7 +57,7 @@ class ModulosSeeder extends Seeder
                 'id_modulo' => 1,
                 'titulo' => 'SGA Configurações',
                 'posicao' => 2,
-                'url_amigavel' => 'admin/configuracao/sistema',
+                'url_amigavel' => 'admin/configuracao',
                 'icone' => '',
                 'tipo_de_acao' => 'other',
                 'created_at' => now(),
@@ -306,7 +306,7 @@ class ModulosSeeder extends Seeder
             ]
         );
 
-        
+
 
         DB::table('modulos')->insert(
             $modulos

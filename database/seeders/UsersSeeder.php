@@ -16,22 +16,19 @@ class UsersSeeder extends Seeder
     public function run()
     {
         //
-        $data = array(
-            [
-                'name' => 'André Baill',
-                'email' => "srandrebaill@gmail.com",
-                'password' => bcrypt('10203010')
-            ]
-        );
-
-        DB::table('users')->insert(
-            $data
-        );
 
         DB::table('users')->insert([
-            'name' => 'Christian André Steffens',
+            'name' => 'André Baill',
+            'email'         => 'srandrebaill@gmail.com',
+            'password'      => bcrypt('10203010'),
+            'created_at'    => now(),
+            'updated_at'    => now()
+        ]);
+
+        DB::table('users')->insert([
+            'name' => 'Wagner Bugs',
             'email'         => 'admin@sga-e.eng.br',
-            'password'      => Hash::make('123456789'),
+            'password'      => bcrypt('123456789'),
             'created_at'    => now(),
             'updated_at'    => now()
         ]);

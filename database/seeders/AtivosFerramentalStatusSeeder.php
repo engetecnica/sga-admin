@@ -27,8 +27,14 @@ class AtivosFerramentalStatusSeeder extends Seeder
                 'titulo' => 'Devolvido',
                 'classe' => 'warning'
             ], [
-                'titulo' => 'Devolvido com Defeito',
+                'titulo' => 'Devolvido com defeito',
                 'classe' => 'info'
+            ], [
+                'titulo' => 'Não devolvido',
+                'classe' => 'danger'
+            ], [
+                'titulo' => 'Cancelado',
+                'classe' => 'primary'
             ]
         );
 

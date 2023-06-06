@@ -20,7 +20,7 @@ class AtivosFerramentalRequisicaoStatusSeeder extends Seeder
      *      - Liberado
      *          - Liberado Parcialmente
      *      - Recusado (recusado pelo administrador)
-     *      - Em Trânsito 
+     *      - Em Trânsito
      *      - Recebido Parcialmente (recebido parcialmente na obra)
      *      - Finalizado (recebido corretamente)
      */
@@ -30,23 +30,25 @@ class AtivosFerramentalRequisicaoStatusSeeder extends Seeder
         $data = array(
             [
                 'titulo' => 'Pendente',
-                'classe' => 'danger'
+                'classe' => 'primary'
             ], [
                 'titulo' => 'Liberado',
-                'classe' => 'primary'
+                'classe' => 'success'
             ], [
                 'titulo' => 'Liberado Parcialmente',
                 'classe' => 'warning'
             ], [
                 'titulo' => 'Recusado',
                 'classe' => 'danger'
-            ],
-            [
-                'titulo' => 'Em Trânsito',
-                'classe' => 'light'
             ], [
-                'titulo' => 'Recebido Parcialmente',
+                'titulo' => 'Em Trânsito',
+                'classe' => 'warning'
+            ], [
+                'titulo' => 'Recebido',
                 'classe' => 'info'
+            ], [
+                'titulo' => 'Recebido com defeito',
+                'classe' => 'success'
             ], [
                 'titulo' => 'Finalizado',
                 'classe' => 'success'

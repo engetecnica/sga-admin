@@ -47,6 +47,12 @@ class AtivosExternosStatusSeeder extends Seeder
             ], [
                 'titulo' => 'Em Manutenção',
                 'classe' => 'danger'
+            ], [
+                'titulo' => 'Reservado',
+                'classe' => 'secondary'
+            ], [
+                'titulo' => 'Recebido com defeito',
+                'classe' => 'warning'
             ]
         );
 

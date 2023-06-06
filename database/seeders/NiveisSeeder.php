@@ -38,6 +38,6 @@ class NiveisSeeder extends Seeder
 
         DB::table('usuarios_niveis')->insert(
             $data
-         ); 
+        );
     }
 }

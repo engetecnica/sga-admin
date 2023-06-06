@@ -110,6 +110,7 @@ class FerramentalRequisicaoController extends Controller
 
     public function update(Request $request, $id)
     {
+        // dd($request->all());
 
         if (! $save = FerramentalRequisicao::find($id)) {
             return redirect()->route('ferramental.requisicao.show', $id)->with('fail', 'Registro não encontrado.');

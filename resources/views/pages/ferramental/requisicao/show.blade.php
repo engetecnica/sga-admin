@@ -125,7 +125,11 @@
                                             <input name="id_ativo[]" type="hidden" value="{{ $item->ativo_externo_estoque->id }}">
                                             <input name="id_ativo_estoque[]" type="hidden" value="{{ $item->ativo_externo_estoque->id_ativo_externo }}">
                                             <input name="quantidade_solicitada[]" type="hidden" value="{{ $item->quantidade_solicitada }}">
-                                            <input name="quantidade_liberada[]" type="number" value="0" max="1" {{ $ferramentalRequisicao->status != 1 ? 'disabled' : '' }}>
+
+                                            <div class="form-switch">
+                                                <input class="form-check-input" name="quantidade_liberada[]" type="checkbox" value="1" role="switch" {{ $ferramentalRequisicao->status != 1 ? 'disabled' : '' }}>
+                                            </div>
+                                            <input name="quantidade_liberada[]" type="hidden" value="0">
                                         </td>
                                         {{-- <td>{{ $item->quantidade_liberada }}</td> --}}
                                     @endif

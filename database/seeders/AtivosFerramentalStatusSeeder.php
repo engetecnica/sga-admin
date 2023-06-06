@@ -19,13 +19,13 @@ class AtivosFerramentalStatusSeeder extends Seeder
         $data = array(
             [
                 'titulo' => 'Pendente',
-                'classe' => 'danger'
+                'classe' => 'primary'
             ], [
                 'titulo' => 'Entregue',
-                'classe' => 'danger'
+                'classe' => 'warning'
             ], [
                 'titulo' => 'Devolvido',
-                'classe' => 'warning'
+                'classe' => 'success'
             ], [
                 'titulo' => 'Devolvido com defeito',
                 'classe' => 'info'
@@ -34,7 +34,7 @@ class AtivosFerramentalStatusSeeder extends Seeder
                 'classe' => 'danger'
             ], [
                 'titulo' => 'Cancelado',
-                'classe' => 'primary'
+                'classe' => 'secondary'
             ]
         );
 

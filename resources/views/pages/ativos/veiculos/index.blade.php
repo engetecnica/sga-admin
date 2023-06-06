@@ -100,7 +100,7 @@
                                                 @if ($ultimaQuilometragem)
                                                     {{ $ultimaQuilometragem->quilometragem_nova }} HR
                                                 @else
-                                                    {{ Tratamento::simpleHour($veiculo->horimetro_inicial) }} HR
+                                                    {{ $veiculo->horimetro_inicial }} HR
                                                 @endif
                                             @endif
                                         </td>

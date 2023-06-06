@@ -11,79 +11,87 @@ use Illuminate\Support\Facades\Log;
 class VeiculoQuilometragemController extends Controller
 {
 
-    public function index($id)
+    public function index(Veiculo $veiculo)
     {
-        $veiculo = Veiculo::find($id);
 
-        $quilometragens = VeiculoQuilometragem::with('veiculo')->where('veiculo_id', $id)->orderByDesc('id')->get();
+        $quilometragens = VeiculoQuilometragem::with('veiculo')->where('veiculo_id', $veiculo->id)->orderByDesc('id')->get();
 
-        $last = VeiculoQuilometragem::where('veiculo_id', $id)->orderByDesc('id')->first();
-
-        return view('pages.ativos.veiculos.quilometragem.index', compact('veiculo', 'quilometragens', 'last'));
+        return view('pages.ativos.veiculos.quilometragem.index', compact('veiculo', 'quilometragens'));
     }
 
-    public function edit($id, $btn)
+    public function create(Veiculo $veiculo)
     {
-        $store = VeiculoQuilometragem::with('veiculo')->find($id);
-
-        if (!$id or !$store) {
-            return redirect()->route('ativo.veiculo')->with('fail', 'Esse veículo não foi encontrado.');
-        }
-
-        return view('pages.ativos.veiculos.quilometragem.form', compact('store', 'btn'));
+        return view('pages.ativos.veiculos.quilometragem.create', compact('veiculo'));
     }
 
-    public function store(Request $request, $id)
+    public function store(Request $request)
     {
-        $veiculo = Veiculo::findOrFail($id);
+        $request->validate([
+            'quilometragem_atual' => 'required',
+            'quilometragem_nova' => 'required|gte:quilometragem_atual',
+        ]);
 
-        try {
-            VeiculoQuilometragem::create(
-                [
-                    'veiculo_id' => $veiculo->id,
-                    'quilometragem_atual' => $request->input('quilometragem_atual'),
-                    'quilometragem_nova' => $request->input('quilometragem_nova')
-                ]
-            );
+        $data = $request->all();
+        $save = VeiculoQuilometragem::create($data);
+
+        if($save){
 
             $userLog = Auth::user()->email;
-            Log::channel('main')->info($userLog .' | STORE QUILOMETRAGEM: ' . $veiculo->id);
+            Log::channel('main')->info($userLog .' | STORE QUILOMETRAGEM: ' . $request->veiculo_id);
 
-            return redirect()->route('ativo.veiculo.quilometragem.index', $id)->with('success', 'Sucesso');
-        } catch (\Exception $e) {
-
-            return redirect()->back()->withInput();
+            return redirect()->route('ativo.veiculo.quilometragem.index', $request->veiculo_id)->with('success', 'Registro salvo com sucesso');
+        } else {
+            return redirect()->route('ativo.veiculo.quilometragem.index', $request->veiculo_id)->with('fail', 'Erro ao salvar registro');
         }
+
+    }
+
+    public function edit($id)
+    {
+        $quilometragem = VeiculoQuilometragem::with('veiculo')->where('id', $id)->first();
+
+        return view('pages.ativos.veiculos.quilometragem.edit', compact('quilometragem'));
     }
 
     public function update(Request $request, $id)
     {
-        $veiculo = VeiculoQuilometragem::findOrFail($id);
+        // dd($request->all());
 
-        try {
-            $veiculo->update([
-                'quilometragem_atual' => $request->quilometragem_atual,
-                'quilometragem_nova' => $request->quilometragem_nova
-            ]);
-
-            $userLog = Auth::user()->email;
-            Log::channel('main')->info($userLog .' | UPDATEv QUILOMETRAGEM/HORIMETRO: ' . $veiculo->id);
-
-            return redirect()->route('ativo.veiculo.quilometragem.editar', $veiculo->veiculo_id)->with('success', 'Sucesso');
-        } catch (\Exception $e) {
-
-            return redirect()->back()->withInput();
+        if (! $save = VeiculoQuilometragem::find($id)) {
+            return redirect()->route('ativo.veiculo.quilometragem.editar', $id)->with('fail', 'Problemas para localizar o registro.');
         }
+
+        $request->validate([
+            'veiculo_id' => 'required',
+            'quilometragem_atual' => 'required',
+            'quilometragem_nova' => 'required|gte:quilometragem_atual',
+        ]);
+
+        $data = $request->all();
+        $save->update($data);
+
+        if($save) {
+            $userLog = Auth::user()->email;
+            Log::channel('main')->info($userLog .' | EDIT QUILOMETRAGEM/HORIMETRO: ' . $save->id);
+
+            return redirect()->route('ativo.veiculo.quilometragem.editar', $id)->with('success', 'Registro salvo com sucesso.');
+        } else {
+            return redirect()->route('ativo.veiculo.quilometragem.editar', $id)->with('fail', 'Erro ao salvar registro.');
+        }
+
     }
+
     public function delete($id)
     {
-        $veiculo = VeiculoQuilometragem::findOrFail($id);
+        $quilometragem = VeiculoQuilometragem::findOrFail($id);
 
         $userLog = Auth::user()->email;
-        Log::channel('main')->info($userLog .' | DELETE QUILOMETRAGEM/HORIMETRO: ' . $veiculo->id);
+        Log::channel('main')->info($userLog .' | DELETE QUILOMETRAGEM/HORIMETRO: ' . $quilometragem->id);
 
-        $veiculo->delete();
-
-        return redirect()->back()->with('success', 'Registro excluído com sucesso.');
+        if($quilometragem->delete()) {
+            return redirect()->back()->with('success', 'Registro excluído com sucesso.');
+        } else {
+            return redirect()->back()->with('fail', 'Erro ao excluir registro.');
+        }
     }
 }

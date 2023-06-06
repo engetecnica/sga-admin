@@ -24,7 +24,7 @@
 
     <div class="page-header">
         <h3 class="page-title">
-            <a class="btn btn-sm btn-danger" href="{{ route('ativo.veiculo.quilometragem.editar', [$last->id, 'add']) }}">
+            <a class="btn btn-sm btn-danger" href="{{ route('ativo.veiculo.quilometragem.adicionar', $veiculo->id) }}">
                 Adicionar
             </a>
         </h3>

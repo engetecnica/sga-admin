@@ -332,7 +332,10 @@
                     }
                 });
             } else {
-                $('#marca').empty().append('<option value="" selected>Selecione o tipo</option>');
+                $('#marcaVeiculo').hide();
+                $('#modeloVeiculo').hide();
+                $('#modeloMaquina').hide();
+                $('#marcaMaquina').hide();
                 $('#valor_fipe1').val('R$ ');
             }
         });

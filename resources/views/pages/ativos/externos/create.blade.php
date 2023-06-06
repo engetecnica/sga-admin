@@ -49,4 +49,6 @@
             </div>
         </div>
     </div>
+    {{-- MODAL INCLUSAO RAPIDA DE OBRAS --}}
+    @include('pages.cadastros.obra.partials.inclusao-rapida')
 @endsection

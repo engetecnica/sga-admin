@@ -70,8 +70,13 @@
                             </div>
 
                             <div class="col-md-4">
+
+                                @php
+                                    $ultimaQuilometragem = $veiculo->quilometragens->last();
+                                @endphp
+
                                 <label class="form-label" for="quilometragem">{{ $veiculo->tipo == 'maquinas' ? 'Horímetro' : 'Quilometragem' }} Atual</label>
-                                <input class="form-control" id="quilometragem" name="quilometragem" type="number" value="{{ old('quilometragem') }}" step="any">
+                                <input class="form-control" id="quilometragem" name="quilometragem" type="number" value="{{ $ultimaQuilometragem->quilometragem_nova ?? old('quilometragem') }}" step="any" min="{{ $ultimaQuilometragem->quilometragem_nova }}">
                             </div>
                         </div>
 
@@ -82,7 +87,7 @@
                             </div>
                             <div class="col-md-4">
                                 <label class="form-label" for="quantidade">Quantidade</label>
-                                <input class="form-control" id="quantidade" name="quantidade" type="number" value="{{ old('quantidade') }}">
+                                <input class="form-control" id="quantidade" name="quantidade" type="number" value="{{ old('quantidade') }}" step="any">
                             </div>
                             <div class="col-md-4">
                                 <label class="form-label" for="valor_total">Valor total</label>

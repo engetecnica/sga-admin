@@ -244,7 +244,7 @@
                                         @foreach ($module['submodulo'] as $sub)
                                             <?php
                                             $item = env('URL_APP_ADMIN') . Request::segment(2) . '/' . Request::segment(3);
-
+                                            
                                             ?>
                                             <li class="nav-item"> <a class="nav-link {{ $item === $sub['url_amigavel'] ? 'active-submodulo' : '' }}" href="{{ url($sub['url_amigavel']) }}">{{ $sub['titulo'] }}</a>
                                             </li>
@@ -347,6 +347,18 @@
                 ],
                 language: {
                     search: 'Buscar',
+                    url: 'https://cdn.datatables.net/plug-ins/1.11.5/i18n/pt-BR.json',
+                }
+            });
+        });
+
+        $(document).ready(function() {
+            $('#tabela').DataTable({
+                order: [
+                    [0, 'desc']
+                ],
+                language: {
+                    search: 'Buscar por ativo ',
                     url: 'https://cdn.datatables.net/plug-ins/1.11.5/i18n/pt-BR.json',
                 }
             });
@@ -698,9 +710,8 @@
             unmaskAsNumber: true
         });
 
-        $("#placa").inputmask({
-            mask: 'AAA-9*99'
-        });
+
+
 
         /* Exclusão Padrão */
         $('.excluir-padrao').on('click', function() {
@@ -711,11 +722,37 @@
 
             console.log(tabela, modulo, redirecionar, id)
 
-        })
+        });
 
         $(document).on('click', '.remove', function() {
             $(this).closest('.item-lista').remove();
-        })
+        });
+
+        // $("#placa").inputmask({
+        //     mask: 'AAA-9*99'
+        // });
+
+
+        $(document).ready(function() {
+            $("#placa").on("blur", function() {
+                var numero = $(this).val();
+                var numeroFormatado = formatarNumero(numero);
+                $(this).val(numeroFormatado);
+            });
+        });
+
+        function formatarNumero(numero) {
+            if (numero.length === 7) {
+                var quintoCaractere = numero.charAt(4);
+                if (isNaN(quintoCaractere)) {
+                    return numero.slice(0, 3) + " " + numero.slice(3);
+                } else {
+                    return numero.slice(0, 3) + "-" + numero.slice(3);
+                }
+            } else {
+                return numero; // Não aplicar formatação se o número não tiver o comprimento esperado
+            }
+        }
 
 
 

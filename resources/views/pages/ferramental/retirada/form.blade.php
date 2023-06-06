@@ -51,8 +51,10 @@
                             <input id="id_obra" name="id_obra" type="hidden" value="">
                         @endif
 
-                        <div class="col-12">
-                            @include('components.fields.id_obra')
+                        <div class="row mt-3">
+                            <div class="col-12">
+                                @include('components.fields.id_obra')
+                            </div>
                         </div>
 
                         <div class="row mt-3">
@@ -79,8 +81,8 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-12 mt-3">
-                                <table class="table-striped table-bordered table-hover table">
+                            <div class="col-12 mt-5">
+                                <table class="table-striped table-hover table" id="tabela">
                                     <thead>
                                         <tr class="">
                                             <th width="10%">Patrimônio</th>

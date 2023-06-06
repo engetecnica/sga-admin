@@ -115,7 +115,7 @@
                         <div class="row mt-3">
                             <div class="col-md-4">
                                 <label class="form-label" for="data_de_execucao">Data de Execução</label>
-                                <input class="form-control" id="data_de_execucao" name="data_de_execucao" type="date" value="{{ $manutencao->data_de_execucao }}">
+                                <input class="form-control" id="data_de_execucao" name="data_de_execucao" type="date" value="{{ $manutencao->data_de_execucao }}" required>
                             </div>
                             <div class="col-md-4">
                                 <label class="form-label" for="data_de_vencimento">Data de Vencimento</label>

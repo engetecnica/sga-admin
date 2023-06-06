@@ -84,11 +84,19 @@ class VeiculoController extends Controller
             ]
         );
 
-        VeiculoQuilometragem::create([
-            'veiculo_id' => $veiculo->id,
-            'quilometragem_atual' => $request->input('quilometragem_atual'),
-            'quilometragem_nova' => $request->input('quilometragem_atual'),
-        ]);
+        if ($request->tipo == 'maquinas') {
+            VeiculoQuilometragem::create([
+                'veiculo_id' => $veiculo->id,
+                'quilometragem_atual' => $request->horimetro_inicial,
+                'quilometragem_nova' => $request->horimetro_inicial,
+            ]);
+        } else {
+            VeiculoQuilometragem::create([
+                'veiculo_id' => $veiculo->id,
+                'quilometragem_atual' => $request->quilometragem_atual,
+                'quilometragem_nova' => $request->quilometragem_atual,
+            ]);
+        }
 
         $userLog = Auth::user()->email;
         Log::channel('main')->info($userLog . ' | ADD VEICULO | Placa: ' . $veiculo->veiculo);

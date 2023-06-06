@@ -87,11 +87,11 @@
                                     @php
                                         $ultima_quilometragem = $veiculo->quilometragens->last();
                                     @endphp
-                                    <input class="form-control" id="horimetro_atual" name="horimetro_atual" type="number" value="{{ $ultima_quilometragem->quilometragem_nova ?? old('horimetro_atual') }}">
+                                    <input class="form-control" id="horimetro_atual" name="horimetro_atual" type="number" value="{{ $ultima_quilometragem->quilometragem_nova ?? old('horimetro_atual') }}" min="{{ $ultima_quilometragem->quilometragem_nova }}">
                                 </div>
                                 <div class="col-md-4">
                                     <label class="form-label" for="horimetro_proximo">Próximo Horímetro (Preventiva)</label>
-                                    <input class="form-control" id="horimetro_proximo" name="horimetro_proximo" type="number" value="{{ old('horimetro_proximo') }}">
+                                    <input class="form-control" id="horimetro_proximo" name="horimetro_proximo" type="number" value="{{ old('horimetro_proximo') }}" min="{{ $ultima_quilometragem->quilometragem_nova }}">
                                 </div>
                             </div>
                         @else
@@ -114,7 +114,7 @@
                         <div class="row mt-3">
                             <div class="col-md-4">
                                 <label class="form-label" for="data_de_execucao">Data de Execução</label>
-                                <input class="form-control" id="data_de_execucao" name="data_de_execucao" type="date" value="{{ old('data_de_execucao') }}">
+                                <input class="form-control" id="data_de_execucao" name="data_de_execucao" type="date" value="{{ old('data_de_execucao') }}" required>
                             </div>
                             <div class="col-md-4">
                                 <label class="form-label" for="data_de_vencimento">Data de Vencimento</label>

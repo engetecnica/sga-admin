@@ -204,6 +204,7 @@ class FerramentalRetiradaController extends Controller
     public function destroy($id)
     {
         $retirada = FerramentalRetirada::findOrFail($id);
+        $retirada->status = 6;
 
         $itens = FerramentalRetiradaItem::where('id_retirada', $retirada->id)->get();
 
@@ -211,13 +212,15 @@ class FerramentalRetiradaController extends Controller
             $item->delete();
         }
 
+
+
         $userLog = Auth::user()->email;
         Log::channel('main')->info($userLog .' | DELETE RETIRADA | ID: ' . $id . ' | DATA: ' . date('Y-m-d H:i:s'));
 
-        if($retirada->delete()){
-            return redirect()->route('ferramental.retirada')->with('success', 'Registro deletado com sucesso!');
+        if($retirada->save()){
+            return redirect()->route('ferramental.retirada')->with('success', 'Retirada cancelada com sucesso');
         } else {
-            return redirect()->route('ferramental.retirada')->with('error', 'Não foi possível deletar o registro!');
+            return redirect()->route('ferramental.retirada')->with('error', 'Não foi possível cancelar a retirada, entre em contato com suporte!');
         }
     }
 
@@ -305,7 +308,7 @@ class FerramentalRetiradaController extends Controller
                     $dropdown = '<div class="dropdown"><div class="btn-group"><button class="btn btn-gradient-danger btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Selecione</button><ul class="dropdown-menu" aria-labelledby="drodownAcoes">';
 
                     /** Devolver Itens */
-                    if ($row->status == "2") {
+                    if ($row->status == "2" || $row->status == "5" && $row->termo_responsabilidade_gerado) {
                         $dropdown .= '<li><a class="dropdown-item" href="' . route('ferramental.retirada.devolver', $row->id) . '"><i class="mdi mdi-redo-variant"></i> Devolver Itens</a></li>';
                     }
 

@@ -69,12 +69,11 @@
                                                     <td>{{ Tratamento::FormatarData($detalhes->created_at) }}</td>
 
                                                     <td>
-                                                        <select class="form-select-sm" id="id_ativo_externo" name="id_ativo_externo[{{ $item->id }}]" @if ($item->status != 2) disabled @endif>
+                                                        <select class="form-select-sm" id="id_ativo_externo" name="id_ativo_externo[{{ $item->id }}]" {{ $item->status == 2 || $item->status == 5 ? '' : 'disabled' }}>
                                                             <option value="{{ $item->status }}">{{ Tratamento::getStatusRetirada($item->status)['titulo'] }}</option>
-                                                            @if ($item->status == 2)
-                                                                <option value="3">Devolvido</option>
-                                                            @endif
+                                                            <option value="3">Devolvido</option>
                                                             <option value="4">Devolvido com Defeito</option>
+                                                            <option value="5">Não Devolvido</option>
                                                         </select>
                                                     </td>
                                                 </tr>
@@ -90,14 +89,14 @@
                                             <div class="row">
                                                 <div class="col-12 mt-3">
                                                     <label class="form-label" for="observacoes">Observações</label>
-                                                    <textarea class="form-control" id="observacoes" name="observacoes" rows="3" @if ($item->status != 2) disabled @endif>{{ $detalhes->devolucao_observacoes }}</textarea>
+                                                    <textarea class="form-control" id="observacoes" name="observacoes" rows="3" {{ $item->status == 2 || $item->status == 5 ? '' : 'disabled' }}>{{ $detalhes->devolucao_observacoes }}</textarea>
                                                 </div>
                                             </div>
 
                                         </div>
                                     </div>
 
-                                    @if ($item->status == 2)
+                                    @if ($detalhes->status == 2 || $detalhes->status == 5)
                                         <div class="mt-2">
                                             <button class="btn btn-gradient-primary font-weight-medium" type="submit">Devolver Itens</button>
 

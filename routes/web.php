@@ -198,6 +198,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('admin/ativo/externo/editar/{id?}', [AtivoExternoController::class, 'edit'])->name('ativo.externo.editar');
     Route::get('admin/ativo/externo/adicionar', [AtivoExternoController::class, 'create'])->name('ativo.externo.adicionar');
     Route::post('admin/ativo/externo/store', [AtivoExternoController::class, 'store'])->name('ativo.externo.store');
+    Route::get('admin/ativo/externo/inserir/{ativo}', [AtivoExternoController::class, 'insert'])->name('ativo.externo.inserir');
+    Route::post('admin/ativo/externo/inserir/store', [AtivoExternoController::class, 'insertStore'])->name('ativo.externo.inserir.store');
+
     Route::post('admin/ativo/externo/update/{id}', [AtivoExternoController::class, 'update'])->name('ativo.externo.update');
 
     Route::get('admin/ativo/externo/detalhes/{id}', [AtivoExternoController::class, 'show'])->name('ativo.externo.detalhes');
@@ -258,11 +261,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::delete('admin/ativo/veiculo/manutencao/delete/{id}', [VeiculoManutencaoController::class, 'delete'])->name('ativo.veiculo.manutencao.delete');
 
     /* Ativo - Veículos - Quilometragem */
-    Route::get('admin/ativo/veiculo/quilometragem/{id}', [VeiculoQuilometragemController::class, 'index'])->name('ativo.veiculo.quilometragem.index');
-    Route::get('admin/ativo/veiculo/quilometragem/editar/{id}/{btn}', [VeiculoQuilometragemController::class, 'edit'])->name('ativo.veiculo.quilometragem.editar');
-    Route::post('admin/ativo/veiculo/quilometragem/store/{id}', [VeiculoQuilometragemController::class, 'store'])->name('ativo.veiculo.quilometragem.store');
-    Route::post('admin/ativo/veiculo/quilometragem/update/{id}', [VeiculoQuilometragemController::class, 'update'])->name('ativo.veiculo.quilometragem.update');
-    Route::post('admin/ativo/veiculo/quilometragem/delete/{id}', [VeiculoQuilometragemController::class, 'delete'])->name('ativo.veiculo.quilometragem.delete');
+    Route::get('admin/ativo/veiculo/quilometragem/{veiculo}', [VeiculoQuilometragemController::class, 'index'])->name('ativo.veiculo.quilometragem.index');
+    Route::get('admin/ativo/veiculo/quilometragem/adicionar/{veiculo}', [VeiculoQuilometragemController::class, 'create'])->name('ativo.veiculo.quilometragem.adicionar');
+    Route::post('admin/ativo/veiculo/quilometragem', [VeiculoQuilometragemController::class, 'store'])->name('ativo.veiculo.quilometragem.store');
+    Route::get('admin/ativo/veiculo/quilometragem/editar/{id}', [VeiculoQuilometragemController::class, 'edit'])->name('ativo.veiculo.quilometragem.editar');
+    Route::put('admin/ativo/veiculo/quilometragem/{id}', [VeiculoQuilometragemController::class, 'update'])->name('ativo.veiculo.quilometragem.update');
+    Route::delete('admin/ativo/veiculo/quilometragem/delete/{id}', [VeiculoQuilometragemController::class, 'delete'])->name('ativo.veiculo.quilometragem.delete');
 
     /* Ativo - Veículos - Seguro */
     Route::get('admin/ativo/veiculo/seguro/{veiculo}', [VeiculoSeguroController::class, 'index'])->name('ativo.veiculo.seguro.index');

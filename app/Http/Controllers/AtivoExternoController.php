@@ -10,6 +10,7 @@ use App\Models\{
     AtivoExternoEstoqueItem,
     AtivoExternoEstoqueHistorico,
     AtivosExternosStatus,
+    CadastroEmpresa,
     CadastroObra
 };
 use Illuminate\Support\Facades\Auth;
@@ -40,9 +41,11 @@ class AtivoExternoController extends Controller
     {
         $obras = CadastroObra::all();
 
+        $empresas = CadastroEmpresa::all();
+
         $ativo_configuracoes = AtivoConfiguracao::where('id_relacionamento', '>', 0)->get();
 
-        return view('pages.ativos.externos.create', compact('ativo_configuracoes', 'obras'));
+        return view('pages.ativos.externos.create', compact('ativo_configuracoes', 'obras', 'empresas'));
     }
 
     public function store(Request $request)
@@ -114,23 +117,73 @@ class AtivoExternoController extends Controller
 
     public function show($id)
     {
-        // if (!$id) {
-        //     return redirect()->route('ativo.externo')->with('fail', 'Não foi possível processar os ativos solicitados. Fale com seu supervisor.');
-        // }
-
-        // $detalhes = AtivoExterno::select('ativos_configuracoes.titulo AS categoria', 'ativos_externos.*')
-        //     ->join('ativos_configuracoes', 'ativos_configuracoes.id', '=', 'ativos_externos.id_ativo_configuracao')
-        //     ->where('ativos_externos.id', $id)
-        //     ->first();
-
-        // if(!$detalhes){
-        //     return redirect()->route('ativo.externo')->with('fail', 'Não foi possível processar os ativos solicitados. Fale com seu supervisor.');
-        // }
 
         $detalhes = AtivoExterno::with('categoria')->find($id);
         $itens = AtivoExternoEstoque::with('obra', 'situacao')->where('id_ativo_externo', $id)->get();
 
         return view('pages.ativos.externos.show', compact('detalhes', 'itens'));
+    }
+
+    public function insert(AtivoExterno $ativo)
+    {
+        $obras = CadastroObra::all();
+
+        $empresas = CadastroEmpresa::all();
+
+        $ativo_configuracoes = AtivoConfiguracao::where('id_relacionamento', '>', 0)->get();
+
+        return view('pages.ativos.externos.insert', compact('ativo_configuracoes', 'obras', 'ativo', 'empresas'));
+    }
+
+    public function insertStore(Request $request)
+    {
+        // dd($request->all());
+
+        $request->validate(
+            [
+                'id_ativo_configuracao' => 'required',
+                'titulo' => 'required',
+                'quantidade' => 'required|min:1',
+                'status' => 'required'
+            ],
+            [
+                'id_ativo_configuracao.required' => 'É necessário selecionar uma Categoria',
+                'titulo.required' => 'Preencha o Título do Ativo',
+                'quantidade.required' => 'A quantidade não pode ser Zero ou Nula',
+                'status.required' => 'Selecione o Status'
+            ]
+        );
+
+        /* Salvar Ativo Estoque */
+        $externo_estoque_quantidade = $request->quantidade;
+
+        /* Inclusão de Estoque  */
+        for ($i = 1; $i <= $externo_estoque_quantidade; $i++) {
+
+            /* Contagem de Patrimonio diante do Atual */
+            $patrimonio = Configuracao::PatrimonioAtual();
+
+            /* Dados para Salvar no Estoque */
+            $externo_estoque = new AtivoExternoEstoque();
+            $externo_estoque->id_ativo_externo = $request->id_ativo_externo;
+            $externo_estoque->id_obra = $request->id_obra;
+            $externo_estoque->patrimonio = Configuracao::PatrimonioSigla() . $patrimonio;
+            $externo_estoque->valor = str_replace('R$ ', '', $request->valor) ?? 0;
+            $externo_estoque->calibracao = $request->calibracao;
+            $externo_estoque->status = 4; // Em Estoque
+            $externo_estoque->save();
+        }
+
+        $save = AtivoExternoEstoqueItem::where('id_ativo_externo', $request->id_ativo_externo)->increment('quantidade_estoque', $request->quantidade);
+
+        $userLog = Auth::user()->email;
+        Log::channel('main')->info($userLog .' | ADD ATIVO EXTERNO: ' . $externo_estoque->patrimonio);
+
+        if($save){
+            return redirect()->route('ativo.externo.detalhes', $request->id_ativo_externo)->with('success', 'Novos ativos foram inseridos no estoque.');
+        } else {
+            return redirect()->route('ativo.externo')->with('fail', 'Não foi possível processar os ativos solicitados. Fale com seu supervisor.');
+        }
     }
 
     public function edit($id)
@@ -141,7 +194,9 @@ class AtivoExternoController extends Controller
         $categorias = AtivoConfiguracao::where('id_relacionamento', '>', 0)->get();
         $situacoes = AtivosExternosStatus::all();
 
-        return view('pages.ativos.externos.edit', compact('estoques', 'obras', 'categorias', 'situacoes'));
+        $empresas = CadastroEmpresa::all();
+
+        return view('pages.ativos.externos.edit', compact('estoques', 'obras', 'categorias', 'situacoes', 'empresas'));
     }
 
     public function searchAtivoID(Request $request, int $id)

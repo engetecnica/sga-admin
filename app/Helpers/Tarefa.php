@@ -22,8 +22,8 @@ class Tarefa
     public static function funcionariosBloqueados()
     {
         $bloqueio = FerramentalRetirada::with('funcionario')
-        ->where('status', 2)
         ->where('data_devolucao', '<', Carbon::now())
+        ->orWhere('status', 5)
         ->orderByDesc('id')
         ->limit(10)
         ->get();

@@ -38,6 +38,6 @@ class AtivosFerramentalStatusSeeder extends Seeder
             ]
         );
 
-        DB::table('ativos_externos_status')->insert($data);
+        DB::table('ativos_ferramental_status')->insert($data);
     }
 }

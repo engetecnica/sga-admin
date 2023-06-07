@@ -189,7 +189,7 @@ class AtivoExternoController extends Controller
     public function edit($id)
     {
 
-        $estoques = AtivoExternoEstoque::with('obra', 'situacao', 'ativo')->where('id_ativo_externo', $id)->get();
+        $estoques = AtivoExternoEstoque::with('obra', 'situacao', 'ativo_externo')->where('id_ativo_externo', $id)->get();
         $obras = CadastroObra::all();
         $categorias = AtivoConfiguracao::where('id_relacionamento', '>', 0)->get();
         $situacoes = AtivosExternosStatus::all();

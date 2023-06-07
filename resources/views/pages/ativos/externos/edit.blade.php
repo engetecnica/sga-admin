@@ -33,7 +33,7 @@
                                 </ul>
                             </div>
                         @endif
-                        <form method="post" action="{{ route('ativo.externo.update', $estoque->ativo->id) }}">
+                        <form method="post" action="{{ route('ativo.externo.update', $estoque->ativo_externo->id) }}">
                             @csrf
 
                             <div class="row">
@@ -42,7 +42,7 @@
                                     <select class="form-select select2" name="id_ativo_configuracao">
                                         <option value="">Selecione uma Categoria</option>
                                         @foreach ($categorias as $categoria)
-                                            <option value="{{ $categoria->id }}" {{ $estoque->ativo->id_ativo_configuracao == $categoria->id ? 'selected' : '' }}>{{ $categoria->titulo }}</option>
+                                            <option value="{{ $categoria->id }}" {{ $estoque->ativo_externo->id_ativo_configuracao == $categoria->id ? 'selected' : '' }}>{{ $categoria->titulo }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -79,7 +79,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label" for="titulo">Título</label>
-                                    <input class="form-control" id="titulo" name="titulo" type="text" value="{{ $estoque->ativo->titulo ?? old('titulo') }}">
+                                    <input class="form-control" id="titulo" name="titulo" type="text" value="{{ $estoque->ativo_externo->titulo ?? old('titulo') }}">
                                 </div>
 
                                 <div class="col-md-2">

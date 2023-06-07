@@ -24,6 +24,11 @@ class FerramentalRequisicaoItem extends Model
         'observacao_recebido'
     ];
 
+    public function ativo_externo()
+    {
+        return $this->belongsTo(AtivoExterno::class,'id_ativo_externo');
+    }
+
     public function ativo_externo_estoque()
     {
         return $this->belongsTo(AtivoExternoEstoque::class,'id_ativo_externo');

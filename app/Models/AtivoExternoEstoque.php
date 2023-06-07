@@ -4,17 +4,25 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 
 class AtivoExternoEstoque extends Model
 {
     use HasFactory;
+    use SoftDeletes;
+
+    protected $dates = ['deleted_at'];
 
     protected $table = "ativos_externos_estoque";
 
     protected $fillable = [
+        'id_ativo_externo',
         'id_obra',
+        'patrimonio',
+        'data_descarte',
+        'valor',
+        'calibracao',
         'status'
     ];
 
@@ -37,19 +45,19 @@ class AtivoExternoEstoque extends Model
         return $estoque;
     }
 
-    public function ativo()
+    public function ativo_externo()
     {
-        return $this->belongsTo(AtivoExterno::class, 'id_ativo_externo',  'id');
+        return $this->belongsTo(AtivoExterno::class, 'id_ativo_externo');
     }
 
     public function obra()
     {
-        return $this->belongsTo(CadastroObra::class, 'id_obra',  'id');
+        return $this->belongsTo(CadastroObra::class, 'id_obra');
     }
 
     public function situacao()
     {
-        return $this->belongsTo(AtivoExernoStatus::class, 'status',  'id');
+        return $this->belongsTo(AtivoExernoStatus::class, 'status');
     }
 
 

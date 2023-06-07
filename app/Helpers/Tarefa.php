@@ -4,6 +4,7 @@ namespace App\Helpers;
 
 use App\Models\CadastroFornecedor;
 use App\Models\CadastroObra;
+use App\Models\FerramentalRequisicaoTransito;
 use App\Models\FerramentalRetirada;
 use App\Models\Preventiva;
 use Carbon\Carbon;
@@ -35,5 +36,11 @@ class Tarefa
     {
         $preventivas = Preventiva::with('veiculo', 'manutencao')->limit(10)->get();
         return $preventivas;
+    }
+
+    public static function transferencias()
+    {
+        $transferencias = FerramentalRequisicaoTransito::with('requisicao', 'ativo', 'obraOrigem', 'obradestino', 'status')->where('status', 5)->get();
+        return $transferencias;
     }
 }

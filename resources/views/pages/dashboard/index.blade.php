@@ -213,27 +213,37 @@
         </div>
     </div>
 
-    {{-- <div class="row">
+    <div class="row">
         <div class="col-xl-12 col-sm-12 mb-12">
             <div class="card">
                 <div class="card-body">
-                    <h5>Preventivas ({{ count(Tarefa::preventivas()) }})</h5>
+                    <h5>Requisições: Transferências ativas ({{ count(Tarefa::transferencias()) }})</h5>
                     <table class="table-border table">
-                        @foreach (Tarefa::preventivas() as $preventiva)
+                        @php
+                            $requisicao = Tarefa::transferencias()->first();
+                        @endphp
+                        @if ($requisicao)
                             <tr>
                                 <td>
-                                    {{ $preventiva->veiculo->marca }} | {{ $preventiva->veiculo->modelo }} | {{ $preventiva->veiculo->veiculo }}<br>
-                                    {{ $preventiva->descricao }}
-                                </td>
-                                <td style="width: 20%">
-                                    <a href="{{ route('ativo.veiculo.manutencao.editar', $preventiva->manutencao->id) }}"><span class="badge badge-success">Visualizar dados da manutenção</span></a>
+                                    <a href="{{ route('ferramental.requisicao.show', $requisicao->id_requisicao) }}"><span class="badge badge-success">Ver requisição</span></a>
                                 </td>
                             </tr>
-                        @endforeach
+                            @foreach (Tarefa::transferencias() as $transferencia)
+                                <tr>
+                                    <td>
+                                        <strong>Obra de origem:</strong> {{ $transferencia->obraOrigem->razao_social }} -> <strong>OBRA DESTINO:</strong> {{ $transferencia->obraDestino->razao_social }}
+                                        @php
+                                            $item = $transferencia->ativo->load('ativo_externo');
+                                        @endphp
+                                        Item: <span class="badge badge-secondary">{{ $transferencia->ativo->patrimonio }}</span> {{ $item->ativo_externo->titulo }}
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @endif
                     </table>
                 </div>
             </div>
         </div>
-    </div> --}}
+    </div>
 
 @endsection

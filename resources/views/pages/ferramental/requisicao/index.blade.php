@@ -52,7 +52,7 @@
                                     <td class="align-middle">{{ $requisicao->obraOrigem->razao_social ?? null }}</td>
                                     <td class="align-middle">{{ $requisicao->obraDestino->razao_social }}</td>
                                     <td class="align-middle">{{ Tratamento::datetimeBR($requisicao->created_at) }}</td>
-                                    <td class="align-middle">{{ $requisicao->data_liberacao }}</td>
+                                    <td class="align-middle">{{ Tratamento::datetimeBR($requisicao->data_liberacao) }}</td>
                                     <td class="align-middle"><span class="badge badge-{{ $requisicao->situacao->classe }}">{{ $requisicao->situacao->titulo }}</span></td>
                                     <td class="d-flex gap-2 align-middle">
                                         <div class="dropdown">

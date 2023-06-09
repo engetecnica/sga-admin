@@ -325,6 +325,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('admin/ferramental/requisicao/{id}', [FerramentalRequisicaoController::class, 'show'])->name('ferramental.requisicao.show');
     // Route::get('admin/ferramental/requisicao/{id}/editar', [FerramentalRequisicaoController::class, 'edit'])->name('ferramental.requisicao.edit');
     Route::put('admin/ferramental/requisicao/{id}', [FerramentalRequisicaoController::class, 'update'])->name('ferramental.requisicao.update');
+    Route::post('admin/ferramental/requisicao/romaneio/{id}', [FerramentalRequisicaoController::class, 'romaneio'])->name('ferramental.requisicao.romaneio');
     Route::patch('admin/ferramental/requisicao/{id}', [FerramentalRequisicaoController::class, 'recept'])->name('ferramental.requisicao.recept');
     // Route::delete('admin/ferramental/requisicao/{id}', [FerramentalRequisicaoController::class, 'destroy'])->name('ferramental.requisicao.destroy');
 

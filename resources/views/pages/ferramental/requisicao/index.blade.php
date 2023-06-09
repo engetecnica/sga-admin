@@ -35,7 +35,6 @@
                             <tr>
                                 <th width="8%">ID</th>
                                 <th> Solicitante </th>
-                                <th> Origem </th>
                                 <th> Destino </th>
                                 <th> Data de Solicitação </th>
                                 <th> Data de Liberação </th>
@@ -49,7 +48,6 @@
                                 <tr>
                                     <td class="text-center align-middle"><span class="badge badge-dark">{{ $requisicao->id }}</span></td>
                                     <td class="align-middle">{{ $requisicao->solicitante->name }}</td>
-                                    <td class="align-middle">{{ $requisicao->obraOrigem->razao_social ?? null }}</td>
                                     <td class="align-middle">{{ $requisicao->obraDestino->razao_social }}</td>
                                     <td class="align-middle">{{ Tratamento::datetimeBR($requisicao->created_at) }}</td>
                                     <td class="align-middle">{{ Tratamento::datetimeBR($requisicao->data_liberacao) }}</td>
@@ -60,7 +58,11 @@
                                                 <i class="mdi mdi-pencil"></i> Gerenciar
                                             </button>
                                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                <li><a class="dropdown-item" href="{{ route('ferramental.requisicao.show', $requisicao->id) }}">Detalhes</a></li>
+                                                @if ($requisicao->status > 1 and $requisicao->status < 4)
+                                                    <li><a class="dropdown-item" href="{{ route('ferramental.requisicao.show', $requisicao->id) }}"><i class="mdi mdi-file-pdf-box"></i> Gerar Romaneio</a></li>
+                                                @endif
+                                                <li><a class="dropdown-item" href="{{ route('ferramental.requisicao.show', $requisicao->id) }}"><i class="mdi mdi-file-document-outline"></i> Detalhes</a></li>
+
                                             </ul>
                                         </div>
                                         {{--

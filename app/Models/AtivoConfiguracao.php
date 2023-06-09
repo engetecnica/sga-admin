@@ -29,4 +29,8 @@ class AtivoConfiguracao extends Model
 
         return $configuracoes;
     }
+
+    public function relacionamento() {
+        return $this->belongsTo(AtivoConfiguracao::class, 'id_relacionamento');
+    }
 }

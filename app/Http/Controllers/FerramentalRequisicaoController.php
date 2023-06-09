@@ -12,7 +12,7 @@ use App\Models\{
     FerramentalRequisicaoItem,
     FerramentalRequisicaoTransito
 };
-
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -122,15 +122,19 @@ class FerramentalRequisicaoController extends Controller
     public function update(Request $request, $id)
     {
 
-
         if (! $save = FerramentalRequisicao::find($id)) {
             return redirect()->route('ferramental.requisicao.show', $id)->with('fail', 'Registro não encontrado.');
         }
 
-        // dd($request->all());
-
         $total_liberado = count($request->id_item);
         $total_solicitado = array_sum($request->quantidade_solicitada);
+
+        if ($total_liberado > $total_solicitado) {
+            // Erro de validação informando que a quantidade liberada é maior do que a quantidade solicitada
+            return redirect()->back()->with('fail', 'A quantidade liberada excede a quantidade solicitada.');
+        }
+
+        // dd($request->all());
 
         //SALVANDO AS MUDANÇAS NA REQUISIÇÃO
         $data = $request->all();
@@ -196,7 +200,7 @@ class FerramentalRequisicaoController extends Controller
 
         foreach($ativos as $ativo) {
             $item = AtivoExternoEstoque::find($ativo);
-            $item->update(['status' => 3]);
+            $item->update(['status' => 2]);
 
             //GERANDO TRANSFERÊNCIAS ENTRE OBRAS
             $transfer = new FerramentalRequisicaoTransito();
@@ -213,6 +217,38 @@ class FerramentalRequisicaoController extends Controller
 
         return redirect()->route('ferramental.requisicao.index')->with('success', 'Registro atualizado com sucesso.');
 
+
+    }
+
+    public function romaneio(Request $request, $id)
+    {
+        // dd($request->all());
+
+        $atualiza_requisicao = FerramentalRequisicao::find($id);
+        $atualiza_requisicao->update(['status' => 5]);
+
+        $atualiza_itens = FerramentalRequisicaoTransito::where('id_requisicao', $id)->get();
+        foreach($atualiza_itens as $item) {
+            $transito = FerramentalRequisicaoTransito::find($item->id);
+            $transito->update(['status' => 5]);
+
+            $estoque = AtivoExternoEstoque::find($transito->id_ativo);
+            $estoque->update(['status' => 3]);
+        }
+
+        $requisicao = FerramentalRequisicao::with('solicitante', 'despachante', 'recebedor', 'obraOrigem', 'obraDestino', 'situacao')->find($id);
+
+        $ativos = FerramentalRequisicaoItem::with('ativo_externo', 'ativo_externo_estoque', 'situacao', 'situacao_recebido')->where('id_requisicao', $id)->get();
+
+        $ativos_liberados = FerramentalRequisicaoTransito::with('ativo', 'obraOrigem', 'obraDestino', 'status')->where('id_requisicao', $id)->get();
+
+        $data = date('d/m/Y H:i:s');
+        $nome = 'requisicao_'. $requisicao->id .'_' . date("dmYHis") . '.pdf';
+
+        $pdf = Pdf::loadView('components.romaneio.romaneio', compact('requisicao', 'ativos', 'ativos_liberados', 'data'));
+        return $pdf->stream($nome, array("Attachment" => false));
+
+        // return view('components.romaneio.romaneio', compact('requisicao', 'ativos', 'ativos_liberados', 'data'));
 
     }
 

@@ -11,4 +11,9 @@ class CadastroFuncao extends Model
 
     protected $table = "funcionarios_funcoes";
     protected $dates = ['deleted_at'];
+
+    public function funcionarios()
+    {
+        return $this->hasMany(CadastroFuncionario::class);
+    }
 }

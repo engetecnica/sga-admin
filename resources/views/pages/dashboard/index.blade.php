@@ -22,6 +22,7 @@
                 <div class="col-sm-12">
                     <div class="d-flex align-items-center mb-3">
                         <h3 class="m-0 pr-2"></h3>
+                        {{-- @dd(session()->all()) --}}
                     </div>
                 </div>
             </div>
@@ -117,7 +118,7 @@
                 <div class="d-flex align-items-center flex-wrap">
                     <div class="widget-data">
                         <div class="weight-400 font-20">Funcionários</div>
-                        <div class="weight-300 font-30">{{ Estatistica::funcionarios() }}</div>
+                        <div class="weight-300 font-30">{{ Estatistica::funcionarios(session()->get('obra')->id ?? session()->get('obra')['id']) }}</div>
                     </div>
                     <div class="widget-icon">
                         <div class="icon"><i class="mdi mdi-account-group" aria-hidden="true"></i></div>
@@ -138,19 +139,21 @@
                 </div>
             </div>
         </div> --}}
-        <div class="col-xl-3 mb-50 mb-2">
-            <div class="gradient-style4 box-shadow border-radius-10 height-100-p widget-style3 text-white">
-                <div class="d-flex align-items-center flex-wrap">
-                    <div class="widget-data">
-                        <div class="weight-400 font-20">Obras</div>
-                        <div class="weight-300 font-30">{{ Estatistica::obras() }}</div>
-                    </div>
-                    <div class="widget-icon">
-                        <div class="icon"><i class="mdi mdi-hard-hat" aria-hidden="true"></i></div>
+        @if (session()->get('usuario_vinculo')->id_nivel <= 2)
+            <div class="col-xl-3 mb-50 mb-2">
+                <div class="gradient-style4 box-shadow border-radius-10 height-100-p widget-style3 text-white">
+                    <div class="d-flex align-items-center flex-wrap">
+                        <div class="widget-data">
+                            <div class="weight-400 font-20">Obras</div>
+                            <div class="weight-300 font-30">{{ Estatistica::obras() }}</div>
+                        </div>
+                        <div class="widget-icon">
+                            <div class="icon"><i class="mdi mdi-hard-hat" aria-hidden="true"></i></div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        @endif
     </div>
 
     <div class="row">
@@ -195,9 +198,9 @@
         <div class="col-xl-6 col-sm-12 mb-4">
             <div class="card">
                 <div class="card-body">
-                    <h5>Aniversariantes do mês ({{ count(Estatistica::aniversariantes()) }})</h5>
+                    <h5>Aniversariantes do mês ({{ count(Estatistica::aniversariantes(session()->get('obra')->id ?? session()->get('obra')['id'])) }})</h5>
                     <table class="table-border table-responsive table">
-                        @foreach (Estatistica::aniversariantes() as $aniversariante)
+                        @foreach (Estatistica::aniversariantes(session()->get('obra')->id ?? session()->get('obra')['id']) as $aniversariante)
                             <tr>
                                 <td>
                                     {{ $aniversariante->matricula }} - {{ $aniversariante->nome }} | {{ Tratamento::dateBr($aniversariante->data_nascimento) }}
@@ -217,30 +220,40 @@
         <div class="col-xl-12 col-sm-12 mb-12">
             <div class="card">
                 <div class="card-body">
-                    <h5>Requisições: Transferências ativas ({{ count(Tarefa::transferencias()) }})</h5>
-                    <table class="table-border table">
+                    <h5>Requisições: Transferências ativas ({{ count(Tarefa::transferencias(session()->get('obra')->id ?? session()->get('obra')['id'])) }})</h5>
+                    <div class="accordion" id="accordionExample">
                         @php
-                            $requisicao = Tarefa::transferencias()->first();
+                            $requisicao = Tarefa::transferencias(session()->get('obra')->id ?? session()->get('obra')['id'])->first();
                         @endphp
-                        @if ($requisicao)
-                            <tr>
-                                <td>
-                                    <a href="{{ route('ferramental.requisicao.show', $requisicao->id_requisicao) }}"><span class="badge badge-success">Ver requisição</span></a>
-                                </td>
-                            </tr>
-                            @foreach (Tarefa::transferencias() as $transferencia)
-                                <tr>
-                                    <td>
-                                        <strong>Obra de origem:</strong> {{ $transferencia->obraOrigem->razao_social }} -> <strong>OBRA DESTINO:</strong> {{ $transferencia->obraDestino->razao_social }}
-                                        @php
-                                            $item = $transferencia->ativo->load('ativo_externo');
-                                        @endphp
-                                        Item: <span class="badge badge-secondary">{{ $transferencia->ativo->patrimonio }}</span> {{ $item->ativo_externo->titulo }}
-                                    </td>
-                                </tr>
-                            @endforeach
-                        @endif
-                    </table>
+                        <div class="card">
+                            <div class="card-header" id="heading-{{ $loop->iteration }}">
+                                <h2 class="mb-0">
+                                    <button class="btn btn-link btn-block text-left" data-toggle="collapse" data-target="#collapse-{{ $loop->iteration }}" type="button" aria-expanded="true" aria-controls="collapseOne">
+                                        Collapsible Group Item #1
+                                    </button>
+                                </h2>
+                            </div>
+
+                            <div class="show collapse" id="collapse-{{ $loop->iteration }}" data-parent="#accordionExample" aria-labelledby="heading-{{ $loop->iteration }}">
+                                <div class="card-body">
+                                    <a href="{{ route('ferramental.requisicao.show', $requisicao->id_requisicao) }}"><span class="badge badge-success">Ver requisição</span></a><br>
+                                    <table class="table-border table">
+                                        @foreach (Tarefa::transferencias(session()->get('obra')->id ?? session()->get('obra')['id']) as $transferencia)
+                                            <tr>
+                                                <td>
+                                                    <strong>Obra de origem:</strong> {{ $transferencia->obraOrigem->razao_social }} -> <strong>OBRA DESTINO:</strong> {{ $transferencia->obraDestino->razao_social }}
+                                                    @php
+                                                        $item = $transferencia->ativo->load('ativo_externo');
+                                                    @endphp
+                                                    Item: <span class="badge badge-secondary">{{ $transferencia->ativo->patrimonio }}</span> {{ $item->ativo_externo->titulo }}
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

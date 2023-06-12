@@ -27,20 +27,30 @@ class Estatistica
         return CadastroFornecedor::where('status', 'Ativo')->count();
     }
 
-    public static function funcionarios()
+    public static function funcionarios($obra)
     {
-        return CadastroFuncionario::where('status', 'Ativo')->count();
+        if(isset($obra)) {
+            return CadastroFuncionario::where('status', 'Ativo')->where('id_obra', $obra)->count();
+        } else {
+            return CadastroFuncionario::where('status', 'Ativo')->count();
+        }
     }
+
 
     public static function obras()
     {
         return CadastroObra::where('status', 'Ativo')->count();
     }
 
-    public static function aniversariantes()
+    public static function aniversariantes($obra)
     {
         $now = Carbon::now();
 
-        return CadastroFuncionario::whereMonth('data_nascimento', $now->month)->get();
+        if(isset($obra)) {
+            return CadastroFuncionario::where('id_obra', $obra)->whereMonth('data_nascimento', $now->month)->get();
+        } else {
+            return CadastroFuncionario::whereMonth('data_nascimento', $now->month)->get();
+        }
+
     }
 }

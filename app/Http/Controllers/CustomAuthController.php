@@ -52,11 +52,11 @@ class CustomAuthController extends Controller
 
             if ($id_obra == null) {
                 $obra_detalhes = [
-                    'obra' => [
+
                         'id' => null,
                         'razao_social' => 'SGA Todas as Obras',
                         'codigo_obra' => 'SGAE-OBRA-ADM'
-                    ]
+
                 ];
             } else {
                 $obra_detalhes = CadastroObra::find($id_obra);

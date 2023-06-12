@@ -49,15 +49,22 @@
                     <span class="mdi mdi-menu"></span>
                 </button>
                 <div class="w-100 mt-3">
-                    <form action="">
-                        <select class="form-select select2 form-control" id="id_obra" name="id_obra">
-
-                            @foreach ($obras_lista as $obra_lista)
-                                <option value="{{ $obra_lista->id }}">
-                                    {{ $obra_lista->codigo_obra }} | {{ $obra_lista->razao_social }} | {{ $obra_lista->cnpj }}
+                    <form class="d-flex" action="/atualizar-obra" method="POST">
+                        @csrf
+                        <select class="{{ session()->get('usuario_vinculo')->id_nivel < 3 ? 'form-select select2' : '' }} form-control mr-2" id="novo_id" name="novo_id">
+                            @if (session()->get('usuario_vinculo')->id_nivel <= 2)
+                                @foreach ($obras_lista as $obra_lista)
+                                    <option value="{{ $obra_lista->id }}" {{ session()->get('obra')['id'] == $obra_lista->id ? 'selected' : '' }}>
+                                        {{ $obra_lista->codigo_obra }} | {{ $obra_lista->razao_social }} | {{ $obra_lista->cnpj }}
+                                    </option>
+                                @endforeach
+                            @else
+                                <option value="{{ session()->get('obra')->id }}" readonly>
+                                    {{ session()->get('obra')->codigo_obra }} | {{ session()->get('obra')->razao_social }} | {{ session()->get('obra')->cnpj }}
                                 </option>
-                            @endforeach
+                            @endif
                         </select>
+                        <button class="btn btn-gradient-danger" type="submit">OK</button>
                     </form>
                 </div>
 

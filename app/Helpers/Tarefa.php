@@ -38,9 +38,17 @@ class Tarefa
         return $preventivas;
     }
 
-    public static function transferencias()
+    public static function transferencias($obra)
     {
-        $transferencias = FerramentalRequisicaoTransito::with('requisicao', 'ativo', 'obraOrigem', 'obradestino', 'status')->where('status', 5)->get();
+        if(isset($obra)) {
+            $transferencias = FerramentalRequisicaoTransito::with('requisicao', 'ativo', 'obraOrigem', 'obradestino', 'status')->where('status', 5)
+            ->Where('id_obra_origem', $obra)
+            ->orWhere('id_obra_destino', $obra)
+            ->get();
+        } else {
+            $transferencias = FerramentalRequisicaoTransito::with('requisicao', 'ativo', 'obraOrigem', 'obradestino', 'status')->where('status', 5)
+            ->get();
+        }
         return $transferencias;
     }
 }

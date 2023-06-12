@@ -85,6 +85,14 @@ Route::get('admin/signout',                                       [CustomAuthCon
 /* Grupo de Rotas Autenticadas */
 Route::group(['middleware' => 'auth'], function () {
 
+    Route::post('/atualizar-obra', function (Illuminate\Http\Request $request) {
+        $novoId = $request->input('novo_id');
+        $obra = session('obra', []);
+        $obra['id'] = $novoId;
+        session(['obra' => $obra]);
+        return redirect('/'); // Redirecionar para a página inicial ou qualquer outra página desejada
+    });
+
     /* Configurações - Dashboard */
     Route::get('admin/configuracao', [ConfigController::class, 'edit'])->name('config.edit');
     Route::post('admin/configuracao', [ConfigController::class, 'update'])->name('config.update');

@@ -10,7 +10,7 @@
                     @if ($configuracao->id_relacionamento == 0)
                         <optgroup label="{{ $configuracao->titulo }}" readonly>
                         @else
-                            <option>{{ $configuracao->titulo }}</option>
+                            <option value="{{ $configuracao->id }}">{{ $configuracao->titulo }}</option>
                     @endif
                 @endforeach
             @else

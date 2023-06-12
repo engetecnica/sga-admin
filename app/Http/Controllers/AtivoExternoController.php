@@ -32,9 +32,9 @@ class AtivoExternoController extends Controller
 
     public function index()
     {
-        $lista = [];
+        $ativos = AtivoExterno::with('configuracao')->get();
 
-        return view('pages.ativos.externos.index', compact('lista'));
+        return view('pages.ativos.externos.index', compact('ativos'));
     }
 
     public function create()
@@ -43,7 +43,7 @@ class AtivoExternoController extends Controller
 
         $empresas = CadastroEmpresa::all();
 
-        $ativo_configuracoes = AtivoConfiguracao::where('id_relacionamento', '>', 0)->get();
+        $ativo_configuracoes = AtivoConfiguracao::with('relacionamento')->where('status', 'Ativo')->get();
 
         return view('pages.ativos.externos.create', compact('ativo_configuracoes', 'obras', 'empresas'));
     }

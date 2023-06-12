@@ -29,8 +29,8 @@
         <div class="col-lg-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
-
-                    <table class="table-hover table-striped yajra-datatable table pt-4">
+                    {{-- @dd($ativos) --}}
+                    <table class="table-hover table-striped table pt-4" id="tabela">
                         <thead>
                             <tr>
                                 <th width="8%">ID</th>
@@ -38,11 +38,23 @@
                                 <th>Título</th>
                                 <th>Data de Inclusão</th>
                                 <th>Status</th>
-                                <th width="10%">Ações</th>
+                                <th>Ações</th>
                             </tr>
                         </thead>
                         <tbody>
-
+                            @foreach ($ativos as $ativo)
+                                <tr>
+                                    <td>{{ $ativo->id }}</td>
+                                    <td>{{ $ativo->configuracao->titulo }}</td>
+                                    <td>{{ $ativo->titulo }}</td>
+                                    <td>{{ Tratamento::datetimeBr($ativo->created_at) }}</td>
+                                    <td>{{ $ativo->status }}</td>
+                                    <td>
+                                        <a class="badge badge-primary" href="{{ route('ativo.externo.editar', $ativo->id) }}">Editar</a>
+                                        <a class="badge badge-success" href="{{ route('ativo.externo.detalhes', $ativo->id) }}">Detalhes</a>
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -51,7 +63,7 @@
     </div>
 
 @endsection
-
+{{--
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script src="//cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
 <script src="//stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
@@ -101,4 +113,4 @@
         });
 
     });
-</script>
+</script> --}}

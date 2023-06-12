@@ -1,5 +1,5 @@
 <div class="modal fade" id="addMarcaModal" role="dialog" aria-labelledby="addMarcaModalLabel" aria-hidden="true" tabindex="-1">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="addMarcaModalLabel">Adicionar nova marca</h5>
@@ -10,6 +10,7 @@
             <div class="modal-body">
                 <form action="{{ route('adicionar.marca') }}" method="POST">
                     @csrf
+                    <input id="_token_modal" name="newToken" type="hidden" value="{{ csrf_token() }}">
                     <div class="form-group">
                         <label class="form-label" for="add_marca_da_maquina">Nome da marca</label>
                         <input class="form-control" id="add_marca_da_maquina" name="add_marca_da_maquina" type="text">

@@ -75,7 +75,7 @@ class VeiculoController extends Controller
                 'codigo_fipe' => $request->input('codigo_fipe'),
                 'fipe_mes_referencia' => $request->input('fipe_mes_referencia'),
                 'codigo_da_maquina' => $request->input('codigo_da_maquina'),
-                'placa' => $request->input('placa'),
+                'placa' => strtoupper($request->placa),
                 'renavam' => $request->input('renavam'),
                 'horimetro_inicial' => $request->input('horimetro_inicial'),
                 'quilometragem_inicial' => $request->input('quilometragem_atual'),
@@ -128,7 +128,7 @@ class VeiculoController extends Controller
     {
         // dd($request->all());
         if (! $save = Veiculo::find($id)) {
-            return redirect()->route('ativo.interno.index')->with('fail', 'Registro atualizado com sucesso.');
+            return redirect()->route('ativo.interno.index')->with('fail', 'O veículo não foi encontrado.');
         }
 
         if ($request->tipo == 'maquinas') {
@@ -149,7 +149,7 @@ class VeiculoController extends Controller
             $data['modelo'] = $request->input('modelo_da_maquina');
             $data['ano'] = $request->input('ano_da_maquina');
             $data['veiculo'] = $request->input('veiculo_maquina');
-            $date['valor_fipe'] = str_replace('R$ ', '', $request->valor_fipe);
+            $data['valor_fipe'] = str_replace('R$ ', '', $request->valor_fipe);
             $save->update($data);
 
             $userLog = Auth::user()->email;
@@ -162,6 +162,7 @@ class VeiculoController extends Controller
             $data['modelo'] = $request->modelo_nome;
             $data['ano'] = substr($request->ano, 0, 4);
             $data['valor_fipe'] = str_replace('R$ ', '', $request->valor_fipe);
+            $data['placa'] = strtoupper($request->placa);
             $save->update($data);
 
             $userLog = Auth::user()->email;
@@ -203,5 +204,20 @@ class VeiculoController extends Controller
             return redirect()->route('ativo.veiculo')->with('fail', 'Problemas ao excluir registro.');
         }
 
+    }
+
+    public function storeMarca(Request $request)
+    {
+        $data = $request->all();
+        $save = MarcaMaquina::create($data);
+
+        $userLog = Auth::user()->email;
+        Log::channel('main')->info($userLog .' | ADD MARCA MÁQUINA: ' . $save->marca);
+
+        if ($save) {
+            return response()->json(['success' => true]);
+        } else {
+            return response()->json(['fail' => true]);
+        }
     }
 }

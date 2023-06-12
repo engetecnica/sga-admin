@@ -15,6 +15,6 @@ class Servico extends Model
 
     public function manutencao()
     {
-        return $this->hasOne(VeiculoManutencao::class);
+        return $this->hasMany(VeiculoManutencao::class);
     }
 }

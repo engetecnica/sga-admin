@@ -25,7 +25,8 @@ class VeiculoManutencao extends Model
         'data_de_execucao',
         'data_de_vencimento',
         'descricao',
-        'valor_do_servico'
+        'valor_do_servico',
+        'situacao',
     ];
 
     public function veiculo()

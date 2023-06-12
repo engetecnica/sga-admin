@@ -9,7 +9,43 @@ use Illuminate\Support\Facades\DB;
 class FerramentalRetirada extends Model
 {
     use HasFactory;
+
     protected $table = "ativos_ferramental_retirada";
+    protected $fillable = [
+        "id_relacionamento",
+        "id_obra",
+        "id_usuario",
+        "id_funcionario",
+        "termo_responsabilidade_gerado",
+        "data_devolucao_prevista",
+        "data_devolucao",
+        "devolucao_observacoes",
+        "status",
+        "observacoes",
+    ];
+
+    public function obra()
+    {
+        return $this->belongsTo(CadastroObra::class, 'id_obra', 'id');
+    }
+
+    public function usuario()
+    {
+        return $this->belongsTo(User::class, 'id_usuario', 'id');
+    }
+
+    public function funcionario()
+    {
+        return $this->belongsTo(CadastroFuncionario::class, 'id_funcionario', 'id');
+    }
+
+    public function situacao()
+    {
+        return $this->belongsTo(FerramentalRetiradaStatus::class, 'status', 'id');
+    }
+
+
+
 
     static function getRetirada()
     {
@@ -77,10 +113,7 @@ class FerramentalRetirada extends Model
         return $retirada;
     }
 
-    public function funcionario()
-    {
-        return $this->belongsTo(CadastroFuncionario::class, 'id_funcionario', 'id');
-    }
+
 
 
 }

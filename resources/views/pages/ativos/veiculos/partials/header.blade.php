@@ -61,7 +61,6 @@
                             <li><a class="dropdown-item" href="{{ route('ativo.veiculo.ipva.index', $veiculo->id) }}">IPVA</a></li>
                             <li><a class="dropdown-item" href="{{ route('ativo.veiculo.seguro.index', $veiculo->id) }}">Seguro</a></li>
                             <li><a class="dropdown-item" href="{{ route('ativo.veiculo.depreciacao.index', $veiculo->id) }}">Depreciação</a></li>
-                            <li><a class="dropdown-item" href="#">Anexos</a></li>
                         </ul>
                     </div>
                     <form action="{{ route('ativo.veiculo.delete', $veiculo->id) }}" method="POST">

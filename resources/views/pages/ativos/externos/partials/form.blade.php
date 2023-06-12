@@ -1,11 +1,17 @@
 <div class="row">
     <div class="col-md-12">
+        {{-- @dd($ativo_configuracoes) --}}
         <label class="form-label" for="id_ativo_configuracao">Categoria</label>
         <select class="form-control select2" id="id_ativo_configuracao" name="id_ativo_configuracao">
+
             <option value="">Selecione uma Categoria</option>
             @if (url()->current() == route('ativo.externo.adicionar'))
-                @foreach ($ativo_configuracoes as $configuracoes)
-                    <option value="{{ $configuracoes->id }}">{{ $configuracoes->titulo }}</option>
+                @foreach ($ativo_configuracoes as $configuracao)
+                    @if ($configuracao->id_relacionamento == 0)
+                        <optgroup label="{{ $configuracao->titulo }}" readonly>
+                        @else
+                            <option>{{ $configuracao->titulo }}</option>
+                    @endif
                 @endforeach
             @else
                 @foreach ($ativo_configuracoes as $configuracoes)

@@ -38,6 +38,8 @@
                         </div>
                     @endif
 
+                    {{-- @dd($veiculo->depreciacaos) --}}
+
                     <form method="post" action="{{ route('ativo.veiculo.depreciacao.store') }}">
                         @csrf
                         <div class="jumbotron p-3">
@@ -45,8 +47,8 @@
                         </div>
                         <div class="row mt-3">
                             <div class="col-md-4">
-                                <label class="form-label" for="valor_atual">Valor Atual</label>
-                                <input class="form-control" id="valor_atual" name="valor_atual" type="text" value="">
+                                <label class="form-label" for="valor_atual">Valor Atual </label>
+                                <input class="form-control" id="valor_atual" name="valor_atual" type="text" value="{{ $veiculo->depreciacaos->last()->valor_atual ?? $veiculo->valor_fipe }}">
                             </div>
 
                             <div class="col-md-2">

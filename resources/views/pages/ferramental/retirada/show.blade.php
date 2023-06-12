@@ -52,7 +52,6 @@
                                         <td>Data</td>
                                         <td>Previsão Devolução</td>
                                         <td>Status</td>
-                                        <td>Gerenciar</td>
                                     </tr>
 
                                     <tr>
@@ -66,7 +65,6 @@
                                                 {{ Tratamento::getStatusRetirada($detalhes->status)['titulo'] }}
                                             </span>
                                         </td>
-                                        <td>Gerenciar</td>
                                     </tr>
                                 </table>
 

@@ -31,6 +31,6 @@ class AtivoConfiguracao extends Model
     }
 
     public function relacionamento() {
-        return $this->belongsTo(AtivoConfiguracao::class, 'id_relacionamento');
+        return $this->hasMany(AtivoExterno::class, 'id_ativo_configuracao');
     }
 }

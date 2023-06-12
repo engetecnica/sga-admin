@@ -354,6 +354,7 @@
 
         $(document).ready(function() {
             $('#tabela').DataTable({
+                "pageLength": 50,
                 order: [
                     [0, 'desc']
                 ],
@@ -365,13 +366,18 @@
         });
 
         $(document).ready(function() {
-
-            //toastr.error('Teste')
-
-
-
+            $('#tabela-estoque').DataTable({
+                pageLength: 50,
+                order: [
+                    [0, 'desc']
+                ],
+                paging: false,
+                language: {
+                    search: 'Buscar por ativo ',
+                    url: 'https://cdn.datatables.net/plug-ins/1.11.5/i18n/pt-BR.json',
+                }
+            });
         });
-
 
         $(".select2").select2();
 
@@ -641,7 +647,7 @@
         $('.cpf').inputmask('999.999.999-99');
         $('.cep').inputmask('99999-999');
         $('.cnpj').inputmask('99.999.999/9999-99');
-        $("#valor_fipe").inputmask('currency', {
+        $("#valor_fipe1").inputmask('currency', {
             "autoUnmask": true,
             radixPoint: ",",
             groupSeparator: ",",
@@ -896,6 +902,52 @@
                         $('#modal-marcas').hide();
                         $('.modal-backdrop').hide();
                         $('#marcas-form').trigger("reset");
+                    }
+                });
+            });
+
+            $(document).on('submit', '#addMarcaModal', function(e) {
+                e.preventDefault();
+                var marca = $("#add_marca_da_maquina").val();
+                var _token = $("#_token_modal").val();
+
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ route('ativo.veiculo.marcas.ajax') }}',
+                    dataType: 'json',
+                    data: {
+                        '_token': _token,
+                        'marca': marca
+                    },
+                    success: function(response) {
+                        $('#marca_da_maquina').append('<option value="' + marca + '" selected="selected">' + marca + '</option>');
+                        $('#addMarcaModal').hide();
+                        $('.modal-backdrop').hide();
+                        $('#addMarcaModal').trigger("reset");
+                    }
+                });
+            });
+
+            $(document).on('submit', '#servicos-form', function(e) {
+                e.preventDefault();
+                var name = $("#servicos_modal").val();
+                var _token = $("#_token_modal").val();
+
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ route('ativo.veiculo.manutencao.servico.ajax') }}',
+                    dataType: 'json',
+                    data: {
+                        '_token': _token,
+                        'name': name
+                    },
+                    success: function(response) {
+                        var servico_id = response.servico_id;
+                        var servico = response.servico;
+                        $('#servico_id').append('<option value="' + servico_id + '" selected="selected">' + servico + '</option>');
+                        $('#modal-servicos').hide();
+                        $('.modal-backdrop').hide();
+                        $('#servicos-form').trigger("reset");
                     }
                 });
             });

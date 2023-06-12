@@ -115,7 +115,6 @@ class VeiculoManutencaoController extends Controller
 
     public function delete($id)
     {
-
         $manutencao = VeiculoManutencao::findOrFail($id);
 
         Preventiva::where('manutencao_id', $manutencao->id)->delete();
@@ -128,6 +127,38 @@ class VeiculoManutencaoController extends Controller
             return redirect()->route('ativo.veiculo.manutencao.index', $manutencao->veiculo_id)->with('success', 'Registro excluído com sucesso');
         } else {
             return redirect()->route('ativo.veiculo.manutencao.index', $manutencao->veiculo_id)->with('fail', 'Problema nas exclusão do registro');
+        }
+    }
+
+    public function cancel($id)
+    {
+
+        if (! $save = VeiculoManutencao::find($id)) {
+            return redirect()->route('ativo.veiculo.manutencao.index', $save->veiculo_id)->with('fail', 'Problemas para localizar o registro.');
+        }
+        $save->update(['situacao' => 4]);
+
+        if($save) {
+            $userLog = Auth::user()->email;
+            Log::channel('main')->info($userLog .' | CANCEL MANUTENCAO: ' . $save->id);
+            return redirect()->route('ativo.veiculo.manutencao.index', $save->veiculo_id)->with('success', 'Registro salvo com sucesso.');
+        } else {
+            return redirect()->route('ativo.veiculo.manutencao.index', $save->veiculo_id)->with('fail', 'Erro ao salvar registro.');
+        }
+    }
+
+    public function storeServico(Request $request)
+    {
+        $data = $request->all();
+        $save = Servico::create($data);
+
+        $userLog = Auth::user()->email;
+        Log::channel('main')->info($userLog .' | ADD SERVICO MANUTENCAO: ' . $save->name);
+
+        if ($save) {
+            return response()->json(['success' => true, 'servico_id' => $save->id, 'servico' => $save->name]);
+        } else {
+            return response()->json(['fail' => true]);
         }
     }
 }

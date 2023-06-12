@@ -85,8 +85,7 @@
                                 <select class="form-select" id="estado" name="estado">
                                     <option value="">Selecione o Estado</option>
                                     @foreach ($estados as $sigla => $estado)
-                                        <option value="{{ $sigla }}" @php if(@$store->estado==$sigla) echo 'selected' @endphp>{{ $estado }}
-                                        </option>
+                                        <option value="{{ $sigla }}" {{ old('estado') ? 'selected' : '' }}>{{ $estado }}</option>
                                     @endforeach
                                 </select>
                             </div>

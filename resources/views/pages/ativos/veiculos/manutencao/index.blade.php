@@ -64,6 +64,7 @@
                                     <th>KM Próxima Revisão</th>
                                 @endif
                                 <th>Data De Entrada</th>
+                                <th>Situação</th>
                                 <th width="10%">Ações</th>
                             </tr>
                         </thead>
@@ -82,12 +83,33 @@
                                         <td>{{ $manutencao->quilometragem_proxima }} KM</td>
                                     @endif
                                     <td>{{ Tratamento::datetimeBr($manutencao->created_at) }}</td>
+                                    <td>
+                                        @if ($manutencao->situacao == 1)
+                                            <span class="badge badge-primary">Pendente</span>
+                                        @elseif ($manutencao->situacao == 2)
+                                            <span class="badge badge-warning">Em Execução</span>
+                                        @elseif ($manutencao->situacao == 3)
+                                            <span class="badge badge-success">Concluído</span>
+                                        @elseif ($manutencao->situacao == 4)
+                                            <span class="badge badge-danger">Cancelado</span>
+                                        @endif
+
+                                    </td>
                                     <td class="d-flex gap-2">
 
                                         <a href="{{ route('ativo.veiculo.manutencao.editar', [$manutencao->id, 'edit']) }}">
                                             <button class="badge badge-info" data-toggle="tooltip" data-placement="top" title="Editar"><i class="mdi mdi-pencil"></i> Editar
                                             </button>
                                         </a>
+
+                                        <form action="{{ route('ativo.veiculo.manutencao.cancel', $manutencao->id) }}" method="POST">
+                                            @csrf
+                                            @method('patch')
+                                            <a class="excluir-padrao" data-id="{{ $manutencao->id }}" data-table="empresas" data-module="cadastro/empresa">
+                                                <button class="badge badge-warning" data-toggle="tooltip" data-placement="top" type="submit" title="Cancelar" onclick="return confirm('Tem certeza que deseja cancelar a manutenção?')">
+                                                    <i class="mdi mdi-delete"></i> Cancelar</button>
+                                            </a>
+                                        </form>
 
                                         <form action="{{ route('ativo.veiculo.manutencao.delete', $manutencao->id) }}" method="POST">
                                             @csrf

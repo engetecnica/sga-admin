@@ -36,7 +36,7 @@
                     @php
                         $action = isset($store) ? route('ferramental.retirada.update', $store->id) : route('ferramental.retirada.store');
                     @endphp
-                    <form method="post" enctype="multipart/form-data" action="{{ $action }}">
+                    <form method="post" action="{{ $action }}">
                         @csrf
 
                         @if (Auth::user()->user_level == 1)
@@ -53,13 +53,29 @@
 
                         <div class="row mt-3">
                             <div class="col-12">
-                                @include('components.fields.id_obra')
+                                <label class="form-label" for="id_obra">Obra</label> <button class="badge badge-primary" data-toggle="modal" data-target="#modal-add" type="button"><i class="mdi mdi-plus"></i></button>
+                                <select class="form-select select2" id="id_obra" name="id_obra" required>
+                                    <option value="">Selecione uma Obra</option>
+                                    @foreach ($obras as $obra)
+                                        <option value="{{ $obra->id }}" {{ old('id_obra') == $obra->id ? 'selected' : '' }}>
+                                            {{ $obra->codigo_obra }} - {{ $obra->razao_social }}
+                                        </option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
 
                         <div class="row mt-3">
                             <div class="col-6">
-                                @include('components.fields.id_funcionario')
+                                <label class="form-label" for="id_funcionario">Funcionário</label>
+                                <select class="form-select select2" id="id_funcionario" name="id_funcionario">
+                                    <option value="">Selecione um Funcionário</option>
+                                    @foreach ($funcionarios as $funcionario)
+                                        <option value="{{ $funcionario->id }}" @php if(old('id_funcionario', @$store->id_funcionario) == $funcionario->id) echo "selected"; @endphp>
+                                            {{ $funcionario->matricula }} - {{ $funcionario->nome }}
+                                        </option>
+                                    @endforeach
+                                </select>
                             </div>
 
                             <div class="col-3">
@@ -82,7 +98,7 @@
 
                         <div class="row">
                             <div class="col-12 mt-5">
-                                <table class="table-striped table-hover table" id="tabela">
+                                <table class="table-striped table-hover table" id="tabela-estoque">
                                     <thead>
                                         <tr class="">
                                             <th width="10%">Patrimônio</th>
@@ -93,15 +109,15 @@
                                     </thead>
 
                                     <tbody>
-                                        @foreach ($estoque as $est)
+                                        @foreach ($estoques as $estoque)
                                             <tr>
-                                                <td><span class="badge badge-primary">{{ $est->patrimonio }}</span></td>
-                                                <td><span class="badge badge-danger">{{ $est->codigo_obra . ' - ' . $est->razao_social }}</span>
+                                                <td><span class="badge badge-primary">{{ $estoque->patrimonio }}</span></td>
+                                                <td><span class="badge badge-secondary">{{ $estoque->obra->codigo_obra }}</span> {{ $estoque->obra->razao_social }}
                                                 </td>
-                                                <td>{{ $est->item }}</td>
+                                                <td>{{ $estoque->ativo_externo->titulo }}</td>
                                                 <td>
                                                     <div class="form-switch">
-                                                        <input class="form-check-input" id="id_ativo_exerno" name="id_ativo_externo[]" type="checkbox" value="{{ $est->id_ativo_externo_item }}" role="switch">
+                                                        <input class="form-check-input" id="id_ativo_externo" name="id_ativo_externo[]" type="checkbox" value="{{ $estoque->id }}" role="switch">
                                                     </div>
                                                 </td>
                                             </tr>

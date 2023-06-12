@@ -115,7 +115,7 @@
                         <div class="row mt-3" id="divPlacaRenavam">
                             <div class="col-md-4">
                                 <label class="form-label" for="placa">Placa</label>
-                                <input class="form-control" id="placa" name="placa" type="text" value="{{ old('placa', $veiculo->placa) }}">
+                                <input class="form-control text-uppercase" id="placa" name="placa" type="text" value="{{ $veiculo->placa ?? old('placa') }}">
                             </div>
                             <div class="col-md-4">
                                 <label class="form-label" for="renavam">Renavam</label>

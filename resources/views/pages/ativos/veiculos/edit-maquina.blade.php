@@ -147,16 +147,6 @@
                             </div>
                         </div>
 
-                        <div class="row mt-3" id="divPlacaRenavam">
-                            <div class="col-md-4">
-                                <label class="form-label" for="placa">Placa</label>
-                                <input class="form-control" id="placa" name="placa" type="text" value="{{ old('placa', $veiculo->placa) }}">
-                            </div>
-                            <div class="col-md-4">
-                                <label class="form-label" for="renavam">Renavam</label>
-                                <input class="form-control" id="renavam" name="renavam" type="text" value="{{ old('renavam', $veiculo->renavam) }}">
-                            </div>
-                        </div>
                         <div class="row mt-3" id="divHorimetro">
                             <div class="col-md-2">
                                 <label class="form-label" for="horimetro_inicial">Horímetro inicial</label>

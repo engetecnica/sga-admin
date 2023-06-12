@@ -123,10 +123,23 @@
                             </div>
 
                             <div class="col-md-4">
+                                <label class="form-label" for="situacao">Situação</label>
+                                <select class="form-select select2" id="situacao" name="situacao">
+                                    <option value="">Selecione</option>
+                                    <option value="1" {{ $manutencao->situacao == 1 ? 'selected' : '' }}>Pendente</option>
+                                    <option value="2" {{ $manutencao->situacao == 2 ? 'selected' : '' }}>Em Execução</option>
+                                    <option value="3" {{ $manutencao->situacao == 3 ? 'selected' : '' }}>Concluído</option>
+                                    <option value="4" {{ $manutencao->situacao == 4 ? 'selected' : '' }}>Cancelado</option>
+                                </select>
+                            </div>
+
+                        </div>
+
+                        <div class="row mt-3">
+                            <div class="col-md-4">
                                 <label class="form-label" for="valor_do_servico">Valor do Serviço</label>
                                 <input class="form-control" id="valor_do_servico" name="valor_do_servico" type="text" value="{{ $manutencao->valor_do_servico }}">
                             </div>
-
                         </div>
 
                         <div class="row mt-3">

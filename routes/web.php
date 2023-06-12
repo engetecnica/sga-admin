@@ -200,11 +200,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('admin/ativo/externo/store', [AtivoExternoController::class, 'store'])->name('ativo.externo.store');
     Route::get('admin/ativo/externo/inserir/{ativo}', [AtivoExternoController::class, 'insert'])->name('ativo.externo.inserir');
     Route::post('admin/ativo/externo/inserir/store', [AtivoExternoController::class, 'insertStore'])->name('ativo.externo.inserir.store');
-
     Route::post('admin/ativo/externo/update/{id}', [AtivoExternoController::class, 'update'])->name('ativo.externo.update');
-
     Route::get('admin/ativo/externo/detalhes/{id}', [AtivoExternoController::class, 'show'])->name('ativo.externo.detalhes');
-
     Route::get('admin/ativo/externo/search/{id}', [AtivoExternoController::class, 'searchAtivoID'])->name('ativo.externo.search');
     Route::get('admin/ativo/externo/lista/{id?}', [AtivoExternoController::class, 'searchAtivoLista'])->name('ativo.externo.lista');
 
@@ -227,6 +224,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('admin/ativo/veiculo/editar/{id}', [VeiculoController::class, 'edit'])->name('ativo.veiculo.editar');
     Route::post('admin/ativo/veiculo/update/{id}', [VeiculoController::class, 'update'])->name('ativo.veiculo.update');
     Route::post('admin/ativo/veiculo/delete/{id}', [VeiculoController::class, 'delete'])->name('ativo.veiculo.delete');
+    Route::post('/admin/ativo/veiculo/marca/ajax', [VeiculoController::class, 'storeMarca'])->name('ativo.veiculo.marcas.ajax');
 
     /* Ativo - Veículos - Abastecimento */
     Route::get('admin/ativo/veiculo/abastecimento/{veiculo}', [VeiculoAbastecimentoController::class, 'index'])->name('ativo.veiculo.abastecimento.index');
@@ -259,6 +257,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('admin/ativo/veiculo/manutencao/editar/{id}', [VeiculoManutencaoController::class, 'edit'])->name('ativo.veiculo.manutencao.editar');
     Route::put('admin/ativo/veiculo/manutencao/{id}', [VeiculoManutencaoController::class, 'update'])->name('ativo.veiculo.manutencao.update');
     Route::delete('admin/ativo/veiculo/manutencao/delete/{id}', [VeiculoManutencaoController::class, 'delete'])->name('ativo.veiculo.manutencao.delete');
+    Route::post('/admin/ativo/veiculo/manutencao/marca/ajax', [VeiculoManutencaoController::class, 'storeServico'])->name('ativo.veiculo.manutencao.servico.ajax');
+    Route::patch('admin/ativo/veiculo/manutencao/{id}', [VeiculoManutencaoController::class, 'cancel'])->name('ativo.veiculo.manutencao.cancel');
+
 
     /* Ativo - Veículos - Quilometragem */
     Route::get('admin/ativo/veiculo/quilometragem/{veiculo}', [VeiculoQuilometragemController::class, 'index'])->name('ativo.veiculo.quilometragem.index');

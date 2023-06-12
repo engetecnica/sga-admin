@@ -48,7 +48,9 @@ class FerramentalRetiradaController extends Controller
 
     public function index()
     {
-        return view('pages.ferramental.retirada.index');
+        $retiradas = FerramentalRetirada::with('obra', 'usuario', 'funcionario', 'situacao')->get();
+
+        return view('pages.ferramental.retirada.index', compact('retiradas'));
     }
 
     public function create()
@@ -57,15 +59,16 @@ class FerramentalRetiradaController extends Controller
 
         $funcionarios = CadastroFuncionario::where('status', 'Ativo')->get();
 
-        $estoque = AtivoExternoEstoque::getAtivosExternoEstoque();
+        $estoques = AtivoExternoEstoque::with('ativo_externo', 'obra', 'situacao')->where('status', 4)->get();
 
         $empresas = CadastroEmpresa::where('status', 'Ativo')->get();
 
-        return view('pages.ferramental.retirada.form', compact('funcionarios', 'estoque', 'obras', 'empresas'));
+        return view('pages.ferramental.retirada.form', compact('funcionarios', 'estoques', 'obras', 'empresas'));
     }
 
     public function store(Request $request)
     {
+        // dd($request->all());
         $request->validate(
             [
                 'id_obra' => 'required',
@@ -209,13 +212,16 @@ class FerramentalRetiradaController extends Controller
         $itens = FerramentalRetiradaItem::where('id_retirada', $retirada->id)->get();
 
         foreach ($itens as $item) {
-            $item->delete();
+            $restart = AtivoExternoEstoque::where('id', $item->id_ativo_externo)->first();
+            $restart->update(['status' => 4]);
+
+            $item->update(['status' => 6]);
         }
 
 
 
         $userLog = Auth::user()->email;
-        Log::channel('main')->info($userLog .' | DELETE RETIRADA | ID: ' . $id . ' | DATA: ' . date('Y-m-d H:i:s'));
+        Log::channel('main')->info($userLog .' | CANCEL RETIRADA | ID: ' . $id . ' | DATA: ' . date('Y-m-d H:i:s'));
 
         if($retirada->save()){
             return redirect()->route('ferramental.retirada')->with('success', 'Retirada cancelada com sucesso');

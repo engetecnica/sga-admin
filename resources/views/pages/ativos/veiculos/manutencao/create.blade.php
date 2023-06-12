@@ -46,7 +46,7 @@
                         <div class="row mt-3">
                             <div class="col-md-4">
                                 <label class="form-label" for="fornecedor_id">Fornecedor</label>
-                                <select class="form-select select2" id="fornecedor_id" name="fornecedor_id">
+                                <select class="form-select select2" id="fornecedor_id" name="fornecedor_id" required>
                                     <option value="">Selecione</option>
                                     @foreach ($fornecedores as $fornecedor)
                                         <option value="{{ $fornecedor->id }}" {{ old('fornecedor_id') == $fornecedor->id ? 'selected' : '' }}>
@@ -56,7 +56,7 @@
                                 </select>
                             </div>
                             <div class="col-md-4">
-                                <label class="form-label" for="servico_id">Serviço</label>
+                                <label class="form-label" for="servico_id">Serviço</label> <button class="badge badge-primary" data-toggle="modal" data-target="#modal-servicos" type="button"><i class="mdi mdi-plus"></i></button>
                                 <select class="form-control select2" id="servico_id" name="servico_id">
                                     <option value="">Selecione</option>
                                     @foreach ($servicos as $servico)
@@ -114,7 +114,7 @@
                         <div class="row mt-3">
                             <div class="col-md-4">
                                 <label class="form-label" for="data_de_execucao">Data de Execução</label>
-                                <input class="form-control" id="data_de_execucao" name="data_de_execucao" type="date" value="{{ old('data_de_execucao') }}" required>
+                                <input class="form-control" id="data_de_execucao" name="data_de_execucao" type="date" value="{{ old('data_de_execucao') }}">
                             </div>
                             <div class="col-md-4">
                                 <label class="form-label" for="data_de_vencimento">Data de Vencimento</label>
@@ -122,10 +122,23 @@
                             </div>
 
                             <div class="col-md-4">
+                                <label class="form-label" for="situacao">Situação</label>
+                                <select class="form-select select2" id="situacao" name="situacao">
+                                    <option value="">Selecione</option>
+                                    <option value="1" {{ old('situacao') == 'Pendente' ? 'selected' : '' }}>Pendente</option>
+                                    <option value="2" {{ old('situacao') == 'Em Execução' ? 'selected' : '' }}>Em Execução</option>
+                                    <option value="3" {{ old('situacao') == 'Concluído' ? 'selected' : '' }}>Concluído</option>
+                                    <option value="4" {{ old('situacao') == 'Cancelado' ? 'selected' : '' }}>Cancelado</option>
+                                </select>
+                            </div>
+
+                        </div>
+
+                        <div class="row mt-3">
+                            <div class="col-md-4">
                                 <label class="form-label" for="valor_do_servico">Valor do Serviço</label>
                                 <input class="form-control" id="valor_do_servico" name="valor_do_servico" type="text" value="{{ old('valor_do_servico') }}">
                             </div>
-
                         </div>
 
                         <div class="row mt-3">
@@ -149,4 +162,5 @@
             </div>
         </div>
     </div>
+    @include('pages.ativos.veiculos.manutencao.servicos-inclusao-rapida')
 @endsection

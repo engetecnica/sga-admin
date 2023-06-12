@@ -216,47 +216,46 @@
         </div>
     </div>
 
-    <div class="row">
+    {{-- <div class="row">
         <div class="col-xl-12 col-sm-12 mb-12">
             <div class="card">
                 <div class="card-body">
                     <h5>Requisições: Transferências ativas ({{ count(Tarefa::transferencias(session()->get('obra')->id ?? session()->get('obra')['id'])) }})</h5>
                     <div class="accordion" id="accordionExample">
-                        @php
-                            $requisicao = Tarefa::transferencias(session()->get('obra')->id ?? session()->get('obra')['id'])->first();
-                        @endphp
-                        <div class="card">
-                            <div class="card-header" id="heading-{{ $loop->iteration }}">
-                                <h2 class="mb-0">
-                                    <button class="btn btn-link btn-block text-left" data-toggle="collapse" data-target="#collapse-{{ $loop->iteration }}" type="button" aria-expanded="true" aria-controls="collapseOne">
-                                        Collapsible Group Item #1
-                                    </button>
-                                </h2>
-                            </div>
+                        @foreach (Tarefa::transferencias(session()->get('obra')->id ?? session()->get('obra')['id'])->groupBy('id_requisicao') as $requisicao)
+                            <div class="card">
+                                <div class="card-header" id="heading-{{ $loop->index }}">
+                                    <h2 class="mb-0">
+                                        <button class="btn btn-link btn-block text-left" data-toggle="collapse" data-target="#collapse-{{ $loop->index }}" type="button" aria-expanded="true" aria-controls="collapseOne">
+                                            Requisicao
+                                        </button>
+                                    </h2>
+                                </div>
 
-                            <div class="show collapse" id="collapse-{{ $loop->iteration }}" data-parent="#accordionExample" aria-labelledby="heading-{{ $loop->iteration }}">
-                                <div class="card-body">
-                                    <a href="{{ route('ferramental.requisicao.show', $requisicao->id_requisicao) }}"><span class="badge badge-success">Ver requisição</span></a><br>
-                                    <table class="table-border table">
-                                        @foreach (Tarefa::transferencias(session()->get('obra')->id ?? session()->get('obra')['id']) as $transferencia)
-                                            <tr>
-                                                <td>
-                                                    <strong>Obra de origem:</strong> {{ $transferencia->obraOrigem->razao_social }} -> <strong>OBRA DESTINO:</strong> {{ $transferencia->obraDestino->razao_social }}
-                                                    @php
-                                                        $item = $transferencia->ativo->load('ativo_externo');
-                                                    @endphp
-                                                    Item: <span class="badge badge-secondary">{{ $transferencia->ativo->patrimonio }}</span> {{ $item->ativo_externo->titulo }}
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    </table>
+                                <div class="show collapse" id="collapse-{{ $loop->index }}" data-parent="#accordionExample" aria-labelledby="heading-{{ $loop->iteration }}">
+                                    <div class="card-body">
+                                        <a href="{{ route('ferramental.requisicao.show', $requisicao->id_requisicao) }}"><span class="badge badge-success">Ver requisição</span></a><br>
+                                        <table class="table-border table">
+                                            @foreach (Tarefa::transferencias(session()->get('obra')->id ?? session()->get('obra')['id']) as $transferencia)
+                                                <tr>
+                                                    <td>
+                                                        <strong>Obra de origem:</strong> {{ $transferencia->obraOrigem->razao_social }} -> <strong>OBRA DESTINO:</strong> {{ $transferencia->obraDestino->razao_social }}
+                                                        @php
+                                                            $item = $transferencia->ativo->load('ativo_externo');
+                                                        @endphp
+                                                        Item: <span class="badge badge-secondary">{{ $transferencia->ativo->patrimonio }}</span> {{ $item->ativo_externo->titulo }}
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
 @endsection

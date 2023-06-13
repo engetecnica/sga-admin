@@ -19,9 +19,11 @@
 
     <div class="page-header">
         <h3 class="page-title">
-            <a class="btn btn-sm btn-danger" href="{{ route('ativo.veiculo.adicionar') }}">
-                Adicionar
-            </a>
+            @if (session()->get('usuario_vinculo')->id_nivel <= 2)
+                <a class="btn btn-sm btn-danger" href="{{ route('ativo.veiculo.adicionar') }}">
+                    Adicionar
+                </a>
+            @endif
         </h3>
     </div>
 
@@ -40,7 +42,9 @@
                                 <th>Veículo</th>
                                 <th>KM atual</th>
                                 <th>HR Atual</th>
-                                <th width="10%">Ações</th>
+                                @if (session()->get('usuario_vinculo')->id_nivel <= 2)
+                                    <th width="10%">Ações</th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody>
@@ -104,38 +108,40 @@
                                                 @endif
                                             @endif
                                         </td>
-                                        <td class="d-flex gap-2">
-                                            <div class="dropdown">
-                                                <button class="badge badge-info" id="dropdownMenuButton1" data-bs-toggle="dropdown" type="button" aria-expanded="false">
-                                                    <i class="mdi mdi-pencil"></i> Gerenciar
-                                                </button>
-                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                    <li><a class="dropdown-item" href="{{ route('ativo.veiculo.editar', $veiculo->id) }}">Editar</a></li>
-                                                    <li>
-                                                        <a class="dropdown-item" href="{{ route('ativo.veiculo.quilometragem.index', $veiculo->id) }}">
-                                                            @if ($veiculo->tipo == 'maquinas')
-                                                                Horímetro
-                                                            @else
-                                                                Quilometragem
-                                                            @endif
-                                                        </a>
-                                                    </li>
-                                                    <li><a class="dropdown-item" href="{{ route('ativo.veiculo.abastecimento.index', $veiculo->id) }}">Abastecimento</a></li>
-                                                    <li><a class="dropdown-item" href="{{ route('ativo.veiculo.manutencao.index', $veiculo->id) }}">Manutenção</a></li>
-                                                    <li><a class="dropdown-item" href="{{ route('ativo.veiculo.ipva.index', $veiculo->id) }}">IPVA</a></li>
-                                                    <li><a class="dropdown-item" href="{{ route('ativo.veiculo.seguro.index', $veiculo->id) }}">Seguro</a></li>
-                                                    <li><a class="dropdown-item" href="{{ route('ativo.veiculo.depreciacao.index', $veiculo->id) }}">Depreciação</a></li>
-                                                </ul>
-                                            </div>
+                                        @if (session()->get('usuario_vinculo')->id_nivel <= 2)
+                                            <td class="d-flex gap-2">
+                                                <div class="dropdown">
+                                                    <button class="badge badge-info" id="dropdownMenuButton1" data-bs-toggle="dropdown" type="button" aria-expanded="false">
+                                                        <i class="mdi mdi-pencil"></i> Gerenciar
+                                                    </button>
+                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                                        <li><a class="dropdown-item" href="{{ route('ativo.veiculo.editar', $veiculo->id) }}">Editar</a></li>
+                                                        <li>
+                                                            <a class="dropdown-item" href="{{ route('ativo.veiculo.quilometragem.index', $veiculo->id) }}">
+                                                                @if ($veiculo->tipo == 'maquinas')
+                                                                    Horímetro
+                                                                @else
+                                                                    Quilometragem
+                                                                @endif
+                                                            </a>
+                                                        </li>
+                                                        <li><a class="dropdown-item" href="{{ route('ativo.veiculo.abastecimento.index', $veiculo->id) }}">Abastecimento</a></li>
+                                                        <li><a class="dropdown-item" href="{{ route('ativo.veiculo.manutencao.index', $veiculo->id) }}">Manutenção</a></li>
+                                                        <li><a class="dropdown-item" href="{{ route('ativo.veiculo.ipva.index', $veiculo->id) }}">IPVA</a></li>
+                                                        <li><a class="dropdown-item" href="{{ route('ativo.veiculo.seguro.index', $veiculo->id) }}">Seguro</a></li>
+                                                        <li><a class="dropdown-item" href="{{ route('ativo.veiculo.depreciacao.index', $veiculo->id) }}">Depreciação</a></li>
+                                                    </ul>
+                                                </div>
 
-                                            <form action="{{ route('ativo.veiculo.delete', $veiculo->id) }}" method="POST">
-                                                @csrf
-                                                <a class="excluir-padrao" data-id="{{ $veiculo->id }}" data-table="empresas" data-module="cadastro/empresa">
-                                                    <button class="badge badge-danger" data-toggle="tooltip" data-placement="top" type="submit" title="Excluir" onclick="return confirm('Tem certeza que deseja exluir o veículo?')"><i class="mdi mdi-delete"></i>
-                                                        Excluir</button>
-                                                </a>
-                                            </form>
-                                        </td>
+                                                <form action="{{ route('ativo.veiculo.delete', $veiculo->id) }}" method="POST">
+                                                    @csrf
+                                                    <a class="excluir-padrao" data-id="{{ $veiculo->id }}" data-table="empresas" data-module="cadastro/empresa">
+                                                        <button class="badge badge-danger" data-toggle="tooltip" data-placement="top" type="submit" title="Excluir" onclick="return confirm('Tem certeza que deseja exluir o veículo?')"><i class="mdi mdi-delete"></i>
+                                                            Excluir</button>
+                                                    </a>
+                                                </form>
+                                            </td>
+                                        @endif
                                     </tr>
                                 @endforeach
                             @endforeach

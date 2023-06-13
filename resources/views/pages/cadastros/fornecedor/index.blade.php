@@ -88,14 +88,15 @@
                                         <a class="badge badge-info mr-2" href="{{ route('cadastro.fornecedor.editar', $fornecedor->id) }}">
                                             <i class="mdi mdi-pencil"></i> Editar
                                         </a>
-
-                                        <form action="{{ route('cadastro.fornecedor.destroy', $fornecedor->id) }}" method="POST">
-                                            @csrf
-                                            @method('delete')
-                                            <button class="badge badge-danger mr-2" data-toggle="tooltip" data-placement="top" type="submit" title="Excluir" onclick="return confirm('Tem certeza que deseja excluir o registro?')">
-                                                <i class="mdi mdi-delete"></i> Excluir
-                                            </button>
-                                        </form>
+                                        @if (session()->get('usuario_vinculo')->id_nivel <= 2)
+                                            <form action="{{ route('cadastro.fornecedor.destroy', $fornecedor->id) }}" method="POST">
+                                                @csrf
+                                                @method('delete')
+                                                <button class="badge badge-danger mr-2" data-toggle="tooltip" data-placement="top" type="submit" title="Excluir" onclick="return confirm('Tem certeza que deseja excluir o registro?')">
+                                                    <i class="mdi mdi-delete"></i> Excluir
+                                                </button>
+                                            </form>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach

@@ -19,9 +19,11 @@
 
     <div class="page-header">
         <h3 class="page-title">
-            <a href="{{ route('ativo.interno.create') }}">
-                <button class="btn btn-sm btn-danger">Cadastrar</button>
-            </a>
+            @if (session()->get('usuario_vinculo')->id_nivel <= 2)
+                <a href="{{ route('ativo.interno.create') }}">
+                    <button class="btn btn-sm btn-danger">Cadastrar</button>
+                </a>
+            @endif
         </h3>
     </div>
 
@@ -42,8 +44,9 @@
                                 <th>Valor</th>
                                 <th>Inclusão</th>
                                 <th>Situação</th>
-
-                                <th width="10%">Ações</th>
+                                @if (session()->get('usuario_vinculo')->id_nivel <= 2)
+                                    <th width="10%">Ações</th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody>
@@ -66,25 +69,27 @@
                                             <span class="badge badge-danger">Inativo</span>
                                         @endif
                                     </td>
-                                    <td class="d-flex gap-2 align-middle">
-                                        <div class="dropdown">
-                                            <button class="badge badge-info" id="dropdownMenuButton1" data-bs-toggle="dropdown" type="button" aria-expanded="false">
-                                                <i class="mdi mdi-pencil"></i> Gerenciar
-                                            </button>
-                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                <li><a class="dropdown-item" href="{{ route('ativo.interno.edit', $ativo->id) }}">Editar</a></li>
-                                                <li><a class="dropdown-item" href="{{ route('ativo.interno.show', $ativo->id) }}" target="_blank">Gerar etiqueta</a></li>
-                                            </ul>
-                                        </div>
+                                    @if (session()->get('usuario_vinculo')->id_nivel <= 2)
+                                        <td class="d-flex gap-2 align-middle">
+                                            <div class="dropdown">
+                                                <button class="badge badge-info" id="dropdownMenuButton1" data-bs-toggle="dropdown" type="button" aria-expanded="false">
+                                                    <i class="mdi mdi-pencil"></i> Gerenciar
+                                                </button>
+                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                                    <li><a class="dropdown-item" href="{{ route('ativo.interno.edit', $ativo->id) }}">Editar</a></li>
+                                                    <li><a class="dropdown-item" href="{{ route('ativo.interno.show', $ativo->id) }}" target="_blank">Gerar etiqueta</a></li>
+                                                </ul>
+                                            </div>
 
-                                        <form action="{{ route('ativo.interno.destroy', $ativo->id) }}" method="POST">
-                                            @csrf
-                                            @method('delete')
-                                            <button class="badge badge-danger" data-toggle="tooltip" data-placement="top" type="submit" title="Excluir" onclick="return confirm('Tem certeza que deseja excluir o registro?')">
-                                                <i class="mdi mdi-delete"></i> Excluir
-                                            </button>
-                                        </form>
-                                    </td>
+                                            <form action="{{ route('ativo.interno.destroy', $ativo->id) }}" method="POST">
+                                                @csrf
+                                                @method('delete')
+                                                <button class="badge badge-danger" data-toggle="tooltip" data-placement="top" type="submit" title="Excluir" onclick="return confirm('Tem certeza que deseja excluir o registro?')">
+                                                    <i class="mdi mdi-delete"></i> Excluir
+                                                </button>
+                                            </form>
+                                        </td>
+                                    @endif
                                 </tr>
                             @endforeach
                         </tbody>

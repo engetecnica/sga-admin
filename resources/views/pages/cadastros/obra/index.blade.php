@@ -19,11 +19,13 @@
 
     <div class="page-header">
         <h3 class="page-title">
-            <a href="{{ route('cadastro.obra.adicionar') }}">
-                <button class="btn btn-sm btn-danger">Novo Registro</button>
-            </a>
+            @if (session()->get('usuario_vinculo')->id_nivel <= 2)
+                <a href="{{ route('cadastro.obra.adicionar') }}">
+                    <button class="btn btn-sm btn-danger">Novo Registro</button>
+                </a>
 
-            <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-add">Inclusão rápida</button>
+                <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-add">Inclusão rápida</button>
+            @endif
         </h3>
     </div>
 
@@ -42,7 +44,9 @@
                                 <th>WhatsApp</th>
                                 <th>E-mail</th>
                                 <th>Status</th>
-                                <th width="10%">Ações</th>
+                                @if (session()->get('usuario_vinculo')->id_nivel <= 2)
+                                    <th width="10%">Ações</th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody>
@@ -55,19 +59,23 @@
                                     <td>{{ $v->celular }}</td>
                                     <td>{{ $v->email }}</td>
                                     <td>{{ $v->status }} </td>
-                                    <td class="d-flex">
-                                        <a class="badge badge-info mr-2" href="{{ route('cadastro.obra.editar', $v->id) }}">
-                                            <i class="mdi mdi-pencil"></i> Editar
-                                        </a>
+                                    @if (session()->get('usuario_vinculo')->id_nivel <= 2)
+                                        <td class="d-flex">
 
-                                        <form action="{{ route('cadastro.obra.destroy', $v->id) }}" method="POST">
-                                            @csrf
-                                            @method('delete')
-                                            <button class="badge badge-danger" data-toggle="tooltip" data-placement="top" type="submit" title="Excluir" onclick="return confirm('Tem certeza que deseja excluir o registro?')">
-                                                <i class="mdi mdi-delete"></i> Excluir
-                                            </button>
-                                        </form>
-                                    </td>
+                                            <a class="badge badge-info mr-2" href="{{ route('cadastro.obra.editar', $v->id) }}">
+                                                <i class="mdi mdi-pencil"></i> Editar
+                                            </a>
+
+                                            <form action="{{ route('cadastro.obra.destroy', $v->id) }}" method="POST">
+                                                @csrf
+                                                @method('delete')
+                                                <button class="badge badge-danger" data-toggle="tooltip" data-placement="top" type="submit" title="Excluir" onclick="return confirm('Tem certeza que deseja excluir o registro?')">
+                                                    <i class="mdi mdi-delete"></i> Excluir
+                                                </button>
+                                            </form>
+
+                                        </td>
+                                    @endif
                                 </tr>
                             @endforeach
                         </tbody>

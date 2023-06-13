@@ -19,9 +19,11 @@
 
     <div class="page-header">
         <h3 class="page-title">
-            <a href="{{ route('cadastro.empresa.adicionar') }}">
-                <button class="btn btn-sm btn-danger">Novo Registro</button>
-            </a>
+            @if (session()->get('usuario_vinculo')->id_nivel <= 2)
+                <a href="{{ route('cadastro.empresa.adicionar') }}">
+                    <button class="btn btn-sm btn-danger">Novo Registro</button>
+                </a>
+            @endif
         </h3>
     </div>
 
@@ -39,7 +41,9 @@
                                 <th>WhatsApp</th>
                                 <th>E-mail</th>
                                 <th>Status</th>
-                                <th width="15%">Ações</th>
+                                @if (session()->get('usuario_vinculo')->id_nivel <= 2)
+                                    <th width="15%">Ações</th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody>
@@ -51,20 +55,20 @@
                                     <td>{{ $v->celular }}</td>
                                     <td>{{ $v->email }}</td>
                                     <td>{{ $v->status }} </td>
-                                    <td class="d-flex justify-itens-between">
-
-                                        <a href="{{ route('cadastro.empresa.editar', $v->id) }}">
-                                            <button class="badge badge-info mr-2" data-toggle="tooltip" data-placement="top" title="Editar"><i class="mdi mdi-pencil"></i> Editar</button>
-                                        </a>
-
-                                        <form action="{{ route('cadastro.empresa.destroy', $v->id) }}" method="POST">
-                                            @csrf
-                                            @method('delete')
-                                            <button class="badge badge-danger" data-toggle="tooltip" data-placement="top" type="submit" title="Excluir" onclick="return confirm('Tem certeza que deseja excluir o registro?')">
-                                                <i class="mdi mdi-delete"></i> Excluir
-                                            </button>
-                                        </form>
-                                    </td>
+                                    @if (session()->get('usuario_vinculo')->id_nivel <= 2)
+                                        <td class="d-flex justify-itens-between">
+                                            <a href="{{ route('cadastro.empresa.editar', $v->id) }}">
+                                                <button class="badge badge-info mr-2" data-toggle="tooltip" data-placement="top" title="Editar"><i class="mdi mdi-pencil"></i> Editar</button>
+                                            </a>
+                                            <form action="{{ route('cadastro.empresa.destroy', $v->id) }}" method="POST">
+                                                @csrf
+                                                @method('delete')
+                                                <button class="badge badge-danger" data-toggle="tooltip" data-placement="top" type="submit" title="Excluir" onclick="return confirm('Tem certeza que deseja excluir o registro?')">
+                                                    <i class="mdi mdi-delete"></i> Excluir
+                                                </button>
+                                            </form>
+                                        </td>
+                                    @endif
                                 </tr>
                             @endforeach
                         </tbody>

@@ -57,7 +57,7 @@
                             </div>
                             <div class="col-md-4">
                                 <label class="form-label" for="servico_id">Serviço</label> <button class="badge badge-primary" data-toggle="modal" data-target="#modal-servicos" type="button"><i class="mdi mdi-plus"></i></button>
-                                <select class="form-control select2" id="servico_id" name="servico_id">
+                                <select class="form-control select2" id="servico_id" name="servico_id" required>
                                     <option value="">Selecione</option>
                                     @foreach ($servicos as $servico)
                                         <option value="{{ $servico->id }}" {{ old('servico_id') == $servico->id ? 'selected' : '' }}>
@@ -68,7 +68,7 @@
                             </div>
                             <div class="col-md-4">
                                 <label class="form-label" for="tipo">Método da Preventiva</label>
-                                <select class="form-select select2" id="tipo" name="tipo">
+                                <select class="form-select select2" id="tipo" name="tipo" required>
                                     @if ($veiculo->tipo == 'maquinas')
                                         <option value="horas" {{ old('tipo') == 'horas' ? 'selected' : '' }}>Horas</option>
                                     @else

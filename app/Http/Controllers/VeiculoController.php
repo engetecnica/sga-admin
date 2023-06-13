@@ -145,6 +145,7 @@ class VeiculoController extends Controller
 
         if ($request->tipo == 'maquinas') {
             $data = $request->all();
+            $data['obra_id'] = $request->input('obra');
             $data['marca'] = $request->input('marca_da_maquina');
             $data['modelo'] = $request->input('modelo_da_maquina');
             $data['ano'] = $request->input('ano_da_maquina');
@@ -158,6 +159,7 @@ class VeiculoController extends Controller
             return redirect()->route('ativo.veiculo.editar', $id)->with('success', 'Máquina editada com sucesso.');
         } else {
             $data = $request->all();
+            $data['obra_id'] = $request->input('obra');
             $data['marca'] = $request->marca_nome;
             $data['modelo'] = $request->modelo_nome;
             $data['ano'] = substr($request->ano, 0, 4);

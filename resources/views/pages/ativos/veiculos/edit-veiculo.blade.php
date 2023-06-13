@@ -39,9 +39,9 @@
                         <div class="row">
                             <div class="col-md-10">
                                 <label class="form-label" for="obra">Obra</label> <button class="badge badge-primary" data-toggle="modal" data-target="#modal-add" type="button"><i class="mdi mdi-plus"></i></button>
-                                <select class="form-select" id="obra" name="obra">
+                                <select class="form-select" id="obra" name="obra" required>
                                     @foreach ($obras as $obra)
-                                        <option value="{{ $obra->id }}" {{ $obra->id == $veiculo->id_obra ? 'selected' : '' }}>{{ $obra->codigo_obra }} | {{ $obra->razao_social }}</option>
+                                        <option value="{{ $obra->id }}" {{ $veiculo->obra_id == $obra->id ? 'selected' : '' }}>{{ $obra->codigo_obra }} | {{ $obra->razao_social }}</option>
                                     @endforeach
                                 </select>
                             </div>

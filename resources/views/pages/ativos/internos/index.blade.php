@@ -50,48 +50,93 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($ativos as $ativo)
-                                <tr>
-                                    <td class="text-center align-middle"><span class="badge badge-dark">{{ $ativo->id }}</span></td>
-                                    <td class="align-middle">{{ $ativo->obra->razao_social }}</td>
-                                    <td class="align-middle">{{ $ativo->patrimonio }}</td>
-                                    <td class="align-middle">{{ $ativo->numero_serie }}</td>
-                                    <td class="align-middle">{{ $ativo->titulo }}</td>
-                                    <td class="align-middle">{{ $ativo->marca }}</td>
-                                    <td class="align-middle">{{ Tratamento::currencyFormatBr($ativo->valor_atribuido) }}</td>
-                                    <td class="align-middle">{{ Tratamento::datetimeBr($ativo->created_at) }}</td>
-                                    <td class="text-center align-middle">
-                                        @if ($ativo->status == 1)
-                                            <span class="badge badge-success">Ativo</span>
-                                        @elseif ($ativo->status == 0)
-                                            <span class="badge badge-danger">Inativo</span>
-                                        @else
-                                            <span class="badge badge-danger">Inativo</span>
-                                        @endif
-                                    </td>
-                                    @if (session()->get('usuario_vinculo')->id_nivel <= 2)
-                                        <td class="d-flex gap-2 align-middle">
-                                            <div class="dropdown">
-                                                <button class="badge badge-info" id="dropdownMenuButton1" data-bs-toggle="dropdown" type="button" aria-expanded="false">
-                                                    <i class="mdi mdi-pencil"></i> Gerenciar
-                                                </button>
-                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                    <li><a class="dropdown-item" href="{{ route('ativo.interno.edit', $ativo->id) }}">Editar</a></li>
-                                                    <li><a class="dropdown-item" href="{{ route('ativo.interno.show', $ativo->id) }}" target="_blank">Gerar etiqueta</a></li>
-                                                </ul>
-                                            </div>
-
-                                            <form action="{{ route('ativo.interno.destroy', $ativo->id) }}" method="POST">
-                                                @csrf
-                                                @method('delete')
-                                                <button class="badge badge-danger" data-toggle="tooltip" data-placement="top" type="submit" title="Excluir" onclick="return confirm('Tem certeza que deseja excluir o registro?')">
-                                                    <i class="mdi mdi-delete"></i> Excluir
-                                                </button>
-                                            </form>
+                            @if (session()->get('usuario_vinculo')->id_nivel <= 2)
+                                @foreach ($ativos as $ativo)
+                                    <tr>
+                                        <td class="text-center align-middle"><span class="badge badge-dark">{{ $ativo->id }}</span></td>
+                                        <td class="align-middle">{{ $ativo->obra->razao_social }}</td>
+                                        <td class="align-middle">{{ $ativo->patrimonio }}</td>
+                                        <td class="align-middle">{{ $ativo->numero_serie }}</td>
+                                        <td class="align-middle">{{ $ativo->titulo }}</td>
+                                        <td class="align-middle">{{ $ativo->marca }}</td>
+                                        <td class="align-middle">{{ Tratamento::currencyFormatBr($ativo->valor_atribuido) }}</td>
+                                        <td class="align-middle">{{ Tratamento::datetimeBr($ativo->created_at) }}</td>
+                                        <td class="text-center align-middle">
+                                            @if ($ativo->status == 1)
+                                                <span class="badge badge-success">Ativo</span>
+                                            @elseif ($ativo->status == 0)
+                                                <span class="badge badge-danger">Inativo</span>
+                                            @else
+                                                <span class="badge badge-danger">Inativo</span>
+                                            @endif
                                         </td>
-                                    @endif
-                                </tr>
-                            @endforeach
+                                        @if (session()->get('usuario_vinculo')->id_nivel <= 2)
+                                            <td class="d-flex gap-2 align-middle">
+                                                <div class="dropdown">
+                                                    <button class="badge badge-info" id="dropdownMenuButton1" data-bs-toggle="dropdown" type="button" aria-expanded="false">
+                                                        <i class="mdi mdi-pencil"></i> Gerenciar
+                                                    </button>
+                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                                        <li><a class="dropdown-item" href="{{ route('ativo.interno.edit', $ativo->id) }}">Editar</a></li>
+                                                        <li><a class="dropdown-item" href="{{ route('ativo.interno.show', $ativo->id) }}" target="_blank">Gerar etiqueta</a></li>
+                                                    </ul>
+                                                </div>
+
+                                                <form action="{{ route('ativo.interno.destroy', $ativo->id) }}" method="POST">
+                                                    @csrf
+                                                    @method('delete')
+                                                    <button class="badge badge-danger" data-toggle="tooltip" data-placement="top" type="submit" title="Excluir" onclick="return confirm('Tem certeza que deseja excluir o registro?')">
+                                                        <i class="mdi mdi-delete"></i> Excluir
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        @endif
+                                    </tr>
+                                @endforeach
+                            @else
+                                @foreach ($ativos->where('obra_id', session()->get('obra')->id) as $ativo)
+                                    <tr>
+                                        <td class="text-center align-middle"><span class="badge badge-dark">{{ $ativo->id }}</span></td>
+                                        <td class="align-middle">{{ $ativo->obra->razao_social }}</td>
+                                        <td class="align-middle">{{ $ativo->patrimonio }}</td>
+                                        <td class="align-middle">{{ $ativo->numero_serie }}</td>
+                                        <td class="align-middle">{{ $ativo->titulo }}</td>
+                                        <td class="align-middle">{{ $ativo->marca }}</td>
+                                        <td class="align-middle">{{ Tratamento::currencyFormatBr($ativo->valor_atribuido) }}</td>
+                                        <td class="align-middle">{{ Tratamento::datetimeBr($ativo->created_at) }}</td>
+                                        <td class="text-center align-middle">
+                                            @if ($ativo->status == 1)
+                                                <span class="badge badge-success">Ativo</span>
+                                            @elseif ($ativo->status == 0)
+                                                <span class="badge badge-danger">Inativo</span>
+                                            @else
+                                                <span class="badge badge-danger">Inativo</span>
+                                            @endif
+                                        </td>
+                                        @if (session()->get('usuario_vinculo')->id_nivel <= 2)
+                                            <td class="d-flex gap-2 align-middle">
+                                                <div class="dropdown">
+                                                    <button class="badge badge-info" id="dropdownMenuButton1" data-bs-toggle="dropdown" type="button" aria-expanded="false">
+                                                        <i class="mdi mdi-pencil"></i> Gerenciar
+                                                    </button>
+                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                                        <li><a class="dropdown-item" href="{{ route('ativo.interno.edit', $ativo->id) }}">Editar</a></li>
+                                                        <li><a class="dropdown-item" href="{{ route('ativo.interno.show', $ativo->id) }}" target="_blank">Gerar etiqueta</a></li>
+                                                    </ul>
+                                                </div>
+
+                                                <form action="{{ route('ativo.interno.destroy', $ativo->id) }}" method="POST">
+                                                    @csrf
+                                                    @method('delete')
+                                                    <button class="badge badge-danger" data-toggle="tooltip" data-placement="top" type="submit" title="Excluir" onclick="return confirm('Tem certeza que deseja excluir o registro?')">
+                                                        <i class="mdi mdi-delete"></i> Excluir
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        @endif
+                                    </tr>
+                                @endforeach
+                            @endif
                         </tbody>
                     </table>
                 </div>

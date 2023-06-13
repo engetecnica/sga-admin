@@ -47,32 +47,61 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($lista as $v)
-                                <tr>
-                                    <td><span class="badge badge-dark">{{ $v->id }}</span></td>
-                                    <td><span class="badge badge-danger">{{ $v->razao_social }}</span></td>
-                                    <td>{{ $v->matricula ?? '-' }}</td>
-                                    <td>{{ $v->nome }}</td>
-                                    <td>{{ $v->celular }}</td>
-                                    <td>{{ $v->email }}</td>
-                                    <td>{{ $v->status }} </td>
-                                    <td class="d-flex justify-itens-between">
+                            @if (session()->get('usuario_vinculo')->id_nivel <= 2)
+                                @foreach ($lista as $v)
+                                    <tr>
+                                        <td><span class="badge badge-dark">{{ $v->id }}</span></td>
+                                        <td><span class="badge badge-danger">{{ $v->razao_social }}</span></td>
+                                        <td>{{ $v->matricula ?? '-' }}</td>
+                                        <td>{{ $v->nome }}</td>
+                                        <td>{{ $v->celular }}</td>
+                                        <td>{{ $v->email }}</td>
+                                        <td>{{ $v->status }} </td>
+                                        <td class="d-flex justify-itens-between">
 
-                                        <a class="badge badge-info mr-2" href="{{ route('cadastro.funcionario.editar', $v->id) }}">
-                                            <i class="mdi mdi-pencil"></i> Editar
-                                        </a>
-                                        @if (session()->get('usuario_vinculo')->id_nivel <= 2)
-                                            <form action="{{ route('cadastro.funcionario.destroy', $v->id) }}" method="POST">
-                                                @csrf
-                                                @method('delete')
-                                                <button class="badge badge-danger" data-toggle="tooltip" data-placement="top" type="submit" title="Excluir" onclick="return confirm('Tem certeza que deseja excluir o registro?')">
-                                                    <i class="mdi mdi-delete"></i> Excluir
-                                                </button>
-                                            </form>
-                                        @endif
-                                    </td>
-                                </tr>
-                            @endforeach
+                                            <a class="badge badge-info mr-2" href="{{ route('cadastro.funcionario.editar', $v->id) }}">
+                                                <i class="mdi mdi-pencil"></i> Editar
+                                            </a>
+                                            @if (session()->get('usuario_vinculo')->id_nivel <= 2)
+                                                <form action="{{ route('cadastro.funcionario.destroy', $v->id) }}" method="POST">
+                                                    @csrf
+                                                    @method('delete')
+                                                    <button class="badge badge-danger" data-toggle="tooltip" data-placement="top" type="submit" title="Excluir" onclick="return confirm('Tem certeza que deseja excluir o registro?')">
+                                                        <i class="mdi mdi-delete"></i> Excluir
+                                                    </button>
+                                                </form>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            @else
+                                @foreach ($lista->where('id_obra', session()->get('obra')->id) as $v)
+                                    <tr>
+                                        <td><span class="badge badge-dark">{{ $v->id }}</span></td>
+                                        <td><span class="badge badge-danger">{{ $v->razao_social }}</span></td>
+                                        <td>{{ $v->matricula ?? '-' }}</td>
+                                        <td>{{ $v->nome }}</td>
+                                        <td>{{ $v->celular }}</td>
+                                        <td>{{ $v->email }}</td>
+                                        <td>{{ $v->status }} </td>
+                                        <td class="d-flex justify-itens-between">
+
+                                            <a class="badge badge-info mr-2" href="{{ route('cadastro.funcionario.editar', $v->id) }}">
+                                                <i class="mdi mdi-pencil"></i> Editar
+                                            </a>
+                                            @if (session()->get('usuario_vinculo')->id_nivel <= 2)
+                                                <form action="{{ route('cadastro.funcionario.destroy', $v->id) }}" method="POST">
+                                                    @csrf
+                                                    @method('delete')
+                                                    <button class="badge badge-danger" data-toggle="tooltip" data-placement="top" type="submit" title="Excluir" onclick="return confirm('Tem certeza que deseja excluir o registro?')">
+                                                        <i class="mdi mdi-delete"></i> Excluir
+                                                    </button>
+                                                </form>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            @endif
                         </tbody>
                     </table>
                 </div>

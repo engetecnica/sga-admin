@@ -47,7 +47,7 @@
                         <div class="row mt-3">
                             <div class="col-md-4">
                                 <label class="form-label" for="fornecedor_id">Fornecedor</label>
-                                <select class="form-select select2" id="fornecedor_id" name="fornecedor_id">
+                                <select class="form-select select2" id="fornecedor_id" name="fornecedor_id" required>
                                     <option value="">Selecione</option>
                                     @foreach ($fornecedores as $fornecedor)
                                         <option value="{{ $fornecedor->id }}" {{ $manutencao->fornecedor_id == $fornecedor->id ? 'selected' : '' }}>
@@ -58,7 +58,7 @@
                             </div>
                             <div class="col-md-4">
                                 <label class="form-label" for="servico_id">Serviço</label>
-                                <select class="form-control select2" id="servico_id" name="servico_id">
+                                <select class="form-control select2" id="servico_id" name="servico_id" required>
                                     <option value="">Selecione</option>
                                     @foreach ($servicos as $servico)
                                         <option value="{{ $servico->id }}" {{ $manutencao->servico_id == $servico->id ? 'selected' : '' }}>
@@ -69,7 +69,7 @@
                             </div>
                             <div class="col-md-4">
                                 <label class="form-label" for="tipo">Método da Preventiva</label>
-                                <select class="form-select select2" id="tipo" name="tipo">
+                                <select class="form-select select2" id="tipo" name="tipo" required>
                                     @if ($manutencao->veiculo->tipo == 'maquinas')
                                         <option value="horas" {{ $manutencao->tipo == 'horas' ? 'selected' : '' }}>Horas</option>
                                     @else

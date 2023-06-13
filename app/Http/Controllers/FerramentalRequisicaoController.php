@@ -222,7 +222,7 @@ class FerramentalRequisicaoController extends Controller
 
     public function romaneio(Request $request, $id)
     {
-        // dd($request->all());
+        dd($request->all());
 
         $atualiza_requisicao = FerramentalRequisicao::find($id);
         $atualiza_requisicao->update(['status' => 5]);
@@ -242,6 +242,8 @@ class FerramentalRequisicaoController extends Controller
 
         $ativos_liberados = FerramentalRequisicaoTransito::with('ativo', 'obraOrigem', 'obraDestino', 'status')->where('id_requisicao', $id)->get();
 
+
+
         $data = date('d/m/Y H:i:s');
         $nome = 'requisicao_'. $requisicao->id .'_' . date("dmYHis") . '.pdf';
 
@@ -249,6 +251,49 @@ class FerramentalRequisicaoController extends Controller
         return $pdf->stream($nome, array("Attachment" => false));
 
         // return view('components.romaneio.romaneio', compact('requisicao', 'ativos', 'ativos_liberados', 'data'));
+
+    }
+
+    public function romaneioGeral(Request $request, $id)
+    {
+
+        $requisicao = FerramentalRequisicao::with('solicitante', 'despachante', 'recebedor', 'obraOrigem', 'obraDestino', 'situacao')->find($id);
+
+        $ativos = FerramentalRequisicaoItem::with('ativo_externo', 'ativo_externo_estoque', 'situacao', 'situacao_recebido')->where('id_requisicao', $id)->get();
+
+        $ativos_liberados = FerramentalRequisicaoTransito::with('ativo', 'obraOrigem', 'obraDestino', 'status')->where('id_requisicao', $id)->get();
+
+        $data = date('d/m/Y H:i:s');
+        $nome = 'requisicao_'. $requisicao->id .'_' . date("dmYHis") . '.pdf';
+
+        $pdf = Pdf::loadView('components.romaneio.romaneio', compact('requisicao', 'ativos', 'ativos_liberados', 'data'));
+        return $pdf->stream($nome, array("Attachment" => false));
+
+        // return view('components.romaneio.romaneio', compact('requisicao', 'ativos', 'ativos_liberados', 'data'));
+
+    }
+
+    public function romaneioObra($id, $obra)
+    {
+        $requisicao = FerramentalRequisicao::with('solicitante', 'despachante', 'recebedor', 'obraOrigem', 'obraDestino', 'situacao')
+        ->find($id);
+
+        $ativos = FerramentalRequisicaoItem::with('ativo_externo', 'ativo_externo_estoque', 'situacao', 'situacao_recebido')
+        ->where('id_requisicao', $id)
+        ->get();
+
+        $ativos_liberados = FerramentalRequisicaoTransito::with('ativo', 'obraOrigem', 'obraDestino', 'status')
+        ->where('id_requisicao', $id)
+        ->where('id_obra_origem', $obra)
+        ->get();
+
+        $data = date('d/m/Y H:i:s');
+        $nome = 'requisicao_'. $requisicao->id .'_' . date("dmYHis") . '.pdf';
+
+        $pdf = Pdf::loadView('components.romaneio.romaneio-obra', compact('requisicao', 'ativos', 'ativos_liberados', 'data'));
+        return $pdf->stream($nome, array("Attachment" => true));
+
+        // return view('components.romaneio.romaneio-obra', compact('requisicao', 'ativos', 'ativos_liberados', 'data'));
 
     }
 

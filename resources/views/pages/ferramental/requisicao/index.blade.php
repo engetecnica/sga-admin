@@ -61,6 +61,16 @@
                                                 @if ($requisicao->status > 1 and $requisicao->status < 4)
                                                     <li><a class="dropdown-item" href="{{ route('ferramental.requisicao.show', $requisicao->id) }}"><i class="mdi mdi-file-pdf-box"></i> Gerar Romaneio</a></li>
                                                 @endif
+                                                {{-- @php
+                                                    $obra = session()->get('obra')->id ?? session()->get('obra')['id'];
+                                                @endphp
+                                                @if ($requisicao->status == 5 && isset($obra))
+                                                    <li><a class="dropdown-item" href="{{ route('ferramental.requisicao.romaneio.obra', [$requisicao->id, $obra]) }}"><i class="mdi mdi-file-pdf-box"></i> Ver Romaneio</a></li>
+                                                @endif --}}
+
+                                                @if ($requisicao->status == 5)
+                                                    <li><a class="dropdown-item" href="{{ route('ferramental.requisicao.romaneio.geral', $requisicao->id) }}" target="_blank"><i class="mdi mdi-file-pdf-box"></i> Ver Romaneio</a></li>
+                                                @endif
                                                 <li><a class="dropdown-item" href="{{ route('ferramental.requisicao.show', $requisicao->id) }}"><i class="mdi mdi-file-document-outline"></i> Detalhes</a></li>
 
                                             </ul>

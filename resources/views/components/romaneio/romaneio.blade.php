@@ -21,23 +21,23 @@
         padding: 0 !important;
     }
 
-    body {
-        background-image: url('assets/images/background-termo.jpg');
-        background-size: cover;
-        background-repeat: no-repeat;
-        z-index: -1000;
-        margin: 0 !important;
-        padding: 0;
+    @media print {
+        tr {
+            display: block;
+        }
+
+        tr.page-break {
+            page-break-before: always;
+            margin-top: 300px !important;
+        }
+
+        tr.page-break+* {
+            margin-top: 300px !important;
+        }
     }
 
     table {
         width: 100% !important;
-    }
-
-    td,
-    th {
-        border: 1px solid #ddd;
-        padding: 8px;
     }
 
     tr:nth-child(even) {
@@ -56,14 +56,23 @@
         color: white;
     }
 
+    td,
+    th {
+        border: 1px solid #ddd;
+        padding: 8px;
+    }
+
+    body {
+        background-image: url('assets/images/background-romaneio.jpeg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        z-index: -1000;
+    }
+
     .container {
         margin-top: 150px !important;
         margin-left: 75px !important;
         margin-right: 75px !important;
-    }
-
-    .page-break {
-        page-break-after: always;
     }
 </style>
 
@@ -143,7 +152,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
+                                    <tr class="page-break">
                                         <td><strong>{{ $ativo->id }}</strong></td>
                                         <td><strong>{{ $ativo->ativo_externo->titulo }}</strong></td>
                                         <td><strong>{{ $ativo->quantidade_solicitada }}</strong></td>
@@ -156,14 +165,14 @@
                                 <thead class="table-dark">
                                     <tr>
                                         <th style="width:10%;">ID Ativo</th>
-                                        <th style="width:30%;">Categoria</th>
+                                        <th style="width:40%;">Categoria</th>
                                         <th style="width:10%;">Código</th>
-                                        <th style="width:50%;">Nome</th>
+                                        <th style="width:40%;">Nome</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($ativos_liberados as $liberado)
-                                        <tr>
+                                        <tr class="page-break">
                                             <td><strong>{{ $liberado->id }}</strong></td>
                                             <td><strong>{{ $liberado->ativo->ativo_externo->categoria->relacionamento->titulo }} > {{ $liberado->ativo->ativo_externo->categoria->titulo }}</strong></td>
                                             <td><strong>{{ $liberado->ativo->patrimonio }}</strong></td>
@@ -175,8 +184,6 @@
                             </table>
                         @endforeach
 
-                        <div class="page-break"></div>
-                        <div style="margin-top: 150px;"></div>
                         <div style="margin-top: 100px;"></div>
                         <h4 class="card-title" style="text-align: center ">Responsável pelo Recebimento</h4>
                         <div style="margin-top: 100px;"></div>

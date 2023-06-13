@@ -337,6 +337,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('admin/ferramental/requisicao/romaneio/{id}', [FerramentalRequisicaoController::class, 'romaneio'])->name('ferramental.requisicao.romaneio');
     Route::patch('admin/ferramental/requisicao/{id}', [FerramentalRequisicaoController::class, 'recept'])->name('ferramental.requisicao.recept');
     // Route::delete('admin/ferramental/requisicao/{id}', [FerramentalRequisicaoController::class, 'destroy'])->name('ferramental.requisicao.destroy');
+    Route::get('admin/ferramental/requisicao/romaneio/{id}/obra/{obra}', [FerramentalRequisicaoController::class, 'romaneioObra'])->name('ferramental.requisicao.romaneio.obra');
+    Route::get('admin/ferramental/requisicao/romaneio/{id}', [FerramentalRequisicaoController::class, 'romaneioGeral'])->name('ferramental.requisicao.romaneio.geral');
 
     /** Ferramental - Requisição API */
     Route::get('admin/ferramental/requisicao/lista_ativo/{term?}', [ApiRequisicao::class, 'lista_ativo'])->name('ferramental.requisicao.lista_ativo');

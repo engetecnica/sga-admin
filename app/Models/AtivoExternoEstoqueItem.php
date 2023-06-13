@@ -16,25 +16,25 @@ class AtivoExternoEstoqueItem extends Model
 
     protected $fillable = ['quantidade_em_transito'];
 
-    static function getEstoqueItemLista($termo = null)
-    {
+    // static function getEstoqueItemLista($termo = null)
+    // {
 
-        $query = DB::table('ativos_externos_estoque_item')
-        ->select(
-            "ativos_externos_estoque_item.*",
-            "ativos_externos.titulo"
-        )
-            ->join(
-                'ativos_externos',
-                'ativos_externos.id',
-                '=',
-                'ativos_externos_estoque_item.id_ativo_externo'
-            );
+    //     $query = DB::table('ativos_externos_estoque_item')
+    //     ->select(
+    //         "ativos_externos_estoque_item.*",
+    //         "ativos_externos.titulo"
+    //     )
+    //         ->join(
+    //             'ativos_externos',
+    //             'ativos_externos.id',
+    //             '=',
+    //             'ativos_externos_estoque_item.id_ativo_externo'
+    //         );
 
-        if ($termo) {
-            $query->where('ativos_externos.titulo', 'LIKE', '%' . $termo . '%');
-        }
+    //     if ($termo) {
+    //         $query->where('ativos_externos.titulo', 'LIKE', '%' . $termo . '%');
+    //     }
 
-        return $query->get();
-    }
+    //     return $query->get();
+    // }
 }

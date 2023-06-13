@@ -17,11 +17,17 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
+use Session;
+
 class FerramentalRequisicaoController extends Controller
 {
     public function index()
     {
-        $requisicoes = FerramentalRequisicao::with('solicitante', 'obraOrigem', 'obraDestino', 'situacao')->orderByDesc('id')->get();
+        if (Session::get('obra')['id']) {
+            $requisicoes = FerramentalRequisicao::where('id_obra_destino', Session::get('obra')['id'])->with('solicitante', 'obraOrigem', 'obraDestino', 'situacao')->orderByDesc('id')->get();
+        } else {
+            $requisicoes = FerramentalRequisicao::with('solicitante', 'obraOrigem', 'obraDestino', 'situacao')->orderByDesc('id')->get();
+        }
 
 
         return view('pages.ferramental.requisicao.index', compact('requisicoes'));
@@ -31,7 +37,11 @@ class FerramentalRequisicaoController extends Controller
     {
         $itens = AtivoExterno::with('estoque')->get();
 
-        $obras = CadastroObra::all();
+        if (Session::get('obra')['id']) {
+            $obras = CadastroObra::where('id', Session::get('obra')['id'])->get();
+        } else {
+            $obras = CadastroObra::all();
+        }
 
         return view('pages.ferramental.requisicao.create', compact('itens', 'obras'));
     }

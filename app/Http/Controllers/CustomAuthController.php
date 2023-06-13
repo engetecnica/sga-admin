@@ -99,4 +99,23 @@ class CustomAuthController extends Controller
 
         return redirect('login');
     }
+
+    public function atualizar_obra(request $request)
+    {
+
+        $id_obra = $request->input('novo_id') ?? null;
+        $obra = CadastroObra::find($id_obra);
+
+        if ($id_obra) {
+            $obra['id'] = $id_obra;
+            $obra['razao_social'] = $obra->razao_social;
+            $obra['codigo_obra'] = $obra->codigo_obra;
+        } else {
+            $obra['id'] = null;
+            $obra['razao_social'] = 'PERFIL ADMINISTRADOR - TODAS';
+            $obra['codigo_obra'] = 'Todas';
+        }
+
+        session(['obra' => $obra]);
+    }
 }

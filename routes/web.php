@@ -59,6 +59,7 @@ use App\Http\Controllers\VeiculoSeguroController;
 use App\Http\Controllers\AtivoInternoController;
 use App\Http\Controllers\ConfigController;
 use App\Http\Controllers\FuncaoFuncionarioController;
+use App\Models\CadastroObra;
 
 /*
 |--------------------------------------------------------------------------
@@ -85,13 +86,9 @@ Route::get('admin/signout',                                       [CustomAuthCon
 /* Grupo de Rotas Autenticadas */
 Route::group(['middleware' => 'auth'], function () {
 
-    Route::post('/atualizar-obra', function (Illuminate\Http\Request $request) {
-        $novoId = $request->input('novo_id');
-        $obra = session('obra', []);
-        $obra['id'] = $novoId;
-        session(['obra' => $obra]);
-        return redirect('/'); // Redirecionar para a página inicial ou qualquer outra página desejada
-    });
+    /** Atualizar obra ID */
+    Route::post('/atualizar-obra', [CustomAuthController::class, 'atualizar_obra'])->name('atualizar.obra');
+
 
     /* Configurações - Dashboard */
     Route::get('admin/configuracao', [ConfigController::class, 'edit'])->name('config.edit');

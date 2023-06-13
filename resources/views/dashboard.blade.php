@@ -6,9 +6,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>SGA-E | @if (View::hasSection('title'))
-            @yield('title')
+        @yield('title')
         @else
-            Dashboard
+        Dashboard
         @endif
     </title>
 
@@ -50,21 +50,24 @@
                 </button>
                 <div class="w-100 mt-3">
                     <form class="d-flex" action="/atualizar-obra" method="POST">
+
+
                         @csrf
                         <select class="{{ session()->get('usuario_vinculo')->id_nivel < 3 ? 'form-select select2' : '' }} form-control mr-2" id="novo_id" name="novo_id">
-                            @if (session()->get('usuario_vinculo')->id_nivel <= 2)
+                            @if (session()->get('usuario_vinculo')->id_nivel <= 2) <option value="" {{ session()->get('obra')['id'] == null ? 'selected' : '' }}>PERFIL ADMINISTRADOR - TODAS</option>
+
                                 @foreach ($obras_lista as $obra_lista)
-                                    <option value="{{ $obra_lista->id }}" {{ session()->get('obra')['id'] == $obra_lista->id ? 'selected' : '' }}>
-                                        {{ $obra_lista->codigo_obra }} | {{ $obra_lista->razao_social }} | {{ $obra_lista->cnpj }}
-                                    </option>
+                                <option value="{{ $obra_lista->id }}" {{ session()->get('obra')['id'] == $obra_lista->id ? 'selected' : '' }}>
+                                    {{ $obra_lista->codigo_obra }} | {{ $obra_lista->razao_social }} | {{ $obra_lista->cnpj }}
+                                </option>
                                 @endforeach
-                            @else
+                                @else
                                 <option value="{{ session()->get('obra')->id }}" readonly>
                                     {{ session()->get('obra')->codigo_obra }} | {{ session()->get('obra')->razao_social }} | {{ session()->get('obra')->cnpj }}
                                 </option>
-                            @endif
+                                @endif
                         </select>
-                        <button class="btn btn-gradient-danger" type="submit">OK</button>
+                        <!-- <button class="btn btn-gradient-danger" type="submit">OK</button> -->
                     </form>
                 </div>
 
@@ -230,36 +233,36 @@
                     </li>
 
                     @foreach ($modulos_permitidos as $module)
-                        <li class="nav-item">
+                    <li class="nav-item">
 
-                            @if (count($module['submodulo']) > 0)
-                                <a class="nav-link" data-bs-toggle="collapse" href="#{{ $module['url_amigavel'] }}" aria-expanded="false" aria-controls="{{ $module['url_amigavel'] }}">
-                                    <span class="menu-title">{{ $module['titulo'] }}</span>
-                                    <i class="menu-arrow"></i>
-                                    <i class="{{ $module['icone'] }} menu-icon"></i>
-                                </a>
-                            @else
-                                <a class="nav-link" href="{{ env('URL_APP_ADMIN') }}{{ $module['url_amigavel'] }}">
-                                    <span class="menu-title">{{ $module['titulo'] }}</span>
-                                    <i class="{{ $module['icone'] }} menu-icon"></i>
-                                </a>
-                            @endif
+                        @if (count($module['submodulo']) > 0)
+                        <a class="nav-link" data-bs-toggle="collapse" href="#{{ $module['url_amigavel'] }}" aria-expanded="false" aria-controls="{{ $module['url_amigavel'] }}">
+                            <span class="menu-title">{{ $module['titulo'] }}</span>
+                            <i class="menu-arrow"></i>
+                            <i class="{{ $module['icone'] }} menu-icon"></i>
+                        </a>
+                        @else
+                        <a class="nav-link" href="{{ env('URL_APP_ADMIN') }}{{ $module['url_amigavel'] }}">
+                            <span class="menu-title">{{ $module['titulo'] }}</span>
+                            <i class="{{ $module['icone'] }} menu-icon"></i>
+                        </a>
+                        @endif
 
-                            @if (count($module['submodulo']) > 0)
-                                <div class="collapse" id="{{ $module['url_amigavel'] }}">
-                                    <ul class="nav flex-column sub-menu">
-                                        @foreach ($module['submodulo'] as $sub)
-                                            <?php
-                                            $item = env('URL_APP_ADMIN') . Request::segment(2) . '/' . Request::segment(3);
-                                            
-                                            ?>
-                                            <li class="nav-item"> <a class="nav-link {{ $item === $sub['url_amigavel'] ? 'active-submodulo' : '' }}" href="{{ url($sub['url_amigavel']) }}">{{ $sub['titulo'] }}</a>
-                                            </li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            @endif
-                        </li>
+                        @if (count($module['submodulo']) > 0)
+                        <div class="collapse" id="{{ $module['url_amigavel'] }}">
+                            <ul class="nav flex-column sub-menu">
+                                @foreach ($module['submodulo'] as $sub)
+                                <?php
+                                $item = env('URL_APP_ADMIN') . Request::segment(2) . '/' . Request::segment(3);
+
+                                ?>
+                                <li class="nav-item"> <a class="nav-link {{ $item === $sub['url_amigavel'] ? 'active-submodulo' : '' }}" href="{{ url($sub['url_amigavel']) }}">{{ $sub['titulo'] }}</a>
+                                </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                        @endif
+                    </li>
                     @endforeach
 
                     <li class="nav-item">
@@ -294,50 +297,50 @@
     </div>
 
     <!-- jquery:js-3.1.1 -->
-    <script src="{{ asset('assets/components/js/jquery.min.js') }}"></script>
+    <script src="{{ asset('assets/components/js/jquery.min.js') }}?v=@php echo date('his'); @endphp"></script>
 
     <!-- bootstrap:js-4.1.3 -->
-    <script src="{{ asset('assets/components/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('assets/components/js/bootstrap.min.js') }}?v=@php echo date('his'); @endphp"></script>
 
     <!-- popper:js -->
-    <script src="{{ asset('assets/components/js/popper.min.js') }}"></script>
+    <script src="{{ asset('assets/components/js/popper.min.js') }}?v=@php echo date('his'); @endphp"></script>
 
     <!-- plugins:js -->
-    <script src="{{ asset('assets/components/js/vendor.bundle.base.js') }}"></script>
+    <script src="{{ asset('assets/components/js/vendor.bundle.base.js') }}?v=@php echo date('his'); @endphp"></script>
     <!-- endinject -->
 
     <!-- Plugin js for this page -->
-    <script src="{{ asset('assets/components/js/Chart.min.js') }}"></script>
-    <script src="{{ asset('assets/components/js/jquery.cookie.js') }}"></script>
+    <script src="{{ asset('assets/components/js/Chart.min.js') }}?v=@php echo date('his'); @endphp"></script>
+    <script src="{{ asset('assets/components/js/jquery.cookie.js') }}?v=@php echo date('his'); @endphp"></script>
     <!-- End plugin js for this page -->
 
     <!-- inject:js -->
-    <script src="{{ asset('assets/components/js/off-canvas.js') }}"></script>
-    <script src="{{ asset('assets/components/js/hoverable-collapse.js') }}"></script>
-    <script src="{{ asset('assets/components/js/misc.js') }}"></script>
+    <script src="{{ asset('assets/components/js/off-canvas.js') }}?v=@php echo date('his'); @endphp"></script>
+    <script src="{{ asset('assets/components/js/hoverable-collapse.js') }}?v=@php echo date('his'); @endphp"></script>
+    <script src="{{ asset('assets/components/js/misc.js') }}?v=@php echo date('his'); @endphp"></script>
     <!-- endinject -->
 
     <!-- Custom js for this page -->
-    <script src="{{ asset('assets/components/js/dashboard.js') }}"></script>
-    <script src="{{ asset('assets/components/js/todolist.js') }}"></script>
+    <script src="{{ asset('assets/components/js/dashboard.js') }}?v=@php echo date('his'); @endphp"></script>
+    <script src="{{ asset('assets/components/js/todolist.js') }}?v=@php echo date('his'); @endphp"></script>
     <!-- End custom js for this page -->
 
     <!-- inputmask:js -->
-    <script src="{{ asset('assets/components/js/jquery.inputmask.min.js') }}"></script>
+    <script src="{{ asset('assets/components/js/jquery.inputmask.min.js') }}?v=@php echo date('his'); @endphp"></script>
 
     <!-- summernote:css-js -->
-    <link href="{{ asset('assets/components/css/summernote-bs4.min.css') }}" rel="stylesheet">
-    <script src="{{ asset('assets/components/js/summernote-bs4.min.js') }}"></script>
+    <link href="{{ asset('assets/components/css/summernote-bs4.min.css') }}?v=@php echo date('his'); @endphp" rel="stylesheet">
+    <script src="{{ asset('assets/components/js/summernote-bs4.min.js') }}?v=@php echo date('his'); @endphp"></script>
 
     <!-- select2:js -->
-    <script src="{{ asset('assets/components/js/select2.min.js') }}"></script>
+    <script src="{{ asset('assets/components/js/select2.min.js') }}?v=@php echo date('his'); @endphp"></script>
 
     <!-- datatables:js -->
-    <script src="{{ asset('assets/components/js/datatables.min.js') }}"></script>
+    <script src="{{ asset('assets/components/js/datatables.min.js') }}?v=@php echo date('his'); @endphp"></script>
 
     <!-- toastr:js -->
-    <script src="{{ asset('assets/components/js/toastr.min.js') }}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bs-custom-file-input/1.3.4/bs-custom-file-input.min.js"></script>
+    <script src="{{ asset('assets/components/js/toastr.min.js') }}?v=@php echo date('his'); @endphp"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bs-custom-file-input/1.3.4/bs-custom-file-input.min.js?v=@php echo date('his'); @endphp"></script>
 
     <script>
         dados1 = {};
@@ -345,6 +348,28 @@
         var route = window.location.pathname;
 
 
+        /** Novo ID para o perfil Administrador */
+        $("#novo_id").on('change', function() {
+
+            novo_id = $(this).val();
+
+            $.ajax({
+                type: 'POST',
+                url: "{{ route('atualizar.obra') }}",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    novo_id: novo_id
+                },
+                success: function(result) {
+
+                    $('.toastrDefaultSuccess').ready(function() {
+                        toastr.success('Você fez login em outra obra!')
+                    });
+
+                    window.location.href = route;
+                }
+            })
+        });
 
 
         $(document).ready(function() {
@@ -504,42 +529,7 @@
             }
         })
 
-        // $(".cep").on('keyup', function() {
 
-        //     //Nova variável "cep" somente com dígitos.
-        //     var cep = $("#cep").val().replace(/\D/g, '');
-
-        //     //Verifica se campo cep possui valor informado.
-        //     if (cep != "") {
-
-        //         //Expressão regular para validar o CEP.
-        //         var validacep = /^[0-9]{8}$/;
-
-        //         //Valida o formato do CEP.
-        //         if (validacep.test(cep)) {
-
-        //             //Consulta o webservice viacep.com.br/
-        //             $.getJSON("//viacep.com.br/ws/" + cep + "/json/?callback=?", function(
-        //                 dados) {
-
-        //                 if (!("erro" in dados)) {
-        //                     //Atualiza os campos com os valores da consulta.
-        //                     $("#endereco").val(dados.logradouro);
-        //                     $("#bairro").val(dados.bairro);
-        //                     $("#cidade").val(dados.localidade);
-        //                     $("#estado").val(dados.uf);
-        //                 } //end if.
-        //                 else {
-        //                     //CEP pesquisado não foi encontrado.
-        //                     console.log("CEP não encontrado.");
-        //                 }
-        //             });
-        //         } //end if.
-        //         else {
-        //             console.log("Formato de CEP inválido.");
-        //         }
-        //     } //end if.
-        // });
 
         $(document).on('blur', '#cep', function() {
             const cep = $(this).val();
@@ -579,27 +569,27 @@
         });
 
 
-        $(".selecionar_obra").on('change', function() {
-            let id_obra = $(this).val();
+        // $(".selecionar_obra").on('change', function() {
+        //     let id_obra = $(this).val();
 
-            console.log('Selecionando Obra')
+        //     console.log('Selecionando Obra')
 
-            $.ajax({
-                    url: "{{ route('api.selecionar_obra') }}",
-                    type: 'post',
-                    data: {
-                        "_token": "{{ csrf_token() }}",
-                        id_obra: id_obra,
-                        route: route
-                    }
-                })
-                .done(function(msg) {
-                    window.location.href = route;
-                })
-                .fail(function(jqXHR, textStatus, msg) {
-                    alert(msg);
-                });
-        })
+        //     $.ajax({
+        //             url: "{{ route('api.selecionar_obra') }}",
+        //             type: 'post',
+        //             data: {
+        //                 "_token": "{{ csrf_token() }}",
+        //                 id_obra: id_obra,
+        //                 route: route
+        //             }
+        //         })
+        //         .done(function(msg) {
+        //             window.location.href = route;
+        //         })
+        //         .fail(function(jqXHR, textStatus, msg) {
+        //             alert(msg);
+        //         });
+        // })
 
         $('.summernote').summernote({
             height: 400
@@ -877,16 +867,18 @@
 
 
         // EXIBIÇÃO DOS ALERTAS
-        @if (Session::get('fail'))
-            $('.toastrDefaultError').ready(function() {
-                toastr.error('{{ Session::get('fail') }}')
-            });
+        @if(Session::get('fail'))
+        $('.toastrDefaultError').ready(function() {
+            toastr.error('{{ Session::get('
+                fail ') }}')
+        });
         @endif
 
-        @if (Session::get('success'))
-            $('.toastrDefaultSuccess').ready(function() {
-                toastr.success('{{ Session::get('success') }}')
-            });
+        @if(Session::get('success'))
+        $('.toastrDefaultSuccess').ready(function() {
+            toastr.success('{{ Session::get('
+                success ') }}')
+        });
         @endif
 
         // MODAL ATIVOS INTERNOS MARCAS
@@ -898,7 +890,7 @@
 
                 $.ajax({
                     type: 'POST',
-                    url: '{{ route('ativo.interno.marcas.ajax') }}',
+                    url: "{{ route('ativo.interno.marcas.ajax') }}",
                     dataType: 'json',
                     data: {
                         '_token': _token,
@@ -920,7 +912,7 @@
 
                 $.ajax({
                     type: 'POST',
-                    url: '{{ route('ativo.veiculo.marcas.ajax') }}',
+                    url: '{{ route("ativo.veiculo.marcas.ajax") }}',
                     dataType: 'json',
                     data: {
                         '_token': _token,
@@ -942,7 +934,7 @@
 
                 $.ajax({
                     type: 'POST',
-                    url: '{{ route('ativo.veiculo.manutencao.servico.ajax') }}',
+                    url: '{{ route("ativo.veiculo.manutencao.servico.ajax") }}',
                     dataType: 'json',
                     data: {
                         '_token': _token,

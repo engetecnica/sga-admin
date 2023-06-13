@@ -18,7 +18,7 @@ class CadastroFuncionarioController extends Controller
     {
 
 
-        $lista = CadastroFuncionario::select('obras.razao_social', 'funcionarios.*')
+        $lista = CadastroFuncionario::select('obras.razao_social', "obras.codigo_obra", 'funcionarios.*')
         ->join('obras', 'obras.id', '=', 'funcionarios.id_obra')
         ->get();
 

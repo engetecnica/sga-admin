@@ -25,21 +25,36 @@ use App\Helpers\Tratamento;
 
 use Yajra\DataTables\DataTables;
 
+use Session;
+
 class AtivoExternoController extends Controller
 {
 
     use Configuracao, FuncoesAdaptadas;
 
+
+
     public function index()
     {
-        $ativos = AtivoExterno::with('configuracao')->get();
+
+
+        if (Session::get('obra')['id'] == null) {
+            $ativos = AtivoExterno::with('configuracao')->get();
+        } else {
+            $ativos = AtivoExterno::with('configuracao')->get();
+            // $ativos = AtivoExternoEstoque::where('id_obra', Session::get('obra')['id'])->with('configuracao')->get(); // aqui preciso trazer o resultado somente dos itens que tem naquela obra
+        }
 
         return view('pages.ativos.externos.index', compact('ativos'));
     }
 
     public function create()
     {
-        $obras = CadastroObra::all();
+        if (Session::get('obra')['id'] == null) {
+            $obras = CadastroObra::orderByDesc('id')->get();
+        } else {
+            $obras = CadastroObra::where('id', Session::get('obra')['id'])->orderByDesc('id')->get();
+        }
 
         $empresas = CadastroEmpresa::all();
 
@@ -64,8 +79,6 @@ class AtivoExternoController extends Controller
                 'status.required' => 'Selecione o Status'
             ]
         );
-
-        // FuncoesAdaptadas::dv($request->all());
 
         /* Salvar Ativo */
         $externo = new AtivoExterno();
@@ -119,7 +132,12 @@ class AtivoExternoController extends Controller
     {
 
         $detalhes = AtivoExterno::with('categoria')->find($id);
-        $itens = AtivoExternoEstoque::with('obra', 'situacao')->where('id_ativo_externo', $id)->get();
+
+        if (Session::get('obra')['id'] == null) {
+            $itens = AtivoExternoEstoque::with('obra', 'situacao')->where('id_ativo_externo', $id)->get();
+        } else {
+            $itens = AtivoExternoEstoque::where('id_obra', Session::get('obra')['id'])->with('obra', 'situacao')->where('id_ativo_externo', $id)->get();
+        }
 
         return view('pages.ativos.externos.show', compact('detalhes', 'itens'));
     }

@@ -38,10 +38,13 @@ use PDF;
 
 //Notification mail
 use App\Notifications\NotificaRetirada;
+
 //Notification telegram
 use App\Notifications\NotificaRetiradaTelegram;
 use Illuminate\Support\Facades\Notification;
 use Yajra\DataTables\DataTables;
+
+use Session;
 
 class FerramentalRetiradaController extends Controller
 {
@@ -55,13 +58,19 @@ class FerramentalRetiradaController extends Controller
 
     public function create()
     {
-        $obras = CadastroObra::where('status', 'Ativo')->get();
 
-        $funcionarios = CadastroFuncionario::where('status', 'Ativo')->get();
-
-        $estoques = AtivoExternoEstoque::with('ativo_externo', 'obra', 'situacao')->where('status', 4)->get();
-
+        if (Session::get('obra')['id']) {
+            $obras = CadastroObra::where('id', Session::get('obra')['id'])->where('status', 'Ativo')->get();
+            $funcionarios = CadastroFuncionario::where('id_obra', Session::get('obra')['id'])->where('status', 'Ativo')->get();
+            $estoques = AtivoExternoEstoque::where('id_obra', Session::get('obra')['id'])->with('ativo_externo', 'obra', 'situacao')->where('status', 4)->get();
+        } else {
+            $obras = CadastroObra::where('status', 'Ativo')->get();
+            $funcionarios = CadastroFuncionario::where('status', 'Ativo')->get();
+            $estoques = AtivoExternoEstoque::with('ativo_externo', 'obra', 'situacao')->where('status', 4)->get();
+        }
+        
         $empresas = CadastroEmpresa::where('status', 'Ativo')->get();
+
 
         return view('pages.ferramental.retirada.form', compact('funcionarios', 'estoques', 'obras', 'empresas'));
     }
@@ -381,6 +390,8 @@ class FerramentalRetiradaController extends Controller
     {
 
 
+       
+
         if ($request->id_ativo_externo) {
 
             $status_retirada = null;
@@ -400,7 +411,7 @@ class FerramentalRetiradaController extends Controller
 
                 /** Salvar Ativo Externo */
                 $estoque = AtivoExternoEstoque::find($item->id_ativo_externo);
-                $estoque->status = $value;
+                $estoque->status = 4; // em estoque
                 $estoque->save();
             }
 

@@ -33,18 +33,19 @@
                                 </ul>
                             </div>
                         @endif
-                        <form method="post" action="{{ route('ativo.externo.update', $estoque->ativo_externo->id) }}">
+                        <form method="post" action="{{ route('ativo.externo.update', $estoque->id) }}">
                             @csrf
 
                             <div class="row">
                                 <div class="col-md-6">
-                                    <label class="form-label">Categoria</label>
-                                    <select class="form-select select2" name="id_ativo_configuracao">
+                                    <label class="form-label">Categoria:</label>
+                                    {{ $estoque->ativo_externo->titulo }}
+                                    {{-- <select class="form-control" name="id_ativo_configuracao" readonly>
                                         <option value="">Selecione uma Categoria</option>
                                         @foreach ($categorias as $categoria)
                                             <option value="{{ $categoria->id }}" {{ $estoque->ativo_externo->id_ativo_configuracao == $categoria->id ? 'selected' : '' }}>{{ $categoria->titulo }}</option>
                                         @endforeach
-                                    </select>
+                                    </select> --}}
                                 </div>
                             </div>
 
@@ -62,24 +63,17 @@
 
                                     </select>
                                 </div>
-                                <div class="col-md-2">
-                                    <label class="form-label" for="status">Situação</label>
-                                    <select class="form-select select2" name="status">
-                                        @foreach ($situacoes as $situacao)
-                                            <option value="{{ $situacao->id }}" {{ $estoque->status == $situacao->id ? 'selected' : '' }}>{{ $situacao->titulo }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
+
                             </div>
 
                             <div class="row mt-3">
                                 <div class="col-md-2">
                                     <label class="form-label" for="patrimonio">Patrimônio</label>
-                                    <input class="form-control" id="patrimonio" name="patrimonio" type="text" value="{{ $estoque->patrimonio ?? old('patrimonio') }}">
+                                    <input class="form-control" id="patrimonio" name="patrimonio" type="text" value="{{ $estoque->patrimonio ?? old('patrimonio') }}" readonly>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label" for="titulo">Título</label>
-                                    <input class="form-control" id="titulo" name="titulo" type="text" value="{{ $estoque->ativo_externo->titulo ?? old('titulo') }}">
+                                    <input class="form-control" id="titulo" name="titulo" type="text" value="{{ $estoque->ativo_externo->titulo ?? old('titulo') }}" readonly>
                                 </div>
 
                                 <div class="col-md-2">
@@ -97,14 +91,17 @@
                             </div>
 
                             <div class="row mt-3">
-                                <div class="col-md-3">
-                                    <label class="form-label" for="status">Status</label>
-                                    <select class="form-select select2" id="status" name="status">
-                                        <option value="Ativo" selected>Em Estoque</option>
+                                <div class="col-md-2">
+                                    <label class="form-label" for="status">Situação</label>
+                                    <select class="form-select select2" name="status">
+                                        @foreach ($situacoes as $situacao)
+                                            <option value="{{ $situacao->id }}" {{ $estoque->status == $situacao->id ? 'selected' : '' }}>{{ $situacao->titulo }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
                             <div class="col-12 mt-3">
+                                <input name="id_ativo_externo" type="hidden" value="{{ $estoque->id_ativo_externo }}">
                                 <button class="btn btn-gradient-dark btn-lg font-weight-medium" type="submit">Salvar</button>
                             </div>
                         </form>

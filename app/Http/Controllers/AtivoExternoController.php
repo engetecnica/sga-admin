@@ -199,6 +199,28 @@ class AtivoExternoController extends Controller
         return view('pages.ativos.externos.edit', compact('estoques', 'obras', 'categorias', 'situacoes', 'empresas'));
     }
 
+    public function update(Request $request, $id)
+    {
+        // dd($request->all());
+        if (! $save = AtivoExternoEstoque::find($id)) {
+            return redirect()->route('ativo.externo.index')->with('fail', 'Problemas para localizar o ativo.');
+        }
+
+        $userLog = Auth::user()->email;
+        Log::channel('main')->info($userLog .' | EDIT ATIVOS INTERNOS: ' . $save->patrimonio);
+
+        $data = $request->all();
+        $atualiza['id_obra'] = $request->id_obra;
+        $atualiza['valor'] = str_replace('R$ ', '', $request->valor) ?? 0;
+        $atualiza['calibracao'] = $request->calibracao;
+        $atualiza['status'] = $request->status;
+        $save->update($atualiza);
+
+        return redirect()->route('ativo.externo.editar', $request->id_ativo_externo)->with('success', 'Registro atualizado com sucesso.');
+
+
+    }
+
     public function searchAtivoID(Request $request, int $id)
     {
 

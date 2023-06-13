@@ -49,10 +49,12 @@
                     <span class="mdi mdi-menu"></span>
                 </button>
                 <div class="w-100 mt-3">
+                    {{-- @dd(session()->all()) --}}
                     <form class="d-flex" action="/atualizar-obra" method="POST">
                         @csrf
                         <select class="{{ session()->get('usuario_vinculo')->id_nivel < 3 ? 'form-select select2' : '' }} form-control mr-2" id="novo_id" name="novo_id">
                             @if (session()->get('usuario_vinculo')->id_nivel <= 2)
+                                <option value="null">VER TODAS</option>
                                 @foreach ($obras_lista as $obra_lista)
                                     <option value="{{ $obra_lista->id }}" {{ session()->get('obra')['id'] == $obra_lista->id ? 'selected' : '' }}>
                                         {{ $obra_lista->codigo_obra }} | {{ $obra_lista->razao_social }} | {{ $obra_lista->cnpj }}

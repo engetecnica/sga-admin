@@ -9,6 +9,7 @@ use App\Models\CadastroObra;
 use App\Models\User;
 
 use Carbon\Carbon;
+use Ramsey\Uuid\Type\Integer;
 
 class Estatistica
 {
@@ -29,7 +30,7 @@ class Estatistica
 
     public static function funcionarios($obra)
     {
-        if(isset($obra)) {
+        if(is_int($obra)) {
             return CadastroFuncionario::where('status', 'Ativo')->where('id_obra', $obra)->count();
         } else {
             return CadastroFuncionario::where('status', 'Ativo')->count();

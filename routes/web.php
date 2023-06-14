@@ -86,7 +86,7 @@ Route::get('admin/signout',                                       [CustomAuthCon
 Route::group(['middleware' => 'auth'], function () {
 
     Route::post('/atualizar-obra', function (Illuminate\Http\Request $request) {
-        $novoId = $request->input('novo_id');
+        $novoId = intval($request->input('novo_id'));
         $obra = session('obra', []);
         $obra['id'] = $novoId;
         session(['obra' => $obra]);

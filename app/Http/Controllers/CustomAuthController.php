@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 use App\Traits\FuncoesAdaptadas;
+use Carbon\Carbon;
 
 class CustomAuthController extends Controller
 {
@@ -22,6 +23,7 @@ class CustomAuthController extends Controller
     public function index()
     {
         if(Auth::check()){
+
             return redirect()->intended('dashboard');
         }
 
@@ -77,7 +79,8 @@ class CustomAuthController extends Controller
     public function dashboard()
     {
         if(Auth::check()){
-            return view('pages.dashboard.index');
+            $dataAtual = Carbon::now();
+            return view('pages.dashboard.index', compact('dataAtual'));
         }
 
         Auth::logout();

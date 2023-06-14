@@ -179,14 +179,15 @@
         <div class="col-xl-6 col-sm-12 mb-4">
             <div class="card">
                 <div class="card-body">
-                    <h5>Funcionários bloqueados ({{ count(Tarefa::funcionariosBloqueados()) }})</h5>
+                    <h5>Funcionários bloqueados ({{ count(Tarefa::funcionariosBloqueados()) }}) <small>{{ $dataAtual }}</small></h5>
                     <table class="table-border table-responsive table">
                         @foreach (Tarefa::funcionariosBloqueados() as $bloqueado)
                             <tr>
                                 <td>
-                                    {{ $bloqueado->funcionario->matricula }} - {{ $bloqueado->funcionario->nome }}
+                                    <span class="badge badge-dark">{{ $bloqueado->funcionario->obra->codigo_obra }}</span> - <span class="badge badge-secondary">{{ $bloqueado->funcionario->matricula }}</span> - {{ $bloqueado->funcionario->nome }}
                                 </td>
                                 <td style="width: 20%">
+                                    <a href="{{ route('ferramental.retirada.detalhes', $bloqueado->id) }}"><span class="badge badge-warning">Retirada #{{ $bloqueado->id }}</span></a>
                                     <a href="{{ route('cadastro.funcionario.editar', $bloqueado->funcionario->id) }}"><span class="badge badge-success">Visualizar dados de contato</span></a>
                                 </td>
                             </tr>
@@ -194,9 +195,7 @@
                     </table>
                 </div>
             </div>
-        </div>
-        <div class="col-xl-6 col-sm-12 mb-4">
-            <div class="card">
+            <div class="card mt-4">
                 <div class="card-body">
                     <h5>Aniversariantes do mês ({{ count(Estatistica::aniversariantes(session()->get('obra')->id ?? session()->get('obra')['id'])) }})</h5>
                     <table class="table-border table-responsive table">
@@ -213,6 +212,9 @@
                     </table>
                 </div>
             </div>
+        </div>
+        <div class="col-xl-6 col-sm-12 mb-4">
+
         </div>
     </div>
 

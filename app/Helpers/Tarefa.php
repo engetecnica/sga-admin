@@ -22,9 +22,11 @@ class Tarefa
 
     public static function funcionariosBloqueados()
     {
+        $now = Carbon::now();
+
         $bloqueio = FerramentalRetirada::with('funcionario')
-        ->where('data_devolucao', '<', Carbon::now())
-        ->orWhere('status', 5)
+        ->where('data_devolucao_prevista', '<', $now->format('Y-m-d H:i:s'))
+        ->where('status', [2,5])
         ->orderByDesc('id')
         ->limit(10)
         ->get();
@@ -51,4 +53,6 @@ class Tarefa
         }
         return $transferencias;
     }
+
+
 }

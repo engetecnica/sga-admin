@@ -157,4 +157,9 @@ class Tratamento
         return substr($time, 0, 5);
     }
 
+    public static function teste()
+    {
+        return Carbon::now();
+    }
+
 }

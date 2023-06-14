@@ -30,7 +30,7 @@ class Estatistica
 
     public static function funcionarios($obra)
     {
-        if(is_int($obra)) {
+        if(is_int($obra) && $obra > 0) {
             return CadastroFuncionario::where('status', 'Ativo')->where('id_obra', $obra)->count();
         } else {
             return CadastroFuncionario::where('status', 'Ativo')->count();
@@ -47,7 +47,7 @@ class Estatistica
     {
         $now = Carbon::now();
 
-        if(isset($obra)) {
+        if(is_int($obra) && $obra > 0) {
             return CadastroFuncionario::where('id_obra', $obra)->whereMonth('data_nascimento', $now->month)->get();
         } else {
             return CadastroFuncionario::whereMonth('data_nascimento', $now->month)->get();

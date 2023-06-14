@@ -51,10 +51,12 @@
                 <div class="w-100 mt-3">
                     {{-- @dd(session()->all()) --}}
                     <form class="d-flex" action="/atualizar-obra" method="POST">
+
                         @csrf
                         <select class="{{ session()->get('usuario_vinculo')->id_nivel < 3 ? 'form-select select2' : '' }} form-control mr-2" id="novo_id" name="novo_id">
                             @if (session()->get('usuario_vinculo')->id_nivel <= 2)
-                                <option value="null">VER TODAS</option>
+                                <option value="" {{ session()->get('obra')['id'] == null ? 'selected' : '' }}>PERFIL ADMINISTRADOR - TODAS</option>
+
                                 @foreach ($obras_lista as $obra_lista)
                                     <option value="{{ $obra_lista->id }}" {{ session()->get('obra')['id'] == $obra_lista->id ? 'selected' : '' }}>
                                         {{ $obra_lista->codigo_obra }} | {{ $obra_lista->razao_social }} | {{ $obra_lista->cnpj }}
@@ -66,7 +68,7 @@
                                 </option>
                             @endif
                         </select>
-                        <button class="btn btn-gradient-danger" type="submit">OK</button>
+                        <!-- <button class="btn btn-gradient-danger" type="submit">OK</button> -->
                     </form>
                 </div>
 
@@ -296,50 +298,50 @@
     </div>
 
     <!-- jquery:js-3.1.1 -->
-    <script src="{{ asset('assets/components/js/jquery.min.js') }}"></script>
+    <script src="{{ asset('assets/components/js/jquery.min.js') }}?v=@php echo date('his'); @endphp"></script>
 
     <!-- bootstrap:js-4.1.3 -->
-    <script src="{{ asset('assets/components/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('assets/components/js/bootstrap.min.js') }}?v=@php echo date('his'); @endphp"></script>
 
     <!-- popper:js -->
-    <script src="{{ asset('assets/components/js/popper.min.js') }}"></script>
+    <script src="{{ asset('assets/components/js/popper.min.js') }}?v=@php echo date('his'); @endphp"></script>
 
     <!-- plugins:js -->
-    <script src="{{ asset('assets/components/js/vendor.bundle.base.js') }}"></script>
+    <script src="{{ asset('assets/components/js/vendor.bundle.base.js') }}?v=@php echo date('his'); @endphp"></script>
     <!-- endinject -->
 
     <!-- Plugin js for this page -->
-    <script src="{{ asset('assets/components/js/Chart.min.js') }}"></script>
-    <script src="{{ asset('assets/components/js/jquery.cookie.js') }}"></script>
+    <script src="{{ asset('assets/components/js/Chart.min.js') }}?v=@php echo date('his'); @endphp"></script>
+    <script src="{{ asset('assets/components/js/jquery.cookie.js') }}?v=@php echo date('his'); @endphp"></script>
     <!-- End plugin js for this page -->
 
     <!-- inject:js -->
-    <script src="{{ asset('assets/components/js/off-canvas.js') }}"></script>
-    <script src="{{ asset('assets/components/js/hoverable-collapse.js') }}"></script>
-    <script src="{{ asset('assets/components/js/misc.js') }}"></script>
+    <script src="{{ asset('assets/components/js/off-canvas.js') }}?v=@php echo date('his'); @endphp"></script>
+    <script src="{{ asset('assets/components/js/hoverable-collapse.js') }}?v=@php echo date('his'); @endphp"></script>
+    <script src="{{ asset('assets/components/js/misc.js') }}?v=@php echo date('his'); @endphp"></script>
     <!-- endinject -->
 
     <!-- Custom js for this page -->
-    <script src="{{ asset('assets/components/js/dashboard.js') }}"></script>
-    <script src="{{ asset('assets/components/js/todolist.js') }}"></script>
+    <script src="{{ asset('assets/components/js/dashboard.js') }}?v=@php echo date('his'); @endphp"></script>
+    <script src="{{ asset('assets/components/js/todolist.js') }}?v=@php echo date('his'); @endphp"></script>
     <!-- End custom js for this page -->
 
     <!-- inputmask:js -->
-    <script src="{{ asset('assets/components/js/jquery.inputmask.min.js') }}"></script>
+    <script src="{{ asset('assets/components/js/jquery.inputmask.min.js') }}?v=@php echo date('his'); @endphp"></script>
 
     <!-- summernote:css-js -->
-    <link href="{{ asset('assets/components/css/summernote-bs4.min.css') }}" rel="stylesheet">
-    <script src="{{ asset('assets/components/js/summernote-bs4.min.js') }}"></script>
+    <link href="{{ asset('assets/components/css/summernote-bs4.min.css') }}?v=@php echo date('his'); @endphp" rel="stylesheet">
+    <script src="{{ asset('assets/components/js/summernote-bs4.min.js') }}?v=@php echo date('his'); @endphp"></script>
 
     <!-- select2:js -->
-    <script src="{{ asset('assets/components/js/select2.min.js') }}"></script>
+    <script src="{{ asset('assets/components/js/select2.min.js') }}?v=@php echo date('his'); @endphp"></script>
 
     <!-- datatables:js -->
-    <script src="{{ asset('assets/components/js/datatables.min.js') }}"></script>
+    <script src="{{ asset('assets/components/js/datatables.min.js') }}?v=@php echo date('his'); @endphp"></script>
 
     <!-- toastr:js -->
-    <script src="{{ asset('assets/components/js/toastr.min.js') }}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bs-custom-file-input/1.3.4/bs-custom-file-input.min.js"></script>
+    <script src="{{ asset('assets/components/js/toastr.min.js') }}?v=@php echo date('his'); @endphp"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bs-custom-file-input/1.3.4/bs-custom-file-input.min.js?v=@php echo date('his'); @endphp"></script>
 
     <script>
         dados1 = {};
@@ -347,6 +349,28 @@
         var route = window.location.pathname;
 
 
+        /** Novo ID para o perfil Administrador */
+        $("#novo_id").on('change', function() {
+
+            novo_id = $(this).val();
+
+            $.ajax({
+                type: 'POST',
+                url: "{{ route('atualizar.obra') }}",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    novo_id: novo_id
+                },
+                success: function(result) {
+
+                    $('.toastrDefaultSuccess').ready(function() {
+                        toastr.success('Você fez login em outra obra!')
+                    });
+
+                    window.location.href = route;
+                }
+            })
+        });
 
 
         $(document).ready(function() {
@@ -390,6 +414,21 @@
 
         $(".select2").select2();
 
+
+        $(".ItemsRetirada").on('click', function() {
+            let id_retirada = $(this).attr('data-id_retirada');
+
+
+            $.ajax({
+                type: 'GET',
+                url: BASE_URL + '/ferramental/retirada/items/' + id_retirada,
+                data: {},
+                success: function(result) {
+                    $(".modal-title").html('Itens da Retirada #' + id_retirada)
+                    $(".modal-body").html(result)
+                }
+            });
+        });
 
         $("#gerar_termo").on('click', function() {
 
@@ -506,42 +545,7 @@
             }
         })
 
-        // $(".cep").on('keyup', function() {
 
-        //     //Nova variável "cep" somente com dígitos.
-        //     var cep = $("#cep").val().replace(/\D/g, '');
-
-        //     //Verifica se campo cep possui valor informado.
-        //     if (cep != "") {
-
-        //         //Expressão regular para validar o CEP.
-        //         var validacep = /^[0-9]{8}$/;
-
-        //         //Valida o formato do CEP.
-        //         if (validacep.test(cep)) {
-
-        //             //Consulta o webservice viacep.com.br/
-        //             $.getJSON("//viacep.com.br/ws/" + cep + "/json/?callback=?", function(
-        //                 dados) {
-
-        //                 if (!("erro" in dados)) {
-        //                     //Atualiza os campos com os valores da consulta.
-        //                     $("#endereco").val(dados.logradouro);
-        //                     $("#bairro").val(dados.bairro);
-        //                     $("#cidade").val(dados.localidade);
-        //                     $("#estado").val(dados.uf);
-        //                 } //end if.
-        //                 else {
-        //                     //CEP pesquisado não foi encontrado.
-        //                     console.log("CEP não encontrado.");
-        //                 }
-        //             });
-        //         } //end if.
-        //         else {
-        //             console.log("Formato de CEP inválido.");
-        //         }
-        //     } //end if.
-        // });
 
         $(document).on('blur', '#cep', function() {
             const cep = $(this).val();
@@ -581,27 +585,27 @@
         });
 
 
-        $(".selecionar_obra").on('change', function() {
-            let id_obra = $(this).val();
+        // $(".selecionar_obra").on('change', function() {
+        //     let id_obra = $(this).val();
 
-            console.log('Selecionando Obra')
+        //     console.log('Selecionando Obra')
 
-            $.ajax({
-                    url: "{{ route('api.selecionar_obra') }}",
-                    type: 'post',
-                    data: {
-                        "_token": "{{ csrf_token() }}",
-                        id_obra: id_obra,
-                        route: route
-                    }
-                })
-                .done(function(msg) {
-                    window.location.href = route;
-                })
-                .fail(function(jqXHR, textStatus, msg) {
-                    alert(msg);
-                });
-        })
+        //     $.ajax({
+        //             url: "{{ route('api.selecionar_obra') }}",
+        //             type: 'post',
+        //             data: {
+        //                 "_token": "{{ csrf_token() }}",
+        //                 id_obra: id_obra,
+        //                 route: route
+        //             }
+        //         })
+        //         .done(function(msg) {
+        //             window.location.href = route;
+        //         })
+        //         .fail(function(jqXHR, textStatus, msg) {
+        //             alert(msg);
+        //         });
+        // })
 
         $('.summernote').summernote({
             height: 400
@@ -881,13 +885,15 @@
         // EXIBIÇÃO DOS ALERTAS
         @if (Session::get('fail'))
             $('.toastrDefaultError').ready(function() {
-                toastr.error('{{ Session::get('fail') }}')
+                toastr.error('{{ Session::get('
+                                fail ') }}')
             });
         @endif
 
         @if (Session::get('success'))
             $('.toastrDefaultSuccess').ready(function() {
-                toastr.success('{{ Session::get('success') }}')
+                toastr.success('{{ Session::get('
+                                success ') }}')
             });
         @endif
 
@@ -900,7 +906,7 @@
 
                 $.ajax({
                     type: 'POST',
-                    url: '{{ route('ativo.interno.marcas.ajax') }}',
+                    url: "{{ route('ativo.interno.marcas.ajax') }}",
                     dataType: 'json',
                     data: {
                         '_token': _token,

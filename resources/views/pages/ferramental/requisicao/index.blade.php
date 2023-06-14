@@ -48,7 +48,7 @@
                                 <tr>
                                     <td class="text-center align-middle"><span class="badge badge-dark">{{ $requisicao->id }}</span></td>
                                     <td class="align-middle">{{ $requisicao->solicitante->name }}</td>
-                                    <td class="align-middle">{{ $requisicao->obraDestino->razao_social }}</td>
+                                    <td class="align-middle"><span class="badge badge-danger">{{ $requisicao->obraDestino->codigo_obra }}</span></td>
                                     <td class="align-middle">{{ Tratamento::datetimeBR($requisicao->created_at) }}</td>
                                     <td class="align-middle">{{ Tratamento::datetimeBR($requisicao->data_liberacao) }}</td>
                                     <td class="align-middle"><span class="badge badge-{{ $requisicao->situacao->classe }}">{{ $requisicao->situacao->titulo }}</span></td>
@@ -61,28 +61,18 @@
                                                 @if ($requisicao->status > 1 and $requisicao->status < 4)
                                                     <li><a class="dropdown-item" href="{{ route('ferramental.requisicao.show', $requisicao->id) }}"><i class="mdi mdi-file-pdf-box"></i> Gerar Romaneio</a></li>
                                                 @endif
-                                                {{-- @php
-                                                    $obra = session()->get('obra')->id ?? session()->get('obra')['id'];
-                                                @endphp
-                                                @if ($requisicao->status == 5 && isset($obra))
-                                                    <li><a class="dropdown-item" href="{{ route('ferramental.requisicao.romaneio.obra', [$requisicao->id, $obra]) }}"><i class="mdi mdi-file-pdf-box"></i> Ver Romaneio</a></li>
-                                                @endif --}}
-
-                                                @if ($requisicao->status == 5)
-                                                    <li><a class="dropdown-item" href="{{ route('ferramental.requisicao.romaneio.geral', $requisicao->id) }}" target="_blank"><i class="mdi mdi-file-pdf-box"></i> Ver Romaneio</a></li>
-                                                @endif
                                                 <li><a class="dropdown-item" href="{{ route('ferramental.requisicao.show', $requisicao->id) }}"><i class="mdi mdi-file-document-outline"></i> Detalhes</a></li>
 
                                             </ul>
                                         </div>
                                         {{--
                                         <form action="{{ route('ativo.interno.destroy', $requisicao->id) }}" method="POST">
-                                            @csrf
-                                            @method('delete')
-                                            <button class="badge badge-danger" data-toggle="tooltip" data-placement="top" type="submit" title="Excluir">
-                                                <i class="mdi mdi-delete"></i> Excluir
-                                            </button>
-                                        </form> --}}
+                                @csrf
+                                @method('delete')
+                                <button class="badge badge-danger" data-toggle="tooltip" data-placement="top" type="submit" title="Excluir">
+                                    <i class="mdi mdi-delete"></i> Excluir
+                                </button>
+                                </form> --}}
                                     </td>
                                 </tr>
                             @endforeach

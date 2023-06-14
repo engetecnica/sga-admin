@@ -16,13 +16,14 @@ use Illuminate\Support\Facades\Log;
 
 use App\Traits\Configuracao;
 
+use Session;
+
 class AtivoInternoController extends Controller
 {
 
     public function index()
     {
-        $ativos = AtivosInterno::orderByDesc('id')->get();
-
+        $ativos = AtivosInterno::whereOr('id_obra', Session::get('obra')['id'])->orderByDesc('id')->get();
         return view('pages.ativos.internos.index', compact('ativos'));
     }
 

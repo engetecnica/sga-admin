@@ -93,11 +93,14 @@ class FerramentalRetirada extends Model
                 ->select(
                     'ativos_ferramental_retirada_item.*',
                     'ativos_externos_estoque.patrimonio as item_codigo_patrimonio',
-                    'ativos_externos.titulo as item_nome'
+                'ativos_externos.titulo as item_nome',
+                'ativos_ferramental_status.titulo as status_item',
+                'ativos_ferramental_status.classe as status_classe'
                 )
 
                 ->join("ativos_externos_estoque", "ativos_externos_estoque.id", "=", "ativos_ferramental_retirada_item.id_ativo_externo")
                 ->join("ativos_externos", "ativos_externos.id", "=", "ativos_externos_estoque.id_ativo_externo")
+                ->join("ativos_ferramental_status", "ativos_ferramental_status.id", "=", "ativos_ferramental_retirada_item.id")
                 ->where('ativos_ferramental_retirada_item.id_retirada', $id)
                 ->get();
 

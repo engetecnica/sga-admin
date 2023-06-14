@@ -59,6 +59,7 @@ use App\Http\Controllers\VeiculoSeguroController;
 use App\Http\Controllers\AtivoInternoController;
 use App\Http\Controllers\ConfigController;
 use App\Http\Controllers\FuncaoFuncionarioController;
+use App\Models\CadastroObra;
 
 /*
 |--------------------------------------------------------------------------
@@ -85,13 +86,9 @@ Route::get('admin/signout',                                       [CustomAuthCon
 /* Grupo de Rotas Autenticadas */
 Route::group(['middleware' => 'auth'], function () {
 
-    Route::post('/atualizar-obra', function (Illuminate\Http\Request $request) {
-        $novoId = intval($request->input('novo_id'));
-        $obra = session('obra', []);
-        $obra['id'] = $novoId;
-        session(['obra' => $obra]);
-        return redirect('/'); // Redirecionar para a página inicial ou qualquer outra página desejada
-    });
+    /** Atualizar obra ID */
+    Route::post('/atualizar-obra', [CustomAuthController::class, 'atualizar_obra'])->name('atualizar.obra');
+
 
     /* Configurações - Dashboard */
     Route::get('admin/configuracao', [ConfigController::class, 'edit'])->name('config.edit');
@@ -321,6 +318,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('admin/ferramental/retirada/detalhes/{id}', [FerramentalRetiradaController::class, 'show'])->name('ferramental.retirada.detalhes');
     Route::get('admin/ferramental/retirada/termo/{id}', [FerramentalRetiradaController::class, 'termo'])->name('ferramental.retirada.termo');
     Route::get('admin/ferramental/retirada/termo_assinar/{id}', [FerramentalRetiradaController::class, 'termo_assinar'])->name('ferramental.retirada.termo_assinar');
+    Route::get('admin/ferramental/retirada/items/{id}', [FerramentalRetiradaController::class, 'items'])->name('ferramental.retirada.items');
     Route::get('admin/ferramental/retirada/lista', [FerramentalRetiradaController::class, 'lista'])->name('ferramental.retirada.lista');
     Route::get('admin/ferramental/retirada/devolver/{id}', [FerramentalRetiradaController::class, 'devolver'])->name('ferramental.retirada.devolver');
     Route::post('admin/ferramental/retirada/salvar', [FerramentalRetiradaController::class, 'devolver_salvar'])->name('ferramental.retirada.devolver.salvar');

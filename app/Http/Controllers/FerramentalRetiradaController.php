@@ -38,10 +38,13 @@ use PDF;
 
 //Notification mail
 use App\Notifications\NotificaRetirada;
+
 //Notification telegram
 use App\Notifications\NotificaRetiradaTelegram;
 use Illuminate\Support\Facades\Notification;
 use Yajra\DataTables\DataTables;
+
+use Session;
 
 class FerramentalRetiradaController extends Controller
 {
@@ -55,13 +58,19 @@ class FerramentalRetiradaController extends Controller
 
     public function create()
     {
-        $obras = CadastroObra::where('status', 'Ativo')->get();
 
-        $funcionarios = CadastroFuncionario::where('status', 'Ativo')->get();
-
-        $estoques = AtivoExternoEstoque::with('ativo_externo', 'obra', 'situacao')->where('status', 4)->get();
-
+        if (Session::get('obra')['id']) {
+            $obras = CadastroObra::where('id', Session::get('obra')['id'])->where('status', 'Ativo')->get();
+            $funcionarios = CadastroFuncionario::where('id_obra', Session::get('obra')['id'])->where('status', 'Ativo')->get();
+            $estoques = AtivoExternoEstoque::where('id_obra', Session::get('obra')['id'])->with('ativo_externo', 'obra', 'situacao')->where('status', 4)->get();
+        } else {
+            $obras = CadastroObra::where('status', 'Ativo')->get();
+            $funcionarios = CadastroFuncionario::where('status', 'Ativo')->get();
+            $estoques = AtivoExternoEstoque::with('ativo_externo', 'obra', 'situacao')->where('status', 4)->get();
+        }
+        
         $empresas = CadastroEmpresa::where('status', 'Ativo')->get();
+
 
         return view('pages.ferramental.retirada.form', compact('funcionarios', 'estoques', 'obras', 'empresas'));
     }
@@ -127,6 +136,20 @@ class FerramentalRetiradaController extends Controller
         } else {
             return redirect()->route('ferramental.retirada')->with('error', 'Não foi possível registrar sua solicitação, entre em contato com suporte.');
         }
+    }
+
+    public function items(int $id)
+    {
+        if (!$id) {
+            return redirect()->route('ferramental.retirada')->with('fail', 'Não foi possível localizar esta Retirada.');
+        }
+        $detalhes = FerramentalRetirada::getRetiradaItems($id);
+
+        if (!$detalhes) {
+            return redirect()->route('ferramental.retirada')->with('fail', 'Não foi possível localizar esta Retirada.');
+        }
+
+        return view('pages.ferramental.retirada.items', compact('detalhes'));
     }
 
     public function show(int $id)
@@ -289,68 +312,68 @@ class FerramentalRetiradaController extends Controller
      * Listagem de Retiradas
      * Via service-side
      */
-    public function lista(Request $request)
-    {
-        if ($request->ajax()) {
+    // public function lista(Request $request)
+    // {
+    //     if ($request->ajax()) {
 
-            $listaRetirada = FerramentalRetirada::getRetirada();
+    //         $listaRetirada = FerramentalRetirada::getRetirada();
 
-            return DataTables::of($listaRetirada)
+    //         return DataTables::of($listaRetirada)
 
-                ->editColumn('created_at', function ($row) {
-                    return ($row->created_at) ? Tratamento::FormatarData($row->created_at) : '-';
-                })
-                ->editColumn('devolucao', function ($row) {
-                    return ($row->data_devolucao_prevista) ? Tratamento::FormatarData($row->data_devolucao_prevista) : '-';
-                })
-                ->editColumn('status', function ($row) {
-                    $status_classe = Tratamento::getStatusRetirada($row->status)['classe'];
-                    $status_titulo = Tratamento::getStatusRetirada($row->status)['titulo'];
-                    $status = "<div class='badge badge-" . $status_classe . "'>" . $status_titulo . "</div>";
-                    return $status;
-                })
-                ->editColumn('acoes', function ($row) {
+    //             ->editColumn('created_at', function ($row) {
+    //                 return ($row->created_at) ? Tratamento::FormatarData($row->created_at) : '-';
+    //             })
+    //             ->editColumn('devolucao', function ($row) {
+    //                 return ($row->data_devolucao_prevista) ? Tratamento::FormatarData($row->data_devolucao_prevista) : '-';
+    //             })
+    //             ->editColumn('status', function ($row) {
+    //                 $status_classe = Tratamento::getStatusRetirada($row->status)['classe'];
+    //                 $status_titulo = Tratamento::getStatusRetirada($row->status)['titulo'];
+    //                 $status = "<div class='badge badge-" . $status_classe . "'>" . $status_titulo . "</div>";
+    //                 return $status;
+    //             })
+    //             ->editColumn('acoes', function ($row) {
 
-                    $dropdown = '<div class="dropdown"><div class="btn-group"><button class="btn btn-gradient-danger btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Selecione</button><ul class="dropdown-menu" aria-labelledby="drodownAcoes">';
+    //                 $dropdown = '<div class="dropdown"><div class="btn-group"><button class="btn btn-gradient-danger btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Selecione</button><ul class="dropdown-menu" aria-labelledby="drodownAcoes">';
 
-                    /** Devolver Itens */
-                    if ($row->status == "2" || $row->status == "5" && $row->termo_responsabilidade_gerado) {
-                        $dropdown .= '<li><a class="dropdown-item" href="' . route('ferramental.retirada.devolver', $row->id) . '"><i class="mdi mdi-redo-variant"></i> Devolver Itens</a></li>';
-                    }
+    //                 /** Devolver Itens */
+    //                 if ($row->status == "2" || $row->status == "5" && $row->termo_responsabilidade_gerado) {
+    //                     $dropdown .= '<li><a class="dropdown-item" href="' . route('ferramental.retirada.devolver', $row->id) . '"><i class="mdi mdi-redo-variant"></i> Devolver Itens</a></li>';
+    //                 }
 
-                    /** Gerar Termo */
-                if ($row->status == "1" && !$row->termo_responsabilidade_gerado) {
-                        $dropdown .= '<li><a class="dropdown-item" href="' . route('ferramental.retirada.termo', $row->id) . '"><i class="mdi mdi-access-point-network"></i> Gerar Termo</a></li>';
-                    }
+    //                 /** Gerar Termo */
+    //             if ($row->status == "1" && !$row->termo_responsabilidade_gerado) {
+    //                     $dropdown .= '<li><a class="dropdown-item" href="' . route('ferramental.retirada.termo', $row->id) . '"><i class="mdi mdi-access-point-network"></i> Gerar Termo</a></li>';
+    //                 }
 
-                    /** Baixar Termo */
-                if ($row->status == "2" or $row->status == "3" && $row->termo_responsabilidade_gerado) {
-                        $dropdown .= '<li><a class="dropdown-item" href="' . route('ferramental.retirada.termo', $row->id) . '"><i class="mdi mdi-download"></i> Baixar Termo</a></li>';
-                    }
+    //                 /** Baixar Termo */
+    //             if ($row->status == "2" or $row->status == "3" && $row->termo_responsabilidade_gerado) {
+    //                     $dropdown .= '<li><a class="dropdown-item" href="' . route('ferramental.retirada.termo', $row->id) . '"><i class="mdi mdi-download"></i> Baixar Termo</a></li>';
+    //                 }
 
-                if ($row->status == "1" && !$row->termo_responsabilidade_gerado) {
+    //             if ($row->status == "1" && !$row->termo_responsabilidade_gerado) {
 
-                    /** Modificar Retirada */
-                    $dropdown .= '<li><a class="dropdown-item" href="' . route('ferramental.retirada.editar', $row->id) . '"><i class="mdi mdi-pencil"></i> Modificar Retirada</a></li>';
+    //                 /** Modificar Retirada */
+    //                 $dropdown .= '<li><a class="dropdown-item" href="' . route('ferramental.retirada.editar', $row->id) . '"><i class="mdi mdi-pencil"></i> Modificar Retirada</a></li>';
 
-                    /** Cancelar Retirada */
-                    $dropdown .= '<li><form action="' . route('ferramental.retirada.destroy', $row->id) . '" method="POST">'.csrf_field().'<input type="hidden" name="_method" value="DELETE"><button type="submit" class="dropdown-item" onclick="return confirm(\'Deseja realmente cancelar a retirada?\')"><i class="mdi mdi-cancel"></i> Cancelar Retirada</button></form></li>';
+    //                 /** Cancelar Retirada */
+    //                 $dropdown .= '<li><form action="' . route('ferramental.retirada.destroy', $row->id) . '" method="POST">'.csrf_field().'<input type="hidden" name="_method" value="DELETE"><button type="submit" class="dropdown-item" onclick="return confirm(\'Deseja realmente cancelar a retirada?\')"><i class="mdi mdi-cancel"></i> Cancelar Retirada</button></form></li>';
 
-                }
+    //             }
 
-                    $dropdown .= '<li><a class="dropdown-item" href="' . route('ferramental.retirada.detalhes', $row->id) . '"><i class="mdi mdi-minus"></i> Detalhes</a></li> ';
+    //                 $dropdown .= '<li><a class="dropdown-item" href="' . route('ferramental.retirada.detalhes', $row->id) . '"><i class="mdi mdi-minus"></i> Detalhes</a></li> ';
 
-                    /** Ver Termo */
-                if ($row->status == "3" or $row->status == "4" && $row->termo_responsabilidade_gerado) {
-                    $dropdown .= '<li><a class="dropdown-item" href="' . route('ferramental.retirada.termo', $row->id) . '"><i class="mdi mdi-printer"></i> Ver Termo</a></li></ul></div>';
-                }
+    //                 /** Ver Termo */
+    //             if ($row->status == "3" or $row->status == "4" && $row->termo_responsabilidade_gerado) {
+    //                 $dropdown .= '<li><a class="dropdown-item" href="' . route('ferramental.retirada.termo', $row->id) . '"><i class="mdi mdi-printer"></i> Ver Termo</a></li></ul></div>';
+    //             }
 
-                    return $dropdown;
-                })
-                ->rawColumns(['acoes', 'status'])
-                ->make(true);
-        }
-    }
+    //                 return $dropdown;
+    //             })
+    //             ->rawColumns(['acoes', 'status'])
+    //             ->make(true);
+    //     }
+    // }
 
     /**
      * Devolver Itens
@@ -378,8 +401,7 @@ class FerramentalRetiradaController extends Controller
      */
 
     public function devolver_salvar(Request $request)
-    {
-
+    {       
 
         if ($request->id_ativo_externo) {
 
@@ -400,7 +422,7 @@ class FerramentalRetiradaController extends Controller
 
                 /** Salvar Ativo Externo */
                 $estoque = AtivoExternoEstoque::find($item->id_ativo_externo);
-                $estoque->status = $value;
+                $estoque->status = 4; // em estoque
                 $estoque->save();
             }
 

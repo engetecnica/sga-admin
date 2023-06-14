@@ -68,7 +68,7 @@ class FerramentalRetiradaController extends Controller
             $funcionarios = CadastroFuncionario::where('status', 'Ativo')->get();
             $estoques = AtivoExternoEstoque::with('ativo_externo', 'obra', 'situacao')->where('status', 4)->get();
         }
-        
+
         $empresas = CadastroEmpresa::where('status', 'Ativo')->get();
 
 
@@ -126,11 +126,11 @@ class FerramentalRetiradaController extends Controller
             // $email_config = Config::where('id', 1)->first();
             // $email_config->notify(new NotificaRetirada($email_config->email));
 
-            //Notificação por telegram no canal registrado (API depende de https)
-            // if (env('APP_ENV') === 'production') {
-            //     Notification::route('telegram', env('TELEGRAM_CHAT_ID'))
-            //         ->notify(new NotificaRetiradaTelegram($email_config->email));
-            // }
+            // Notificação por telegram no canal registrado (API depende de https)
+            if (env('APP_ENV') === 'development') {
+                Notification::route('telegram', env('TELEGRAM_CHAT_ID'))
+                    ->notify(new NotificaRetiradaTelegram('atendimento@codigosdigitais.com.br'));//$email_config->email
+            }
 
             return redirect()->route('ferramental.retirada.detalhes', $id_retirada)->with('success', 'Sua retirada foi registrada com sucesso!');
         } else {
@@ -401,7 +401,7 @@ class FerramentalRetiradaController extends Controller
      */
 
     public function devolver_salvar(Request $request)
-    {       
+    {
 
         if ($request->id_ativo_externo) {
 

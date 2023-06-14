@@ -63,10 +63,10 @@ $method = 'put';
         <div class="col-lg-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
-                    <table class="table-striped table">
+                    <table class="table-striped table table-bordered">
                         <tr>
-                            <th>ID Requisição</th>
-                            <th>Solicitação</th>
+                            <th width="15%">ID Requisição</th>
+                            <th width="25%">Solicitação</th>
                             <th>Liberação</th>
                             <th>Status</th>
                             <th style="width: 100px">Ações</th>
@@ -80,10 +80,10 @@ $method = 'put';
                         </tr>
                     </table>
 
-                    <table class="table-striped mt-5 table">
+                    <table class="table-striped mt-5 table table-bordered">
                         <tr>
-                            <th>Solicitante</th>
-                            <th>Despachante</th>
+                            <th width="15%">Solicitante</th>
+                            <th width="25%">Despachante</th>
                             <th>Obra Destino</th>
                         </tr>
                         <tr>
@@ -93,31 +93,31 @@ $method = 'put';
                         </tr>
                     </table>
 
-                    <table class="table-striped mt-5 table">
+                    <table class="table-striped mt-5 table table-bordered">
                         <tr>
-                            <th>Solicitado</th>
-                            <th>Liberado</th>
-                            <th>Transferido</th>
+                            <th width="15%">Solicitado</th>
+                            <th width="25%">Liberado</th>
+                            <th width="15%">Transferido</th>
                             <th>Recebido</th>
                         </tr>
                         <tr>
                             <td>{{ Tratamento::datetimeBR($ferramentalRequisicao->created_at) }}</td>
                             <td>{{ Tratamento::datetimeBR($ferramentalRequisicao->data_liberacao) ?? null }}</td>
-                            <td></td>
-                            <td></td>
+                            <td>-</td>
+                            <td>-</td>
                         </tr>
                     </table>
                     @if ($ferramentalRequisicao->status == 1)
                     <table class="table-striped table-bordered mt-5 table">
                         <tr>
-                            <th>Item</th>
-                            <th>Estoque</th>
+                            <th width="15%">Item</th>
+                            <th width="25%">Estoque</th>
                             <th>Qtde. Solicitada</th>
                             @if ($ferramentalRequisicao->status > 1)
                             <th>Qtde. Liberada</th>
                             <th>Defeito?</th>
                             @endif
-                            <th style="with:10%">Situação</th>
+                            <th style="width:10.7%">Situação</th>
                             @if ($ferramentalRequisicao->status > 1)
                             <th>Opções</th>
                             @endif

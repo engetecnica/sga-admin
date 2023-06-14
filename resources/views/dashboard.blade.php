@@ -414,6 +414,21 @@
         $(".select2").select2();
 
 
+        $(".ItemsRetirada").on('click', function() {
+            let id_retirada = $(this).attr('data-id_retirada');
+
+
+            $.ajax({
+                type: 'GET',
+                url: BASE_URL + '/ferramental/retirada/items/' + id_retirada,
+                data: {},
+                success: function(result) {
+                    $(".modal-title").html('Itens da Retirada #' + id_retirada)
+                    $(".modal-body").html(result)
+                }
+            });
+        });
+
         $("#gerar_termo").on('click', function() {
 
             $("#gerarTermoModal").show('fade');
@@ -867,15 +882,13 @@
 
 
         // EXIBIÇÃO DOS ALERTAS
-        @if(Session::get('fail'))
-        $('.toastrDefaultError').ready(function() {
+        @if(Session::get('fail')) $('.toastrDefaultError').ready(function() {
             toastr.error('{{ Session::get('
                 fail ') }}')
         });
         @endif
 
-        @if(Session::get('success'))
-        $('.toastrDefaultSuccess').ready(function() {
+        @if(Session::get('success')) $('.toastrDefaultSuccess').ready(function() {
             toastr.success('{{ Session::get('
                 success ') }}')
         });

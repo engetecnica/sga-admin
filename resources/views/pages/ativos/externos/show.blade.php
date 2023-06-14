@@ -67,7 +67,7 @@
                         <div class="card-body">
                             <h4 class="card-title">Itens pertencentes ao Estoque</h4>
                             <hr>
-                            <table class="table-hover table-striped yajra-datatable table pt-4">
+                            <table class="table-hover table-striped yajra-datatable table pt-4" id="tabela">
                                 <thead class="table-dark">
                                     <tr>
                                         <th>#</th>

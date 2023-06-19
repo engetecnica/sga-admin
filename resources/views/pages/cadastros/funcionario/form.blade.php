@@ -76,7 +76,7 @@
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label" for="id_funcao">Função</label> <a class="badge badge-success ml-3 text-white" data-toggle="modal" data-target="#modal-funcao" style="cursor: pointer;">Inclusão rápida de Função</a>
-                                <select class="form-select" name="id_funcao" required>
+                                <select class="form-select" id="id_funcao" name="id_funcao" required>
                                     <option value="">Selecione uma Função</option>
                                     @if (url()->current() == route('cadastro.funcionario.adicionar'))
                                         @foreach ($funcoes as $funcao)

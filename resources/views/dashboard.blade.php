@@ -255,7 +255,7 @@
                                         @foreach ($module['submodulo'] as $sub)
                                             <?php
                                             $item = env('URL_APP_ADMIN') . Request::segment(2) . '/' . Request::segment(3);
-                                            
+
                                             ?>
                                             <li class="nav-item"> <a class="nav-link {{ $item === $sub['url_amigavel'] ? 'active-submodulo' : '' }}" href="{{ url($sub['url_amigavel']) }}">{{ $sub['titulo'] }}</a>
                                             </li>
@@ -886,14 +886,14 @@
         @if (Session::get('fail'))
             $('.toastrDefaultError').ready(function() {
                 toastr.error('{{ Session::get('
-                                fail ') }}')
+                                                                                                                                                                                fail ') }}')
             });
         @endif
 
         @if (Session::get('success'))
             $('.toastrDefaultSuccess').ready(function() {
                 toastr.success('{{ Session::get('
-                                success ') }}')
+                                                                                                                                                                                success ') }}')
             });
         @endif
 
@@ -963,6 +963,33 @@
                         $('#modal-servicos').hide();
                         $('.modal-backdrop').hide();
                         $('#servicos-form').trigger("reset");
+                    }
+                });
+            });
+
+            $(document).on('submit', '#funcao-form', function(e) {
+                e.preventDefault();
+                var funcao = $("#funcao_modal").val();
+                var codigo = $("#codigo_modal").val();
+                var _token = $("#_token_modal").val();
+
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ route('cadastro.funcionario.funcoes.ajax') }}',
+                    dataType: 'json',
+                    data: {
+                        '_token': _token,
+                        'funcao': funcao,
+                        'codigo': codigo
+                    },
+                    success: function(response) {
+                        var funcao_id = response.funcao_id;
+                        var funcao = response.funcao;
+                        var codigo = response.codigo;
+                        $('#id_funcao').append('<option value="' + funcao_id + '" selected="selected">' + codigo + ' | ' + funcao + '</option>');
+                        $('#modal-funcao').hide();
+                        $('.modal-backdrop').hide();
+                        $('#funcao-form').trigger("reset");
                     }
                 });
             });

@@ -186,7 +186,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('admin/cadastro/funcionario/funcoes/update/{id}', [FuncaoFuncionarioController::class, 'update'])->name('cadastro.funcionario.funcoes.update');
     Route::delete('admin/cadastro/funcionario/funcoes/{funcao}', [FuncaoFuncionarioController::class, 'destroy'])->name('cadastro.funcionario.funcoes.destroy');
     Route::post('admin/cadastro/funcionario', [FuncaoFuncionarioController::class, 'fastStore'])->name('cadastro.funcoes.fast.store');
-
+    Route::post('admin/cadastro/funcionario/funcao/ajax', [FuncaoFuncionarioController::class, 'storeFuncao'])->name('cadastro.funcionario.funcoes.ajax');
 
     /* Ativo - Configuração */
     Route::get('admin/ativo', [AtivoConfiguracaoController::class, 'index'])->name('ativo');

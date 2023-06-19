@@ -2,11 +2,11 @@
 
 namespace App\Helpers;
 
-use App\Models\CadastroFornecedor;
 use App\Models\CadastroObra;
 use App\Models\FerramentalRequisicaoTransito;
 use App\Models\FerramentalRetirada;
 use App\Models\Preventiva;
+
 use Carbon\Carbon;
 class Tarefa
 {
@@ -20,18 +20,47 @@ class Tarefa
         return CadastroObra::where('nome_fantasia', null)->orderByDesc('id')->limit(10)->get();
     }
 
-    public static function funcionariosBloqueados()
+    public static function funcionariosBloqueados($obra)
+    {
+        $now = Carbon::now();
+        if(is_int($obra) && $obra > 0) {
+            $bloqueio = FerramentalRetirada::with('funcionario')
+            ->where('data_devolucao_prevista', '<', $now->format('Y-m-d H:i:s'))
+            ->where('status', [2,5])
+            ->where('id_obra', $obra)
+            ->orderByDesc('id')
+            ->limit(10)
+            ->get();
+        } else {
+            $bloqueio = FerramentalRetirada::with('funcionario')
+            ->where('data_devolucao_prevista', '<', $now->format('Y-m-d H:i:s'))
+            ->where('status', [2,5])
+            ->orderByDesc('id')
+            ->limit(10)
+            ->get();
+        }
+
+        return $bloqueio;
+    }
+
+    public static function funcionariosBloqueadosRetirada($funcionario)
     {
         $now = Carbon::now();
 
         $bloqueio = FerramentalRetirada::with('funcionario')
+        ->where('id_funcionario', $funcionario)
         ->where('data_devolucao_prevista', '<', $now->format('Y-m-d H:i:s'))
         ->where('status', [2,5])
-        ->orderByDesc('id')
-        ->limit(10)
         ->get();
 
-        return $bloqueio;
+        return count($bloqueio);
+
+        // if (count($bloqueio) > 0) {
+        //     return count($bloqueio);
+        // } else {
+        //     return count($bloqueio);
+        // }
+
     }
 
     public static function preventivas()

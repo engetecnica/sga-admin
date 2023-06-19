@@ -22,7 +22,7 @@
                 <div class="col-sm-12">
                     <div class="d-flex align-items-center mb-3">
                         <h3 class="m-0 pr-2"></h3>
-                        {{-- @dd(session()->all()) --}}
+                        {{-- @dd(session('usuario_vinculo')->id_nivel) --}}
                     </div>
                 </div>
             </div>
@@ -179,9 +179,9 @@
         <div class="col-xl-6 col-sm-12 mb-4">
             <div class="card">
                 <div class="card-body">
-                    <h5>Funcionários bloqueados ({{ count(Tarefa::funcionariosBloqueados()) }}) <small>{{ $dataAtual }}</small></h5>
+                    <h5>Funcionários bloqueados ({{ count(Tarefa::funcionariosBloqueados(session()->get('obra')->id ?? session()->get('obra')['id'])) }}) <small>{{ $dataAtual }}</small></h5>
                     <table class="table-border table-responsive table">
-                        @foreach (Tarefa::funcionariosBloqueados() as $bloqueado)
+                        @foreach (Tarefa::funcionariosBloqueados(session()->get('obra')->id ?? session()->get('obra')['id']) as $bloqueado)
                             <tr>
                                 <td>
                                     <span class="badge badge-dark">{{ $bloqueado->funcionario->obra->codigo_obra }}</span> - <span class="badge badge-secondary">{{ $bloqueado->funcionario->matricula }}</span> - {{ $bloqueado->funcionario->nome }}

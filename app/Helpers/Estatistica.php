@@ -9,7 +9,6 @@ use App\Models\CadastroObra;
 use App\Models\User;
 
 use Carbon\Carbon;
-use Ramsey\Uuid\Type\Integer;
 
 class Estatistica
 {

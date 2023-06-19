@@ -20,6 +20,7 @@ use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\{
     Auth,
+    Session,
     Storage
 };
 
@@ -44,14 +45,16 @@ use App\Notifications\NotificaRetiradaTelegram;
 use Illuminate\Support\Facades\Notification;
 use Yajra\DataTables\DataTables;
 
-use Session;
-
 class FerramentalRetiradaController extends Controller
 {
 
     public function index()
     {
-        $retiradas = FerramentalRetirada::with('obra', 'usuario', 'funcionario', 'situacao')->get();
+        if (Session::get('obra')['id']) {
+            $retiradas = FerramentalRetirada::where('id_obra', Session::get('obra')['id'])->with('obra', 'usuario', 'funcionario', 'situacao')->get();
+        } else {
+            $retiradas = FerramentalRetirada::with('obra', 'usuario', 'funcionario', 'situacao')->get();
+        }
 
         return view('pages.ferramental.retirada.index', compact('retiradas'));
     }

@@ -19,6 +19,11 @@ use Illuminate\Support\Facades\Log;
 
 class VeiculoController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('access.level:3')->except('index');
+    }
+
     public function index()
     {
         $veiculos = Veiculo::with('quilometragens')->get();

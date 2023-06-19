@@ -20,6 +20,10 @@ use Session;
 
 class AtivoInternoController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('access.level:3')->except('index');
+    }
 
     public function index()
     {

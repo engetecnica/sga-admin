@@ -162,6 +162,7 @@ class FerramentalRetiradaController extends Controller
         }
 
         $detalhes = FerramentalRetirada::getRetiradaItems($id);
+        
 
         if (!$detalhes) {
             return redirect()->route('ferramental.retirada')->with('fail', 'Não foi possível localizar esta Retirada.');

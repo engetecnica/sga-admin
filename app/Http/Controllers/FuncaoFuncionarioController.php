@@ -88,4 +88,19 @@ class FuncaoFuncionarioController extends Controller
         }
 
     }
+
+    public function storeFuncao(Request $request)
+    {
+        $data = $request->all();
+        $save = FuncaoFuncionario::create($data);
+
+        $userLog = Auth::user()->email;
+        Log::channel('main')->info($userLog .' | ADD FUNCAO FUNCIONARIO: ' . $save->funcao);
+
+        if ($save) {
+            return response()->json(['success' => true, 'funcao_id' => $save->id, 'funcao' => $save->funcao, 'codigo' => $save->codigo]);
+        } else {
+            return response()->json(['fail' => true]);
+        }
+    }
 }

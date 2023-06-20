@@ -42,6 +42,7 @@ use App\Notifications\NotificaRetirada;
 
 //Notification telegram
 use App\Notifications\NotificaRetiradaTelegram;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Notification;
 use Yajra\DataTables\DataTables;
 
@@ -162,7 +163,7 @@ class FerramentalRetiradaController extends Controller
         }
 
         $detalhes = FerramentalRetirada::getRetiradaItems($id);
-        
+
 
         if (!$detalhes) {
             return redirect()->route('ferramental.retirada')->with('fail', 'Não foi possível localizar esta Retirada.');
@@ -443,5 +444,18 @@ class FerramentalRetiradaController extends Controller
 
             return redirect()->back()->with('success', 'Retirada salva com sucesso!');
         }
+    }
+
+    public function bloqueio($usuario)
+    {
+        $now = Carbon::now();
+
+        $bloqueio = FerramentalRetirada::with('funcionario')
+        ->where('id_funcionario', $usuario)
+        ->where('data_devolucao_prevista', '<', $now->format('Y-m-d H:i:s'))
+        ->where('status', [2,5])
+        ->count();
+
+        return response()->json(['quantidade' => $bloqueio]);
     }
 }

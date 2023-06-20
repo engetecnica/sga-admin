@@ -324,7 +324,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('admin/ferramental/retirada/salvar', [FerramentalRetiradaController::class, 'devolver_salvar'])->name('ferramental.retirada.devolver.salvar');
     Route::get('admin/ferramental/retirada/termo_download/{id}', [FerramentalRetiradaController::class, 'termo_download'])->name('ferramental.retirada.download');
     Route::delete('admin/ferramental/retirada/{id}/destroy', [FerramentalRetiradaController::class, 'destroy'])->name('ferramental.retirada.destroy');
-
+    Route::get('admin/ferramental/retirada/bloqueio/contagem/{usuario}', [FerramentalRetiradaController::class, 'bloqueio'])->name('ferramental.retirada.bloqueio');
     /* Ferramental - Requisição */
     Route::get('admin/ferramental/requisicao', [FerramentalRequisicaoController::class, 'index'])->name('ferramental.requisicao.index');
     Route::get('admin/ferramental/requisicao/adicionar', [FerramentalRequisicaoController::class, 'create'])->name('ferramental.requisicao.create');

@@ -1,0 +1,782 @@
+[
+    {
+        "codigo": "010",
+        "funcao": "MEMBROS DAS FOR\u00c7AS ARMADAS"
+    },
+    {
+        "codigo": "020",
+        "funcao": "OFICIAIS DE POL\u00cdCIA MILITAR"
+    },
+    {
+        "codigo": "021",
+        "funcao": "PRA\u00c7AS DE POL\u00cdCIA MILITAR"
+    },
+    {
+        "codigo": "030",
+        "funcao": "OFICIAIS DE BOMBEIRO MILITAR"
+    },
+    {
+        "codigo": "031",
+        "funcao": "PRA\u00c7AS DE BOMBEIRO MILITAR"
+    },
+    {
+        "codigo": "111",
+        "funcao": "MEMBROS SUPERIORES DO PODER LEGISLATIVO, EXECUTIVO E JUDICI\u00c1RIO"
+    },
+    {
+        "codigo": "113",
+        "funcao": "CHEFES DE PEQUENAS POPULA\u00c7\u00d5ES"
+    },
+    {
+        "codigo": "114",
+        "funcao": "DIRIGENTES E ADMINISTRADORES DE ORGANIZA\u00c7\u00c3O DE INTERESSE P\u00daBLICO"
+    },
+    {
+        "codigo": "121",
+        "funcao": "DIRETORES GERAIS"
+    },
+    {
+        "codigo": "122",
+        "funcao": "DIRETORES DE PRODU\u00c7\u00c3O E OPERA\u00c7\u00d5ES"
+    },
+    {
+        "codigo": "123",
+        "funcao": "DIRETORES DE \u00c1REAS DE APOIO"
+    },
+    {
+        "codigo": "131",
+        "funcao": "DIRETORES E GERENTES EM EMPRESA DE SERVI\u00c7OS DE SA\u00daDE, DE EDUCA\u00c7\u00c3O, OU DE SERVI\u00c7OS CULTURAIS, SOCIAIS OU PESSOAIS"
+    },
+    {
+        "codigo": "141",
+        "funcao": "GERENTES DE PRODU\u00c7\u00c3O E OPERA\u00c7\u00d5ES"
+    },
+    {
+        "codigo": "142",
+        "funcao": "GERENTES DE \u00c1REAS DE APOIO"
+    },
+    {
+        "codigo": "201",
+        "funcao": "PROFISSIONAIS DA BIOTECNOLOGIA E METROLOGIA"
+    },
+    {
+        "codigo": "202",
+        "funcao": "PROFISSIONAIS DA ELETROMEC\u00c2NICA"
+    },
+    {
+        "codigo": "203",
+        "funcao": "PESQUISADORES"
+    },
+    {
+        "codigo": "204",
+        "funcao": "PROFISSIONAIS DE INVESTIGA\u00c7\u00c3O CRIMINAL"
+    },
+    {
+        "codigo": "211",
+        "funcao": "MATEM\u00c1TICOS, ESTAT\u00cdSTICOS E AFINS"
+    },
+    {
+        "codigo": "212",
+        "funcao": "PROFISSIONAIS DA INFORM\u00c1TICA"
+    },
+    {
+        "codigo": "213",
+        "funcao": "F\u00cdSICOS, QU\u00cdMICOS E AFINS"
+    },
+    {
+        "codigo": "214",
+        "funcao": "ENGENHEIROS, ARQUITETOS E AFINS"
+    },
+    {
+        "codigo": "215",
+        "funcao": "PROFISSIONAIS EM NAVEGA\u00c7\u00c3O A\u00c9REA, MAR\u00cdTIMA E FLUVIAL"
+    },
+    {
+        "codigo": "221",
+        "funcao": "BI\u00d3LOGOS E AFINS"
+    },
+    {
+        "codigo": "222",
+        "funcao": "AGR\u00d4NOMOS E AFINS"
+    },
+    {
+        "codigo": "223",
+        "funcao": "PROFISSIONAIS DA MEDICINA, SA\u00daDE E AFINS"
+    },
+    {
+        "codigo": "224",
+        "funcao": "PROFISSIONAIS DA EDUCA\u00c7\u00c3O F\u00cdSICA"
+    },
+    {
+        "codigo": "225",
+        "funcao": "PROFISSIONAIS DA MEDICINA"
+    },
+    {
+        "codigo": "226",
+        "funcao": "PROFISSIONAIS DE SA\u00daDE EM PRATICAS INTEGRATIVAS E COMPLEMENTARES"
+    },
+    {
+        "codigo": "231",
+        "funcao": "PROFESSORES DE N\u00cdVEL SUPERIOR NA EDUCA\u00c7\u00c3O INFANTIL E NO ENSINO FUNDAMENTAL"
+    },
+    {
+        "codigo": "232",
+        "funcao": "PROFESSORES DO ENSINO M\u00c9DIO"
+    },
+    {
+        "codigo": "233",
+        "funcao": "PROFESSORES E INSTRUTORES DO ENSINO PROFISSIONAL"
+    },
+    {
+        "codigo": "234",
+        "funcao": "PROFESSORES DO ENSINO SUPERIOR"
+    },
+    {
+        "codigo": "239",
+        "funcao": "OUTROS PROFISSIONAIS DO ENSINO N\u00c3O CLASSIFICADOS ANTERIORMENTE"
+    },
+    {
+        "codigo": "241",
+        "funcao": "ADVOGADOS, PROCURADORES, TABELI\u00c3ES E AFINS"
+    },
+    {
+        "codigo": "242",
+        "funcao": "ADVOGADOS DO PODER JUDICI\u00c1RIO E DA SEGURAN\u00c7A P\u00daBLICA"
+    },
+    {
+        "codigo": "251",
+        "funcao": "CIENTISTAS SOCIAIS, PSIC\u00d3LOGOS E AFINS"
+    },
+    {
+        "codigo": "252",
+        "funcao": "PROFISSIONAIS DE ORGANIZA\u00c7\u00c3O E ADMINISTRA\u00c7\u00c3O DE EMPRESAS E AFINS"
+    },
+    {
+        "codigo": "253",
+        "funcao": "PROFISSIONAIS DE RELA\u00c7\u00d5ES P\u00daBLICAS, PUBLICIDADE, MARKETING E COMERCIALIZA\u00c7\u00c3O"
+    },
+    {
+        "codigo": "254",
+        "funcao": "AUDITORES FISCAIS P\u00daBLICOS"
+    },
+    {
+        "codigo": "261",
+        "funcao": "PROFISSIONAIS DA COMUNICA\u00c7\u00c3O E DA INFORMA\u00c7\u00c3O"
+    },
+    {
+        "codigo": "262",
+        "funcao": "PROFISSIONAIS DE ESPET\u00c1CULOS E DAS ARTES"
+    },
+    {
+        "codigo": "263",
+        "funcao": "MEMBROS DE CULTOS RELIGIOSOS E AFINS"
+    },
+    {
+        "codigo": "271",
+        "funcao": "PROFISSIONAIS EM GASTRONOMIA E SERVI\u00c7OS DE ALIMENTA\u00c7\u00c3O"
+    },
+    {
+        "codigo": "300",
+        "funcao": "T\u00c9CNICOS MECATR\u00d4NICOS E ELETROMEC\u00c2NICOS"
+    },
+    {
+        "codigo": "301",
+        "funcao": "T\u00c9CNICOS EM LABORAT\u00d3RIO"
+    },
+    {
+        "codigo": "311",
+        "funcao": "T\u00c9CNICO EM CI\u00caNCIAS F\u00cdSICAS E QU\u00cdMICAS"
+    },
+    {
+        "codigo": "312",
+        "funcao": "T\u00c9CNICOS EM CONSTRU\u00c7\u00c3O CIVIL, DE EDIFICA\u00c7\u00d5ES E OBRAS DE INFRAESTRUTURA"
+    },
+    {
+        "codigo": "313",
+        "funcao": "T\u00c9CNICOS EM ELETROELETR\u00d4NICA E FOT\u00d4NICA"
+    },
+    {
+        "codigo": "314",
+        "funcao": "T\u00c9CNICOS EM METALMEC\u00c2NICA"
+    },
+    {
+        "codigo": "316",
+        "funcao": "T\u00c9CNICOS EM MINERALOGIA E GEOLOGIA"
+    },
+    {
+        "codigo": "317",
+        "funcao": "T\u00c9CNICOS EM INFORM\u00c1TICA"
+    },
+    {
+        "codigo": "318",
+        "funcao": "DESENHISTAS T\u00c9CNICOS E MODELISTAS"
+    },
+    {
+        "codigo": "319",
+        "funcao": "OUTROS T\u00c9CNICOS DE N\u00cdVEL M\u00c9DIO DAS CI\u00caNCIAS F\u00cdSICAS, QU\u00cdMICAS, ENGENHARIA E AFINS"
+    },
+    {
+        "codigo": "320",
+        "funcao": "T\u00c9CNICOS EM BIOLOGIA"
+    },
+    {
+        "codigo": "321",
+        "funcao": "T\u00c9CNICOS DA PRODU\u00c7\u00c3O AGROPECU\u00c1RIA"
+    },
+    {
+        "codigo": "322",
+        "funcao": "T\u00c9CNICOS DA CI\u00caNCIA DA SA\u00daDE HUMANA"
+    },
+    {
+        "codigo": "323",
+        "funcao": "T\u00c9CNICOS DA CI\u00caNCIA DA SA\u00daDE ANIMAL"
+    },
+    {
+        "codigo": "324",
+        "funcao": "T\u00c9CNICOS EM OPERA\u00c7\u00c3O DE EQUIPAMENTOS E INSTRUMENTOS DE DIAGN\u00d3STICO"
+    },
+    {
+        "codigo": "325",
+        "funcao": "T\u00c9CNICOS DE BIOQU\u00cdMICA E DA BIOTECNOLOGIA"
+    },
+    {
+        "codigo": "328",
+        "funcao": "T\u00c9CNICOS EM NECR\u00d3PSIA E TAXIDERMISTAS"
+    },
+    {
+        "codigo": "331",
+        "funcao": "PROFESSORES DE N\u00cdVEL M\u00c9DIO NA EDUCA\u00c7\u00c3O INFANTIL, NO ENSINO FUNDAMENTAL E NO PROFISSIONALIZANTE"
+    },
+    {
+        "codigo": "332",
+        "funcao": "PROFESSORES LEIGOS NO ENSINO FUNDAMENTAL E NO  PROFISSIONALIZANTE"
+    },
+    {
+        "codigo": "333",
+        "funcao": "INSTRUTORES E PROFESSORES DE ESCOLAS LIVRES"
+    },
+    {
+        "codigo": "334",
+        "funcao": "INSPETORES DE ALUNOS E AFINS"
+    },
+    {
+        "codigo": "341",
+        "funcao": "T\u00c9CNICOS EM NAVEGA\u00c7\u00c3O A\u00c9REA, MAR\u00cdTIMA E FLUVIAL"
+    },
+    {
+        "codigo": "342",
+        "funcao": "T\u00c9CNICOS EM TRANSPORTES (LOG\u00cdSTICA)"
+    },
+    {
+        "codigo": "351",
+        "funcao": "T\u00c9CNICOS DAS CI\u00caNCIAS ADMINISTRATIVAS"
+    },
+    {
+        "codigo": "352",
+        "funcao": "T\u00c9CNICOS DE INSPE\u00c7\u00c3O, FISCALIZA\u00c7\u00c3O E COORDENA\u00c7\u00c3O ADMINISTRATIVA"
+    },
+    {
+        "codigo": "353",
+        "funcao": "T\u00c9CNICOS DE N\u00cdVEL M\u00c9DIO EM OPERA\u00c7\u00d5ES FINANCEIRAS"
+    },
+    {
+        "codigo": "354",
+        "funcao": "T\u00c9CNICOS DE NIVEL M\u00c9DIO EM OPERA\u00c7\u00d5ES COMERCIAIS"
+    },
+    {
+        "codigo": "371",
+        "funcao": "T\u00c9CNICOS DE SERVI\u00c7OS CULTURAIS"
+    },
+    {
+        "codigo": "372",
+        "funcao": "T\u00c9CNICOS EM OPERA\u00c7\u00c3O DE C\u00c2MARA FOTOGR\u00c1FICA , CINEMA E DE TELEVIS\u00c3O"
+    },
+    {
+        "codigo": "373",
+        "funcao": "T\u00c9CNICOS EM OPERA\u00c7\u00c3O DE EMISSORAS DE R\u00c1DIO, SISTEMAS DE TELEVIS\u00c3O E DE PRODUTORAS DE V\u00cdDEO"
+    },
+    {
+        "codigo": "374",
+        "funcao": "T\u00c9CNICOS EM OPERA\u00c7\u00c3O DE APARELHOS DE SONORIZA\u00c7\u00c3O, CENOGRAFIA E PROJE\u00c7\u00c3O"
+    },
+    {
+        "codigo": "375",
+        "funcao": "DECORADORES E VITRINISTAS"
+    },
+    {
+        "codigo": "376",
+        "funcao": "ARTISTAS DE ARTES POPULARES E MODELOS"
+    },
+    {
+        "codigo": "377",
+        "funcao": "ATLETAS, DESPORTISTAS E AFINS"
+    },
+    {
+        "codigo": "391",
+        "funcao": "T\u00c9CNICOS DE NIVEL M\u00c9DIO EM OPERA\u00c7\u00d5ES INDUSTRIAIS"
+    },
+    {
+        "codigo": "395",
+        "funcao": "T\u00c9CNICOS DE APOIO EM PESQUISA E DESENVOLVIMENTO"
+    },
+    {
+        "codigo": "410",
+        "funcao": "SUPERVISORES DE SERVI\u00c7OS ADMINISTRATIVOS (Exceto de atendimento ao p\u00fablico)"
+    },
+    {
+        "codigo": "411",
+        "funcao": "ESCRITUR\u00c1RIOS EM GERAL, AGENTES, ASSISTENTES E AUXILIARES ADMINISTRATIVOS"
+    },
+    {
+        "codigo": "412",
+        "funcao": "SECRET\u00c1RIOS DE EXPEDIENTE E OPERADORES DE M\u00c1QUINAS DE ESCRIT\u00d3RIOS"
+    },
+    {
+        "codigo": "413",
+        "funcao": "ESCRITUR\u00c1RIOS CONT\u00c1BEIS E DE FINAN\u00c7AS"
+    },
+    {
+        "codigo": "414",
+        "funcao": "ESCRITUR\u00c1RIOS DE CONTROLE DE MATERIAIS E DE APOIO \u00c0 PRODU\u00c7\u00c3O"
+    },
+    {
+        "codigo": "415",
+        "funcao": "AUXILIARES DE SERVI\u00c7OS DE BIBLIOTECA, DOCUMENTA\u00c7\u00c3O E CORREIOS"
+    },
+    {
+        "codigo": "420",
+        "funcao": "SUPERVISORES DE ATENDIMENTO AO P\u00daBLICO"
+    },
+    {
+        "codigo": "421",
+        "funcao": "CAIXAS, BILHETEIROS E AFINS"
+    },
+    {
+        "codigo": "422",
+        "funcao": "TRABALHADORES DE INFORMA\u00c7\u00d5ES AO P\u00daBLICO"
+    },
+    {
+        "codigo": "423",
+        "funcao": "DESPACHANTES"
+    },
+    {
+        "codigo": "424",
+        "funcao": "ENTREVISTADORES, RECENSEADORES E AFINS"
+    },
+    {
+        "codigo": "510",
+        "funcao": "SUPERVISORES DOS SERVI\u00c7OS"
+    },
+    {
+        "codigo": "511",
+        "funcao": "TRABALHADORES DOS SERVI\u00c7OS DE TRANSPORTE E TURISMO"
+    },
+    {
+        "codigo": "512",
+        "funcao": "TRABALHADORES DOS SERVI\u00c7OS DOM\u00c9STICOS EM GERAL"
+    },
+    {
+        "codigo": "513",
+        "funcao": "TRABALHADORES DOS SERVI\u00c7OS DE HOTELARIA E ALIMENTA\u00c7\u00c3O"
+    },
+    {
+        "codigo": "514",
+        "funcao": "TRABALHADORES NOS SERVI\u00c7OS DE ADMINISTRA\u00c7\u00c3O, CONSERVA\u00c7\u00c3O E MANUTEN\u00c7\u00c3O DE EDIF\u00cdCIOS E LOGRADOUROS"
+    },
+    {
+        "codigo": "515",
+        "funcao": "TRABALHADORES DOS SERVI\u00c7OS DE SA\u00daDE"
+    },
+    {
+        "codigo": "516",
+        "funcao": "TRABALHADORES NOS SERVI\u00c7OS DE EMBELEZAMENTO E CUIDADOS PESSOAIS"
+    },
+    {
+        "codigo": "517",
+        "funcao": "TRABALHADORES NOS SERVI\u00c7OS DE PROTE\u00c7\u00c3O E SEGURAN\u00c7A"
+    },
+    {
+        "codigo": "519",
+        "funcao": "OUTROS TRABALHADORES DE SERVI\u00c7OS DIVERSOS"
+    },
+    {
+        "codigo": "520",
+        "funcao": "SUPERVISORES DE VENDAS E DE PRESTA\u00c7\u00c3O DE SERVI\u00c7OS"
+    },
+    {
+        "codigo": "521",
+        "funcao": "VENDEDORES E DEMONSTRADORES"
+    },
+    {
+        "codigo": "522",
+        "funcao": "REPOSITORES E REMARCADORES DO COM\u00c9RCIO"
+    },
+    {
+        "codigo": "523",
+        "funcao": "INSTALADORES DE PRODUTOS E ACESS\u00d3RIOS"
+    },
+    {
+        "codigo": "524",
+        "funcao": "VENDEDORES A DOMIC\u00cdLIO, AMBULANTES E EM BANCAS"
+    },
+    {
+        "codigo": "611",
+        "funcao": "PRODUTORES AGROPECU\u00c1RIOS EM GERAL"
+    },
+    {
+        "codigo": "612",
+        "funcao": "PRODUTORES AGR\u00cdCOLAS"
+    },
+    {
+        "codigo": "613",
+        "funcao": "PRODUTORES EM PECU\u00c1RIA"
+    },
+    {
+        "codigo": "620",
+        "funcao": "SUPERVISORES NA EXPLORA\u00c7\u00c3O AGROPECU\u00c1RIA"
+    },
+    {
+        "codigo": "621",
+        "funcao": "TRABALHADORES NA EXPLORA\u00c7\u00c3O AGROPECU\u00c1RIA EM GERAL"
+    },
+    {
+        "codigo": "622",
+        "funcao": "TRABALHADORES AGR\u00cdCOLAS"
+    },
+    {
+        "codigo": "623",
+        "funcao": "TRABALHADORES NA PECU\u00c1RIA"
+    },
+    {
+        "codigo": "630",
+        "funcao": "SUPERVISORES NA EXPLORA\u00c7\u00c3O FLORESTAL E PESCA"
+    },
+    {
+        "codigo": "631",
+        "funcao": "PESCADORES E CA\u00c7ADORES"
+    },
+    {
+        "codigo": "632",
+        "funcao": "EXTRATIVISTAS FLORESTAIS"
+    },
+    {
+        "codigo": "641",
+        "funcao": "TRABALHADORES DA MECANIZA\u00c7\u00c3O AGROPECU\u00c1RIA"
+    },
+    {
+        "codigo": "642",
+        "funcao": "TRABALHADORES DA MECANIZA\u00c7\u00c3O FLORESTAL"
+    },
+    {
+        "codigo": "643",
+        "funcao": "TRABALHADORES DA IRRIGA\u00c7\u00c3O E DRENAGEM"
+    },
+    {
+        "codigo": "710",
+        "funcao": "SUPERVISORES DA EXTRA\u00c7\u00c3O MINERAL E DA CONSTRU\u00c7\u00c3O CIVIL"
+    },
+    {
+        "codigo": "711",
+        "funcao": "TRABALHADORES DA EXTRA\u00c7\u00c3O MINERAL"
+    },
+    {
+        "codigo": "712",
+        "funcao": "TRABALHADORES DE BENEFICIAMENTO DE MIN\u00c9RIOS E PEDRAS ORNAMENTAIS"
+    },
+    {
+        "codigo": "715",
+        "funcao": "TRABALHADORES DA CONSTRU\u00c7\u00c3O CIVIL E OBRAS P\u00daBLICAS"
+    },
+    {
+        "codigo": "716",
+        "funcao": "TRABALHADORES DE ACABAMENTO DE OBRAS"
+    },
+    {
+        "codigo": "717",
+        "funcao": "AJUDANTES DE OBRAS"
+    },
+    {
+        "codigo": "720",
+        "funcao": "SUPERVISORES DA TRANSFORMA\u00c7\u00c3O DE METAIS E DE COMP\u00d3SITOS"
+    },
+    {
+        "codigo": "721",
+        "funcao": "TRABALHADORES DE USINAGEM DE METAIS E DE COMP\u00d3SITOS"
+    },
+    {
+        "codigo": "722",
+        "funcao": "TRABALHADORES DE CONFORMA\u00c7\u00c3O DE METAIS E DE COMP\u00d3SITOS"
+    },
+    {
+        "codigo": "723",
+        "funcao": "TRABALHADORES DE TRATAMENTO T\u00c9RMICO E DE SUPERF\u00cdCIES DE METAIS E DE COMP\u00d3SITOS"
+    },
+    {
+        "codigo": "724",
+        "funcao": "TRABALHADORES DE MONTAGEM DE TUBULA\u00c7\u00d5ES, ESTRUTURAS MET\u00c1LICAS E DE COMP\u00d3SITOS"
+    },
+    {
+        "codigo": "725",
+        "funcao": "MONTADORES DE M\u00c1QUINAS E APARELHOS MEC\u00c2NICOS"
+    },
+    {
+        "codigo": "730",
+        "funcao": "SUPERVISORES DE MONTAGENS E INSTALA\u00c7\u00d5ES ELETROELETR\u00d4NICAS"
+    },
+    {
+        "codigo": "731",
+        "funcao": "MONTADORES E INSTALADORES DE EQUIPAMENTOS ELETROELETR\u00d4NICOS EM GERAL"
+    },
+    {
+        "codigo": "732",
+        "funcao": "INSTALADORES E REPARADORES DE LINHAS E CABOS EL\u00c9TRICOS E DE COMUNICA\u00c7\u00d5ES"
+    },
+    {
+        "codigo": "740",
+        "funcao": "SUPERVISORES DA MEC\u00c2NICA DE PRECIS\u00c3O E INSTRUMENTOS MUSICAIS"
+    },
+    {
+        "codigo": "741",
+        "funcao": "MONTADORES E AJUSTADORES DE INSTRUMENTOS DE PRECIS\u00c3O"
+    },
+    {
+        "codigo": "742",
+        "funcao": "MONTADORES E AJUSTADORES DE INSTRUMENTOS MUSICAIS"
+    },
+    {
+        "codigo": "750",
+        "funcao": "SUPERVISORES DE JOALHERIA, VIDRARIA, CER\u00c2MICA E AFINS"
+    },
+    {
+        "codigo": "751",
+        "funcao": "JOALHEIROS E OURIVES"
+    },
+    {
+        "codigo": "752",
+        "funcao": "VIDREIROS, CERAMISTAS E AFINS"
+    },
+    {
+        "codigo": "760",
+        "funcao": "SUPERVISORES NAS IND\u00daSTRIAS T\u00caXTIL, DO CURTIMENTO, DO VESTU\u00c1RIO E DAS ARTES GR\u00c1FICAS"
+    },
+    {
+        "codigo": "761",
+        "funcao": "TRABALHADORES DAS INDUSTRIAS T\u00caXTEIS"
+    },
+    {
+        "codigo": "762",
+        "funcao": "TRABALHADORES DO TRATAMENTO DE COUROS E PELES"
+    },
+    {
+        "codigo": "763",
+        "funcao": "TRABALHADORES DA CONFEC\u00c7\u00c3O DE ROUPAS"
+    },
+    {
+        "codigo": "764",
+        "funcao": "TRABALHADORES DA CONFEC\u00c7\u00c3O DE CAL\u00c7ADOS"
+    },
+    {
+        "codigo": "765",
+        "funcao": "TRABALHADORES DA CONFEC\u00c7\u00c3O DE ARTEFATOS DE TECIDOS E COUROS"
+    },
+    {
+        "codigo": "766",
+        "funcao": "TRABALHADORES DA PRODU\u00c7\u00c3O GR\u00c1FICA"
+    },
+    {
+        "codigo": "768",
+        "funcao": "TRABALHADORES ARTESANAIS DAS ATIVIDADES T\u00caXTEIS, DO VESTU\u00c1RIO E DAS ARTES GR\u00c1FICAS"
+    },
+    {
+        "codigo": "770",
+        "funcao": "SUPERVISORES EM IND\u00daSTRIA DE MADEIRA, MOBILI\u00c1RIO E DA CARPINTARIA VEICULAR"
+    },
+    {
+        "codigo": "771",
+        "funcao": "MARCENEIROS E AFINS"
+    },
+    {
+        "codigo": "772",
+        "funcao": "TRABALHADORES DA PREPARA\u00c7\u00c3O DA MADEIRA"
+    },
+    {
+        "codigo": "773",
+        "funcao": "TRABALHADORES DA TRANSFORMA\u00c7\u00c3O DA MADEIRA E DA FABRICA\u00c7\u00c3O DO MOBILI\u00c1RIO"
+    },
+    {
+        "codigo": "774",
+        "funcao": "TRABALHADORES DE MONTAGEM DE M\u00d3VEIS E ARTEFATOS DE MADEIRA"
+    },
+    {
+        "codigo": "775",
+        "funcao": "TRABALHADORES EM ACABAMENTO DE MADEIRA E DE MOBILI\u00c1RIO"
+    },
+    {
+        "codigo": "776",
+        "funcao": "TRABALHADORES ARTESANAIS DA MADEIRA E DO MOBILI\u00c1RIO"
+    },
+    {
+        "codigo": "777",
+        "funcao": "TRABALHADORES DA CARPINTARIA VEICULAR"
+    },
+    {
+        "codigo": "780",
+        "funcao": "SUPERVISORES DE TRABALHADORES DE EMBALAGEM E ETIQUETAGEM"
+    },
+    {
+        "codigo": "781",
+        "funcao": "OPERADORES DE ROB\u00d4S E EQUIPAMENTOS ESPECIAIS"
+    },
+    {
+        "codigo": "782",
+        "funcao": "CONDUTORES DE VE\u00cdCULOS E OPERADORES DE EQUIPAMENTOS DE ELEVA\u00c7\u00c3O E DE MOVIMENTA\u00c7\u00c3O DE CARGAS"
+    },
+    {
+        "codigo": "783",
+        "funcao": "TRABALHADORES DE MANOBRAS SOBRE TRILHOS E MOVIMENTA\u00c7\u00c3O E CARGAS"
+    },
+    {
+        "codigo": "784",
+        "funcao": "EMBALADORES E ALIMENTADORES DE PRODU\u00c7\u00c3O"
+    },
+    {
+        "codigo": "791",
+        "funcao": "TRABALHADORES DO ARTESANATO URBANO E RURAL"
+    },
+    {
+        "codigo": "810",
+        "funcao": "SUPERVISORES DE PRODU\u00c7\u00c3O, EM IND\u00daSTRIAS QU\u00cdMICAS, PETROQU\u00cdMICAS E AFINS"
+    },
+    {
+        "codigo": "811",
+        "funcao": "OPERADORES DE INSTALA\u00c7\u00d5ES EM IND\u00daSTRIAS QU\u00cdMICAS, PETROQU\u00cdMICAS E AFINS"
+    },
+    {
+        "codigo": "812",
+        "funcao": "TRABALHADORES DA FABRICA\u00c7\u00c3O DE MUNI\u00c7\u00c3O E EXPLOSIVOS QU\u00cdMICOS"
+    },
+    {
+        "codigo": "813",
+        "funcao": "OPERADORES DE OUTRAS INSTALA\u00c7\u00d5ES QU\u00cdMICAS, PETROQU\u00cdMICAS E AFINS"
+    },
+    {
+        "codigo": "818",
+        "funcao": "OPERADORES DE OPERA\u00c7\u00c3O UNIT\u00c1RIA DE LABORAT\u00d3RIO (TRANSVERSAL PARA TODA IND\u00daSTRIA DE PROCESSOS)"
+    },
+    {
+        "codigo": "820",
+        "funcao": "SUPERVISORES DE PRODU\u00c7\u00c3O EM IND\u00daSTRIAS SIDER\u00daRGICAS"
+    },
+    {
+        "codigo": "821",
+        "funcao": "OPERADORES DE INSTALA\u00c7\u00d5ES E EQUIPAMENTOS DE PRODU\u00c7\u00c3O DE METAIS E LIGAS- PRIMEIRA FUS\u00c3O"
+    },
+    {
+        "codigo": "822",
+        "funcao": "OPERADORES DE INSTALA\u00c7\u00d5ES E EQUIPAMENTOS DE PRODU\u00c7\u00c3O DE METAIS E LIGAS- SEGUNDA FUS\u00c3O"
+    },
+    {
+        "codigo": "823",
+        "funcao": "TRABALHADORES DE INSTALA\u00c7\u00d5ES E EQUIPAMENTOS DE MATERIAL DE CONSTRU\u00c7\u00c3O, CER\u00c2MICA E VIDRO"
+    },
+    {
+        "codigo": "828",
+        "funcao": "TRABALHADORES ARTESANAIS DA SIDERURGIA E DE MATERIAIS DE CONSTRU\u00c7\u00c3O"
+    },
+    {
+        "codigo": "830",
+        "funcao": "SUPERVISORES DA FABRICA\u00c7\u00c3O DE CELULOSE E PAPEL"
+    },
+    {
+        "codigo": "831",
+        "funcao": "TRABALHADORES DA PREPARA\u00c7\u00c3O DE PASTA DE PAPEL"
+    },
+    {
+        "codigo": "832",
+        "funcao": "TRABALHADORES DA FABRICA\u00c7\u00c3O DE PAPEL"
+    },
+    {
+        "codigo": "833",
+        "funcao": "CONFECCIONADORES DE PRODUTOS DE PAPEL E PAPEL\u00c3O"
+    },
+    {
+        "codigo": "840",
+        "funcao": "SUPERVISORES DA FABRICA\u00c7\u00c3O DE ALIMENTOS, BEBIDAS E FUMO"
+    },
+    {
+        "codigo": "841",
+        "funcao": "OPERADORES DE EQUIPAMENTOS NA PREPARA\u00c7\u00c3O DE ALIMENTOS E BEBIDAS"
+    },
+    {
+        "codigo": "842",
+        "funcao": "OPERADORES NA PREPARA\u00c7\u00c3O DE FUMO E NA FABRICA\u00c7\u00c3O DE CHARUTOS E CIGARROS"
+    },
+    {
+        "codigo": "848",
+        "funcao": "TRABALHADORES ARTESANAIS NA  AGROIND\u00daSTRIA, NA IND\u00daSTRIA DE ALIMENTOS E DO FUMO"
+    },
+    {
+        "codigo": "860",
+        "funcao": "SUPERVISORES DA PRODU\u00c7\u00c3O DE UTILIDADES"
+    },
+    {
+        "codigo": "861",
+        "funcao": "OPERADORES NA GERA\u00c7\u00c3O E DISTRIBUI\u00c7\u00c3O DE ENERGIA (CENTRAIS HIDREL\u00c9TRICAS, TERMEL\u00c9TRICAS E NUCLEARES)"
+    },
+    {
+        "codigo": "862",
+        "funcao": "OPERADORES DE UTILIDADES"
+    },
+    {
+        "codigo": "871",
+        "funcao": "OPERADORES DE OUTRAS INSTALA\u00c7\u00d5ES INDUSTRIAIS"
+    },
+    {
+        "codigo": "910",
+        "funcao": "SUPERVISORES EM SERVI\u00c7OS DE REPARA\u00c7\u00c3O E MANUTEN\u00c7\u00c3O MEC\u00c2NICA"
+    },
+    {
+        "codigo": "911",
+        "funcao": "MEC\u00c2NICOS DE MANUTEN\u00c7\u00c3O DE M\u00c1QUINAS E EQUIPAMENTOS INDUSTRIAIS, COMERCIAIS E RESIDENCIAIS"
+    },
+    {
+        "codigo": "913",
+        "funcao": "MEC\u00c2NICOS DE MANUTEN\u00c7\u00c3O DE M\u00c1QUINAS PESADAS E EQUIPAMENTOS AGR\u00cdCOLAS"
+    },
+    {
+        "codigo": "914",
+        "funcao": "MEC\u00c2NICOS DE MANUTEN\u00c7\u00c3O VEICULAR"
+    },
+    {
+        "codigo": "915",
+        "funcao": "REPARADORES DE INSTRUMENTOS E EQUIPAMENTOS DE PRECIS\u00c3O"
+    },
+    {
+        "codigo": "919",
+        "funcao": "OUTROS TRABALHADORES NA REPARA\u00c7\u00c3O E MANUTEN\u00c7\u00c3O DE EQUIPAMENTOS"
+    },
+    {
+        "codigo": "950",
+        "funcao": "SUPERVISORES DE MANUTEN\u00c7\u00c3O ELETROELETR\u00d4NICA E ELETROMEC\u00c2NICA"
+    },
+    {
+        "codigo": "951",
+        "funcao": "ELETRICISTAS ELETR\u00d4NICOS DE MANUTEN\u00c7\u00c3O INDUSTRIAL, COMERCIAL E RESIDENCIAL"
+    },
+    {
+        "codigo": "953",
+        "funcao": "ELETRICISTAS ELETR\u00d4NICOS DE MANUTEN\u00c7\u00c3O VEICULAR"
+    },
+    {
+        "codigo": "954",
+        "funcao": "MANTENEDORES ELETROMEC\u00c2NICOS"
+    },
+    {
+        "codigo": "991",
+        "funcao": "OUTROS TRABALHADORES DA CONSERVA\u00c7\u00c3O E MANUTEN\u00c7\u00c3O (EXCETO TRABALHADORES ELEMENTARES)"
+    },
+    {
+        "codigo": "992",
+        "funcao": "TRABALHADORES ELEMENTARES DA MANUTEN\u00c7\u00c3O"
+    }
+]

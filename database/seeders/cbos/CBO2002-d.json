@@ -1,0 +1,2470 @@
+[
+    {
+        "codigo": "0101",
+        "funcao": "Oficiais generais das for\u00e7as armadas"
+    },
+    {
+        "codigo": "0102",
+        "funcao": "Oficiais das for\u00e7as armadas"
+    },
+    {
+        "codigo": "0103",
+        "funcao": "Pra\u00e7as das for\u00e7as armadas"
+    },
+    {
+        "codigo": "0201",
+        "funcao": "Oficiais superiores da pol\u00edcia militar"
+    },
+    {
+        "codigo": "0202",
+        "funcao": "Capit\u00e3es da  pol\u00edcia militar"
+    },
+    {
+        "codigo": "0203",
+        "funcao": "Tenentes da pol\u00edcia militar"
+    },
+    {
+        "codigo": "0211",
+        "funcao": "Subtenentes e sargentos da policia militar"
+    },
+    {
+        "codigo": "0212",
+        "funcao": "Cabos e soldados da pol\u00edcia militar"
+    },
+    {
+        "codigo": "0301",
+        "funcao": "Oficiais superiores do corpo de bombeiros militar"
+    },
+    {
+        "codigo": "0302",
+        "funcao": "Oficiais intermedi\u00e1rios do corpo de bombeiros militar"
+    },
+    {
+        "codigo": "0303",
+        "funcao": "Tenentes do corpo de bombeiros militar"
+    },
+    {
+        "codigo": "0311",
+        "funcao": "Subtenentes e sargentos do corpo de bombeiros militar"
+    },
+    {
+        "codigo": "0312",
+        "funcao": "Cabos e soldados do corpo de bombeiros militar"
+    },
+    {
+        "codigo": "1111",
+        "funcao": "Legisladores"
+    },
+    {
+        "codigo": "1112",
+        "funcao": "Dirigentes gerais da administra\u00e7\u00e3o p\u00fablica"
+    },
+    {
+        "codigo": "1113",
+        "funcao": "Magistrados"
+    },
+    {
+        "codigo": "1114",
+        "funcao": "Dirigentes do servi\u00e7o p\u00fablico"
+    },
+    {
+        "codigo": "1115",
+        "funcao": "Gestores p\u00fablicos"
+    },
+    {
+        "codigo": "1130",
+        "funcao": "Dirigentes de povos ind\u00edgenas, de quilombolas e cai\u00e7aras"
+    },
+    {
+        "codigo": "1141",
+        "funcao": "Dirigentes de partidos pol\u00edticos"
+    },
+    {
+        "codigo": "1142",
+        "funcao": "Dirigentes e administradores de entidades patronais e dos trabalhadores e de outros interesses s\u00f3cioecon\u00f4micos"
+    },
+    {
+        "codigo": "1143",
+        "funcao": "Dirigentes e administradores de entidades religiosas"
+    },
+    {
+        "codigo": "1144",
+        "funcao": "Dirigentes e administradores de organiza\u00e7\u00f5es da sociedade civil sem fins lucrativos"
+    },
+    {
+        "codigo": "1210",
+        "funcao": "Diretores gerais"
+    },
+    {
+        "codigo": "1221",
+        "funcao": "Diretores de produ\u00e7\u00e3o e opera\u00e7\u00f5es em empresa agropecu\u00e1ria, pesqueira , aq\u00fc\u00edcola e florestal"
+    },
+    {
+        "codigo": "1222",
+        "funcao": "Diretores de produ\u00e7\u00e3o e opera\u00e7\u00f5es em empresa da ind\u00fastria extrativa, transforma\u00e7\u00e3o e de servi\u00e7os de utilidade p\u00fablica"
+    },
+    {
+        "codigo": "1223",
+        "funcao": "Diretores de opera\u00e7\u00f5es de obras em empresa de constru\u00e7\u00e3o"
+    },
+    {
+        "codigo": "1224",
+        "funcao": "Diretores de opera\u00e7\u00f5es em empresa do com\u00e9rcio"
+    },
+    {
+        "codigo": "1225",
+        "funcao": "Diretores de servi\u00e7os de turismo, de alojamento e de alimenta\u00e7\u00e3o"
+    },
+    {
+        "codigo": "1226",
+        "funcao": "Diretores de opera\u00e7\u00f5es de servi\u00e7os em empresa de armazenamento, de transporte e de telecomunica\u00e7\u00e3o"
+    },
+    {
+        "codigo": "1227",
+        "funcao": "Diretores de opera\u00e7\u00f5es de servi\u00e7os em institui\u00e7\u00e3o de intermedia\u00e7\u00e3o financeira"
+    },
+    {
+        "codigo": "1231",
+        "funcao": "Diretores administrativos e financeiros"
+    },
+    {
+        "codigo": "1232",
+        "funcao": "Diretores de recursos humanos e rela\u00e7\u00f5es de trabalho"
+    },
+    {
+        "codigo": "1233",
+        "funcao": "Diretores de comercializa\u00e7\u00e3o e marketing"
+    },
+    {
+        "codigo": "1234",
+        "funcao": "Diretores de suprimentos e afins"
+    },
+    {
+        "codigo": "1236",
+        "funcao": "Diretores de servi\u00e7os de inform\u00e1tica"
+    },
+    {
+        "codigo": "1237",
+        "funcao": "Diretores de pesquisa e desenvolvimento"
+    },
+    {
+        "codigo": "1238",
+        "funcao": "Diretores de manuten\u00e7\u00e3o"
+    },
+    {
+        "codigo": "1311",
+        "funcao": "Diretores e gerentes de opera\u00e7\u00f5es em empresa de servi\u00e7os pessoais, sociais e culturais"
+    },
+    {
+        "codigo": "1312",
+        "funcao": "Gestores e especialistas de opera\u00e7\u00f5es em empresas, secretarias e unidades de servi\u00e7os de sa\u00fade"
+    },
+    {
+        "codigo": "1313",
+        "funcao": "Diretores e gerentes de institui\u00e7\u00e3o de servi\u00e7os educacionais"
+    },
+    {
+        "codigo": "1411",
+        "funcao": "Gerentes de produ\u00e7\u00e3o e opera\u00e7\u00f5es em empresa agropecu\u00e1ria, pesqueira, aq\u00fc\u00edcola e florestal"
+    },
+    {
+        "codigo": "1412",
+        "funcao": "Gerentes de produ\u00e7\u00e3o e opera\u00e7\u00f5es em empresa da ind\u00fastria extrativa, de transforma\u00e7\u00e3o e de servi\u00e7os de utilidade p\u00fablica"
+    },
+    {
+        "codigo": "1413",
+        "funcao": "Gerentes de obras em empresa de constru\u00e7\u00e3o"
+    },
+    {
+        "codigo": "1414",
+        "funcao": "Gerentes de opera\u00e7\u00f5es comerciais e de assist\u00eancia t\u00e9cnica"
+    },
+    {
+        "codigo": "1415",
+        "funcao": "Gerentes de opera\u00e7\u00f5es de servi\u00e7os em empresa de turismo, de alojamento e alimenta\u00e7\u00e3o"
+    },
+    {
+        "codigo": "1416",
+        "funcao": "Gerentes de opera\u00e7\u00f5es de servi\u00e7os em empresa de transporte, de comunica\u00e7\u00e3o e de log\u00edstica (armazenagem e distribui\u00e7\u00e3o)"
+    },
+    {
+        "codigo": "1417",
+        "funcao": "Gerentes de opera\u00e7\u00f5es de servi\u00e7os em institui\u00e7\u00e3o de intermedia\u00e7\u00e3o financeira"
+    },
+    {
+        "codigo": "1421",
+        "funcao": "Gerentes administrativos, financeiros, de riscos e afins"
+    },
+    {
+        "codigo": "1422",
+        "funcao": "Gerentes de recursos humanos e de rela\u00e7\u00f5es do trabalho"
+    },
+    {
+        "codigo": "1423",
+        "funcao": "Gerentes de comercializa\u00e7\u00e3o, marketing e comunica\u00e7\u00e3o"
+    },
+    {
+        "codigo": "1424",
+        "funcao": "Gerentes de suprimentos e afins"
+    },
+    {
+        "codigo": "1425",
+        "funcao": "Gerentes de tecnologia da informa\u00e7\u00e3o"
+    },
+    {
+        "codigo": "1426",
+        "funcao": "Gerentes de pesquisa e desenvolvimento e afins"
+    },
+    {
+        "codigo": "1427",
+        "funcao": "Gerentes de manuten\u00e7\u00e3o e afins"
+    },
+    {
+        "codigo": "2011",
+        "funcao": "Profissionais da biotecnologia"
+    },
+    {
+        "codigo": "2012",
+        "funcao": "Profissionais da metrologia"
+    },
+    {
+        "codigo": "2021",
+        "funcao": "Engenheiros de controle e automa\u00e7\u00e3o, engenheiros mecatr\u00f4nicos e afins"
+    },
+    {
+        "codigo": "2030",
+        "funcao": "Pesquisadores das ci\u00eancias biol\u00f3gicas"
+    },
+    {
+        "codigo": "2031",
+        "funcao": "Pesquisadores das ci\u00eancias naturais e exatas"
+    },
+    {
+        "codigo": "2032",
+        "funcao": "Pesquisadores de engenharia e tecnologia"
+    },
+    {
+        "codigo": "2033",
+        "funcao": "Pesquisadores das ci\u00eancias da sa\u00fade"
+    },
+    {
+        "codigo": "2034",
+        "funcao": "Pesquisadores das ci\u00eancias da agricultura"
+    },
+    {
+        "codigo": "2035",
+        "funcao": "Pesquisadores das ci\u00eancias sociais e humanas"
+    },
+    {
+        "codigo": "2041",
+        "funcao": "Peritos criminais"
+    },
+    {
+        "codigo": "2111",
+        "funcao": "Profissionais da matem\u00e1tica"
+    },
+    {
+        "codigo": "2112",
+        "funcao": "Profissionais de estat\u00edstica"
+    },
+    {
+        "codigo": "2122",
+        "funcao": "Engenheiros em computa\u00e7\u00e3o"
+    },
+    {
+        "codigo": "2123",
+        "funcao": "Administradores de tecnologia da informa\u00e7\u00e3o"
+    },
+    {
+        "codigo": "2124",
+        "funcao": "Analistas de tecnologia da informa\u00e7\u00e3o"
+    },
+    {
+        "codigo": "2131",
+        "funcao": "F\u00edsicos"
+    },
+    {
+        "codigo": "2132",
+        "funcao": "Qu\u00edmicos"
+    },
+    {
+        "codigo": "2133",
+        "funcao": "Profissionais das ci\u00eancias atmosf\u00e9ricas e espaciais e de astronomia"
+    },
+    {
+        "codigo": "2134",
+        "funcao": "Ge\u00f3logos, ocean\u00f3grafos, geof\u00edsicos e afins"
+    },
+    {
+        "codigo": "2140",
+        "funcao": "Engenheiros ambientais e afins"
+    },
+    {
+        "codigo": "2141",
+        "funcao": "Arquitetos e urbanistas"
+    },
+    {
+        "codigo": "2142",
+        "funcao": "Engenheiros civis e afins"
+    },
+    {
+        "codigo": "2143",
+        "funcao": "Engenheiros eletricistas, eletr\u00f4nicos e afins"
+    },
+    {
+        "codigo": "2144",
+        "funcao": "Engenheiros mec\u00e2nicos e afins"
+    },
+    {
+        "codigo": "2145",
+        "funcao": "Engenheiros qu\u00edmicos e afins"
+    },
+    {
+        "codigo": "2146",
+        "funcao": "Engenheiros metalurgistas, de materiais e afins"
+    },
+    {
+        "codigo": "2147",
+        "funcao": "Engenheiros de minas e afins"
+    },
+    {
+        "codigo": "2148",
+        "funcao": "Engenheiros agrimensores e engenheiros cart\u00f3grafos"
+    },
+    {
+        "codigo": "2149",
+        "funcao": "Engenheiros de produ\u00e7\u00e3o, qualidade, seguran\u00e7a e afins"
+    },
+    {
+        "codigo": "2151",
+        "funcao": "Oficiais de conv\u00e9s e afins"
+    },
+    {
+        "codigo": "2152",
+        "funcao": "Oficiais de m\u00e1quinas da marinha mercante"
+    },
+    {
+        "codigo": "2153",
+        "funcao": "Profissionais da pilotagem aeron\u00e1utica"
+    },
+    {
+        "codigo": "2211",
+        "funcao": "Bi\u00f3logos e afins"
+    },
+    {
+        "codigo": "2212",
+        "funcao": "Biom\u00e9dicos"
+    },
+    {
+        "codigo": "2221",
+        "funcao": "Engenheiros agrossilvipecu\u00e1rios"
+    },
+    {
+        "codigo": "2222",
+        "funcao": "Engenheiros de alimentos e afins"
+    },
+    {
+        "codigo": "2232",
+        "funcao": "Cirurgi\u00f5es-dentistas"
+    },
+    {
+        "codigo": "2233",
+        "funcao": "Veterin\u00e1rios e zootecnistas"
+    },
+    {
+        "codigo": "2234",
+        "funcao": "Farmac\u00eauticos"
+    },
+    {
+        "codigo": "2235",
+        "funcao": "Enfermeiros e afins"
+    },
+    {
+        "codigo": "2236",
+        "funcao": "Fisioterapeutas"
+    },
+    {
+        "codigo": "2237",
+        "funcao": "Nutricionistas"
+    },
+    {
+        "codigo": "2238",
+        "funcao": "Fonoaudi\u00f3logos"
+    },
+    {
+        "codigo": "2239",
+        "funcao": "Terapeutas ocupacionais e ortoptistas"
+    },
+    {
+        "codigo": "2241",
+        "funcao": "Profissionais da educa\u00e7\u00e3o f\u00edsica"
+    },
+    {
+        "codigo": "2251",
+        "funcao": "M\u00e9dicos cl\u00ednicos"
+    },
+    {
+        "codigo": "2252",
+        "funcao": "M\u00e9dicos em especialidades cir\u00fargicas"
+    },
+    {
+        "codigo": "2253",
+        "funcao": "M\u00e9dicos em medicina diagn\u00f3stica e terap\u00eautica"
+    },
+    {
+        "codigo": "2261",
+        "funcao": "Osteopatas e quiropraxistas"
+    },
+    {
+        "codigo": "2263",
+        "funcao": "Profissionais das terapias criativas,equoter\u00e1picas e naturol\u00f3gicas"
+    },
+    {
+        "codigo": "2311",
+        "funcao": "Professores de n\u00edvel superior na educa\u00e7\u00e3o infantil"
+    },
+    {
+        "codigo": "2312",
+        "funcao": "Professores de n\u00edvel superior do ensino fundamental (primeira a quarta s\u00e9ries)"
+    },
+    {
+        "codigo": "2313",
+        "funcao": "Professores de n\u00edvel superior no ensino fundamental de quinta a oitava s\u00e9rie"
+    },
+    {
+        "codigo": "2321",
+        "funcao": "Professores do ensino m\u00e9dio"
+    },
+    {
+        "codigo": "2331",
+        "funcao": "Professores do ensino profissional"
+    },
+    {
+        "codigo": "2332",
+        "funcao": "Instrutores de ensino profissional"
+    },
+    {
+        "codigo": "2341",
+        "funcao": "Professores de matem\u00e1tica, estat\u00edstica e inform\u00e1tica do ensino superior"
+    },
+    {
+        "codigo": "2342",
+        "funcao": "Professores de ci\u00eancias f\u00edsicas, qu\u00edmicas e afins do ensino superior"
+    },
+    {
+        "codigo": "2343",
+        "funcao": "Professores de arquitetura e urbanismo, engenharia, geof\u00edsica e geologia do ensino superior"
+    },
+    {
+        "codigo": "2344",
+        "funcao": "Professores de ci\u00eancias biol\u00f3gicas e da sa\u00fade do ensino superior"
+    },
+    {
+        "codigo": "2345",
+        "funcao": "Professores na \u00e1rea de forma\u00e7\u00e3o pedag\u00f3gica do ensino superior"
+    },
+    {
+        "codigo": "2346",
+        "funcao": "Professores nas \u00e1reas de l\u00edngua e literatura do ensino superior"
+    },
+    {
+        "codigo": "2347",
+        "funcao": "Professores de ci\u00eancias humanas do ensino superior"
+    },
+    {
+        "codigo": "2348",
+        "funcao": "Professores de ci\u00eancias econ\u00f4micas, administrativas e cont\u00e1beis do ensino superior"
+    },
+    {
+        "codigo": "2349",
+        "funcao": "Professores de artes do ensino superior"
+    },
+    {
+        "codigo": "2392",
+        "funcao": "Professores de educa\u00e7\u00e3o especial"
+    },
+    {
+        "codigo": "2394",
+        "funcao": "Programadores, avaliadores e orientadores de ensino"
+    },
+    {
+        "codigo": "2410",
+        "funcao": "Advogados"
+    },
+    {
+        "codigo": "2412",
+        "funcao": "Procuradores e advogados p\u00fablicos"
+    },
+    {
+        "codigo": "2413",
+        "funcao": "Tabeli\u00e3es e registradores"
+    },
+    {
+        "codigo": "2422",
+        "funcao": "Membros do minist\u00e9rio p\u00fablico"
+    },
+    {
+        "codigo": "2423",
+        "funcao": "Delegados de pol\u00edcia"
+    },
+    {
+        "codigo": "2424",
+        "funcao": "Defensores p\u00fablicos e procuradores da assist\u00eancia judici\u00e1ria"
+    },
+    {
+        "codigo": "2429",
+        "funcao": "Profissionais da intelig\u00eancia"
+    },
+    {
+        "codigo": "2511",
+        "funcao": "Profissionais em pesquisa e an\u00e1lise antropol\u00f3gica sociol\u00f3gica"
+    },
+    {
+        "codigo": "2512",
+        "funcao": "Economistas"
+    },
+    {
+        "codigo": "2513",
+        "funcao": "Profissionais em pesquisa e an\u00e1lise geogr\u00e1fica"
+    },
+    {
+        "codigo": "2514",
+        "funcao": "Fil\u00f3sofos"
+    },
+    {
+        "codigo": "2515",
+        "funcao": "Psic\u00f3logos e psicanalistas"
+    },
+    {
+        "codigo": "2516",
+        "funcao": "Assistentes sociais e economistas dom\u00e9sticos"
+    },
+    {
+        "codigo": "2521",
+        "funcao": "Administradores"
+    },
+    {
+        "codigo": "2522",
+        "funcao": "Contadores e afins"
+    },
+    {
+        "codigo": "2523",
+        "funcao": "Secret\u00e1rias(os) executivas(os) e afins"
+    },
+    {
+        "codigo": "2524",
+        "funcao": "Profissionais de recursos humanos"
+    },
+    {
+        "codigo": "2525",
+        "funcao": "Profissionais de administra\u00e7\u00e3o ec\u00f4nomico-financeira"
+    },
+    {
+        "codigo": "2526",
+        "funcao": "Profissionais da administra\u00e7\u00e3o dos servi\u00e7os de seguran\u00e7a"
+    },
+    {
+        "codigo": "2527",
+        "funcao": "Profissionais de planejamento, programa\u00e7\u00e3o e controles logisticos"
+    },
+    {
+        "codigo": "2531",
+        "funcao": "Profissionais de publicidade"
+    },
+    {
+        "codigo": "2532",
+        "funcao": "Profissionais de comercializac\u00e3o e consultoria de servi\u00e7os banc\u00e1rios"
+    },
+    {
+        "codigo": "2533",
+        "funcao": "Corretores de valores, ativos financeiros, mercadorias e derivativos"
+    },
+    {
+        "codigo": "2541",
+        "funcao": "Auditores fiscais e t\u00e9cnicos da receita federal"
+    },
+    {
+        "codigo": "2542",
+        "funcao": "Auditores fiscais da previd\u00eancia social"
+    },
+    {
+        "codigo": "2543",
+        "funcao": "Auditores fiscais do trabalho"
+    },
+    {
+        "codigo": "2544",
+        "funcao": "Fiscais de tributos estaduais e municipais"
+    },
+    {
+        "codigo": "2545",
+        "funcao": "Profissionais da fiscaliza\u00e7\u00e3o de atividades urbanas"
+    },
+    {
+        "codigo": "2611",
+        "funcao": "Profissionais do jornalismo"
+    },
+    {
+        "codigo": "2612",
+        "funcao": "Profissionais da informa\u00e7\u00e3o"
+    },
+    {
+        "codigo": "2613",
+        "funcao": "Arquivistas e muse\u00f3logos"
+    },
+    {
+        "codigo": "2614",
+        "funcao": "Fil\u00f3logos,tradutores ,int\u00e9rpretes e afins"
+    },
+    {
+        "codigo": "2615",
+        "funcao": "Profissionais da escrita"
+    },
+    {
+        "codigo": "2616",
+        "funcao": "Editores"
+    },
+    {
+        "codigo": "2617",
+        "funcao": "Locutores, comentaristas e rep\u00f3rteres de r\u00e1dio e televis\u00e3o"
+    },
+    {
+        "codigo": "2618",
+        "funcao": "Fot\u00f3grafos profissionais"
+    },
+    {
+        "codigo": "2621",
+        "funcao": "Produtores art\u00edsticos e culturais"
+    },
+    {
+        "codigo": "2622",
+        "funcao": "Diretores de espet\u00e1culos e afins"
+    },
+    {
+        "codigo": "2623",
+        "funcao": "Cen\u00f3grafos"
+    },
+    {
+        "codigo": "2624",
+        "funcao": "Artistas visuais,desenhistas industriais e conservadores-restauradores de bens culturais"
+    },
+    {
+        "codigo": "2625",
+        "funcao": "Atores"
+    },
+    {
+        "codigo": "2626",
+        "funcao": "M\u00fasicos compositores, arranjadores, regentes e music\u00f3logos"
+    },
+    {
+        "codigo": "2627",
+        "funcao": "M\u00fasicos int\u00e9rpretes"
+    },
+    {
+        "codigo": "2628",
+        "funcao": "Artistas da dan\u00e7a (exceto dan\u00e7a tradicional e popular)"
+    },
+    {
+        "codigo": "2629",
+        "funcao": "Designer de interiores de n\u00edvel superior"
+    },
+    {
+        "codigo": "2631",
+        "funcao": "Ministros de culto, mission\u00e1rios, te\u00f3logos e profissionais assemelhados"
+    },
+    {
+        "codigo": "2711",
+        "funcao": "Chefes de cozinha e afins"
+    },
+    {
+        "codigo": "3001",
+        "funcao": "T\u00e9cnicos em mecatr\u00f4nica"
+    },
+    {
+        "codigo": "3003",
+        "funcao": "T\u00e9cnicos em eletromec\u00e2nica"
+    },
+    {
+        "codigo": "3011",
+        "funcao": "T\u00e9cnicos de laborat\u00f3rio industrial"
+    },
+    {
+        "codigo": "3012",
+        "funcao": "T\u00e9cnicos de apoio \u00e0 bioengenharia"
+    },
+    {
+        "codigo": "3111",
+        "funcao": "T\u00e9cnicos qu\u00edmicos"
+    },
+    {
+        "codigo": "3112",
+        "funcao": "T\u00e9cnicos de produ\u00e7\u00e3o de ind\u00fastrias qu\u00edmicas, petroqu\u00edmicas, refino de petr\u00f3leo, g\u00e1s e afins"
+    },
+    {
+        "codigo": "3113",
+        "funcao": "T\u00e9cnicos em materiais, produtos cer\u00e2micos e vidros"
+    },
+    {
+        "codigo": "3114",
+        "funcao": "T\u00e9cnicos em fabrica\u00e7\u00e3o de produtos pl\u00e1sticos e de borracha"
+    },
+    {
+        "codigo": "3115",
+        "funcao": "T\u00e9cnicos em controle ambiental, utilidades e tratamento de efluentes"
+    },
+    {
+        "codigo": "3116",
+        "funcao": "T\u00e9cnicos t\u00eaxteis"
+    },
+    {
+        "codigo": "3117",
+        "funcao": "Coloristas"
+    },
+    {
+        "codigo": "3121",
+        "funcao": "T\u00e9cnicos em constru\u00e7\u00e3o civil (edifica\u00e7\u00f5es)"
+    },
+    {
+        "codigo": "3122",
+        "funcao": "T\u00e9cnicos em constru\u00e7\u00e3o civil (obras de infraestrutura)"
+    },
+    {
+        "codigo": "3123",
+        "funcao": "T\u00e9cnicos em geom\u00e1tica"
+    },
+    {
+        "codigo": "3131",
+        "funcao": "T\u00e9cnicos em eletricidade e eletrot\u00e9cnica"
+    },
+    {
+        "codigo": "3132",
+        "funcao": "T\u00e9cnicos em eletr\u00f4nica"
+    },
+    {
+        "codigo": "3133",
+        "funcao": "T\u00e9cnicos em telecomunica\u00e7\u00f5es"
+    },
+    {
+        "codigo": "3134",
+        "funcao": "T\u00e9cnicos em calibra\u00e7\u00e3o e instrumenta\u00e7\u00e3o"
+    },
+    {
+        "codigo": "3135",
+        "funcao": "T\u00e9cnicos em fot\u00f4nica"
+    },
+    {
+        "codigo": "3141",
+        "funcao": "T\u00e9cnicos mec\u00e2nicos na fabrica\u00e7\u00e3o e montagem de m\u00e1quinas, sistemas e instrumentos"
+    },
+    {
+        "codigo": "3142",
+        "funcao": "T\u00e9cnicos mec\u00e2nicos (ferramentas)"
+    },
+    {
+        "codigo": "3143",
+        "funcao": "T\u00e9cnicos em mec\u00e2nica veicular"
+    },
+    {
+        "codigo": "3144",
+        "funcao": "T\u00e9cnicos mec\u00e2nicos na manuten\u00e7\u00e3o de m\u00e1quinas, sistemas e instrumentos"
+    },
+    {
+        "codigo": "3146",
+        "funcao": "T\u00e9cnicos em metalurgia (estruturas met\u00e1licas)"
+    },
+    {
+        "codigo": "3147",
+        "funcao": "T\u00e9cnicos em siderurgia"
+    },
+    {
+        "codigo": "3161",
+        "funcao": "T\u00e9cnicos em geologia"
+    },
+    {
+        "codigo": "3163",
+        "funcao": "T\u00e9cnicos em minera\u00e7\u00e3o"
+    },
+    {
+        "codigo": "3171",
+        "funcao": "T\u00e9cnicos de desenvolvimento de sistemas e aplica\u00e7\u00f5es"
+    },
+    {
+        "codigo": "3172",
+        "funcao": "T\u00e9cnicos em opera\u00e7\u00e3o e monitora\u00e7\u00e3o de computadores"
+    },
+    {
+        "codigo": "3180",
+        "funcao": "Desenhistas t\u00e9cnicos, em geral"
+    },
+    {
+        "codigo": "3181",
+        "funcao": "Desenhistas t\u00e9cnicos da constru\u00e7\u00e3o civil e arquitetura"
+    },
+    {
+        "codigo": "3182",
+        "funcao": "Desenhistas t\u00e9cnicos da mec\u00e2nica"
+    },
+    {
+        "codigo": "3183",
+        "funcao": "Desenhistas t\u00e9cnicos em eletricidade, eletr\u00f4nica, eletromec\u00e2nica, calefa\u00e7\u00e3o, ventila\u00e7\u00e3o e refrigera\u00e7\u00e3o"
+    },
+    {
+        "codigo": "3184",
+        "funcao": "Desenhistas t\u00e9cnicos de produtos e servi\u00e7os diversos"
+    },
+    {
+        "codigo": "3185",
+        "funcao": "Desenhistas projetistas de constru\u00e7\u00e3o civil e arquitetura"
+    },
+    {
+        "codigo": "3186",
+        "funcao": "Desenhistas projetistas da mec\u00e2nica"
+    },
+    {
+        "codigo": "3187",
+        "funcao": "Desenhistas projetistas da eletr\u00f4nica"
+    },
+    {
+        "codigo": "3188",
+        "funcao": "Desenhistas projetistas e modelistas de produtos e servi\u00e7os diversos"
+    },
+    {
+        "codigo": "3191",
+        "funcao": "T\u00e9cnicos do vestu\u00e1rio"
+    },
+    {
+        "codigo": "3192",
+        "funcao": "T\u00e9cnicos do mobili\u00e1rio e afins"
+    },
+    {
+        "codigo": "3201",
+        "funcao": "T\u00e9cnicos em biologia"
+    },
+    {
+        "codigo": "3211",
+        "funcao": "T\u00e9cnicos agr\u00edcolas"
+    },
+    {
+        "codigo": "3212",
+        "funcao": "T\u00e9cnicos florestais"
+    },
+    {
+        "codigo": "3213",
+        "funcao": "T\u00e9cnicos em aq\u00fcicultura"
+    },
+    {
+        "codigo": "3221",
+        "funcao": "Tecn\u00f3logos e t\u00e9cnicos em terapias complementares e est\u00e9ticas"
+    },
+    {
+        "codigo": "3222",
+        "funcao": "T\u00e9cnicos e auxiliares de enfermagem"
+    },
+    {
+        "codigo": "3223",
+        "funcao": "T\u00e9cnicos em \u00f3ptica e optometria"
+    },
+    {
+        "codigo": "3224",
+        "funcao": "T\u00e9cnicos de odontologia"
+    },
+    {
+        "codigo": "3225",
+        "funcao": "T\u00e9cnicos em pr\u00f3teses ortop\u00e9dicas"
+    },
+    {
+        "codigo": "3226",
+        "funcao": "T\u00e9cnicos de imobiliza\u00e7\u00f5es ortop\u00e9dicas"
+    },
+    {
+        "codigo": "3231",
+        "funcao": "T\u00e9cnicos em pecu\u00e1ria"
+    },
+    {
+        "codigo": "3241",
+        "funcao": "Tecn\u00f3logos e t\u00e9cnicos em m\u00e9todos de diagn\u00f3sticos e terap\u00eautica"
+    },
+    {
+        "codigo": "3242",
+        "funcao": "T\u00e9cnicos de laborat\u00f3rios de sa\u00fade e bancos de sangue"
+    },
+    {
+        "codigo": "3250",
+        "funcao": "En\u00f3logos, perfumistas e aromistas"
+    },
+    {
+        "codigo": "3251",
+        "funcao": "T\u00e9cnico em farm\u00e1cia e em manipula\u00e7\u00e3o farmac\u00eautica"
+    },
+    {
+        "codigo": "3252",
+        "funcao": "T\u00e9cnicos em produ\u00e7\u00e3o, conserva\u00e7\u00e3o  e de qualidade de alimentos"
+    },
+    {
+        "codigo": "3253",
+        "funcao": "T\u00e9cnicos de apoio \u00e0 biotecnologia"
+    },
+    {
+        "codigo": "3281",
+        "funcao": "T\u00e9cnicos em necr\u00f3psia e taxidermistas"
+    },
+    {
+        "codigo": "3311",
+        "funcao": "Professores de n\u00edvel m\u00e9dio na educa\u00e7\u00e3o infantil"
+    },
+    {
+        "codigo": "3312",
+        "funcao": "Professores de n\u00edvel m\u00e9dio no ensino fundamental"
+    },
+    {
+        "codigo": "3313",
+        "funcao": "Professores de n\u00edvel m\u00e9dio no ensino profissionalizante"
+    },
+    {
+        "codigo": "3321",
+        "funcao": "Professores leigos no ensino fundamental"
+    },
+    {
+        "codigo": "3322",
+        "funcao": "Professores pr\u00e1ticos no ensino profissionalizante"
+    },
+    {
+        "codigo": "3331",
+        "funcao": "Instrutores e professores de cursos livres"
+    },
+    {
+        "codigo": "3341",
+        "funcao": "Inspetores de alunos e afins"
+    },
+    {
+        "codigo": "3411",
+        "funcao": "Pilotos de avia\u00e7\u00e3o comercial, mec\u00e2nicos de v\u00f4o e afins"
+    },
+    {
+        "codigo": "3412",
+        "funcao": "T\u00e9cnicos mar\u00edtimos, fluvi\u00e1rios e pescadores de conv\u00e9s"
+    },
+    {
+        "codigo": "3413",
+        "funcao": "T\u00e9cnicos mar\u00edtimos e fluvi\u00e1rios de m\u00e1quinas"
+    },
+    {
+        "codigo": "3421",
+        "funcao": "Especialistas em log\u00edstica de transportes"
+    },
+    {
+        "codigo": "3422",
+        "funcao": "Despachantes aduaneiros"
+    },
+    {
+        "codigo": "3423",
+        "funcao": "T\u00e9cnicos em transportes rodovi\u00e1rios"
+    },
+    {
+        "codigo": "3424",
+        "funcao": "T\u00e9cnicos em transportes metroferrovi\u00e1rios"
+    },
+    {
+        "codigo": "3425",
+        "funcao": "T\u00e9cnicos em transportes a\u00e9reos"
+    },
+    {
+        "codigo": "3426",
+        "funcao": "T\u00e9cnicos em transportes por vias naveg\u00e1veis e opera\u00e7\u00f5es portu\u00e1rias"
+    },
+    {
+        "codigo": "3511",
+        "funcao": "T\u00e9cnicos em contabilidade"
+    },
+    {
+        "codigo": "3513",
+        "funcao": "T\u00e9cnicos em administra\u00e7\u00e3o"
+    },
+    {
+        "codigo": "3514",
+        "funcao": "Serventu\u00e1rios da justi\u00e7a e afins"
+    },
+    {
+        "codigo": "3515",
+        "funcao": "T\u00e9cnicos em secretariado, taqu\u00edgrafos e estenotipistas"
+    },
+    {
+        "codigo": "3516",
+        "funcao": "T\u00e9cnicos em seguran\u00e7a do trabalho"
+    },
+    {
+        "codigo": "3517",
+        "funcao": "T\u00e9cnicos de seguros e afins"
+    },
+    {
+        "codigo": "3518",
+        "funcao": "Agentes de investiga\u00e7\u00e3o e identifica\u00e7\u00e3o"
+    },
+    {
+        "codigo": "3519",
+        "funcao": "T\u00e9cnicos da intelig\u00eancia"
+    },
+    {
+        "codigo": "3522",
+        "funcao": "Agentes da sa\u00fade e do meio ambiente"
+    },
+    {
+        "codigo": "3523",
+        "funcao": "Agentes  fiscais metrol\u00f3gicos e de qualidade"
+    },
+    {
+        "codigo": "3524",
+        "funcao": "Profissionais de direitos autorais e de avaliac\u00e3o de produtos dos meios de comunica\u00e7\u00e3o"
+    },
+    {
+        "codigo": "3532",
+        "funcao": "T\u00e9cnicos em opera\u00e7\u00f5es e servi\u00e7os banc\u00e1rios"
+    },
+    {
+        "codigo": "3541",
+        "funcao": "Especialistas em promo\u00e7\u00e3o de produtos e vendas"
+    },
+    {
+        "codigo": "3542",
+        "funcao": "Compradores"
+    },
+    {
+        "codigo": "3543",
+        "funcao": "Analistas de com\u00e9rcio exterior"
+    },
+    {
+        "codigo": "3544",
+        "funcao": "Leiloeiros e avaliadores"
+    },
+    {
+        "codigo": "3545",
+        "funcao": "Corretores de seguros"
+    },
+    {
+        "codigo": "3546",
+        "funcao": "Corretores de im\u00f3veis"
+    },
+    {
+        "codigo": "3547",
+        "funcao": "Representantes comerciais aut\u00f4nomos"
+    },
+    {
+        "codigo": "3548",
+        "funcao": "T\u00e9cnicos em servi\u00e7os de turismo e organiza\u00e7\u00e3o de eventos"
+    },
+    {
+        "codigo": "3711",
+        "funcao": "T\u00e9cnicos em biblioteconomia"
+    },
+    {
+        "codigo": "3712",
+        "funcao": "T\u00e9cnicos em museologia e afins"
+    },
+    {
+        "codigo": "3713",
+        "funcao": "T\u00e9cnicos em artes gr\u00e1ficas"
+    },
+    {
+        "codigo": "3714",
+        "funcao": "Recreadores"
+    },
+    {
+        "codigo": "3721",
+        "funcao": "Captadores de imagens em movimento"
+    },
+    {
+        "codigo": "3722",
+        "funcao": "Operadores de rede de teleprocessamento e afins"
+    },
+    {
+        "codigo": "3731",
+        "funcao": "T\u00e9cnicos de opera\u00e7\u00e3o de emissoras de r\u00e1dio"
+    },
+    {
+        "codigo": "3732",
+        "funcao": "T\u00e9cnicos em opera\u00e7\u00e3o de sistemas de televis\u00e3o e de produtoras de v\u00eddeo"
+    },
+    {
+        "codigo": "3741",
+        "funcao": "T\u00e9cnicos em \u00e1udio"
+    },
+    {
+        "codigo": "3742",
+        "funcao": "T\u00e9cnicos em cenografia"
+    },
+    {
+        "codigo": "3743",
+        "funcao": "T\u00e9cnicos em opera\u00e7\u00e3o de aparelhos de proje\u00e7\u00e3o"
+    },
+    {
+        "codigo": "3744",
+        "funcao": "T\u00e9cnicos em montagem, edi\u00e7\u00e3o e finaliza\u00e7\u00e3o de filme e v\u00eddeo"
+    },
+    {
+        "codigo": "3751",
+        "funcao": "Designers de interiores, de vitrines e visual merchandiser e afins (n\u00edvel m\u00e9dio)"
+    },
+    {
+        "codigo": "3761",
+        "funcao": "Dan\u00e7arinos tradicionais e populares"
+    },
+    {
+        "codigo": "3762",
+        "funcao": "Artistas de circo (circenses)"
+    },
+    {
+        "codigo": "3763",
+        "funcao": "Apresentadores de eventos, programas e espet\u00e1culos"
+    },
+    {
+        "codigo": "3764",
+        "funcao": "Modelos"
+    },
+    {
+        "codigo": "3771",
+        "funcao": "Atletas profissionais"
+    },
+    {
+        "codigo": "3772",
+        "funcao": "\u00c1rbitros desportivos"
+    },
+    {
+        "codigo": "3911",
+        "funcao": "T\u00e9cnicos de planejamento e controle de produ\u00e7\u00e3o"
+    },
+    {
+        "codigo": "3912",
+        "funcao": "T\u00e9cnicos de controle da produ\u00e7\u00e3o"
+    },
+    {
+        "codigo": "3951",
+        "funcao": "T\u00e9cnicos de apoio em pesquisa e desenvolvimento"
+    },
+    {
+        "codigo": "4101",
+        "funcao": "Supervisores administrativos"
+    },
+    {
+        "codigo": "4102",
+        "funcao": "Supervisores de servi\u00e7os financeiros, de c\u00e2mbio e de controle"
+    },
+    {
+        "codigo": "4110",
+        "funcao": "Agentes, assistentes e auxiliares administrativos"
+    },
+    {
+        "codigo": "4121",
+        "funcao": "Operadores de equipamentos de entrada e transmiss\u00e3o de dados"
+    },
+    {
+        "codigo": "4122",
+        "funcao": "Cont\u00ednuos"
+    },
+    {
+        "codigo": "4131",
+        "funcao": "Auxiliares de contabilidade"
+    },
+    {
+        "codigo": "4132",
+        "funcao": "Escritur\u00e1rios de servi\u00e7os banc\u00e1rios"
+    },
+    {
+        "codigo": "4141",
+        "funcao": "Almoxarifes e armazenistas"
+    },
+    {
+        "codigo": "4142",
+        "funcao": "Apontadores e conferentes"
+    },
+    {
+        "codigo": "4151",
+        "funcao": "Auxiliares de servi\u00e7os de documenta\u00e7\u00e3o, informa\u00e7\u00e3o e pesquisa"
+    },
+    {
+        "codigo": "4152",
+        "funcao": "Trabalhadores nos servi\u00e7os de classifica\u00e7\u00e3o e entregas de correspond\u00eancias, encomendas e publica\u00e7\u00f5es"
+    },
+    {
+        "codigo": "4201",
+        "funcao": "Supervisores de atendimento ao p\u00fablico e de pesquisa"
+    },
+    {
+        "codigo": "4211",
+        "funcao": "Caixas e bilheteiros (exceto caixa de banco)"
+    },
+    {
+        "codigo": "4212",
+        "funcao": "Coletadores de apostas e de jogos"
+    },
+    {
+        "codigo": "4213",
+        "funcao": "Cobradores e afins"
+    },
+    {
+        "codigo": "4221",
+        "funcao": "Recepcionistas"
+    },
+    {
+        "codigo": "4222",
+        "funcao": "Operadores de telefonia"
+    },
+    {
+        "codigo": "4223",
+        "funcao": "Operadores de telemarketing"
+    },
+    {
+        "codigo": "4231",
+        "funcao": "Despachantes documentalistas e afins"
+    },
+    {
+        "codigo": "4241",
+        "funcao": "Entrevistadores e recenseadores"
+    },
+    {
+        "codigo": "4242",
+        "funcao": "Aplicadores de provas e afins"
+    },
+    {
+        "codigo": "5101",
+        "funcao": "Supervisores dos servi\u00e7os de transporte, turismo, hotelaria e administra\u00e7\u00e3o de edif\u00edcios"
+    },
+    {
+        "codigo": "5102",
+        "funcao": "Supervisores de lavanderia"
+    },
+    {
+        "codigo": "5103",
+        "funcao": "Supervisores dos servi\u00e7os de prote\u00e7\u00e3o, seguran\u00e7a e outros"
+    },
+    {
+        "codigo": "5111",
+        "funcao": "Trabalhadores de seguran\u00e7a e atendimento aos usu\u00e1rios nos transportes"
+    },
+    {
+        "codigo": "5112",
+        "funcao": "Fiscais e cobradores dos transportes coletivos"
+    },
+    {
+        "codigo": "5114",
+        "funcao": "Guias de turismo"
+    },
+    {
+        "codigo": "5115",
+        "funcao": "Condutores de turismo"
+    },
+    {
+        "codigo": "5121",
+        "funcao": "Trabalhadores dos servi\u00e7os dom\u00e9sticos em geral"
+    },
+    {
+        "codigo": "5131",
+        "funcao": "Mordomos e governantas"
+    },
+    {
+        "codigo": "5132",
+        "funcao": "Cozinheiros"
+    },
+    {
+        "codigo": "5133",
+        "funcao": "Camareiros, roupeiros e afins"
+    },
+    {
+        "codigo": "5134",
+        "funcao": "Trabalhadores no atendimento em estabelecimentos de servi\u00e7os de alimenta\u00e7\u00e3o, bebidas e hotelaria"
+    },
+    {
+        "codigo": "5135",
+        "funcao": "Trabalhadores auxiliares nos servi\u00e7os de alimenta\u00e7\u00e3o"
+    },
+    {
+        "codigo": "5136",
+        "funcao": "Churrasqueiros, pizzaiolos e sushimen"
+    },
+    {
+        "codigo": "5141",
+        "funcao": "Trabalhadores nos servi\u00e7os de administra\u00e7\u00e3o de edif\u00edcios"
+    },
+    {
+        "codigo": "5142",
+        "funcao": "Trabalhadores nos servi\u00e7os de coleta de res\u00edduos, de limpeza e conserva\u00e7\u00e3o de \u00e1reas p\u00fablicas"
+    },
+    {
+        "codigo": "5143",
+        "funcao": "Trabalhadores nos  servi\u00e7os de manuten\u00e7\u00e3o de edifica\u00e7\u00f5es"
+    },
+    {
+        "codigo": "5151",
+        "funcao": "Trabalhadores em servi\u00e7os de promo\u00e7\u00e3o e apoio \u00e0 sa\u00fade"
+    },
+    {
+        "codigo": "5152",
+        "funcao": "Auxiliares de laborat\u00f3rio da sa\u00fade"
+    },
+    {
+        "codigo": "5153",
+        "funcao": "Trabalhadores de aten\u00e7\u00e3o, defesa e prote\u00e7\u00e3o a pessoas em situa\u00e7\u00e3o de risco e adolescentes em conflito com a lei"
+    },
+    {
+        "codigo": "5161",
+        "funcao": "Trabalhadores nos servi\u00e7os de embelezamento e higiene"
+    },
+    {
+        "codigo": "5162",
+        "funcao": "Cuidadores de crian\u00e7as, jovens, adultos e idosos"
+    },
+    {
+        "codigo": "5163",
+        "funcao": "Tintureiros, lavadeiros e afins, a m\u00e1quina"
+    },
+    {
+        "codigo": "5164",
+        "funcao": "Lavadores e passadores de roupa, a m\u00e3o"
+    },
+    {
+        "codigo": "5165",
+        "funcao": "Trabalhadores dos servi\u00e7os funer\u00e1rios"
+    },
+    {
+        "codigo": "5166",
+        "funcao": "Trabalhadores auxiliares dos servi\u00e7os funer\u00e1rios"
+    },
+    {
+        "codigo": "5167",
+        "funcao": "Astr\u00f3logos e numer\u00f3logos"
+    },
+    {
+        "codigo": "5168",
+        "funcao": "Esot\u00e9ricos e paranormais"
+    },
+    {
+        "codigo": "5171",
+        "funcao": "Bombeiros e salva-vidas"
+    },
+    {
+        "codigo": "5172",
+        "funcao": "Policiais, guardas-civis municipais e agentes de tr\u00e2nsito"
+    },
+    {
+        "codigo": "5173",
+        "funcao": "Vigilantes e guardas de seguran\u00e7a"
+    },
+    {
+        "codigo": "5174",
+        "funcao": "Porteiros, vigias e afins"
+    },
+    {
+        "codigo": "5191",
+        "funcao": "Motociclistas e ciclistas de entregas r\u00e1pidas"
+    },
+    {
+        "codigo": "5192",
+        "funcao": "Trabalhadores da coleta e sele\u00e7\u00e3o de material recicl\u00e1vel"
+    },
+    {
+        "codigo": "5193",
+        "funcao": "Trabalhadores de servi\u00e7os veterin\u00e1rios, de higiene e est\u00e9tica de animais dom\u00e9sticos"
+    },
+    {
+        "codigo": "5198",
+        "funcao": "Profissionais do sexo"
+    },
+    {
+        "codigo": "5199",
+        "funcao": "Outros trabalhadores dos servi\u00e7os"
+    },
+    {
+        "codigo": "5201",
+        "funcao": "Supervisores de vendas e de presta\u00e7\u00e3o de servi\u00e7os"
+    },
+    {
+        "codigo": "5211",
+        "funcao": "Operadores do com\u00e9rcio em lojas e mercados"
+    },
+    {
+        "codigo": "5231",
+        "funcao": "Instaladores de produtos e acess\u00f3rios"
+    },
+    {
+        "codigo": "5241",
+        "funcao": "Vendedores em domic\u00edlio"
+    },
+    {
+        "codigo": "5242",
+        "funcao": "Vendedores em bancas, quiosques e barracas"
+    },
+    {
+        "codigo": "5243",
+        "funcao": "Vendedores ambulantes"
+    },
+    {
+        "codigo": "6110",
+        "funcao": "Produtores agropecu\u00e1rios em geral"
+    },
+    {
+        "codigo": "6120",
+        "funcao": "Produtores agr\u00edcolas polivalentes"
+    },
+    {
+        "codigo": "6121",
+        "funcao": "Produtores agr\u00edcolas na cultura de gram\u00edneas"
+    },
+    {
+        "codigo": "6122",
+        "funcao": "Produtores agr\u00edcolas na cultura de plantas fibrosas"
+    },
+    {
+        "codigo": "6123",
+        "funcao": "Produtores agr\u00edcolas na olericultura"
+    },
+    {
+        "codigo": "6124",
+        "funcao": "Produtores agr\u00edcolas no cultivo de flores e plantas ornamentais"
+    },
+    {
+        "codigo": "6125",
+        "funcao": "Produtores agr\u00edcolas na fruticultura"
+    },
+    {
+        "codigo": "6126",
+        "funcao": "Produtores agr\u00edcolas na cultura de plantas estimulantes"
+    },
+    {
+        "codigo": "6127",
+        "funcao": "Produtores agr\u00edcolas na cultura de plantas oleaginosas"
+    },
+    {
+        "codigo": "6128",
+        "funcao": "Produtores de especiarias e de plantas arom\u00e1ticas e medicinais"
+    },
+    {
+        "codigo": "6130",
+        "funcao": "Produtores em pecu\u00e1ria polivalente"
+    },
+    {
+        "codigo": "6131",
+        "funcao": "Produtores em pecu\u00e1ria de animais de grande porte"
+    },
+    {
+        "codigo": "6132",
+        "funcao": "Produtores em pecu\u00e1ria de animais de m\u00e9dio porte"
+    },
+    {
+        "codigo": "6133",
+        "funcao": "Produtores da avicultura e cunicultura"
+    },
+    {
+        "codigo": "6134",
+        "funcao": "Produtores de animais e insetos \u00fateis"
+    },
+    {
+        "codigo": "6201",
+        "funcao": "Supervisores na explora\u00e7\u00e3o agropecu\u00e1ria"
+    },
+    {
+        "codigo": "6210",
+        "funcao": "Trabalhadores agropecu\u00e1rios em geral"
+    },
+    {
+        "codigo": "6220",
+        "funcao": "Trabalhadores de apoio \u00e0 agricultura"
+    },
+    {
+        "codigo": "6221",
+        "funcao": "Trabalhadores agr\u00edcolas na cultura de gram\u00edneas"
+    },
+    {
+        "codigo": "6222",
+        "funcao": "Trabalhadores agr\u00edcolas na cultura de plantas fibrosas"
+    },
+    {
+        "codigo": "6223",
+        "funcao": "Trabalhadores agr\u00edcolas na olericultura"
+    },
+    {
+        "codigo": "6224",
+        "funcao": "Trabalhadores agr\u00edcolas no cultivo de flores e plantas ornamentais"
+    },
+    {
+        "codigo": "6225",
+        "funcao": "Trabalhadores agr\u00edcolas na fruticultura"
+    },
+    {
+        "codigo": "6226",
+        "funcao": "Trabalhadores agr\u00edcolas nas culturas de plantas estimulantes"
+    },
+    {
+        "codigo": "6227",
+        "funcao": "Trabalhadores agr\u00edcolas na cultura de plantas oleaginosas"
+    },
+    {
+        "codigo": "6228",
+        "funcao": "Trabalhadores agr\u00edcolas da cultura de especiarias e de plantas arom\u00e1ticas e medicinais"
+    },
+    {
+        "codigo": "6230",
+        "funcao": "Tratadores polivalentes de animais"
+    },
+    {
+        "codigo": "6231",
+        "funcao": "Trabalhadores na pecu\u00e1ria de animais de grande porte"
+    },
+    {
+        "codigo": "6232",
+        "funcao": "Trabalhadores na pecu\u00e1ria de animais de m\u00e9dio porte"
+    },
+    {
+        "codigo": "6233",
+        "funcao": "Trabalhadores na avicultura e cunicultura"
+    },
+    {
+        "codigo": "6234",
+        "funcao": "Trabalhadores na cria\u00e7\u00e3o de insetos e animais \u00fateis"
+    },
+    {
+        "codigo": "6301",
+        "funcao": "Supervisores na \u00e1rea florestal e aq\u00fcicultura"
+    },
+    {
+        "codigo": "6310",
+        "funcao": "Pescadores polivalentes"
+    },
+    {
+        "codigo": "6311",
+        "funcao": "Pescadores profissionais artesanais de \u00e1gua doce"
+    },
+    {
+        "codigo": "6312",
+        "funcao": "Pescadores de \u00e1gua costeira e alto mar"
+    },
+    {
+        "codigo": "6313",
+        "funcao": "Criadores de animais aqu\u00e1ticos"
+    },
+    {
+        "codigo": "6314",
+        "funcao": "Trabalhadores de apoio \u00e0 pesca"
+    },
+    {
+        "codigo": "6320",
+        "funcao": "Trabalhadores florestais polivalentes"
+    },
+    {
+        "codigo": "6321",
+        "funcao": "Extrativistas e reflorestadores de esp\u00e9cies produtoras de madeira"
+    },
+    {
+        "codigo": "6322",
+        "funcao": "Extrativistas florestais de esp\u00e9cies produtoras de gomas e resinas"
+    },
+    {
+        "codigo": "6323",
+        "funcao": "Extrativistas florestais de esp\u00e9cies produtoras de fibras, ceras e \u00f3leos"
+    },
+    {
+        "codigo": "6324",
+        "funcao": "Extrativistas florestais de esp\u00e9cies produtoras de alimentos silvestres"
+    },
+    {
+        "codigo": "6325",
+        "funcao": "Extrativistas florestais de esp\u00e9cies produtoras de subst\u00e2ncias arom\u00e1ticas, medicinais e t\u00f3xicas"
+    },
+    {
+        "codigo": "6326",
+        "funcao": "Carvoejadores"
+    },
+    {
+        "codigo": "6410",
+        "funcao": "Trabalhadores da mecaniza\u00e7\u00e3o agr\u00edcola"
+    },
+    {
+        "codigo": "6420",
+        "funcao": "Trabalhadores da mecaniza\u00e7\u00e3o florestal"
+    },
+    {
+        "codigo": "6430",
+        "funcao": "Trabalhadores da irriga\u00e7\u00e3o e drenagem"
+    },
+    {
+        "codigo": "7101",
+        "funcao": "Supervisores da extra\u00e7\u00e3o mineral"
+    },
+    {
+        "codigo": "7102",
+        "funcao": "Supervisores da constru\u00e7\u00e3o civil"
+    },
+    {
+        "codigo": "7111",
+        "funcao": "Trabalhadores da extra\u00e7\u00e3o de minerais s\u00f3lidos"
+    },
+    {
+        "codigo": "7112",
+        "funcao": "Trabalhadores de extra\u00e7\u00e3o de minerais s\u00f3lidos (operadores de m\u00e1quinas)"
+    },
+    {
+        "codigo": "7113",
+        "funcao": "Trabalhadores da extra\u00e7\u00e3o de minerais l\u00edquidos e gasosos"
+    },
+    {
+        "codigo": "7114",
+        "funcao": "Garimpeiros e operadores de salinas"
+    },
+    {
+        "codigo": "7121",
+        "funcao": "Trabalhadores de beneficiamento de min\u00e9rios"
+    },
+    {
+        "codigo": "7122",
+        "funcao": "Trabalhadores de beneficiamento de pedras ornamentais"
+    },
+    {
+        "codigo": "7151",
+        "funcao": "Trabalhadores na opera\u00e7\u00e3o de m\u00e1quinas de terraplenagem e funda\u00e7\u00f5es"
+    },
+    {
+        "codigo": "7152",
+        "funcao": "Trabalhadores de estruturas de alvenaria"
+    },
+    {
+        "codigo": "7153",
+        "funcao": "Montadores de estruturas de concreto armado"
+    },
+    {
+        "codigo": "7154",
+        "funcao": "Trabalhadores na opera\u00e7\u00e3o de m\u00e1quinas de concreto usinado"
+    },
+    {
+        "codigo": "7155",
+        "funcao": "Trabalhadores de montagem de estruturas de madeira, metal e comp\u00f3sitos em obras civis"
+    },
+    {
+        "codigo": "7156",
+        "funcao": "Trabalhadores de instala\u00e7\u00f5es el\u00e9tricas"
+    },
+    {
+        "codigo": "7157",
+        "funcao": "Aplicadores de materiais isolantes"
+    },
+    {
+        "codigo": "7161",
+        "funcao": "Revestidores de concreto"
+    },
+    {
+        "codigo": "7162",
+        "funcao": "Telhadores (revestimentos r\u00edgidos)"
+    },
+    {
+        "codigo": "7163",
+        "funcao": "Vidraceiros (revestimentos r\u00edgidos)"
+    },
+    {
+        "codigo": "7164",
+        "funcao": "Gesseiros"
+    },
+    {
+        "codigo": "7165",
+        "funcao": "Aplicadores de revestimentos cer\u00e2micos, pastilhas, pedras e madeiras"
+    },
+    {
+        "codigo": "7166",
+        "funcao": "Pintores de obras e revestidores de interiores (revestimentos flex\u00edveis)"
+    },
+    {
+        "codigo": "7170",
+        "funcao": "Ajudantes de obras civis"
+    },
+    {
+        "codigo": "7201",
+        "funcao": "Supervisores de usinagem, conforma\u00e7\u00e3o e tratamento de metais"
+    },
+    {
+        "codigo": "7202",
+        "funcao": "Supervisores da fabrica\u00e7\u00e3o e montagem metalmec\u00e2nica"
+    },
+    {
+        "codigo": "7211",
+        "funcao": "Ferramenteiros e afins"
+    },
+    {
+        "codigo": "7212",
+        "funcao": "Preparadores e operadores de m\u00e1quinas-ferramenta convencionais"
+    },
+    {
+        "codigo": "7213",
+        "funcao": "Afiadores e polidores de metais"
+    },
+    {
+        "codigo": "7214",
+        "funcao": "Operadores de m\u00e1quinas de usinagem cnc"
+    },
+    {
+        "codigo": "7221",
+        "funcao": "Trabalhadores de forjamento de metais"
+    },
+    {
+        "codigo": "7222",
+        "funcao": "Trabalhadores de fundi\u00e7\u00e3o de metais puros e de ligas met\u00e1licas"
+    },
+    {
+        "codigo": "7223",
+        "funcao": "Trabalhadores de moldagem de metais e de ligas met\u00e1licas"
+    },
+    {
+        "codigo": "7224",
+        "funcao": "Trabalhadores de trefila\u00e7\u00e3o e estiramento de metais puros e ligas met\u00e1licas"
+    },
+    {
+        "codigo": "7231",
+        "funcao": "Trabalhadores de tratamento t\u00e9rmico de metais"
+    },
+    {
+        "codigo": "7232",
+        "funcao": "Trabalhadores de tratamento de superf\u00edcies de metais e de comp\u00f3sitos (termoqu\u00edmicos)"
+    },
+    {
+        "codigo": "7233",
+        "funcao": "Trabalhadores da pintura de equipamentos, ve\u00edculos, estruturas met\u00e1licas e de comp\u00f3sitos"
+    },
+    {
+        "codigo": "7241",
+        "funcao": "Encanadores e instaladores de tubula\u00e7\u00f5es"
+    },
+    {
+        "codigo": "7242",
+        "funcao": "Trabalhadores de tra\u00e7agem e montagem de estruturas met\u00e1licas e de comp\u00f3sitos"
+    },
+    {
+        "codigo": "7243",
+        "funcao": "Trabalhadores de soldagem e corte de ligas met\u00e1licas"
+    },
+    {
+        "codigo": "7244",
+        "funcao": "Trabalhadores de caldeiraria e serralheria"
+    },
+    {
+        "codigo": "7245",
+        "funcao": "Operadores de m\u00e1quinas de conforma\u00e7\u00e3o de metais"
+    },
+    {
+        "codigo": "7246",
+        "funcao": "Tran\u00e7adores e laceiros de cabos de a\u00e7o"
+    },
+    {
+        "codigo": "7250",
+        "funcao": "Ajustadores mec\u00e2nicos polivalentes"
+    },
+    {
+        "codigo": "7251",
+        "funcao": "Montadores de m\u00e1quinas, aparelhos e acess\u00f3rios em linhas de montagem"
+    },
+    {
+        "codigo": "7252",
+        "funcao": "Montadores de m\u00e1quinas industriais"
+    },
+    {
+        "codigo": "7253",
+        "funcao": "Montadores de m\u00e1quinas pesadas e equipamentos agr\u00edcolas"
+    },
+    {
+        "codigo": "7254",
+        "funcao": "Mec\u00e2nicos montadores de motores e turboalimentadores"
+    },
+    {
+        "codigo": "7255",
+        "funcao": "Montadores de ve\u00edculos automotores (linha de montagem)"
+    },
+    {
+        "codigo": "7256",
+        "funcao": "Montadores de sistemas e estruturas de aeronaves"
+    },
+    {
+        "codigo": "7257",
+        "funcao": "Instaladores de equipamentos de refrigera\u00e7\u00e3o e ventila\u00e7\u00e3o"
+    },
+    {
+        "codigo": "7301",
+        "funcao": "Supervisores de montagens e instala\u00e7\u00f5es eletroeletr\u00f4nicas"
+    },
+    {
+        "codigo": "7311",
+        "funcao": "Montadores de equipamentos eletroeletr\u00f4nicos"
+    },
+    {
+        "codigo": "7312",
+        "funcao": "Montadores de aparelhos de telecomunica\u00e7\u00f5es"
+    },
+    {
+        "codigo": "7313",
+        "funcao": "Instaladores-reparadores de  linhas e equipamentos de telecomunica\u00e7\u00f5es"
+    },
+    {
+        "codigo": "7321",
+        "funcao": "Instaladores e reparadores de linhas e cabos el\u00e9tricos, telef\u00f4nicos e de comunica\u00e7\u00e3o de dados"
+    },
+    {
+        "codigo": "7401",
+        "funcao": "Supervisores da mec\u00e2nica de precis\u00e3o e instrumentos musicais"
+    },
+    {
+        "codigo": "7411",
+        "funcao": "Mec\u00e2nicos de instrumentos de precis\u00e3o"
+    },
+    {
+        "codigo": "7421",
+        "funcao": "Confeccionadores de instrumentos musicais"
+    },
+    {
+        "codigo": "7501",
+        "funcao": "Supervisores de joalheria e afins"
+    },
+    {
+        "codigo": "7502",
+        "funcao": "Supervisores de vidraria, cer\u00e2mica e afins"
+    },
+    {
+        "codigo": "7510",
+        "funcao": "Joalheiros e lapidadores de gemas"
+    },
+    {
+        "codigo": "7511",
+        "funcao": "Artes\u00e3os de metais preciosos e semi-preciosos"
+    },
+    {
+        "codigo": "7521",
+        "funcao": "Sopradores, moldadores e modeladores de vidros e afins"
+    },
+    {
+        "codigo": "7522",
+        "funcao": "Trabalhadores da transforma\u00e7\u00e3o de vidros planos"
+    },
+    {
+        "codigo": "7523",
+        "funcao": "Ceramistas (prepara\u00e7\u00e3o e fabrica\u00e7\u00e3o)"
+    },
+    {
+        "codigo": "7524",
+        "funcao": "Vidreiros e ceramistas (arte e decora\u00e7\u00e3o)"
+    },
+    {
+        "codigo": "7601",
+        "funcao": "Supervisores da ind\u00fastria t\u00eaxtil"
+    },
+    {
+        "codigo": "7602",
+        "funcao": "Supervisores na ind\u00fastria do curtimento"
+    },
+    {
+        "codigo": "7603",
+        "funcao": "Supervisores na confec\u00e7\u00e3o do vestu\u00e1rio"
+    },
+    {
+        "codigo": "7604",
+        "funcao": "Supervisores na confec\u00e7\u00e3o de cal\u00e7ados"
+    },
+    {
+        "codigo": "7605",
+        "funcao": "Supervisores da confec\u00e7\u00e3o de artefatos de tecidos, couros e afins"
+    },
+    {
+        "codigo": "7606",
+        "funcao": "Supervisores das artes gr\u00e1ficas"
+    },
+    {
+        "codigo": "7610",
+        "funcao": "Trabalhadores polivalentes das ind\u00fastrias t\u00eaxteis"
+    },
+    {
+        "codigo": "7611",
+        "funcao": "Trabalhadores da classifica\u00e7\u00e3o de fibras t\u00eaxteis e lavagem de l\u00e3"
+    },
+    {
+        "codigo": "7612",
+        "funcao": "Operadores da fia\u00e7\u00e3o"
+    },
+    {
+        "codigo": "7613",
+        "funcao": "Operadores de tear e m\u00e1quinas similares"
+    },
+    {
+        "codigo": "7614",
+        "funcao": "Trabalhadores de acabamento, tingimento e estamparia das ind\u00fastrias t\u00eaxteis"
+    },
+    {
+        "codigo": "7618",
+        "funcao": "Inspetores e revisores de produ\u00e7\u00e3o t\u00eaxtil"
+    },
+    {
+        "codigo": "7620",
+        "funcao": "Trabalhadores polivalentes do curtimento de couros e peles"
+    },
+    {
+        "codigo": "7621",
+        "funcao": "Trabalhadores da prepara\u00e7\u00e3o do curtimento de couros e peles"
+    },
+    {
+        "codigo": "7622",
+        "funcao": "Trabalhadores do curtimento de couros e peles"
+    },
+    {
+        "codigo": "7623",
+        "funcao": "Trabalhadores do acabamento de couros e peles"
+    },
+    {
+        "codigo": "7630",
+        "funcao": "Profissionais polivalentes da confec\u00e7\u00e3o de roupas"
+    },
+    {
+        "codigo": "7631",
+        "funcao": "Trabalhadores da prepara\u00e7\u00e3o da confec\u00e7\u00e3o de roupas"
+    },
+    {
+        "codigo": "7632",
+        "funcao": "Operadores de m\u00e1quinas para costura de pe\u00e7as do vestu\u00e1rio"
+    },
+    {
+        "codigo": "7633",
+        "funcao": "Operadores de m\u00e1quinas para bordado e acabamento de roupas"
+    },
+    {
+        "codigo": "7640",
+        "funcao": "Trabalhadores polivalentes da confec\u00e7\u00e3o de cal\u00e7ados"
+    },
+    {
+        "codigo": "7641",
+        "funcao": "Trabalhadores da prepara\u00e7\u00e3o da confec\u00e7\u00e3o de cal\u00e7ados"
+    },
+    {
+        "codigo": "7642",
+        "funcao": "Operadores de m\u00e1quinas de costurar e montar cal\u00e7ados"
+    },
+    {
+        "codigo": "7643",
+        "funcao": "Trabalhadores de acabamento de cal\u00e7ados"
+    },
+    {
+        "codigo": "7650",
+        "funcao": "Trabalhadores polivalentes da confec\u00e7\u00e3o de artefatos de tecidos e couros"
+    },
+    {
+        "codigo": "7651",
+        "funcao": "Trabalhadores da prepara\u00e7\u00e3o de artefatos de tecidos, couros e tape\u00e7aria"
+    },
+    {
+        "codigo": "7652",
+        "funcao": "Trabalhadores da confec\u00e7\u00e3o de artefatos de tecidos, couros e sint\u00e9ticos"
+    },
+    {
+        "codigo": "7653",
+        "funcao": "Operadores de m\u00e1quinas na confec\u00e7\u00e3o de artefatos de  couro"
+    },
+    {
+        "codigo": "7654",
+        "funcao": "Trabalhadores do acabamento de artefatos de tecidos e couros"
+    },
+    {
+        "codigo": "7661",
+        "funcao": "Trabalhadores da pr\u00e9-impress\u00e3o gr\u00e1fica"
+    },
+    {
+        "codigo": "7662",
+        "funcao": "Trabalhadores da impress\u00e3o gr\u00e1fica"
+    },
+    {
+        "codigo": "7663",
+        "funcao": "Trabalhadores do acabamento gr\u00e1fico"
+    },
+    {
+        "codigo": "7664",
+        "funcao": "Trabalhadores de laborat\u00f3rio fotogr\u00e1fico e radiol\u00f3gico"
+    },
+    {
+        "codigo": "7681",
+        "funcao": "Trabalhadores de tecelagem manual, tric\u00f4, croch\u00ea, rendas e afins"
+    },
+    {
+        "codigo": "7682",
+        "funcao": "Trabalhadores artesanais da confec\u00e7\u00e3o de pe\u00e7as e tecidos"
+    },
+    {
+        "codigo": "7683",
+        "funcao": "Trabalhadores artesanais da confec\u00e7\u00e3o de cal\u00e7ados e artefatos de couros e peles"
+    },
+    {
+        "codigo": "7686",
+        "funcao": "Trabalhadores tipogr\u00e1ficos linotipistas e afins"
+    },
+    {
+        "codigo": "7687",
+        "funcao": "Encadernadores e recuperadores de livros (pequenos lotes ou a unidade)"
+    },
+    {
+        "codigo": "7701",
+        "funcao": "Supervisores em ind\u00fastria de madeira, mobili\u00e1rio e da carpintaria veicular"
+    },
+    {
+        "codigo": "7711",
+        "funcao": "Marceneiros e afins"
+    },
+    {
+        "codigo": "7721",
+        "funcao": "Trabalhadores de tratamento e prepara\u00e7\u00e3o da madeira"
+    },
+    {
+        "codigo": "7731",
+        "funcao": "Operadores de m\u00e1quinas de desdobramento da madeira"
+    },
+    {
+        "codigo": "7732",
+        "funcao": "Operadores de m\u00e1quinas de aglomera\u00e7\u00e3o e prensagem de chapas"
+    },
+    {
+        "codigo": "7733",
+        "funcao": "Operadores de usinagem convencional de madeira"
+    },
+    {
+        "codigo": "7734",
+        "funcao": "Operadores de m\u00e1quina de usinar madeira (produ\u00e7\u00e3o em s\u00e9rie)"
+    },
+    {
+        "codigo": "7735",
+        "funcao": "Operadores de m\u00e1quinas de usinagem de madeira cnc"
+    },
+    {
+        "codigo": "7741",
+        "funcao": "Montadores de m\u00f3veis e artefatos de madeira"
+    },
+    {
+        "codigo": "7751",
+        "funcao": "Trabalhadores de arte e  do acabamento em madeira do mobili\u00e1rio"
+    },
+    {
+        "codigo": "7764",
+        "funcao": "Confeccionadores de artefatos de madeira, m\u00f3veis de vime e afins"
+    },
+    {
+        "codigo": "7771",
+        "funcao": "Carpinteiros navais"
+    },
+    {
+        "codigo": "7772",
+        "funcao": "Carpinteiros de carrocerias e carretas"
+    },
+    {
+        "codigo": "7801",
+        "funcao": "Supervisores de trabalhadores de embalagem e etiquetagem"
+    },
+    {
+        "codigo": "7811",
+        "funcao": "Condutores de processos robotizados"
+    },
+    {
+        "codigo": "7813",
+        "funcao": "Operadores de ve\u00edculos subaqu\u00e1ticos controlados remotamente"
+    },
+    {
+        "codigo": "7817",
+        "funcao": "Trabalhadores subaqu\u00e1ticos"
+    },
+    {
+        "codigo": "7821",
+        "funcao": "Operadores de m\u00e1quinas e equipamentos de eleva\u00e7\u00e3o"
+    },
+    {
+        "codigo": "7822",
+        "funcao": "Operadores de equipamentos de movimenta\u00e7\u00e3o de cargas"
+    },
+    {
+        "codigo": "7823",
+        "funcao": "Motoristas de ve\u00edculos de pequeno e m\u00e9dio porte"
+    },
+    {
+        "codigo": "7824",
+        "funcao": "Motoristas de \u00f4nibus urbanos, metropolitanos e rodovi\u00e1rios"
+    },
+    {
+        "codigo": "7825",
+        "funcao": "Motoristas de ve\u00edculos de cargas em geral"
+    },
+    {
+        "codigo": "7826",
+        "funcao": "Operadores de ve\u00edculos sobre trilhos e cabos a\u00e9reos"
+    },
+    {
+        "codigo": "7827",
+        "funcao": "Trabalhadores aquavi\u00e1rios"
+    },
+    {
+        "codigo": "7828",
+        "funcao": "Condutores de animais e de ve\u00edculos de tra\u00e7\u00e3o animal e pedais"
+    },
+    {
+        "codigo": "7831",
+        "funcao": "Trabalhadores de manobras de transportes sobre trilhos"
+    },
+    {
+        "codigo": "7832",
+        "funcao": "Trabalhadores de cargas e descargas de mercadorias"
+    },
+    {
+        "codigo": "7841",
+        "funcao": "Trabalhadores de embalagem e de etiquetagem"
+    },
+    {
+        "codigo": "7842",
+        "funcao": "Alimentadores de linhas de produ\u00e7\u00e3o"
+    },
+    {
+        "codigo": "7911",
+        "funcao": "Artes\u00e3os"
+    },
+    {
+        "codigo": "8101",
+        "funcao": "Supervisores de produ\u00e7\u00e3o em ind\u00fastrias qu\u00edmicas, petroqu\u00edmicas e afins"
+    },
+    {
+        "codigo": "8102",
+        "funcao": "Supervisores de produ\u00e7\u00e3o em ind\u00fastrias de transforma\u00e7\u00e3o de pl\u00e1sticos e borrachas"
+    },
+    {
+        "codigo": "8103",
+        "funcao": "Supervisores de produ\u00e7\u00e3o em ind\u00fastrias de produtos farmac\u00eauticos, cosm\u00e9ticos e afins"
+    },
+    {
+        "codigo": "8110",
+        "funcao": "Operadores polivalentes de equipamentos em ind\u00fastrias qu\u00edmicas, petroqu\u00edmicas e afins"
+    },
+    {
+        "codigo": "8111",
+        "funcao": "Operadores de equipamentos de moagem e mistura de materiais (tratamentos qu\u00edmicos e afins)"
+    },
+    {
+        "codigo": "8112",
+        "funcao": "Operadores de calcina\u00e7\u00e3o e de tratamentos qu\u00edmicos de materiais radioativos"
+    },
+    {
+        "codigo": "8113",
+        "funcao": "Operadores de equipamentos de filtragem e separa\u00e7\u00e3o"
+    },
+    {
+        "codigo": "8114",
+        "funcao": "Operadores de equipamentos de destila\u00e7\u00e3o, evapora\u00e7\u00e3o e rea\u00e7\u00e3o"
+    },
+    {
+        "codigo": "8115",
+        "funcao": "Operadores de equipamentos de produ\u00e7\u00e3o e refino de petr\u00f3leo e g\u00e1s"
+    },
+    {
+        "codigo": "8116",
+        "funcao": "Operadores de equipamentos de coqueifica\u00e7\u00e3o"
+    },
+    {
+        "codigo": "8117",
+        "funcao": "Operadores de instala\u00e7\u00f5es e m\u00e1quinas de produtos pl\u00e1sticos, de borracha e moldadores de parafinas"
+    },
+    {
+        "codigo": "8118",
+        "funcao": "Operadores de m\u00e1quinas e instala\u00e7\u00f5es de produtos farmac\u00eauticos, cosm\u00e9ticos e afins"
+    },
+    {
+        "codigo": "8121",
+        "funcao": "Trabalhadores da fabrica\u00e7\u00e3o de muni\u00e7\u00e3o e explosivos qu\u00edmicos"
+    },
+    {
+        "codigo": "8131",
+        "funcao": "Operadores de processos das ind\u00fastrias de transforma\u00e7\u00e3o de produtos qu\u00edmicos, petroqu\u00edmicos e afins"
+    },
+    {
+        "codigo": "8181",
+        "funcao": "Laboratoristas industriais auxiliares"
+    },
+    {
+        "codigo": "8201",
+        "funcao": "Supervisores de produ\u00e7\u00e3o em ind\u00fastrias sider\u00fargicas"
+    },
+    {
+        "codigo": "8202",
+        "funcao": "Supervisores na fabrica\u00e7\u00e3o de materiais para constru\u00e7\u00e3o (vidros e cer\u00e2micas)"
+    },
+    {
+        "codigo": "8211",
+        "funcao": "Operadores de instala\u00e7\u00f5es de sinteriza\u00e7\u00e3o"
+    },
+    {
+        "codigo": "8212",
+        "funcao": "Operadores de fornos de primeira  fus\u00e3o e aciaria"
+    },
+    {
+        "codigo": "8213",
+        "funcao": "Operadores de equipamentos de lamina\u00e7\u00e3o"
+    },
+    {
+        "codigo": "8214",
+        "funcao": "Operadores de equipamentos de acabamento de chapas e metais"
+    },
+    {
+        "codigo": "8221",
+        "funcao": "Forneiros metal\u00fargicos (segunda fus\u00e3o e reaquecimento)"
+    },
+    {
+        "codigo": "8231",
+        "funcao": "Operadores na prepara\u00e7\u00e3o de massas para abrasivo, vidro, cer\u00e2mica, porcelana e materiais de constru\u00e7\u00e3o"
+    },
+    {
+        "codigo": "8232",
+        "funcao": "Operadores de equipamentos de fabrica\u00e7\u00e3o  e beneficiamento de cristais, vidros, cer\u00e2micas, porcelanas, fibras de vidro, abrasivos e afins"
+    },
+    {
+        "codigo": "8233",
+        "funcao": "Operadores de instala\u00e7\u00f5es e equipamentos de fabrica\u00e7\u00e3o de materiais de constru\u00e7\u00e3o"
+    },
+    {
+        "codigo": "8281",
+        "funcao": "Trabalhadores da fabrica\u00e7\u00e3o de cer\u00e2mica estrutural para constru\u00e7\u00e3o"
+    },
+    {
+        "codigo": "8301",
+        "funcao": "Supervisores da fabrica\u00e7\u00e3o de celulose e papel"
+    },
+    {
+        "codigo": "8311",
+        "funcao": "Preparadores de pasta para fabrica\u00e7\u00e3o de papel"
+    },
+    {
+        "codigo": "8321",
+        "funcao": "Operadores de m\u00e1quinas de fabricar papel e papel\u00e3o"
+    },
+    {
+        "codigo": "8331",
+        "funcao": "Operadores de m\u00e1quinas na fabrica\u00e7\u00e3o de produtos de papel e papel\u00e3o"
+    },
+    {
+        "codigo": "8332",
+        "funcao": "Trabalhadores artesanais de produtos de papel e papel\u00e3o"
+    },
+    {
+        "codigo": "8401",
+        "funcao": "Supervisores da fabrica\u00e7\u00e3o de alimentos, bebidas e fumo"
+    },
+    {
+        "codigo": "8411",
+        "funcao": "Trabalhadores da ind\u00fastria de beneficiamento de gr\u00e3os, cereais e afins"
+    },
+    {
+        "codigo": "8412",
+        "funcao": "Trabalhadores no beneficiamento do sal"
+    },
+    {
+        "codigo": "8413",
+        "funcao": "Trabalhadores na fabrica\u00e7\u00e3o e refino de a\u00e7\u00facar"
+    },
+    {
+        "codigo": "8414",
+        "funcao": "Trabalhadores na fabrica\u00e7\u00e3o e conserva\u00e7\u00e3o de alimentos"
+    },
+    {
+        "codigo": "8415",
+        "funcao": "Trabalhadores na pasteuriza\u00e7\u00e3o do leite e na fabrica\u00e7\u00e3o de latic\u00ednios  e afins"
+    },
+    {
+        "codigo": "8416",
+        "funcao": "Trabalhadores na industrializa\u00e7\u00e3o de caf\u00e9, cacau, mate e de produtos afins"
+    },
+    {
+        "codigo": "8417",
+        "funcao": "Trabalhadores na fabrica\u00e7\u00e3o de cacha\u00e7a, cerveja, vinhos e outras bebidas"
+    },
+    {
+        "codigo": "8418",
+        "funcao": "Operadores de equipamentos na fabrica\u00e7\u00e3o de p\u00e3es, massas aliment\u00edcias, doces, chocolates e achocolatados"
+    },
+    {
+        "codigo": "8421",
+        "funcao": "Cigarreiros e beneficiadores de fumo"
+    },
+    {
+        "codigo": "8422",
+        "funcao": "Charuteiros"
+    },
+    {
+        "codigo": "8481",
+        "funcao": "Trabalhadores artesanais na conserva\u00e7\u00e3o de alimentos"
+    },
+    {
+        "codigo": "8482",
+        "funcao": "Trabalhadores artesanais na pasteuriza\u00e7\u00e3o do leite e na fabrica\u00e7\u00e3o de latic\u00ednios e afins"
+    },
+    {
+        "codigo": "8483",
+        "funcao": "Padeiros, confeiteiros e afins"
+    },
+    {
+        "codigo": "8484",
+        "funcao": "Trabalhadores na degusta\u00e7\u00e3o e classifica\u00e7\u00e3o de gr\u00e3os e afins"
+    },
+    {
+        "codigo": "8485",
+        "funcao": "Magarefes e afins"
+    },
+    {
+        "codigo": "8486",
+        "funcao": "Trabalhadores artesanais na ind\u00fastria do fumo"
+    },
+    {
+        "codigo": "8601",
+        "funcao": "Supervisores da produ\u00e7\u00e3o de utilidades"
+    },
+    {
+        "codigo": "8611",
+        "funcao": "Operadores de instala\u00e7\u00f5es de gera\u00e7\u00e3o e distribui\u00e7\u00e3o de energia el\u00e9trica, hidr\u00e1ulica, t\u00e9rmica ou nuclear"
+    },
+    {
+        "codigo": "8612",
+        "funcao": "Operadores de instala\u00e7\u00f5es de distribui\u00e7\u00e3o de energia el\u00e9trica"
+    },
+    {
+        "codigo": "8621",
+        "funcao": "Operadores de m\u00e1quinas a vapor e utilidades"
+    },
+    {
+        "codigo": "8622",
+        "funcao": "Operadores de instala\u00e7\u00f5es de capta\u00e7\u00e3o, tratamento e distribui\u00e7\u00e3o de \u00e1gua"
+    },
+    {
+        "codigo": "8623",
+        "funcao": "Operadores de instala\u00e7\u00f5es de capta\u00e7\u00e3o e esgotos"
+    },
+    {
+        "codigo": "8624",
+        "funcao": "Operadores de instala\u00e7\u00f5es de extra\u00e7\u00e3o, processamento, envasamento e distribui\u00e7\u00e3o de gases"
+    },
+    {
+        "codigo": "8625",
+        "funcao": "Operadores de instala\u00e7\u00f5es de refrigera\u00e7\u00e3o e ar-condicionado"
+    },
+    {
+        "codigo": "9101",
+        "funcao": "Supervisores em servi\u00e7os de repara\u00e7\u00e3o e manuten\u00e7\u00e3o de m\u00e1quinas e equipamentos industriais, comerciais e residenciais"
+    },
+    {
+        "codigo": "9102",
+        "funcao": "Supervisores em servi\u00e7os de repara\u00e7\u00e3o e manuten\u00e7\u00e3o veicular"
+    },
+    {
+        "codigo": "9109",
+        "funcao": "Supervisores de outros trabalhadores de servi\u00e7os de repara\u00e7\u00e3o, conserva\u00e7\u00e3o e manuten\u00e7\u00e3o"
+    },
+    {
+        "codigo": "9111",
+        "funcao": "Mec\u00e2nicos de manuten\u00e7\u00e3o de bombas, motores, compressores e equipamentos de transmiss\u00e3o"
+    },
+    {
+        "codigo": "9112",
+        "funcao": "Mec\u00e2nicos de manuten\u00e7\u00e3o e instala\u00e7\u00e3o de aparelhos de  climatiza\u00e7\u00e3o e refrigera\u00e7\u00e3o"
+    },
+    {
+        "codigo": "9113",
+        "funcao": "Mec\u00e2nicos de manuten\u00e7\u00e3o de m\u00e1quinas industriais"
+    },
+    {
+        "codigo": "9131",
+        "funcao": "Mec\u00e2nicos de manuten\u00e7\u00e3o de m\u00e1quinas pesadas e equipamentos agr\u00edcolas"
+    },
+    {
+        "codigo": "9141",
+        "funcao": "Mec\u00e2nicos de manuten\u00e7\u00e3o aeron\u00e1utica"
+    },
+    {
+        "codigo": "9142",
+        "funcao": "Mec\u00e2nicos de manuten\u00e7\u00e3o de motores e equipamentos navais"
+    },
+    {
+        "codigo": "9143",
+        "funcao": "Mec\u00e2nicos de manuten\u00e7\u00e3o metroferrovi\u00e1ria"
+    },
+    {
+        "codigo": "9144",
+        "funcao": "Mec\u00e2nicos de manuten\u00e7\u00e3o de ve\u00edculos automotores"
+    },
+    {
+        "codigo": "9151",
+        "funcao": "T\u00e9cnicos em manuten\u00e7\u00e3o e repara\u00e7\u00e3o de instrumentos de medi\u00e7\u00e3o e precis\u00e3o"
+    },
+    {
+        "codigo": "9152",
+        "funcao": "Restauradores de instrumentos musicais"
+    },
+    {
+        "codigo": "9153",
+        "funcao": "T\u00e9cnicos em manuten\u00e7\u00e3o e repara\u00e7\u00e3o de equipamentos biom\u00e9dicos"
+    },
+    {
+        "codigo": "9154",
+        "funcao": "Reparadores de equipamentos fotogr\u00e1ficos"
+    },
+    {
+        "codigo": "9191",
+        "funcao": "Lubrificadores"
+    },
+    {
+        "codigo": "9192",
+        "funcao": "Trabalhadores de manuten\u00e7\u00e3o de ro\u00e7adeiras, motoserras e similares"
+    },
+    {
+        "codigo": "9193",
+        "funcao": "Mec\u00e2nicos de manuten\u00e7\u00e3o de bicicletas e equipamentos esportivos e de gin\u00e1stica"
+    },
+    {
+        "codigo": "9501",
+        "funcao": "Supervisores de manuten\u00e7\u00e3o eletroeletr\u00f4nica industrial, comercial e predial"
+    },
+    {
+        "codigo": "9502",
+        "funcao": "Supervisores de manuten\u00e7\u00e3o eletroeletr\u00f4nica veicular"
+    },
+    {
+        "codigo": "9503",
+        "funcao": "Supervisores de manuten\u00e7\u00e3o eletromec\u00e2nica"
+    },
+    {
+        "codigo": "9511",
+        "funcao": "Eletricistas de manuten\u00e7\u00e3o eletroeletr\u00f4nica"
+    },
+    {
+        "codigo": "9513",
+        "funcao": "Instaladores e mantenedores de sistemas eletroeletr\u00f4nicos de seguran\u00e7a"
+    },
+    {
+        "codigo": "9531",
+        "funcao": "Eletricistas eletr\u00f4nicos de manuten\u00e7\u00e3o veicular (a\u00e9rea, terrestre e naval)"
+    },
+    {
+        "codigo": "9541",
+        "funcao": "Instaladores e mantenedores eletromec\u00e2nicos de elevadores, escadas e portas autom\u00e1ticas"
+    },
+    {
+        "codigo": "9542",
+        "funcao": "Reparadores de aparelhos eletrodom\u00e9sticos"
+    },
+    {
+        "codigo": "9543",
+        "funcao": "Reparadores de equipamentos de escrit\u00f3rio"
+    },
+    {
+        "codigo": "9911",
+        "funcao": "Conservadores de vias permanentes (trilhos)"
+    },
+    {
+        "codigo": "9912",
+        "funcao": "Mantenedores de equipamentos de parques de divers\u00f5es e similares"
+    },
+    {
+        "codigo": "9913",
+        "funcao": "Reparadores de carrocerias de ve\u00edculos"
+    },
+    {
+        "codigo": "9921",
+        "funcao": "Trabalhadores elementares de servi\u00e7os de manuten\u00e7\u00e3o veicular"
+    },
+    {
+        "codigo": "9922",
+        "funcao": "Trabalhadores operacionais de conserva\u00e7\u00e3o de vias permanentes (exceto trilhos)"
+    }
+]

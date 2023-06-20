@@ -1,0 +1,198 @@
+[
+    {
+        "codigo": "01",
+        "funcao": "MEMBROS DAS FOR\u00c7AS ARMADAS"
+    },
+    {
+        "codigo": "02",
+        "funcao": "POLICIAIS MILITARES"
+    },
+    {
+        "codigo": "03",
+        "funcao": "BOMBEIROS MILITARES"
+    },
+    {
+        "codigo": "11",
+        "funcao": "MEMBROS SUPERIORES E DIRIGENTES DO PODER P\u00daBLICO"
+    },
+    {
+        "codigo": "12",
+        "funcao": "DIRIGENTES DE EMPRESAS E ORGANIZA\u00c7\u00d5ES (EXCETO DE INTERESSE P\u00daBLICO)"
+    },
+    {
+        "codigo": "13",
+        "funcao": "DIRETORES E GERENTES EM EMPRESA DE SERVI\u00c7OS DE SA\u00daDE, DA EDUCA\u00c7\u00c3O, OU DE SERVI\u00c7OS CULTURAIS, SOCIAIS OU PESSOAIS"
+    },
+    {
+        "codigo": "14",
+        "funcao": "GERENTES"
+    },
+    {
+        "codigo": "20",
+        "funcao": "PESQUISADORES E PROFISSIONAIS POLICIENT\u00cdFICOS"
+    },
+    {
+        "codigo": "21",
+        "funcao": "PROFISSIONAIS DAS CI\u00caNCIAS EXATAS, F\u00cdSICAS E DA ENGENHARIA"
+    },
+    {
+        "codigo": "22",
+        "funcao": "PROFISSIONAIS DAS CI\u00caNCIAS BIOL\u00d3GICAS, DA SA\u00daDE E AFINS"
+    },
+    {
+        "codigo": "23",
+        "funcao": "PROFISSIONAIS DO ENSINO"
+    },
+    {
+        "codigo": "24",
+        "funcao": "PROFISSIONAIS DAS CI\u00caNCIAS JUR\u00cdDICAS"
+    },
+    {
+        "codigo": "25",
+        "funcao": "PROFISSIONAIS DAS CI\u00caNCIAS SOCIAIS E HUMANAS"
+    },
+    {
+        "codigo": "26",
+        "funcao": "COMUNICADORES, ARTISTAS E RELIGIOSOS"
+    },
+    {
+        "codigo": "27",
+        "funcao": "PROFISSIONAIS EM GASTRONOMIA"
+    },
+    {
+        "codigo": "30",
+        "funcao": "T\u00c9CNICOS POLIVALENTES"
+    },
+    {
+        "codigo": "31",
+        "funcao": "T\u00c9CNICOS DE N\u00cdVEL M\u00c9DIO DAS CI\u00caNCIAS F\u00cdSICAS, QU\u00cdMICAS, ENGENHARIA E AFINS"
+    },
+    {
+        "codigo": "32",
+        "funcao": "T\u00c9CNICOS DE N\u00cdVEL M\u00c9DIO DAS CI\u00caNCIAS BIOL\u00d3GICAS, BIOQU\u00cdMICAS, DA SA\u00daDE E AFINS"
+    },
+    {
+        "codigo": "33",
+        "funcao": "PROFESSORES LEIGOS E DE N\u00cdVEL M\u00c9DIO"
+    },
+    {
+        "codigo": "34",
+        "funcao": "T\u00c9CNICOS DE N\u00cdVEL M\u00c9DIO EM SERVI\u00c7OS DE TRANSPORTES"
+    },
+    {
+        "codigo": "35",
+        "funcao": "T\u00c9CNICOS DE NIVEL M\u00c9DIO NAS CI\u00caNCIAS ADMINISTRATIVAS"
+    },
+    {
+        "codigo": "37",
+        "funcao": "T\u00c9CNICOS EM NIVEL M\u00c9DIO DOS SERVI\u00c7OS CULTURAIS, DAS COMUNICA\u00c7\u00d5ES E DOS DESPORTOS"
+    },
+    {
+        "codigo": "39",
+        "funcao": "OUTROS T\u00c9CNICOS DE N\u00cdVEL M\u00c9DIO"
+    },
+    {
+        "codigo": "41",
+        "funcao": "ESCRITUR\u00c1RIOS"
+    },
+    {
+        "codigo": "42",
+        "funcao": "TRABALHADORES DE ATENDIMENTO AO P\u00daBLICO"
+    },
+    {
+        "codigo": "51",
+        "funcao": "TRABALHADORES DOS SERVI\u00c7OS"
+    },
+    {
+        "codigo": "52",
+        "funcao": "VENDEDORES E PRESTADORES DE SERVI\u00c7OS DO COM\u00c9RCIO"
+    },
+    {
+        "codigo": "61",
+        "funcao": "PRODUTORES NA EXPLORA\u00c7\u00c3O AGROPECU\u00c1RIA"
+    },
+    {
+        "codigo": "62",
+        "funcao": "TRABALHADORES NA EXPLORA\u00c7\u00c3O AGROPECU\u00c1RIA"
+    },
+    {
+        "codigo": "63",
+        "funcao": "PESCADORES E EXTRATIVISTAS FLORESTAIS"
+    },
+    {
+        "codigo": "64",
+        "funcao": "TRABALHADORES DA MECANIZA\u00c7\u00c3O AGROPECU\u00c1RIA E FLORESTAL"
+    },
+    {
+        "codigo": "71",
+        "funcao": "TRABALHADORES DA IND\u00daSTRIA EXTRATIVA E DA CONSTRU\u00c7\u00c3O CIVIL"
+    },
+    {
+        "codigo": "72",
+        "funcao": "TRABALHADORES DA TRANSFORMA\u00c7\u00c3O DE METAIS E DE COMP\u00d3SITOS"
+    },
+    {
+        "codigo": "73",
+        "funcao": "TRABALHADORES DA FABRICA\u00c7\u00c3O E INSTALA\u00c7\u00c3O ELETROELETR\u00d4NICA"
+    },
+    {
+        "codigo": "74",
+        "funcao": "MONTADORES DE APARELHOS E INSTRUMENTOS DE PRECIS\u00c3O E MUSICAIS"
+    },
+    {
+        "codigo": "75",
+        "funcao": "JOALHEIROS, VIDREIROS, CERAMISTAS E AFINS"
+    },
+    {
+        "codigo": "76",
+        "funcao": "TRABALHADORES NAS IND\u00daSTRIAS T\u00caXTIL, DO CURTIMENTO, DO VEST\u00daARIO E DAS ARTES GR\u00c1FICAS"
+    },
+    {
+        "codigo": "77",
+        "funcao": "TRABALHADORES DAS IND\u00daSTRIAS DE MADEIRA E DO MOBILI\u00c1RIO"
+    },
+    {
+        "codigo": "78",
+        "funcao": "TRABALHADORES DE FUN\u00c7\u00d5ES TRANSVERSAIS"
+    },
+    {
+        "codigo": "79",
+        "funcao": "TRABALHADORES DO ARTESANATO"
+    },
+    {
+        "codigo": "81",
+        "funcao": "TRABALHADORES EM IND\u00daSTRIAS DE PROCESSOS CONT\u00cdNUOS E OUTRAS IND\u00daSTRIAS"
+    },
+    {
+        "codigo": "82",
+        "funcao": "TRABALHADORES DE INSTALA\u00c7\u00d5ES SIDER\u00daRGICAS E DE MATERIAIS DE CONSTRU\u00c7\u00c3O"
+    },
+    {
+        "codigo": "83",
+        "funcao": "TRABALHADORES DE INSTALA\u00c7\u00d5ES E M\u00c1QUINAS DE FABRICA\u00c7\u00c3O DE CELULOSE E PAPEL"
+    },
+    {
+        "codigo": "84",
+        "funcao": "TRABALHADORES DA FABRICA\u00c7\u00c3O DE ALIMENTOS, BEBIDAS E FUMO"
+    },
+    {
+        "codigo": "86",
+        "funcao": "OPERADORES DE PRODU\u00c7\u00c3O, CAPTA\u00c7\u00c3O, TRATAMENTO E DISTRIBUI\u00c7\u00c3O (ENERGIA, \u00c1GUA E UTILIDADES)"
+    },
+    {
+        "codigo": "87",
+        "funcao": "OPERADORES DE OUTRAS INSTALA\u00c7\u00d5ES INDUSTRIAIS"
+    },
+    {
+        "codigo": "91",
+        "funcao": "TRABALHADORES EM SERVI\u00c7OS DE REPARA\u00c7\u00c3O E MANUTEN\u00c7\u00c3O MEC\u00c2NICA"
+    },
+    {
+        "codigo": "95",
+        "funcao": "POLIMANTENEDORES"
+    },
+    {
+        "codigo": "99",
+        "funcao": "OUTROS TRABALHADORES DA CONSERVA\u00c7\u00c3O, MANUTEN\u00c7\u00c3O E REPARA\u00c7\u00c3O"
+    }
+]

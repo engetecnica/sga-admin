@@ -148,14 +148,27 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function() {
-        // Quando o campo select for alterado
         $('#id_funcionario').change(function() {
-            // Obtém o valor selecionado
-            var valorSelecionado = $(this).val();
+            var usuario = $(this).val();
+            var url = "{{ route('ferramental.retirada.bloqueio', ':usuario') }}".replace(':usuario', usuario);
 
-            var helperValue = "{{ Tarefa::funcionariosBloqueadosRetirada('VALUE') }}";
-            helperValue = helperValue.replace('VALUE', valorSelecionado);
-            $('#helper').text(helperValue);
+            $.ajax({
+                url: url,
+                type: 'GET',
+                dataType: 'json',
+                success: function(response) {
+                    var quantidade = response.quantidade;
+
+                    if (quantidade >= 1) {
+                        $('#helper').html('<span class="text-danger"><strong>FUNCIONÁRIO BLOQUEADO</strong></span>');
+                    } else {
+                        $('#helper').html('<span class="text-primary">Nenhum bloqueio encontrado</span>');
+                    }
+                },
+                error: function(xhr) {
+                    console.log(xhr.responseText);
+                }
+            });
         });
     });
 </script>

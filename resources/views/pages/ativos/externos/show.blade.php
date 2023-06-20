@@ -85,7 +85,7 @@
                                     <tr>
                                         <td>{{ $item->id }}</td>
                                         <td class="text-center"><span class="badge badge-primary">{{ $item->patrimonio }}</span></td>
-                                        <td class="text-center"><span class="badge badge-danger">{{ $item->obra->codigo_obra }}</span></td>
+                                        <td class="text-center"><span class="badge badge-danger">{{ $item->obra->codigo_obra ?? '-' }}</span></td>
                                         <td class="text-right">R$ {{ $item->valor }}</td>
                                         <td class="text-center">
                                             @if ($item->calibracao == 0)

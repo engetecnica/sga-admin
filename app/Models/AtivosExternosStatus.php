@@ -11,4 +11,9 @@ class AtivosExternosStatus extends Model
 
     protected $table = 'ativos_externos_status';
 
+    public function status()
+    {
+        return $this->belongsTo(AtivosExternosStatus::class, 'id', 'status');
+    }
+
 }

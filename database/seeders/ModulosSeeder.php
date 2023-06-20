@@ -303,6 +303,15 @@ class ModulosSeeder extends Seeder
                 'icone' => NULL, 'tipo_de_acao' => 'other', 'created_at' => now(),
                 'updated_at' => NULL,
                 'deleted_at' => null
+            ],
+            [
+                'id_modulo' => 23,
+                'titulo' => 'Transferências',
+                'posicao' => 3,
+                'url_amigavel' => 'admin/ferramenta/transferencia',
+                'icone' => NULL, 'tipo_de_acao' => 'other', 'created_at' => now(),
+                'updated_at' => NULL,
+                'deleted_at' => null
             ]
         );
 

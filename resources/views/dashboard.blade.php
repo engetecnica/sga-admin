@@ -6,9 +6,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>SGA-E | @if (View::hasSection('title'))
-            @yield('title')
+        @yield('title')
         @else
-            Dashboard
+        Dashboard
         @endif
     </title>
 
@@ -54,19 +54,18 @@
 
                         @csrf
                         <select class="{{ session()->get('usuario_vinculo')->id_nivel < 3 ? 'form-select select2' : '' }} form-control mr-2" id="novo_id" name="novo_id">
-                            @if (session()->get('usuario_vinculo')->id_nivel <= 2)
-                                <option value="" {{ session()->get('obra')['id'] == null ? 'selected' : '' }}>PERFIL ADMINISTRADOR - TODAS</option>
+                            @if (session()->get('usuario_vinculo')->id_nivel <= 2) <option value="" {{ session()->get('obra')['id'] == null ? 'selected' : '' }}>PERFIL ADMINISTRADOR - TODAS</option>
 
                                 @foreach ($obras_lista as $obra_lista)
-                                    <option value="{{ $obra_lista->id }}" {{ session()->get('obra')['id'] == $obra_lista->id ? 'selected' : '' }}>
-                                        {{ $obra_lista->codigo_obra }} | {{ $obra_lista->razao_social }} | {{ $obra_lista->cnpj }}
-                                    </option>
+                                <option value="{{ $obra_lista->id }}" {{ session()->get('obra')['id'] == $obra_lista->id ? 'selected' : '' }}>
+                                    {{ $obra_lista->codigo_obra }} | {{ $obra_lista->razao_social }} | {{ $obra_lista->cnpj }}
+                                </option>
                                 @endforeach
-                            @else
+                                @else
                                 <option value="{{ session()->get('obra')->id }}" readonly>
                                     {{ session()->get('obra')->codigo_obra }} | {{ session()->get('obra')->razao_social }} | {{ session()->get('obra')->cnpj }}
                                 </option>
-                            @endif
+                                @endif
                         </select>
                         <!-- <button class="btn btn-gradient-danger" type="submit">OK</button> -->
                     </form>
@@ -234,36 +233,36 @@
                     </li>
 
                     @foreach ($modulos_permitidos as $module)
-                        <li class="nav-item">
+                    <li class="nav-item">
 
-                            @if (count($module['submodulo']) > 0)
-                                <a class="nav-link" data-bs-toggle="collapse" href="#{{ $module['url_amigavel'] }}" aria-expanded="false" aria-controls="{{ $module['url_amigavel'] }}">
-                                    <span class="menu-title">{{ $module['titulo'] }}</span>
-                                    <i class="menu-arrow"></i>
-                                    <i class="{{ $module['icone'] }} menu-icon"></i>
-                                </a>
-                            @else
-                                <a class="nav-link" href="{{ env('URL_APP_ADMIN') }}{{ $module['url_amigavel'] }}">
-                                    <span class="menu-title">{{ $module['titulo'] }}</span>
-                                    <i class="{{ $module['icone'] }} menu-icon"></i>
-                                </a>
-                            @endif
+                        @if (count($module['submodulo']) > 0)
+                        <a class="nav-link" data-bs-toggle="collapse" href="#{{ $module['url_amigavel'] }}" aria-expanded="false" aria-controls="{{ $module['url_amigavel'] }}">
+                            <span class="menu-title">{{ $module['titulo'] }}</span>
+                            <i class="menu-arrow"></i>
+                            <i class="{{ $module['icone'] }} menu-icon"></i>
+                        </a>
+                        @else
+                        <a class="nav-link" href="{{ env('URL_APP_ADMIN') }}{{ $module['url_amigavel'] }}">
+                            <span class="menu-title">{{ $module['titulo'] }}</span>
+                            <i class="{{ $module['icone'] }} menu-icon"></i>
+                        </a>
+                        @endif
 
-                            @if (count($module['submodulo']) > 0)
-                                <div class="collapse" id="{{ $module['url_amigavel'] }}">
-                                    <ul class="nav flex-column sub-menu">
-                                        @foreach ($module['submodulo'] as $sub)
-                                            <?php
-                                            $item = env('URL_APP_ADMIN') . Request::segment(2) . '/' . Request::segment(3);
+                        @if (count($module['submodulo']) > 0)
+                        <div class="collapse" id="{{ $module['url_amigavel'] }}">
+                            <ul class="nav flex-column sub-menu">
+                                @foreach ($module['submodulo'] as $sub)
+                                <?php
+                                $item = env('URL_APP_ADMIN') . Request::segment(2) . '/' . Request::segment(3);
 
-                                            ?>
-                                            <li class="nav-item"> <a class="nav-link {{ $item === $sub['url_amigavel'] ? 'active-submodulo' : '' }}" href="{{ url($sub['url_amigavel']) }}">{{ $sub['titulo'] }}</a>
-                                            </li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            @endif
-                        </li>
+                                ?>
+                                <li class="nav-item"> <a class="nav-link {{ $item === $sub['url_amigavel'] ? 'active-submodulo' : '' }}" href="{{ url($sub['url_amigavel']) }}">{{ $sub['titulo'] }}</a>
+                                </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                        @endif
+                    </li>
                     @endforeach
 
                     <li class="nav-item">
@@ -883,18 +882,16 @@
 
 
         // EXIBIÇÃO DOS ALERTAS
-        @if (Session::get('fail'))
-            $('.toastrDefaultError').ready(function() {
-                toastr.error('{{ Session::get('
-                                                                                                                                                                                fail ') }}')
-            });
+        @if(Session::get('fail'))
+        $('.toastrDefaultError').ready(function() {
+            toastr.error('{{ Session::get("fail") }}')
+        });
         @endif
 
-        @if (Session::get('success'))
-            $('.toastrDefaultSuccess').ready(function() {
-                toastr.success('{{ Session::get('
-                                                                                                                                                                                success ') }}')
-            });
+        @if(Session::get('success'))
+        $('.toastrDefaultSuccess').ready(function() {
+            toastr.success('{{ Session::get("success") }}')
+        });
         @endif
 
         // MODAL ATIVOS INTERNOS MARCAS
@@ -928,7 +925,7 @@
 
                 $.ajax({
                     type: 'POST',
-                    url: '{{ route('ativo.veiculo.marcas.ajax') }}',
+                    url: '{{ route("ativo.veiculo.marcas.ajax") }}',
                     dataType: 'json',
                     data: {
                         '_token': _token,
@@ -950,7 +947,7 @@
 
                 $.ajax({
                     type: 'POST',
-                    url: '{{ route('ativo.veiculo.manutencao.servico.ajax') }}',
+                    url: '{{ route("ativo.veiculo.manutencao.servico.ajax") }}',
                     dataType: 'json',
                     data: {
                         '_token': _token,
@@ -975,7 +972,7 @@
 
                 $.ajax({
                     type: 'POST',
-                    url: '{{ route('cadastro.funcionario.funcoes.ajax') }}',
+                    url: '{{ route("cadastro.funcionario.funcoes.ajax") }}',
                     dataType: 'json',
                     data: {
                         '_token': _token,

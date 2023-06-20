@@ -1,0 +1,42 @@
+[
+    {
+        "codigo": "0",
+        "funcao": "MEMBROS DAS FOR\u00c7AS ARMADAS, POLICIAIS E BOMBEIROS MILITARES"
+    },
+    {
+        "codigo": "1",
+        "funcao": "MEMBROS SUPERIORES DO PODER P\u00daBLICO, DIRIGENTES DE ORGANIZA\u00c7\u00d5ES DE INTERESSE P\u00daBLICO E DE EMPRESAS, GERENTES"
+    },
+    {
+        "codigo": "2",
+        "funcao": "PROFISSIONAIS DAS CI\u00caNCIAS E DAS ARTES"
+    },
+    {
+        "codigo": "3",
+        "funcao": "T\u00c9CNICOS DE NIVEL M\u00c9DIO"
+    },
+    {
+        "codigo": "4",
+        "funcao": "TRABALHADORES DE SERVI\u00c7OS ADMINISTRATIVOS"
+    },
+    {
+        "codigo": "5",
+        "funcao": "TRABALHADORES DOS SERVI\u00c7OS, VENDEDORES DO COM\u00c9RCIO EM LOJAS E MERCADOS"
+    },
+    {
+        "codigo": "6",
+        "funcao": "TRABALHADORES AGROPECU\u00c1RIOS, FLORESTAIS E DA PESCA"
+    },
+    {
+        "codigo": "7",
+        "funcao": "TRABALHADORES DA PRODU\u00c7\u00c3O DE BENS E SERVI\u00c7OS INDUSTRIAIS"
+    },
+    {
+        "codigo": "8",
+        "funcao": "TRABALHADORES DA PRODU\u00c7\u00c3O DE BENS E SERVI\u00c7OS INDUSTRIAIS"
+    },
+    {
+        "codigo": "9",
+        "funcao": "TRABALHADORES EM SERVI\u00c7OS DE REPARA\u00c7\u00c3O E MANUTEN\u00c7\u00c3O"
+    }
+]

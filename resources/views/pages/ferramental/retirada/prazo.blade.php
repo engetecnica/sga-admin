@@ -6,7 +6,7 @@
         <h3 class="page-title">
             <span class="page-title-icon bg-gradient-primary me-2 text-white">
                 <i class="mdi mdi-access-point-network menu-icon"></i>
-            </span> Retirada de Ferramentas
+            </span> Ampliar prazo da Retirada #{{ $itens->id }}
         </h3>
         <nav aria-label="breadcrumb">
             <ul class="breadcrumb">
@@ -33,10 +33,7 @@
                         </div>
                     @endif
 
-                    @php
-                        $action = isset($store) ? route('ferramental.retirada.update', $store->id) : route('ferramental.retirada.store');
-                    @endphp
-                    <form method="post" action="{{ $action }}">
+                    <form method="post" action="{{ route('ferramental.retirada.ampliar.store') }}">
                         @csrf
 
                         @if (Auth::user()->user_level == 1)
@@ -53,26 +50,26 @@
 
                         <div class="row mt-3">
                             <div class="col-12">
-                                <label class="form-label" for="id_obra">Obra</label> <button class="badge badge-primary" data-toggle="modal" data-target="#modal-add" type="button"><i class="mdi mdi-plus"></i></button>
-                                <select class="form-select select2" id="id_obra" name="id_obra" required>
+                                <label class="form-label" for="{{ $field ?? 'id_obra' }}">{{ $title ?? 'Obra' }}</label>
+                                <select class="form-select select2" disabled>
                                     <option value="">Selecione uma Obra</option>
                                     @foreach ($obras as $obra)
-                                        <option value="{{ $obra->id }}" {{ old('id_obra') == $obra->id ? 'selected' : '' }}>
+                                        <option value="{{ $obra->id }}" {{ $itens->id_obra == $obra->id ? 'selected' : '' }}>
                                             {{ $obra->codigo_obra }} - {{ $obra->razao_social }}
                                         </option>
                                     @endforeach
                                 </select>
+
                             </div>
                         </div>
 
                         <div class="row mt-3">
                             <div class="col-6">
-                                <label class="form-label" id="helper" for="id_funcionario">Funcionário</label>
-
-                                <select class="form-select select2" id="id_funcionario" name="id_funcionario">
+                                <label class="form-label" for="id_funcionario">Funcionário</label>
+                                <select class="form-select select2" disabled>
                                     <option value="">Selecione um Funcionário</option>
                                     @foreach ($funcionarios as $funcionario)
-                                        <option value="{{ $funcionario->id }}" @php if(old('id_funcionario', @$store->id_funcionario) == $funcionario->id) echo "selected"; @endphp>
+                                        <option value="{{ $funcionario->id }}" {{ $itens->id_funcionario == $funcionario->id ? 'selected' : '' }}>
                                             {{ $funcionario->matricula }} - {{ $funcionario->nome }}
                                         </option>
                                     @endforeach
@@ -81,44 +78,45 @@
 
                             <div class="col-3">
                                 <label class="form-label" for="data_solicitacao">Data de Solicitação</label>
-                                <input class="form-control" name="data_solicitacao" type="date" value="@php echo date('Y-m-d'); @endphp" disabled>
+                                <input class="form-control" name="data_solicitacao" type="datetime-local" value="{{ $itens->created_at }}" disabled>
                             </div>
 
                             <div class="col-3">
                                 <label class="form-label" for="devolucao_prevista">Devolução Prevista</label>
-                                <input class="form-control" id="devolucao_prevista" name="devolucao_prevista" type="datetime-local" value="">
+                                <input class="form-control" id="devolucao_prevista" name="devolucao_prevista" type="datetime-local" value="{{ $itens->data_devolucao_prevista }}">
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="col-12 mt-3">
-                                <label class="form-label" for="observacoes">Observações</label>
-                                <textarea class="form-control" id="observacoes" name="observacoes" rows="3">{{ old('observacoes') }}</textarea>
+                                <label class="form-label" for="observacoes">Observações</label><br>
+                                <span class="muted text-primary">Caso considere importante, amplie as observações descrevendo o aumento do prazo.</span>
+                                <textarea class="form-control" name="observacoes" rows="3">{{ $itens->observacoes }}</textarea>
                             </div>
                         </div>
 
                         <div class="row">
-                            <div class="col-12 mt-5">
-                                <table class="table-striped table-hover table">
+                            <div class="col-12 mt-3">
+                                <table class="table-striped table-bordered table-hover table">
                                     <thead>
                                         <tr class="">
                                             <th width="10%">Patrimônio</th>
                                             <th width="30%">Estoque na Obra</th>
                                             <th>Item</th>
-                                            <th>Marcar/Desmarcar</th>
+                                            <th>Demarcar Item</th>
                                         </tr>
                                     </thead>
 
                                     <tbody>
-                                        @foreach ($estoques as $estoque)
+                                        @foreach ($itens->itens as $item)
                                             <tr>
-                                                <td><span class="badge badge-primary">{{ $estoque->patrimonio }}</span></td>
-                                                <td><span class="badge badge-secondary">{{ $estoque->obra->codigo_obra ?? '' }}</span> {{ $estoque->obra->razao_social ?? '' }}
+                                                <td><span class="badge badge-primary">{{ $item->item_codigo_patrimonio }}</span></td>
+                                                <td><span class="badge badge-danger">{{ $itens->codigo_obra . ' - ' . $itens->razao_social }}</span>
                                                 </td>
-                                                <td>{{ $estoque->ativo_externo->titulo }}</td>
+                                                <td>{{ $item->item_nome }}</td>
                                                 <td>
                                                     <div class="form-switch">
-                                                        <input class="form-check-input" id="id_ativo_externo" name="id_ativo_externo[]" type="checkbox" value="{{ $estoque->id }}" role="switch">
+                                                        <input class="form-check-input" id="id_ativo_exerno" name="id_ativo_externo[]" type="checkbox" value="{{ $item->id }}" role="switch" checked>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -128,7 +126,11 @@
                             </div>
                         </div>
 
-                        <button class="btn btn-gradient-primary font-weight-medium" id="btn-submit" type="submit">Salvar</button>
+                        <input name="id_obra" type="hidden" value="{{ $itens->id_obra }}">
+                        <input name="id_funcionario" type="hidden" value="{{ $itens->id_funcionario }}">
+                        <input name="data_solicitacao" type="hidden" value="{{ $itens->created_at }}">
+                        <input name="id_relacionamento" type="hidden" value="{{ $itens->id }}">
+                        <button class="btn btn-gradient-primary font-weight-medium" type="submit">Salvar</button>
 
                         <a href="{{ route('ferramental.retirada') }}">
                             <button class="btn btn-gradient-danger font-weight-medium" type="button">Cancelar</button>
@@ -140,41 +142,4 @@
         </div>
     </div>
 
-    {{-- MODAL INCLUSAO RAPIDA DE OBRAS --}}
-    @include('pages.cadastros.obra.partials.inclusao-rapida')
-
 @endsection
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(document).ready(function() {
-        $('#id_funcionario').change(function() {
-            var usuario = $(this).val();
-            var url = "{{ route('ferramental.retirada.bloqueio', ':usuario') }}".replace(':usuario', usuario);
-
-            $.ajax({
-                url: url,
-                type: 'GET',
-                dataType: 'json',
-                success: function(response) {
-                    var quantidade = response.quantidade;
-
-                    if (quantidade >= 1) {
-                        $('#helper').html('<span class="text-danger"><strong>FUNCIONÁRIO BLOQUEADO</strong></span>');
-                        $('#devolucao_prevista').attr('disabled', 'disabled');
-                        $('#observacoes').attr('disabled', 'disabled');
-                        $('#btn-submit').attr('disabled', 'disabled');
-                    } else {
-                        $('#helper').html('<span class="text-primary">Nenhum bloqueio encontrado</span>');
-                        $('#devolucao_prevista').removeAttr('disabled');
-                        $('#observacoes').removeAttr('disabled');
-                        $('#btn-submit').removeAttr('disabled');
-                    }
-                },
-                error: function(xhr) {
-                    console.log(xhr.responseText);
-                }
-            });
-        });
-    });
-</script>

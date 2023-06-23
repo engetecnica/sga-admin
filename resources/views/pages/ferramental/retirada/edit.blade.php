@@ -46,7 +46,7 @@
                         @endif
 
                         @if (Auth::user()->user_level >= 2)
-                            <input id="id_obra" name="id_obra" type="hidden" value="">
+                            <input id="id_obra" name="id_obra" type="hidden" value="{{ session('obra')->id_obra }}">
                         @endif
 
                         <div class="col-12">

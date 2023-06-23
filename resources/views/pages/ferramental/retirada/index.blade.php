@@ -31,7 +31,14 @@
         <div class="col-lg-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
-
+                    <style>
+                        .relacionamento {
+                            pointer-events: none;
+                            background-color: #eee;
+                            opacity: 0.6;
+                            /* Outros estilos para indicar visualmente que a linha está desativada */
+                        }
+                    </style>
                     <table class="table-hover table-striped table" id="tabela">
                         <thead>
                             <tr>
@@ -46,9 +53,13 @@
                             </tr>
                         </thead>
                         <tbody>
+
                             @foreach ($retiradas as $retirada)
-                                <tr>
-                                    <td class="align-middle" width="8%">{{ $retirada->id }}</td>
+                                @php
+                                    $relacionado = collect($retiradas)->firstWhere('id_relacionamento', $retirada->id);
+                                @endphp
+                                <tr class="{{ $relacionado ? 'relacionamento' : '' }}">
+                                    <td class="align-middle" width="8%">{{ $retirada->id }} </td>
                                     <td class="align-middle"><span class="badge badge-secondary">{{ $retirada->obra->codigo_obra }}</span></td>
                                     <td class="align-middle">{{ $retirada->usuario->name }}</td>
                                     <td class="align-middle">{{ $retirada->funcionario->nome }}</td>
@@ -59,6 +70,7 @@
                                         <a href="javascript:void(0)">
                                             <button class="badge badge-info ItemsRetirada" id="" data-id_retirada="{{ $retirada->id }}" data-bs-toggle="modal" data-bs-target="#ItemsRetiradaModal">Itens</button>
                                         </a>
+                                        <a href="{{ route('ferramental.retirada.detalhes', $retirada->id) }}"><span class="badge badge-success">{{ $retirada->id_relacionamento ? 'Prazo + #' . $retirada->id_relacionamento : '' }}</span></a>
                                     </td>
                                     <td width="10%">
                                         <div class="dropdown">
@@ -68,6 +80,9 @@
                                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                                 @if ($retirada->status == '2' || ($retirada->status == '5' && $retirada->termo_responsabilidade_gerado))
                                                     <li><a class="dropdown-item" href="{{ route('ferramental.retirada.devolver', $retirada->id) }}"><i class="mdi mdi-redo-variant"></i> Devolver Itens</a></li>
+                                                @endif
+                                                @if ($retirada->id_relacionamento == null && $retirada->status < 3)
+                                                    <li><a class="dropdown-item" href="{{ route('ferramental.retirada.ampliar', $retirada->id) }}"><i class="mdi mdi-calendar-plus"></i> Ampliar prazo</a></li>
                                                 @endif
                                                 @if ($retirada->status == '1' && !$retirada->termo_responsabilidade_gerado)
                                                     <li><a class="dropdown-item" href="{{ route('ferramental.retirada.termo', $retirada->id) }}"><i class="mdi mdi-access-point-network"></i> Gerar Termo</a></li>

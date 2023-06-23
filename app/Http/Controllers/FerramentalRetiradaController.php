@@ -131,7 +131,7 @@ class FerramentalRetiradaController extends Controller
             // $email_config->notify(new NotificaRetirada($email_config->email));
 
             // Notificação por telegram no canal registrado (API depende de https)
-            if (env('APP_ENV') === 'development') {
+            if (env('APP_ENV') === 'production') {
                 Notification::route('telegram', env('TELEGRAM_CHAT_ID'))
                     ->notify(new NotificaRetiradaTelegram('atendimento@codigosdigitais.com.br'));//$email_config->email
             }
@@ -439,6 +439,16 @@ class FerramentalRetiradaController extends Controller
             $retirada->status = $status_retirada;
             $retirada->save();
 
+            if ($retirada->id_relacionamento !== null) {
+                /** Salvar Retirada do Relacionamento */
+                $relacionamento = FerramentalRetirada::find($retirada->id_relacionamento);
+                $relacionamento->devolucao_observacoes = $request->observacoes ?? null;
+                $relacionamento->data_devolucao = now();
+                $relacionamento->updated_at = now();
+                $relacionamento->status = $status_retirada;
+                $relacionamento->save();
+            }
+
             $userLog = Auth::user()->email;
             Log::channel('main')->info($userLog .' | SALVOU DEVOLUÇÃO: ' . $retirada->devolucao_observacoes);
 
@@ -457,5 +467,82 @@ class FerramentalRetiradaController extends Controller
         ->count();
 
         return response()->json(['quantidade' => $bloqueio]);
+    }
+
+    public function ampliar($id)
+    {
+        $obras = CadastroObra::where('status', 'Ativo')->get();
+
+        $funcionarios = CadastroFuncionario::where('status', 'Ativo')->get();
+
+        $itens = FerramentalRetirada::getRetiradaItems($id);
+
+        $empresas = CadastroEmpresa::where('status', 'Ativo')->get();
+
+        return view('pages.ferramental.retirada.prazo', compact('obras', 'itens', 'funcionarios', 'empresas'));
+
+    }
+
+    public function ampliarStore(Request $request)
+    {
+        // dd($request->all());
+        $request->validate(
+            [
+                'id_obra' => 'required',
+                'id_funcionario' => 'required',
+                'id_ativo_externo' => 'required',
+                'devolucao_prevista' => 'required'
+            ],
+            [
+                'id_obra.required' => 'Qual obra você deseja efetivar esta retirada?',
+                'id_funcionario.required' => 'Você precisa selecionar o funcionário.',
+                'id_ativo_externo.required' => 'Nenhum item foi selecionado para retirada.',
+                'devolucao_prevista.required' => 'Preencha a data e hora para devolução.'
+            ]
+        );
+
+        $retirada = new FerramentalRetirada();
+        $retirada->id_relacionamento = $request->id_relacionamento;
+        $retirada->id_obra = $request->id_obra;
+        $retirada->id_usuario = Auth::user()->id ?? 1;
+        $retirada->id_funcionario = $request->id_funcionario;
+        $retirada->data_devolucao_prevista = $request->devolucao_prevista;
+        $retirada->data_devolucao = null;
+        $retirada->status = 1;
+        $retirada->observacoes = $request->observacoes ?? NULL;
+        $retirada->save();
+
+        $id_retirada = $retirada->id;
+
+        if ($id_retirada) {
+
+            if ($request->id_ativo_externo) {
+                foreach ($request->id_ativo_externo as $key => $value) {
+                    $retirada_item = new FerramentalRetiradaItem();
+                    $retirada_item->id_ativo_externo = $value;
+                    $retirada_item->id_retirada = $id_retirada;
+                    $retirada_item->status = 1;
+                    $retirada_item->save();
+                }
+            }
+
+            //Registro no Log
+            $userLog = Auth::user()->email;
+            Log::channel('main')->info($userLog .' | AMPLIOU PRAZO DE ENTREGA RETIRADA | ID: ' . $id_retirada . ' | DATA: ' . date('Y-m-d H:i:s'));
+
+            //Notificação por e-mail no endereço cadastrado nas configurações de notificações
+            // $email_config = Config::where('id', 1)->first();
+            // $email_config->notify(new NotificaRetirada($email_config->email));
+
+            // Notificação por telegram no canal registrado (API depende de https)
+            if (env('APP_ENV') === 'production') {
+                Notification::route('telegram', env('TELEGRAM_CHAT_ID'))
+                    ->notify(new NotificaRetiradaTelegram('atendimento@codigosdigitais.com.br'));//$email_config->email
+            }
+
+            return redirect()->route('ferramental.retirada.detalhes', $id_retirada)->with('success', 'Aumento de prazo solicitado com sucesso!');
+        } else {
+            return redirect()->route('ferramental.retirada')->with('error', 'Não foi possível registrar sua solicitação, entre em contato com suporte.');
+        }
     }
 }

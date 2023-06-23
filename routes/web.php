@@ -315,6 +315,8 @@ Route::group(['middleware' => 'auth'], function () {
         [FerramentalRetiradaController::class, 'index']
     )->name('ferramental.retirada');
     Route::get('admin/ferramental/retirada/editar/{id}', [FerramentalRetiradaController::class, 'edit'])->name('ferramental.retirada.editar');
+    Route::get('admin/ferramental/retirada/editar/prazo/{id}', [FerramentalRetiradaController::class, 'ampliar'])->name('ferramental.retirada.ampliar');
+    Route::post('admin/ferramental/retirada/editar/prazo', [FerramentalRetiradaController::class, 'ampliarStore'])->name('ferramental.retirada.ampliar.store');
     Route::get('admin/ferramental/retirada/adicionar', [FerramentalRetiradaController::class, 'create'])->name('ferramental.retirada.adicionar');
     Route::post('admin/ferramental/retirada/store', [FerramentalRetiradaController::class, 'store'])->name('ferramental.retirada.store');
     Route::put('admin/ferramental/retirada/update/{id}', [FerramentalRetiradaController::class, 'update'])->name('ferramental.retirada.update');

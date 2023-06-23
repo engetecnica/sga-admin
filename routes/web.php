@@ -61,6 +61,9 @@ use App\Http\Controllers\ConfigController;
 use App\Http\Controllers\FuncaoFuncionarioController;
 use App\Models\CadastroObra;
 
+
+use App\Http\Controllers\TransferenciaController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -370,6 +373,27 @@ Route::group(['middleware' => 'auth'], function () {
         Artisan::call('view:clear');
         return 'Todos os caches foram limpos com sucesso. (cache, route, config, view)';
     });
+
+    /** SGA-E Transferências - Obra */
+    Route::get('admin/ferramenta/transferencia', [TransferenciaController::class, 'index'])->name('transferencia.index');
+    Route::get('admin/ferramenta/transferencia/obra', [TransferenciaController::class, 'obra'])->name('transferencia.obra');
+    Route::get('admin/ferramenta/transferencia/obra/salvar', [TransferenciaController::class, 'obra_store'])->name('transferencia.obra.store');
+
+    /** SGA-E Transferências - Empresa */
+    Route::get('admin/ferramenta/transferencia/empresa', [TransferenciaController::class, 'empresa'])->name('transferencia.empresa');
+    Route::get('admin/ferramenta/transferencia/empresa/salvar', [TransferenciaController::class, 'empresa_store'])->name('transferencia.empresa.store');
+
+    /** SGA-E Transferências - Fornecedor */
+    Route::get('admin/ferramenta/transferencia/fornecedor', [TransferenciaController::class, 'fornecedor'])->name('transferencia.fornecedor');
+    Route::get('admin/ferramenta/transferencia/fornecedor/salvar', [TransferenciaController::class, 'fornecedor_store'])->name('transferencia.fornecedor.store');
+
+    /** SGA-E Transferências - Funcionario */
+    Route::get('admin/ferramenta/transferencia/funcionario', [TransferenciaController::class, 'funcionario'])->name('transferencia.funcionario');
+    Route::get('admin/ferramenta/transferencia/funcionario/salvar', [TransferenciaController::class, 'funcionario_store'])->name('transferencia.funcionario.store');
+
+    /** SGA-E Transferências - Configuracoes de Ativos */
+    Route::get('admin/ferramenta/transferencia/ativo_configuracao', [TransferenciaController::class, 'ativo_configuracao'])->name('transferencia.ativo_configuracao');
+    Route::get('admin/ferramenta/transferencia/ativo_configuracao/salvar', [TransferenciaController::class, 'ativo_configuracao_store'])->name('transferencia.ativo_configuracao.store');
 });
 
 Route::get('/refresh-migrate', function () {

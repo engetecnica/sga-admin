@@ -25,8 +25,7 @@ class UsersSeeder extends Seeder
             'updated_at'    => now()
         ]);
 
-        DB::table('users')->insert([
-            'name' => 'Wagner Bugs',
+        DB::table('users')->insert(['name' => 'André Baill',
             'email'         => 'admin@sga-e.eng.br',
             'password'      => bcrypt('123456789'),
             'created_at'    => now(),

@@ -40,7 +40,7 @@
     <div class="col-2">
         <div class="form-group">
             <label for="quantidade">Quantidade</label>
-            <input class="form-control" name="quantidade[]" type="number" value="" required>
+            <input class="form-control" name="quantidade[]" type="number" value="" min="0" required>
         </div>
     </div>
     <div class="col-2">

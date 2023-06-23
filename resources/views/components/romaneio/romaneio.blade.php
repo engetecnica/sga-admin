@@ -16,24 +16,19 @@
         text-align: justify;
     }
 
-    @page {
-        margin: 0 !important;
-        padding: 0 !important;
+    body {
+        padding-top: 180px !important;
+        padding-bottom: 40px !important;
+        padding-left: 75px !important;
+        padding-right: 75px !important;
+        background-image: url('assets/images/background-romaneio.jpeg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        z-index: -1000;
     }
 
-    @media print {
-        tr {
-            display: block;
-        }
-
-        tr.page-break {
-            page-break-before: always;
-            margin-top: 300px !important;
-        }
-
-        tr.page-break+* {
-            margin-top: 300px !important;
-        }
+    @page {
+        margin: 0 !important;
     }
 
     table {
@@ -62,18 +57,11 @@
         padding: 8px;
     }
 
-    body {
-        background-image: url('assets/images/background-romaneio.jpeg');
-        background-size: cover;
-        background-repeat: no-repeat;
-        z-index: -1000;
-    }
-
-    .container {
-        margin-top: 150px !important;
+    /* .container {
+        margin-top: 300px !important;
         margin-left: 75px !important;
         margin-right: 75px !important;
-    }
+    } */
 </style>
 
 <body>
@@ -85,7 +73,7 @@
 
                         <h4 class="card-title">ROMANEIO REQUISIÇÃO #{{ $requisicao->id }}</h4>
                         <h4 class="card-title">DADOS</h4>
-                        <table class="table-bordered table-striped table-houver table">
+                        <table class="table-bordered table-houver table">
                             <thead class="table-dark">
                                 <tr>
                                     <th>ID Requisição</th>

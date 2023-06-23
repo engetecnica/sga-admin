@@ -16,22 +16,30 @@
         }
 
         body {
+            padding-top: 180px !important;
+            padding-bottom: 150px !important;
+            padding-left: 75px !important;
+            padding-right: 75px !important;
             background-image: url('assets/images/background-romaneio.jpeg');
             background-size: cover;
-            background-position: center center;
             background-repeat: no-repeat;
+            z-index: -1000;
         }
 
         @page {
-            size: A4;
-            margin: 0;
-            padding: 200px !important;
+            margin: 0 !important;
         }
-
-        @media print {}
 
         table {
             width: 100% !important;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #ddd;
         }
 
         th {
@@ -48,11 +56,11 @@
             padding: 8px;
         }
 
-        .container {
-            padding-top: 150px !important;
-            padding-left: 75px !important;
-            padding-right: 75px !important;
-        }
+        /* .container {
+            margin-top: 300px !important;
+            margin-left: 75px !important;
+            margin-right: 75px !important;
+        } */
     </style>
 </head>
 
@@ -106,7 +114,7 @@
                                 @php
                                     $obra_origem = $ativos_liberados->first();
                                 @endphp
-                                <strong>{{ $obra_origem->obraOrigem->codigo_obra }} - {{ $obra_origem->obraOrigem->razao_social }}</strong><br>
+                                <strong>{{ $obra_origem->obraOrigem->id }} {{ $obra_origem->obraOrigem->codigo_obra }} - {{ $obra_origem->obraOrigem->razao_social }}</strong><br>
                                 {{ $obra_origem->obraOrigem->endereco }}, {{ $obra_origem->obraOrigem->numero }}<br>
                                 {{ $obra_origem->obraOrigem->bairro }} | {{ $obra_origem->obraOrigem->cidade }} | {{ $obra_origem->obraOrigem->estado }}<br>
                                 <strong>Contato:</strong>
@@ -143,47 +151,49 @@
 
                 <br><br>
                 <h4>ITENS E ATIVOS</h4>
-                @foreach ($ativos as $ativo)
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>ID Item</th>
-                                <th>Descrição</th>
-                                <th>Qtde. Solicitada</th>
-                                <th>Qtde. Liberada</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><strong>{{ $ativo->id }}</strong></td>
-                                <td><strong>{{ $ativo->ativo_externo->titulo }}</strong></td>
-                                <td><strong>{{ $ativo->quantidade_solicitada }}</strong></td>
-                                <td><strong>{{ $ativo->quantidade_liberada }}</strong></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <br>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th style="width:10%;">ID Ativo</th>
-                                <th style="width:40%;">Categoria</th>
-                                <th style="width:10%;">Código</th>
-                                <th style="width:40%;">Nome</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($ativos_liberados as $liberado)
-                                <tr class="page-break">
-                                    <td><strong>{{ $liberado->id }}</strong></td>
-                                    <td><strong>{{ $liberado->ativo->ativo_externo->categoria->relacionamento->titulo }} > {{ $liberado->ativo->ativo_externo->categoria->titulo }}</strong></td>
-                                    <td><strong>{{ $liberado->ativo->patrimonio }}</strong></td>
-                                    <td><strong>{{ $liberado->ativo->ativo_externo->titulo }}</strong></td>
-                                </tr>
-                            @endforeach
 
-                        </tbody>
-                    </table>
+                @foreach ($ativos as $ativo)
+                    @if ($ativo->ativo_externo_estoque->id_obra == $obra_origem->obraOrigem->id)
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ID Item</th>
+                                    <th>Descrição</th>
+                                    <th>Qtde. Solicitada</th>
+                                    <th>Qtde. Liberada</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>{{ $ativo->id }}</strong></td>
+                                    <td><strong>{{ $ativo->ativo_externo->titulo }}</strong></td>
+                                    <td><strong>{{ $ativo->quantidade_solicitada }}</strong></td>
+                                    <td><strong>{{ $ativo->quantidade_liberada }}</strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th style="width:10%;">ID Ativo</th>
+                                    <th style="width:40%;">Categoria</th>
+                                    <th style="width:10%;">Código</th>
+                                    <th style="width:40%;">Nome</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($ativos_liberados as $liberado)
+                                    <tr class="page-break">
+                                        <td><strong>{{ $liberado->id }}</strong></td>
+                                        <td><strong>{{ $liberado->ativo->ativo_externo->categoria->relacionamento->titulo }} > {{ $liberado->ativo->ativo_externo->categoria->titulo }}</strong></td>
+                                        <td><strong>{{ $liberado->ativo->patrimonio }}</strong></td>
+                                        <td><strong>{{ $liberado->ativo->ativo_externo->titulo }}</strong></td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    @endif
                 @endforeach
 
                 <div style="margin-top: 100px;"></div>

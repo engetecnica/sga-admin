@@ -231,7 +231,7 @@ class FerramentalRequisicaoController extends Controller
 
     public function romaneio(Request $request, $id)
     {
-        dd($request->all());
+        // dd($request->all());
 
         $atualiza_requisicao = FerramentalRequisicao::find($id);
         $atualiza_requisicao->update(['status' => 5]);

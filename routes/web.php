@@ -376,6 +376,10 @@ Route::group(['middleware' => 'auth'], function () {
         return 'Todos os caches foram limpos com sucesso. (cache, route, config, view)';
     });
 
+    /** SGA-E Transferências - Todas */
+    Route::get('admin/ferramenta/transferencia/todas', [TransferenciaController::class, 'todas'])->name('transferencia.todas');
+
+
     /** SGA-E Transferências - Obra */
     Route::get('admin/ferramenta/transferencia', [TransferenciaController::class, 'index'])->name('transferencia.index');
     Route::get('admin/ferramenta/transferencia/obra', [TransferenciaController::class, 'obra'])->name('transferencia.obra');

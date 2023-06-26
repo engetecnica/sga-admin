@@ -104,9 +104,29 @@
     .gradient-style7 {
         background-image: radial-gradient(circle, rgba(11, 34, 152, 1) 0%, rgba(29, 31, 29, 1) 70%, rgba(252, 70, 107, 1) 100%);
     }
+
+    .gradient-style8 {
+        background-color: #333;
+    }
 </style>
 
 <div class="row mb-5">
+
+    <div class="col-xl-3 mb-50 mb-2">
+        <a href="{{ route('transferencia.todas') }}">
+            <div class="gradient-style8 box-shadow border-radius-10 height-100-p widget-style3 text-white">
+                <div class="d-flex align-items-center flex-wrap">
+                    <div class="widget-data">
+                        <div class="weight-400 font-20">Todas</div>
+                        <span>Executar todas as transferências</span>
+                    </div>
+                    <div class="widget-icon">
+                        <div class="icon"><i class="mdi mdi-watch" aria-hidden="true"></i></div>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
 
     <div class="col-xl-3 mb-50 mb-2">
         <a href="{{ route('transferencia.empresa') }}">
@@ -155,7 +175,9 @@
             </div>
         </a>
     </div>
+</div>
 
+<div class="row mb-5">
     <div class="col-xl-3 mb-50 mb-2">
         <a href="{{ route('transferencia.ativo_configuracao') }}">
             <div class="gradient-style3 box-shadow border-radius-10 height-100-p widget-style3 text-white">
@@ -171,11 +193,6 @@
             </div>
         </a>
     </div>
-
-
-</div>
-
-<div class="row mb-5">
     <div class="col-xl-3 mb-50 mb-2">
         <a href="">
             <div class="gradient-style1 box-shadow border-radius-10 height-100-p widget-style3 text-white">

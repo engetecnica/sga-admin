@@ -278,4 +278,23 @@ class TransferenciaController extends Controller
             return redirect()->route('transferencia.funcionario')->with('fail', 'Erro: ' . $exception->errorInfo[2]);
         }
     }
+
+    /** Executar todas as transferências */
+    public function todas(Request $request)
+    {
+
+        /** Exclusão de todos os dados já pertencentes */
+        // CadastroFuncionario::whereNotNull('id')->delete();
+        // CadastroEmpresa::whereNotNull('id')->truncate();
+        // CadastroObra::whereNotNull('id')->truncate();
+        // CadastroFornecedor::whereNotNull('id')->truncate();
+
+        /** Sincroniza dados com a tabela antiga */
+        TransferenciaController::empresa_store($request);
+        TransferenciaController::obra_store($request);
+        TransferenciaController::fornecedor_store($request);
+        TransferenciaController::funcionario_store($request);
+
+        echo "Adicionado";
+    }
 }

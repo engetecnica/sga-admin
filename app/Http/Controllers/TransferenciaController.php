@@ -174,14 +174,14 @@ class TransferenciaController extends Controller
         try {
 
             /** Cadastra Funções */
-            $funcoes = Transferencia::getFuncionariosFuncoesSGA();
+            // $funcoes = Transferencia::getFuncionariosFuncoesSGA();
 
-            foreach ($funcoes as $func) {
-                $funcao = new CadastroFuncao();
-                $funcao->codigo_cbo = $func->codigo_interno;
-                $funcao->titulo = $func->titulo;
-                $funcao->save();
-            }
+            // foreach ($funcoes as $func) {
+            //     $funcao = new CadastroFuncao();
+            //     $funcao->codigo_cbo = $func->codigo_interno;
+            //     $funcao->titulo = $func->titulo;
+            //     $funcao->save();
+            // }
 
             /** 
              * Cadastra Funcionários 

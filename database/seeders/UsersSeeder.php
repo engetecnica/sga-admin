@@ -26,7 +26,7 @@ class UsersSeeder extends Seeder
         ]);
 
         DB::table('users')->insert(['name' => 'André Baill',
-            'email'         => 'admin@sga-e.eng.br',
+            'email'         => 'admin@engeativos.com.br',
             'password'      => bcrypt('123456789'),
             'created_at'    => now(),
             'updated_at'    => now()

@@ -194,7 +194,7 @@
         </a>
     </div>
     <div class="col-xl-3 mb-50 mb-2">
-        <a href="">
+        <a href="{{ route('transferencia.ativo') }}">
             <div class="gradient-style1 box-shadow border-radius-10 height-100-p widget-style3 text-white">
                 <div class="d-flex align-items-center flex-wrap">
                     <div class="widget-data">

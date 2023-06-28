@@ -53,6 +53,29 @@ class AtivosExternosStatusSeeder extends Seeder
             ], [
                 'titulo' => 'Recebido com defeito',
                 'classe' => 'warning'
+            ],
+            [
+                'titulo' => 'Sem Estoque',
+                'classe' => 'light'
+            ], [
+                'titulo' => 'Com Defeito',
+                'classe' => 'info'
+            ],
+            [
+                'titulo' => 'Liberado Parcialmente',
+                'classe' => 'danger'
+            ], [
+                'titulo' => 'Recebido Parcialmente',
+                'classe' => 'danger'
+            ], [
+                'titulo' => 'Em Manutenção',
+                'classe' => 'danger'
+            ], [
+                'titulo' => 'Aguardando Autorizacao',
+                'classe' => 'secondary'
+            ], [
+                'titulo' => 'Recusado',
+                'classe' => 'warning'
             ]
         );
 

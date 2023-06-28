@@ -98,7 +98,7 @@
                                         </td>
                                         <td>{{ $item->data_descarte }}</td>
                                         <td>{{ Tratamento::datetimeBr($item->created_at) }}</td>
-                                        <td class="text-center"><span class="badge badge-{{ $item->situacao->classe }}">{{ $item->situacao->titulo }}</span></td>
+                                        <td class="text-center"><span class="badge badge-{{ $item->situacao->classe ?? '' }}">{{ $item->situacao->titulo ?? '' }}</span></td>
                                     </tr>
                                     @endforeach
                                 </tbody>

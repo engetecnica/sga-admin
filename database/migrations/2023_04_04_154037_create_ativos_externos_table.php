@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('ativos_externos', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('id_ativo_configuracao');
-            $table->foreign('id_ativo_configuracao')->references('id')->on('ativos_configuracoes');
+           // $table->foreign('id_ativo_configuracao')->references('id')->on('ativos_configuracoes');
             $table->string('titulo')->nullable();            
             $table->enum('status', ['Ativo', 'Inativo']);
             $table->timestamps();

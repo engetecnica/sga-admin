@@ -92,6 +92,7 @@ class ConfiguracaoUsuarioController extends Controller
         $store = ConfiguracaoUsuario::find($id);
         $usuario_niveis = Niveis::all();
         $empresas = CadastroEmpresa::all();
+        $funcionarios = CadastroFuncionario::all();
 
         if (!$id or !$store) :
             return redirect()->route('usuario')->with('fail', 'Esse registro não foi encontrado.');
@@ -101,7 +102,7 @@ class ConfiguracaoUsuarioController extends Controller
             return redirect()->route('usuario')->with('fail', 'Você não pode modificar seu próprio usuário.');
         endif;
 
-        return view('pages.configuracoes.usuario.form', compact('store', 'usuario_niveis', 'empresas'));
+        return view('pages.configuracoes.usuario.form', compact('store', 'usuario_niveis', 'empresas', 'funcionarios'));
     }
 
     public function update(Request $request, $id)

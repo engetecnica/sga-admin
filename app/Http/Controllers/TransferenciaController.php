@@ -7,7 +7,7 @@ use App\Models\CadastroFornecedor;
 use Illuminate\Http\Request;
 
 use App\Models\Transferencia;
-use App\Models\{AtivoConfiguracao, CadastroFuncao, CadastroObra, CadastroFuncionario};
+use App\Models\{AtivoConfiguracao, AtivoExterno, AtivoExternoEstoque, CadastroFuncao, CadastroObra, CadastroFuncionario};
 
 class TransferenciaController extends Controller
 {
@@ -231,70 +231,98 @@ class TransferenciaController extends Controller
             return redirect()->route('transferencia.ativo_configuracao')->with('fail', 'Estes dados já foram importados no sistema.');
         }
 
-        dd($ativo_configuracao, $ativo_configuracao_gestao);
-
-        die();
-
         try {
-
-            /** Cadastra Funções */
-            $funcoes = Transferencia::getFuncionariosFuncoesSGA();
-
-            foreach ($funcoes as $func) {
-                $funcao = new CadastroFuncao();
-                $funcao->codigo_cbo = $func->codigo_interno;
-                $funcao->titulo = $func->titulo;
-                $funcao->save();
-            }
 
             /** 
              * Cadastra Funcionários 
              * Ocultado ID_FUNCAO
              * */
-            foreach ($funcionarios as $func) {
-                $funcionario = new CadastroFuncionario();
-                $funcionario->id = $func->id_funcionario;
-                $funcionario->matricula = $func->matricula;
-                $funcionario->id_obra = $func->id_obra;
-                $funcionario->nome = strtoupper($func->nome);
-                $funcionario->data_nascimento = $func->data_nascimento;
-                $funcionario->cpf = $func->cpf;
-                $funcionario->rg = $func->rg;
-                $funcionario->cep = $func->endereco_cep;
-                $funcionario->endereco = $func->endereco;
-                $funcionario->numero = $func->endereco_numero;
-                $funcionario->bairro = $func->endereco_bairro;
-                $funcionario->cidade = $func->endereco_cidade;
-                $funcionario->estado = $func->endereco_estado;
-                $funcionario->email = $func->email ?? null;
-                $funcionario->celular = $func->celular;
-                $funcionario->status = ($func->situacao == 0) ? 'Ativo' : 'Inativo';
-                $funcionario->save();
+            foreach ($ativo_configuracao as $config) {
+                $configuracao = new AtivoConfiguracao();
+                $configuracao->id_relacionamento = $config->id_ativo_configuracao_vinculo;
+                $configuracao->titulo = $config->titulo;
+                $configuracao->status = "Ativo";
+                $configuracao->save();
             }
 
-            return redirect()->route('transferencia.funcionario')->with('success', 'Dados importados com sucesso!');
+            return redirect()->route('transferencia.ativo_configuracao')->with('success', 'Dados importados com sucesso!');
         } catch (\Illuminate\Database\QueryException $exception) {
 
-            return redirect()->route('transferencia.funcionario')->with('fail', 'Erro: ' . $exception->errorInfo[2]);
+            return redirect()->route('transferencia.ativo_configuracao')->with('fail', 'Erro: ' . $exception->errorInfo[2]);
         }
     }
+
+
+
+
+    /** Transferência de Configurações de Ativos */
+    public function ativo()
+    {
+        $ativos = Transferencia::getAtivoExternoSGA();
+        return view('pages.transferencia.ativo', compact('ativos'));
+    }
+
+    public function ativo_store(Request $request)
+    {
+        $ativo = $ativo_grupo = Transferencia::getAtivoExternoSGA();
+        $ativo_gestao = AtivoExterno::count();
+
+        if ($ativo->count() == $ativo_gestao) {
+            return redirect()->route('transferencia.ativo')->with('fail', 'Estes dados já foram importados no sistema.');
+        }
+
+        try {
+            /** Retorno dos Ativos conforme o Titulo */
+            foreach ($ativo_grupo as $grupo) {
+                $group = new AtivoExterno();
+                $group->id_ativo_configuracao = $grupo->id_ativo_externo_categoria;
+                $group->titulo = $grupo->nome;
+                $group->status = 'Ativo';
+                $group->save();
+
+                $id_ativo_externo = $group->id;
+                $ativo_lista = Transferencia::getAtivoExternoByNomeSGA($grupo->nome);
+
+                foreach ($ativo_lista as $ativoObra) {
+                    $ativo_estoque = new AtivoExternoEstoque();
+                    $ativo_estoque->id_ativo_externo = $id_ativo_externo;
+                    $ativo_estoque->id_obra  = $ativoObra->id_obra;
+                    $ativo_estoque->patrimonio = $ativoObra->codigo;
+                    $ativo_estoque->data_descarte = $ativoObra->data_descarte;
+                    $ativo_estoque->valor = $ativoObra->valor;
+                    $ativo_estoque->calibracao = $ativoObra->necessita_calibracao;
+                    $ativo_estoque->status = $situacao ?? null;
+                    $ativo_estoque->created_at = $ativoObra->data_inclusao;
+                    $ativo_estoque->save();
+                }
+            }
+            return redirect()->route('transferencia.ativo')->with('success', 'Dados importados com sucesso!');
+        } catch (\Illuminate\Database\QueryException $exception) {
+            return redirect()->route('transferencia.ativo')->with('fail', 'Erro: ' . $exception->errorInfo[2]);
+        }
+    }
+
+
+
 
     /** Executar todas as transferências */
     public function todas(Request $request)
     {
 
-        /** Exclusão de todos os dados já pertencentes */
-        // CadastroFuncionario::whereNotNull('id')->delete();
-        // CadastroEmpresa::whereNotNull('id')->truncate();
-        // CadastroObra::whereNotNull('id')->truncate();
-        // CadastroFornecedor::whereNotNull('id')->truncate();
-
         /** Sincroniza dados com a tabela antiga */
+
         TransferenciaController::empresa_store($request);
+
         TransferenciaController::obra_store($request);
+
         TransferenciaController::fornecedor_store($request);
+
         TransferenciaController::funcionario_store($request);
 
-        echo "Adicionado";
+        TransferenciaController::ativo_configuracao_store($request);
+
+        TransferenciaController::ativo_store($request);
+
+        return redirect()->route('transferencia.ativo')->with('success', 'Dados importados com sucesso!');
     }
 }

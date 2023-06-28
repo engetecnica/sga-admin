@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('funcao_funcionarios', function (Blueprint $table) {
             $table->id();
             $table->string('codigo');
-            $table->string('funcao');
+            $table->longText('funcao');
             $table->timestamps();
         });
     }

@@ -23,4 +23,9 @@ class CadastroFuncionario extends Model
     {
         return $this->belongsTo(FuncaoFuncionario::class, 'id_funcao', 'id');
     }
+
+    public function usuario_vinculo()
+    {
+        return $this->belongsTo(CadastroUsuariosVinculo::class, 'id_funcionario', 'id');
+    }
 }

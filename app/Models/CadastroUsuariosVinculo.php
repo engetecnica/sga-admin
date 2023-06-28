@@ -10,4 +10,9 @@ class CadastroUsuariosVinculo extends Model
     use HasFactory;
     protected $table = "usuarios_vinculos";
     protected $primaryKey = "id_usuario";
+
+    public function vinculo()
+    {
+        return $this->hasMany(CadastroFuncionario::class, 'id_funcao');
+    }
 }

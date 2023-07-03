@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 use App\Traits\Configuracao;
-
+use Session;
 class CadastroFuncionarioController extends Controller
 {
 
@@ -17,10 +17,13 @@ class CadastroFuncionarioController extends Controller
     public function index()
     {
 
+        $id_obra = Session::get('obra')['id'] ?? null;
 
-        $lista = CadastroFuncionario::select('obras.razao_social', "obras.codigo_obra", 'funcionarios.*')
-        ->join('obras', 'obras.id', '=', 'funcionarios.id_obra')
-        ->get();
+        if ($id_obra !== null && $id_obra > 0) {
+            $lista = CadastroFuncionario::where('id_obra', $id_obra)->with('obra')->get();
+        } else {
+            $lista = CadastroFuncionario::with('obra')->get();
+        }      
 
         return view('pages.cadastros.funcionario.index', compact('lista'));
     }
@@ -28,11 +31,8 @@ class CadastroFuncionarioController extends Controller
     public function create()
     {
         $empresas = CadastroEmpresa::where('status', 'Ativo')->get();
-
         $estados = Configuracao::estados();
-
         $obras = CadastroObra::where('status', 'Ativo')->get();
-
         $funcoes = FuncaoFuncionario::all();
 
         return view('pages.cadastros.funcionario.form', compact('estados', 'obras', 'funcoes', 'empresas'));
@@ -109,13 +109,9 @@ class CadastroFuncionarioController extends Controller
     public function edit($id)
     {
         $empresas = CadastroEmpresa::where('status', 'Ativo')->get();
-
         $store = CadastroFuncionario::with('funcao')->where('id', $id)->first();
-
         $estados = Configuracao::estados();
-
         $obras = CadastroObra::where('status', 'Ativo')->get();
-
         $funcoes = FuncaoFuncionario::all();
 
         if (!$id or !$store) {

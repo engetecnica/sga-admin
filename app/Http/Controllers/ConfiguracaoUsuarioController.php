@@ -88,8 +88,7 @@ class ConfiguracaoUsuarioController extends Controller
 
     public function edit($id = null)
     {
-
-        $store = ConfiguracaoUsuario::find($id);
+        $store = ConfiguracaoUsuario::with('vinculo')->find($id);
         $usuario_niveis = Niveis::all();
         $empresas = CadastroEmpresa::all();
         $funcionarios = CadastroFuncionario::all();
@@ -108,14 +107,12 @@ class ConfiguracaoUsuarioController extends Controller
     public function update(Request $request, $id)
     {
         $user = ConfiguracaoUsuario::find($id);
-        $user->name = $request->nome;
-        $user->email = $request->email;
+        // $user->name = $request->nome;
+        // $user->email = $request->email;
 
         if (Auth::user()->user_level == 1) {
             $user->user_level = $request->nivel;
         }
-
-        $user->id_empresa = $request->id_empresa;
 
         if (isset($request->password) && isset($request->password_confirm)) {
             if ($request->password === $request->password_confirm) {
@@ -133,4 +130,18 @@ class ConfiguracaoUsuarioController extends Controller
         return redirect()->route('usuario')->with('success', 'Um registro foi modificado com sucesso!');
     }
 
+    public function destroy(ConfiguracaoUsuario $id)
+    {
+        $userLog = Auth::user()->email;
+        Log::channel('main')->info($userLog . ' | DELETE USUÁRIO : ' . $id->nome);
+
+        CadastroUsuariosVinculo::where('id_usuario', $id)->delete();
+
+
+        if ($id->delete()) {
+            return redirect()->route('usuario')->with('success', 'Usuário excluído com sucesso!');
+        } else {
+            return redirect()->route('usuario')->with('fail', 'Usuário excluído com sucesso!');
+        }
+    }
 }

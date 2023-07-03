@@ -10,4 +10,12 @@ class ConfiguracaoUsuario extends Model
     use HasFactory;
 
     protected $table = "users";
+
+    public function vinculo()
+    {
+        return $this->hasOne(CadastroUsuariosVinculo::class, 'id_usuario', 'id');
+    }
+
+    
+
 }

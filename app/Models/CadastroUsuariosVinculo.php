@@ -15,4 +15,14 @@ class CadastroUsuariosVinculo extends Model
     {
         return $this->hasMany(CadastroFuncionario::class, 'id_funcao');
     }
+
+    public function vinculo_funcionario()
+    {
+        return $this->hasOne(CadastroFuncionario::class, 'id', 'id_funcionario');
+    }
+
+    public function vinculo_obra()
+    {
+        return $this->hasOne(CadastroObra::class, 'id', 'id_obra');
+    }
 }

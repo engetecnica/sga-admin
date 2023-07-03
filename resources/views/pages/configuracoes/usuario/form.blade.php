@@ -42,7 +42,7 @@
                             <select class="form-select" name="id_funcionario">
                                 <option value="">Selecione um Funcionário</option>
                                 @foreach ($funcionarios as $funcionario)
-                                <option value="{{ $funcionario->id }}" @php if(@$store->id_funcionario==$funcionario->id) echo 'selected' @endphp>
+                                <option value="{{ $funcionario->id }}" @php if(@$store->vinculo->id_funcionario==$funcionario->id) echo 'selected' @endphp>
                                     {{ $funcionario->matricula }} - {{ $funcionario->nome }}
                                 </option>
                                 @endforeach
@@ -57,7 +57,7 @@
                             <select class="form-select" id="nivel" name="nivel">
                                 <option value="">Escolha o Tipo de Usuário</option>
                                 @foreach ($usuario_niveis as $nivel)
-                                <option value="{{ $nivel->id }}">{{ $nivel->titulo }}</option>
+                                <option value="{{ $nivel->id }}" @php if(@$store->vinculo->id_nivel==$nivel->id) echo 'selected' @endphp>{{ $nivel->titulo }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -70,7 +70,7 @@
                                 <option value="">Escolha o Tipo de Usuário</option>
                                 @foreach ($usuario_niveis as $nivel)
                                 @if ($nivel->id >= 3)
-                                <option value="{{ $nivel->id }}">{{ $nivel->titulo }}</option>
+                                <option value="{{ $nivel->id }}" @php if(@$store->vinculo->id_nivel==$nivel->id) echo 'selected' @endphp>{{ $nivel->titulo }}</option>
                                 @endif
                                 @endforeach
                             </select>

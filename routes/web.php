@@ -116,6 +116,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('admin/configuracao/usuario/adicionar',            [ConfiguracaoUsuarioController::class, 'create'])->name('usuario.adicionar');
     Route::post('admin/configuracao/usuario/store',               [ConfiguracaoUsuarioController::class, 'store'])->name('usuario.store');
     Route::post('admin/configuracao/usuario/update/{id}',         [ConfiguracaoUsuarioController::class, 'update'])->name('usuario.update');
+    Route::delete('admin/configuracao/usuario/{id}',              [ConfiguracaoUsuarioController::class, 'destroy'])->name('usuario.destroy');
+
 
     /* Módulos */
     Route::get('admin/configuracao/modulo',                       [ConfiguracaoModuloController::class, 'index'])->name('modulo');

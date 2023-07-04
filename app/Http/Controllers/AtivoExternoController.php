@@ -36,23 +36,10 @@ class AtivoExternoController extends Controller
 
     public function index()
     {
-        $ativos = AtivoExterno::with('configuracao')->get();
-
-        if (Session::get('obra')['id'] == null) {
-            $ativos_estoque = AtivoExternoEstoque::with('configuracao')->get();
-        } else {
-            $ativos_estoque = AtivoExternoEstoque::where('id_obra', Session::get('obra')['id'])->with('configuracao', 'obra')->get();
-        }
-        //  dd($ativos_estoque);
+        // $ativos = AtivoExterno::with('configuracao')->get();
 
 
-        // if (Session::get('obra')['id'] == null) {
-        // } else {
-        //     $ativos = AtivoExterno::with('configuracao')->get();
-        //     // $ativos = AtivoExternoEstoque::where('id_obra', Session::get('obra')['id'])->with('configuracao')->get(); // aqui preciso trazer o resultado somente dos itens que tem naquela obra
-        // }
-
-        return view('pages.ativos.externos.index', compact('ativos', 'ativos_estoque'));
+        return view('pages.ativos.externos.index');
     }
 
     public function create()
@@ -246,70 +233,91 @@ class AtivoExternoController extends Controller
 
     }
 
-    public function searchAtivoID(Request $request, int $id)
-    {
+    // public function searchAtivoID(Request $request, int $id)
+    // {
 
-        if ($request->ajax()) {
-            $ativosPesquisar = AtivoExternoEstoque::select('obras.razao_social', 'obras.cnpj', 'obras.codigo_obra', 'ativos_externos_estoque.*')
-                ->join('obras', 'obras.id', '=', 'ativos_externos_estoque.id_obra')
-                ->where('ativos_externos_estoque.id_ativo_externo', $id)
-                ->get();
+    //     if ($request->ajax()) {
+    //         $ativosPesquisar = AtivoExternoEstoque::select('obras.razao_social', 'obras.cnpj', 'obras.codigo_obra', 'ativos_externos_estoque.*')
+    //             ->join('obras', 'obras.id', '=', 'ativos_externos_estoque.id_obra')
+    //             ->where('ativos_externos_estoque.id_ativo_externo', $id)
+    //             ->get();
 
-            return DataTables::of($ativosPesquisar)
-                ->editColumn('id_obra', function ($row) {
-                    return '<span class="badge badge-danger">'.$row->codigo_obra . ' - ' . $row->razao_social . '</span>';
-                })
-                ->editColumn('patrimonio', function ($row) {
-                    return '<span class="badge badge-primary">' . $row->patrimonio  . '</span>';
-                })
-                ->editColumn('valor', function ($row) {
-                    return 'R$ '. $row->valor;
-                })
-                ->editColumn('calibracao', function($row){
-                    return $row->calibracao==1 ? "Sim" : "Não";
-                })
-                ->editColumn('data_descarte', function ($row) {
-                    return ($row->data_descarte) ? Tratamento::FormatarData($row->data_descarte) : '-';
-                })
-                ->editColumn('created_at', function ($row) {
-                    return ($row->created_at) ? Tratamento::FormatarData($row->created_at) : '-';
-                })
-                ->addColumn('status', function ($row) {
-                    $status = Tratamento::getStatusEstoque($row->status);
-                    return '<span class="badge badge-'. $status['classe'].'">' . $status['titulo'] . '</span>';
-                })
-                ->rawColumns(['patrimonio', 'id_obra', 'status'])
-                ->make(true);
-        }
+    //         return DataTables::of($ativosPesquisar)
+    //             ->editColumn('id_obra', function ($row) {
+    //                 return '<span class="badge badge-danger">'.$row->codigo_obra . ' - ' . $row->razao_social . '</span>';
+    //             })
+    //             ->editColumn('patrimonio', function ($row) {
+    //                 return '<span class="badge badge-primary">' . $row->patrimonio  . '</span>';
+    //             })
+    //             ->editColumn('valor', function ($row) {
+    //                 return 'R$ '. $row->valor;
+    //             })
+    //             ->editColumn('calibracao', function($row){
+    //                 return $row->calibracao==1 ? "Sim" : "Não";
+    //             })
+    //             ->editColumn('data_descarte', function ($row) {
+    //                 return ($row->data_descarte) ? Tratamento::FormatarData($row->data_descarte) : '-';
+    //             })
+    //             ->editColumn('created_at', function ($row) {
+    //                 return ($row->created_at) ? Tratamento::FormatarData($row->created_at) : '-';
+    //             })
+    //             ->addColumn('status', function ($row) {
+    //                 $status = Tratamento::getStatusEstoque($row->status);
+    //                 return '<span class="badge badge-'. $status['classe'].'">' . $status['titulo'] . '</span>';
+    //             })
+    //             ->rawColumns(['patrimonio', 'id_obra', 'status'])
+    //             ->make(true);
+    //     }
 
-    }
+    // }
 
     public function searchAtivoLista(Request $request){
 
         if ($request->ajax()) {
 
-            $listaAtivos = AtivoExterno::select('ativos_configuracoes.titulo AS categoria', 'ativos_externos.*')
-                ->join('ativos_configuracoes', 'ativos_configuracoes.id', '=', 'ativos_externos.id_ativo_configuracao')
-                ->orderBy('ativos_externos.titulo', 'ASC')
-                ->get();
+
+            if (Session::get('obra')['id'] == null) {
+                $listaAtivos = AtivoExternoEstoque::with('configuracao')->get();
+            } else {
+                $listaAtivos = AtivoExternoEstoque::where('id_obra', Session::get('obra')['id'])->with('configuracao', 'obra')->get();
+            }
+
+            // $listaAtivos = AtivoExterno::select('ativos_configuracoes.titulo AS categoria', 'ativos_externos.*')
+            //     ->join('ativos_configuracoes', 'ativos_configuracoes.id', '=', 'ativos_externos.id_ativo_configuracao')
+            //     ->orderBy('ativos_externos.titulo', 'ASC')
+            //     ->get();
 
             return DataTables::of($listaAtivos)
 
-                ->editColumn('created_at', function ($row) {
-                    return ($row->created_at) ? Tratamento::FormatarData($row->created_at) : '-';
+                ->editColumn('obra', function ($row) {
+                    return $row->obra->codigo_obra;
+                })
+                ->editColumn('patrimonio', function ($row) {
+                    return '<span class="badge badge-danger">' . $row->patrimonio . '</span>';
+                })
+                ->editColumn('titulo', function ($row) {
+                    return $row->configuracao->titulo;
+                })
+                ->editColumn('valor', function ($row) {
+                    return 'R$ ' . number_format($row->valor, 2, ',', '.');
+                })
+                ->editColumn('calibracao', function ($row) {
+                    if ($row->calibracao == 0) {
+                        return '<span class="badge badge-primary">Não</span>';
+                    } else {
+                        return '<span class="badge badge-danger">Sim</span>';
+                    }
+
                 })
                 ->editColumn('status', function ($row) {
-                    return 'Ativo';
-                })
-                ->editColumn('id_ativo_configuracao', function ($row) {
-                    return $row->categoria;
+                return '<span class="badge badge-' . $row->situacao->classe . '">' . $row->situacao->titulo  . '</span>';
                 })
                 ->editColumn('acoes', function($row){
                     $btn = '<a href="' . route("ativo.externo.editar", $row->id) . '"><button class="badge badge-info" data-toggle="tooltip" data-placement="top" title="Editar"><i class="mdi mdi-pencil"></i> Editar</button></a>';
                     $btn .= '<a href="' . route("ativo.externo.detalhes", $row->id) . '"><button class="badge badge-dark" style="margin-left: 5px" data-toggle="tooltip" data-placement="top" title="Detalhes"><i class="mdi mdi-list"></i> Detalhes</button></a>';
                     return $btn;
                 })
-                ->rawColumns(['acoes', 'status'])
+                ->rawColumns(['acoes', 'status', 'patrimonio', 'calibracao'])
                 ->make(true);
         }
 

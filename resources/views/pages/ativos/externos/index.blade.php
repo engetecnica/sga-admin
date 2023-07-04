@@ -29,7 +29,11 @@
     <div class="col-lg-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <table class="table-hover table-striped table pt-4" id="tabela-estoque-lista">
+                <table class="table-hover table-striped table pt-4">
+
+                </table>
+
+                <table class="table table-hover table-striped yajra-datatable pt-4 ">
                     <thead>
                         <tr>
                             <th width="8%">ID</th>
@@ -43,66 +47,69 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($ativos_estoque as $estoque)
-                        <tr>
-                            <td><b>{{ $estoque->id }}</b></td>
-                            <td><span class="badge badge-warning">{{ $estoque->obra->codigo_obra }}</span></td>
-                            <td><span class="badge badge-danger">{{ $estoque->patrimonio }}</span></td>
-                            <td>{{ $estoque->configuracao->titulo }}</td>
-                            <td>R$ {{ Tratamento::currencyFormatBr($estoque->valor) }}</td>
-                            <td>
-                                @if($estoque->calibracao==1)
-                                <span class="badge badge-primary">Sim</span>
-                                @endif
 
-                                @if($estoque->calibracao==0)
-                                <span class="badge badge-secondary">Não</span>
-                                @endif
-                            </td>
-                            <td><span class="badge badge-{{ $estoque->situacao->classe }}">{{ $estoque->situacao->titulo }}</span></td>
-                            <td></td>
-                        </tr>
-                        @endforeach
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
 </div>
-@if (session()->get('usuario_vinculo')->id_nivel <= 2) <div class="row">
-    <div class="col-lg-12 grid-margin stretch-card">
-        <div class="card">
-            <div class="card-body">
-                <table class="table-hover table-striped table pt-4" id="tabela">
-                    <thead>
-                        <tr>
-                            <th width="8%">ID</th>
-                            <th>Categoria</th>
-                            <th>Título</th>
-                            <th>Data de Inclusão</th>
-                            <th>Status</th>
-                            <th>Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($ativos as $ativo)
-                        <tr>
-                            <td>{{ $ativo->id }}</td>
-                            <td>{{ $ativo->configuracao->titulo ?? '-' }}</td>
-                            <td>{{ $ativo->titulo }}</td>
-                            <td>{{ Tratamento::datetimeBr($ativo->created_at) }}</td>
-                            <td>{{ $ativo->status }}</td>
-                            <td>
-                                <a class="badge badge-primary" href="{{ route('ativo.externo.editar', $ativo->id) }}">Editar</a>
-                                <a class="badge badge-success" href="{{ route('ativo.externo.detalhes', $ativo->id) }}">Detalhes</a>
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-    @endif
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script src="//cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+<script src="//stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<script src="//cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
 
-    @endsection
+<script lang="javascript">
+    $(function() {
+
+        var table = $('.yajra-datatable').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: BASE_URL + "/ativo/externo/lista",
+            columns: [{
+                    data: 'id',
+                    name: 'id'
+                },
+                {
+                    data: 'obra',
+                    name: 'obra'
+                },
+                {
+                    data: 'patrimonio',
+                    name: 'patrimonio'
+                },
+                {
+                    data: 'titulo',
+                    name: 'titulo'
+                },
+                {
+                    data: 'valor',
+                    name: 'valor'
+                },
+                {
+                    data: 'calibracao',
+                    name: 'calibracao'
+                }, {
+                    data: 'status',
+                    name: 'status'
+                },
+                {
+                    data: 'acoes',
+                    name: 'acoes',
+                    orderable: true,
+                    searchable: true
+                },
+            ],
+            pageLength: 50,
+            order: [
+                [0, 'desc']
+            ],
+            language: {
+                search: 'Buscar informação da Lista',
+                url: 'https://cdn.datatables.net/plug-ins/1.11.5/i18n/pt-BR.json',
+            },
+        });
+
+    });
+</script>
+@endsection

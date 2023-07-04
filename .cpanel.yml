@@ -1,4 +1,4 @@
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/engeativos/painel #Add /<sub_folder> if required
+    - export DEPLOYPATH=/home/engeativos #Add /<sub_folder> if required
     - /bin/cp -r * $DEPLOYPATH

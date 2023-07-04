@@ -7,7 +7,7 @@ use App\Models\CadastroFornecedor;
 use Illuminate\Http\Request;
 
 use App\Models\Transferencia;
-use App\Models\{AtivoConfiguracao, AtivoExterno, AtivoExternoEstoque, CadastroFuncao, CadastroObra, CadastroFuncionario};
+use App\Models\{AtivoConfiguracao, AtivoExterno, AtivoExernoStatus, AtivoExternoEstoque, CadastroFuncao, CadastroObra, CadastroFuncionario};
 
 class TransferenciaController extends Controller
 {
@@ -267,9 +267,9 @@ class TransferenciaController extends Controller
         $ativo = $ativo_grupo = Transferencia::getAtivoExternoSGA();
         $ativo_gestao = AtivoExterno::count();
 
-        if ($ativo->count() == $ativo_gestao) {
-            return redirect()->route('transferencia.ativo')->with('fail', 'Estes dados já foram importados no sistema.');
-        }
+        // if ($ativo->count() == $ativo_gestao) {
+        //     return redirect()->route('transferencia.ativo')->with('fail', 'Estes dados já foram importados no sistema.');
+        // }
 
         try {
             /** Retorno dos Ativos conforme o Titulo */
@@ -283,7 +283,7 @@ class TransferenciaController extends Controller
                 $id_ativo_externo = $group->id;
                 $ativo_lista = Transferencia::getAtivoExternoByNomeSGA($grupo->nome);
 
-                foreach ($ativo_lista as $ativoObra) {
+                foreach ($ativo_lista as $i => $ativoObra) {
                     $ativo_estoque = new AtivoExternoEstoque();
                     $ativo_estoque->id_ativo_externo = $id_ativo_externo;
                     $ativo_estoque->id_obra  = $ativoObra->id_obra;
@@ -291,10 +291,15 @@ class TransferenciaController extends Controller
                     $ativo_estoque->data_descarte = $ativoObra->data_descarte;
                     $ativo_estoque->valor = $ativoObra->valor;
                     $ativo_estoque->calibracao = $ativoObra->necessita_calibracao;
-                    $ativo_estoque->status = $situacao ?? null;
+                    $ativo_estoque->status = Transferencia::setAtivoExternoSituacao($ativoObra->situacao) ?? null;
                     $ativo_estoque->created_at = $ativoObra->data_inclusao;
                     $ativo_estoque->save();
+
+                    $situacao[$id_ativo_externo . $i]['situacao_atual'] = $ativoObra->situacao;
+                    $situacao[$id_ativo_externo . $i]['situacao_nova'] = $ativo_estoque->status;
+                    $situacao[$id_ativo_externo . $i]['titulo'] = AtivoExernoStatus::find(Transferencia::setAtivoExternoSituacao($ativoObra->situacao))->titulo;
                 }
+
             }
             return redirect()->route('transferencia.ativo')->with('success', 'Dados importados com sucesso!');
         } catch (\Illuminate\Database\QueryException $exception) {

@@ -283,9 +283,9 @@
 
             $('#tabela-estoque-lista').DataTable({
 
-                pageLength: 50,
+                pageLength: 25,
                 order: [
-                    [0, 'desc']
+                    [2, 'desc']
                 ],
                 language: {
                     search: 'Buscar',
@@ -494,28 +494,6 @@
         });
 
 
-        // $(".selecionar_obra").on('change', function() {
-        //     let id_obra = $(this).val();
-
-        //     console.log('Selecionando Obra')
-
-        //     $.ajax({
-        //             url: "{{ route('api.selecionar_obra') }}",
-        //             type: 'post',
-        //             data: {
-        //                 "_token": "{{ csrf_token() }}",
-        //                 id_obra: id_obra,
-        //                 route: route
-        //             }
-        //         })
-        //         .done(function(msg) {
-        //             window.location.href = route;
-        //         })
-        //         .fail(function(jqXHR, textStatus, msg) {
-        //             alert(msg);
-        //         });
-        // })
-
         $('.summernote').summernote({
             height: 400
         });
@@ -537,20 +515,13 @@
         });
 
         $('#marca').select2();
-
         $('#modelo').select2();
-
         $('#ano').select2();
-
         $('#situacao').select2();
-
         $('#fornecedor').select2();
-
         $('#combustivel').select2();
-
         $('#servico').select2();
         $('.addItem').select2();
-
 
         $(".money").inputmask('currency', {
             "autoUnmask": true,
@@ -731,38 +702,6 @@
         $('.listar-ativos-adicionar').click(function() {
             $('#listar-ativos-linha').append($('#listar-ativos-template').html());
             $(".template:last").select2();
-            // $(".listar-ativos.template:last").select2({
-            //     tags: true,
-            //     multiple: false,
-            //     tokenSeparators: [",", " "],
-            //     minimumInputLength: 2,
-            //     minimumResultsForSearch: 10,
-            //     ajax: {
-            //         url: BASE_URL + '/ferramental/requisicao/lista_ativo',
-            //         dataType: "json",
-            //         type: "get",
-            //         data: function(params) {
-            //             var queryParameters = {
-            //                 term: params.term,
-            //             };
-            //             return queryParameters;
-            //         },
-            //         processResults: function(data) {
-            //             return {
-            //                 results: $.map(data, function(item) {
-            //                     return {
-            //                         text: item.titulo + ' - Em Estoque: ' + item
-            //                             .quantidade_estoque,
-            //                         id: item.id,
-            //                     };
-            //                 }),
-            //             };
-            //         },
-            //     },
-            // });
-
-
-
         });
 
 

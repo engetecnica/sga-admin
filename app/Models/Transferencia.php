@@ -89,6 +89,7 @@ class Transferencia extends Model
     /** Set Ativo Externo Situação */
     static function setAtivoExternoSituacao($status)
     {
+        $situacao = 1;
         if ($status == '1') { // pendente
             $situacao = 1;
         }

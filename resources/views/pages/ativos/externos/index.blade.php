@@ -45,13 +45,21 @@
                     <tbody>
                         @foreach($ativos_estoque as $estoque)
                         <tr>
-                            <td>{{ $estoque->id }}</td>
+                            <td><b>{{ $estoque->id }}</b></td>
                             <td><span class="badge badge-warning">{{ $estoque->obra->codigo_obra }}</span></td>
                             <td><span class="badge badge-danger">{{ $estoque->patrimonio }}</span></td>
                             <td>{{ $estoque->configuracao->titulo }}</td>
-                            <td>R$ {{ number_format($estoque->valor, 2, ',', '.') }}</td>
-                            <td>{{ $estoque->calibracao }}</td>
-                            <td>{{ $estoque->status }}</td>
+                            <td>R$ {{ Tratamento::currencyFormatBr($estoque->valor) }}</td>
+                            <td>
+                                @if($estoque->calibracao==1)
+                                <span class="badge badge-primary">Sim</span>
+                                @endif
+
+                                @if($estoque->calibracao==0)
+                                <span class="badge badge-secondary">Não</span>
+                                @endif
+                            </td>
+                            <td><span class="badge badge-{{ $estoque->situacao->classe }}">{{ $estoque->situacao->titulo }}</span></td>
                             <td></td>
                         </tr>
                         @endforeach

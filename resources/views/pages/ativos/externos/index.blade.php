@@ -69,8 +69,7 @@
         </div>
     </div>
 </div>
-
-<div class="row">
+@if (session()->get('usuario_vinculo')->id_nivel <= 2) <div class="row">
     <div class="col-lg-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
@@ -104,6 +103,6 @@
             </div>
         </div>
     </div>
-</div>
+    @endif
 
-@endsection
+    @endsection

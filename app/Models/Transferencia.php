@@ -146,4 +146,21 @@ class Transferencia extends Model
         ->table('ativo_veiculo')
         ->get();
     }
+
+    /** Get Veiculo Seguro */
+    static function getVeiculoSGASeguro($id_ativo_veiculo)
+    {
+        return DB::connection('mysql2')
+        ->table('ativo_veiculo_seguro')
+        ->where('id_ativo_veiculo', $id_ativo_veiculo)
+            ->get();
+    }
+    /** Get Veiculo Seguro */
+    static function getVeiculoSGAIpva($id_ativo_veiculo)
+    {
+        return DB::connection('mysql2')
+        ->table('ativo_veiculo_ipva')
+        ->where('id_ativo_veiculo', $id_ativo_veiculo)
+            ->get();
+    }
 }

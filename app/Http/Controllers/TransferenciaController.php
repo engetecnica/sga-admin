@@ -7,7 +7,7 @@ use App\Models\CadastroFornecedor;
 use Illuminate\Http\Request;
 
 use App\Models\Transferencia;
-use App\Models\{AtivoConfiguracao, AtivoExterno, AtivoExernoStatus, AtivoExternoEstoque, CadastroFuncao, CadastroObra, CadastroFuncionario};
+use App\Models\{AtivoConfiguracao, AtivoExterno, AtivoExernoStatus, AtivoExternoEstoque, CadastroFuncao, CadastroObra, CadastroFuncionario, Veiculo, VeiculoIpva, VeiculoSeguro};
 
 class TransferenciaController extends Controller
 {
@@ -267,9 +267,9 @@ class TransferenciaController extends Controller
         $ativo = $ativo_grupo = Transferencia::getAtivoExternoSGA();
         $ativo_gestao = AtivoExterno::count();
 
-        // if ($ativo->count() == $ativo_gestao) {
-        //     return redirect()->route('transferencia.ativo')->with('fail', 'Estes dados já foram importados no sistema.');
-        // }
+        if ($ativo->count() == $ativo_gestao) {
+            return redirect()->route('transferencia.ativo')->with('fail', 'Estes dados já foram importados no sistema.');
+        }
 
         try {
             /** Retorno dos Ativos conforme o Titulo */
@@ -314,6 +314,56 @@ class TransferenciaController extends Controller
         return view('pages.transferencia.veiculo', compact('veiculos'));
     }
 
+    public function veiculo_store(Request $request)
+    {
+        $veiculo =  Transferencia::getVeiculoSGA();
+        $veiculo_gestao = Veiculo::count();
+
+
+        if ($veiculo->count() == $veiculo_gestao) {
+            return redirect()->route('transferencia.veiculo')->with('fail', 'Estes dados já foram importados no sistema.');
+        }
+
+        try {
+
+            /** Veiculos */
+
+            /** Importar Itens Internos do Veiculo */
+            foreach ($veiculo as $vl) {
+
+                /** Seguro */
+                $seguro = Transferencia::getVeiculoSGASeguro($vl->id_ativo_veiculo);
+                $seguro_salvar = new VeiculoSeguro();
+                $seguro_salvar->veiculo_id = $vl->id_ativo_veiculo;
+                $seguro_salvar->carencia_inicial = $vl->carencia_inicio ?? null;
+                $seguro_salvar->carencia_final = $vl->carencia_fim ?? null;
+                $seguro_salvar->valor = $vl->seguro_custo ?? '0.00';
+                //   $seguro_salvar->save();
+
+                /** IPVA */
+                $ipva = Transferencia::getVeiculoSGAIpva($vl->id_ativo_veiculo);
+                $ipva_salvar = new VeiculoIpva();
+                $ipva_salvar->veiculo_id = $vl->id_ativo_veiculo;
+                $ipva_salvar->referencia_ano = $vl->ipva_ano;
+                $ipva_salvar->valor = $vl->ipva_custo ?? '0.00';
+                $ipva_salvar->data_de_vencimento = $vl->ipva_data_pagamento;
+                $ipva_salvar->data_de_pagamento = $vl->ipva_data_vencimento;
+                // $ipva_salvar->save();
+
+                /** Manutenção */
+
+
+                /** Quilometragem */
+
+
+                /** Operação / Horímetro */
+            }
+
+            dd($ipva, $seguro);
+        } catch (\Illuminate\Database\QueryException $exception) {
+            return redirect()->route('transferencia.veiculo')->with('fail', 'Erro: ' . $exception->errorInfo[2]);
+        }
+    }
 
     /** Executar todas as transferências */
     public function todas(Request $request)
@@ -332,6 +382,8 @@ class TransferenciaController extends Controller
         TransferenciaController::ativo_configuracao_store($request);
 
         TransferenciaController::ativo_store($request);
+
+        TransferenciaController::veiculo_store($request);
 
         return redirect()->route('transferencia.ativo')->with('success', 'Dados importados com sucesso!');
     }

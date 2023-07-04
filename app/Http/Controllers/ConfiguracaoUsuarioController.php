@@ -39,7 +39,7 @@ class ConfiguracaoUsuarioController extends Controller
     {
         $usuario_niveis = Niveis::all();
 
-        $funcionarios = CadastroFuncionario::all();
+        $funcionarios = CadastroFuncionario::orderBy('nome', 'ASC')->get();
 
         return view('pages.configuracoes.usuario.form', compact('usuario_niveis', 'funcionarios'));
     }

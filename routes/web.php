@@ -406,6 +406,10 @@ Route::group(['middleware' => 'auth'], function () {
     /** SGA-E Transferências - Ativos */
     Route::get('admin/ferramenta/transferencia/ativo', [TransferenciaController::class, 'ativo'])->name('transferencia.ativo');
     Route::get('admin/ferramenta/transferencia/ativo/salvar', [TransferenciaController::class, 'ativo_store'])->name('transferencia.ativo.store');
+
+    /** SGA-E Transferências - Veículos */
+    Route::get('admin/ferramenta/transferencia/veiculo', [TransferenciaController::class, 'veiculo'])->name('transferencia.veiculo');
+    Route::get('admin/ferramenta/transferencia/veiculo/salvar', [TransferenciaController::class, 'veiculo_store'])->name('transferencia.veiculo.store');
 });
 
 Route::get('/refresh-migrate', function () {

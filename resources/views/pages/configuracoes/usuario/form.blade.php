@@ -39,7 +39,7 @@
                     <div class="row mt-3">
                         <div class="col-6">
                             <label class="form-label" for="id_funcionario">Funcionário</label>
-                            <select class="form-select" name="id_funcionario">
+                            <select class="form-select select2" name="id_funcionario">
                                 <option value="">Selecione um Funcionário</option>
                                 @foreach ($funcionarios as $funcionario)
                                 <option value="{{ $funcionario->id }}" @php if(@$store->vinculo->id_funcionario==$funcionario->id) echo 'selected' @endphp>

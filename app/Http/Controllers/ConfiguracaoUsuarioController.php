@@ -38,8 +38,11 @@ class ConfiguracaoUsuarioController extends Controller
     public function create()
     {
         $usuario_niveis = Niveis::all();
-
-        $funcionarios = CadastroFuncionario::orderBy('nome', 'ASC')->get();
+        if (\Session::get('obra')['id']) {
+            $funcionarios = CadastroFuncionario::where('id_obra', \Session::get('obra')['id'])->orderBy('nome', 'ASC')->get();
+        } else {
+            $funcionarios = CadastroFuncionario::orderBy('nome', 'ASC')->get();
+        }
 
         return view('pages.configuracoes.usuario.form', compact('usuario_niveis', 'funcionarios'));
     }

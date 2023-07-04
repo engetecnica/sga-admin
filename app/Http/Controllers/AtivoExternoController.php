@@ -36,16 +36,23 @@ class AtivoExternoController extends Controller
 
     public function index()
     {
-
+        $ativos = AtivoExterno::with('configuracao')->get();
 
         if (Session::get('obra')['id'] == null) {
-            $ativos = AtivoExterno::with('configuracao')->get();
+            $ativos_estoque = AtivoExternoEstoque::with('configuracao')->get();
         } else {
-            $ativos = AtivoExterno::with('configuracao')->get();
-            // $ativos = AtivoExternoEstoque::where('id_obra', Session::get('obra')['id'])->with('configuracao')->get(); // aqui preciso trazer o resultado somente dos itens que tem naquela obra
+            $ativos_estoque = AtivoExternoEstoque::where('id_obra', Session::get('obra')['id'])->with('configuracao', 'obra')->get();
         }
+        //  dd($ativos_estoque);
 
-        return view('pages.ativos.externos.index', compact('ativos'));
+
+        // if (Session::get('obra')['id'] == null) {
+        // } else {
+        //     $ativos = AtivoExterno::with('configuracao')->get();
+        //     // $ativos = AtivoExternoEstoque::where('id_obra', Session::get('obra')['id'])->with('configuracao')->get(); // aqui preciso trazer o resultado somente dos itens que tem naquela obra
+        // }
+
+        return view('pages.ativos.externos.index', compact('ativos', 'ativos_estoque'));
     }
 
     public function create()

@@ -302,7 +302,12 @@ class TransferenciaController extends Controller
         }
     }
 
-
+    /** Transferência de Configurações de Ativos */
+    public function veiculo()
+    {
+        $veiculos = Transferencia::getVeiculoSGA();
+        return view('pages.transferencia.veiculo', compact('veiculos'));
+    }
 
 
     /** Executar todas as transferências */

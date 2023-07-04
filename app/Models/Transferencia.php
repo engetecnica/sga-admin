@@ -136,4 +136,13 @@ class Transferencia extends Model
         }
         return $situacao;
     }
+
+
+    /** Get Veiculo */
+    static function getVeiculoSGA()
+    {
+        return DB::connection('mysql2')
+        ->table('ativo_veiculo')
+        ->get();
+    }
 }

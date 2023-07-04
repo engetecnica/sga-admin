@@ -29,7 +29,43 @@
     <div class="col-lg-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                {{-- @dd($ativos) --}}
+                <table class="table-hover table-striped table pt-4" id="tabela-estoque-lista">
+                    <thead>
+                        <tr>
+                            <th width="8%">ID</th>
+                            <th>Obra</th>
+                            <th>Patrimônio</th>
+                            <th>Título</th>
+                            <th>Valor</th>
+                            <th>Calibração</th>
+                            <th>Status</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($ativos_estoque as $estoque)
+                        <tr>
+                            <td>{{ $estoque->id }}</td>
+                            <td><span class="badge badge-warning">{{ $estoque->obra->codigo_obra }}</span></td>
+                            <td><span class="badge badge-danger">{{ $estoque->patrimonio }}</span></td>
+                            <td>{{ $estoque->configuracao->titulo }}</td>
+                            <td>R$ {{ number_format($estoque->valor, 2, ',', '.') }}</td>
+                            <td>{{ $estoque->calibracao }}</td>
+                            <td>{{ $estoque->status }}</td>
+                            <td></td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
                 <table class="table-hover table-striped table pt-4" id="tabela">
                     <thead>
                         <tr>
@@ -63,54 +99,3 @@
 </div>
 
 @endsection
-{{--
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-<script src="//cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
-<script src="//stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-<script src="//cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
-
-<script lang="javascript">
-    $(function() {
-
-        var table = $('.yajra-datatable').DataTable({
-            processing: true,
-            serverSide: true,
-            ajax: BASE_URL + "/ativo/externo/lista",
-            columns: [{
-                    data: 'id',
-                    name: 'id'
-                },
-                {
-                    data: 'id_ativo_configuracao',
-                    name: 'categoria'
-                },
-                {
-                    data: 'titulo',
-                    name: 'titulo'
-                },
-                {
-                    data: 'created_at',
-                    name: 'created_at'
-                },
-                {
-                    data: 'status',
-                    name: 'status'
-                },
-                {
-                    data: 'acoes',
-                    name: 'acoes',
-                    orderable: true,
-                    searchable: true
-                },
-            ],
-            order: [
-                [2, 'desc']
-            ],
-            language: {
-                search: 'Buscar informação da Lista',
-                url: 'https://cdn.datatables.net/plug-ins/1.11.5/i18n/pt-BR.json',
-            },
-        });
-
-    });
-</script> --}}

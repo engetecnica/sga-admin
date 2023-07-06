@@ -1,22 +1,25 @@
 <div class="row mt-3">
-    {{-- <div class="col-6">
+
+    @if (Session::get('obra')['id'] == null)
+    <div class="col-6">
         <select class="form-select select2" name="id_obra_origem" required>
-            <option value="">Selecione uma obra</option>
+            <option value="">Selecione a Origem</option>
             @foreach ($obras as $obra)
-                <option value="{{ $obra->id }}">
-                    {{ $obra->codigo_obra }} - {{ $obra->razao_social }}
-                </option>
+            <option value="{{ $obra->id }}">
+                {{ $obra->codigo_obra }} - {{ $obra->razao_social }}
+            </option>
             @endforeach
         </select>
-    </div> --}}
+    </div>
+    @endif
 
     <div class="col-6">
         <select class="form-select select2" name="id_obra_destino" required>
-            <option value="">Selecione uma Obra</option>
+            <option value="">Selecione o Destino</option>
             @foreach ($obras as $obra)
-                <option value="{{ $obra->id }}">
-                    {{ $obra->codigo_obra }} - {{ $obra->razao_social }}
-                </option>
+            <option value="{{ $obra->id }}">
+                {{ $obra->codigo_obra }} - {{ $obra->razao_social }}
+            </option>
             @endforeach
         </select>
     </div>
@@ -29,9 +32,9 @@
             <select class="form-control form-select select2" name="id_ativo_externo[]" required>
                 <option>Pesquise o Item desejado</option>
                 @foreach ($itens as $item)
-                    @if (count($item->estoque) > 0)
-                        <option value="{{ $item->id }}">{{ $item->titulo }} - em estoque {{ count($item->estoque) }}</option>
-                    @endif
+                @if (count($item->estoque) > 0)
+                <option value="{{ $item->id }}">{{ $item->titulo }} - em estoque {{ count($item->estoque) }}</option>
+                @endif
                 @endforeach
             </select>
 
@@ -63,7 +66,7 @@
             <select class="form-control template item-lista" name="id_ativo_externo[]">
                 <option>Pesquise o Item desejado</option>
                 @foreach ($itens as $item)
-                    <option value="{{ $item->id }}">{{ $item->titulo }} - em estoque {{ count($item->estoque) }}</option>
+                <option value="{{ $item->id }}">{{ $item->titulo }} - em estoque {{ count($item->estoque) }}</option>
                 @endforeach
             </select>
 

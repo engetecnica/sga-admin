@@ -28,7 +28,6 @@ class FerramentalRequisicaoController extends Controller
             $requisicoes = FerramentalRequisicao::with('solicitante', 'obraOrigem', 'obraDestino', 'situacao')->orderByDesc('id')->get();
         }
 
-
         return view('pages.ferramental.requisicao.index', compact('requisicoes'));
     }
 
@@ -36,19 +35,17 @@ class FerramentalRequisicaoController extends Controller
     {
         $itens = AtivoExterno::with('estoque')->get();
 
-        if (Session::get('obra')['id']) {
-            $obras = CadastroObra::where('id', Session::get('obra')['id'])->get();
-        } else {
+        // if (Session::get('obra')['id']) {
+        //     $obras = CadastroObra::where('id', Session::get('obra')['id'])->get();
+        // } else {
             $obras = CadastroObra::all();
-        }
+       // }
 
         return view('pages.ferramental.requisicao.create', compact('itens', 'obras'));
     }
 
     public function store(Request $request)
     {
-
-
 
         // $request->validate([
         //     'id_ativo_externo.*' => 'required',
@@ -67,7 +64,7 @@ class FerramentalRequisicaoController extends Controller
         $data = $request->all();
         $requisicao = new FerramentalRequisicao();
         $requisicao->id_solicitante = Auth::user()->id;
-        $requisicao->id_obra_origem = null;
+        $requisicao->id_obra_origem = $data['id_obra_origem'] ?? Session::get('obra')['id'];
         $requisicao->id_obra_destino = $data['id_obra_destino'];
         $requisicao->observacoes = $data['observacoes'];
         $requisicao->status = 1;
@@ -78,7 +75,6 @@ class FerramentalRequisicaoController extends Controller
 
             $limit = $request->quantidade[$index];
             $id_ativo = $request->id_ativo_externo[$index];
-
 
             $item = new FerramentalRequisicaoItem();
             $item->id_ativo_externo = $id_ativo;

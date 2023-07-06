@@ -29,9 +29,87 @@
     <div class="col-lg-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <table class="table-hover table-striped table pt-4">
+                <!-- <form action="{{ route('ativo.externo.search') }}" method="post" enctype="multipart/form-data">
+                    @csrf
+                    <div class="col-12">
 
-                </table>
+                        <style>
+                            .select-default-search {
+                                width: 100%;
+                                border: solid 1px !important;
+                                border-color: #EDEDED !important;
+                            }
+
+                            .select-default-search option {
+                                background-color: #FFF;
+                            }
+
+                            .span-default-search {
+                                display: flex
+                            }
+
+                            .span-default-search i {
+                                margin-right: 10px;
+                                color: #C02028;
+                                font-size: 26px;
+                            }
+
+                            .span-default-search h6 {
+                                margin-top: 10px;
+                            }
+
+                            label {
+                                font-size: 14px
+                            }
+                        </style>
+
+
+
+                        <div class="row">
+                            <span class="span-default-search">
+                                <i class="mdi mdi-account-search"></i>
+                                <h6>PESQUISAR ATIVO</h6>
+                            </span>
+                        </div>
+
+                        <div class="row mt-3">
+                            <div class="col-md-12">
+                                <label class="form-label" for="status">Filtrar por Obra</label>
+                                <select class="form-select-sm select-default-search select2" id="id_obra" name="id_obra">
+                                    <option value="">Todas as obras</option>
+                                    <option>obra 1</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-md-12">
+                                <label class="form-label" for="status">Filtrar por Categoria</label>
+                                <select class="form-select-sm select-default-search select2" id="id_ativo_configuracao" name="id_ativo_configuracao">
+                                    <option value="">Todas as categorias</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-md-2">
+                                <label class="form-label" for="codigo_patrimonio">Código do Patrimônio</label>
+                                <input class="form-control select-default-search" id="codigo_patrimonio" name="codigo_patrimonio" type="text">
+                            </div>
+
+                            <div class="col-md-3">
+                                <label class="form-label" for="status">Situação do Estoque</label>
+                                <select class="form-select-sm select-default-search select2" id="status" name="status">
+                                    <option value="">Todas</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12 mt-2">
+                                <button class="btn btn-gradient-dark btn-sm font-weight-medium" type="submit">Pesquisar</button>
+                            </div>
+                        </div>
+                    </div>
+                </form> -->
 
                 <table class="table table-hover table-striped yajra-datatable pt-4 ">
                     <thead>
@@ -54,6 +132,7 @@
         </div>
     </div>
 </div>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script src="//cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
 <script src="//stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
@@ -112,4 +191,6 @@
 
     });
 </script>
+
+
 @endsection

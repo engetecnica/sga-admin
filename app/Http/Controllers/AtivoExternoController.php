@@ -200,8 +200,7 @@ class AtivoExternoController extends Controller
 
     public function edit($id)
     {
-
-        $estoques = AtivoExternoEstoque::with('obra', 'situacao', 'ativo_externo')->where('id_ativo_externo', $id)->get();
+        $estoques = AtivoExternoEstoque::with('obra', 'situacao', 'ativo_externo')->where('id', $id)->get();
         $obras = CadastroObra::all();
         $categorias = AtivoConfiguracao::where('id_relacionamento', '>', 0)->get();
         $situacoes = AtivosExternosStatus::all();
@@ -228,7 +227,7 @@ class AtivoExternoController extends Controller
         $atualiza['status'] = $request->status;
         $save->update($atualiza);
 
-        return redirect()->route('ativo.externo.editar', $request->id_ativo_externo)->with('success', 'Registro atualizado com sucesso.');
+        return redirect()->route('ativo.externo.editar', $request->id)->with('success', 'Registro atualizado com sucesso.');
 
 
     }
@@ -320,6 +319,46 @@ class AtivoExternoController extends Controller
                 ->rawColumns(['acoes', 'status', 'patrimonio', 'calibracao'])
                 ->make(true);
         }
+    }
 
+
+
+
+    public function search(Request $request)
+    {
+        //  dd($request->all());
+
+        if ($request->post()) {
+
+            /**
+             * 
+             * "id_obra" => null
+             * "id_ativo_configuracao" => null
+             * "codigo_patrimonio" => null
+             * "status" => null
+             */
+
+
+            if ($request->id_obra) {
+                $listaAtivos = AtivoExternoEstoque::where('id_obra', $request->id_obra)->with('configuracao', 'obra')->get();
+            }
+
+            if ($request->id_ativo_configuracao) {
+                $listaConfiguracao = AtivoExterno::where('id_ativo_configuracao', $request->id_ativo_configuracao)->get();
+                foreach ($listaConfiguracao as $ativo) {
+                    $listaAtivos[] = AtivoExternoEstoque::where('id_ativo_externo', $ativo->id)->with('configuracao', 'obra')->get();
+                }
+            }
+
+            if ($request->codigo_patrimonio) {
+                $listaAtivos = AtivoExternoEstoque::where('patrimonio', $request->codigo_patrimonio)->with('configuracao', 'obra')->get();
+            }
+
+            if ($request->status) {
+                $listaAtivos = AtivoExternoEstoque::where('status', $request->status)->with('configuracao', 'obra')->get();
+            }
+
+            dd($listaAtivos);
+        }
     }
 }

@@ -214,6 +214,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('admin/ativo/externo/detalhes/{id}', [AtivoExternoController::class, 'show'])->name('ativo.externo.detalhes');
     Route::get('admin/ativo/externo/search/{id}', [AtivoExternoController::class, 'searchAtivoID'])->name('ativo.externo.search');
     Route::get('admin/ativo/externo/lista/{id?}', [AtivoExternoController::class, 'searchAtivoLista'])->name('ativo.externo.lista');
+    Route::post('admin/ativo/externo/search', [AtivoExternoController::class, 'search'])->name('ativo.externo.search');
 
     /* Ativo - Interno */
     Route::get('admin/ativo/interno', [AtivoInternoController::class, 'index'])->name('ativo.interno.index');
@@ -332,6 +333,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('admin/ferramental/retirada/termo_download/{id}', [FerramentalRetiradaController::class, 'termo_download'])->name('ferramental.retirada.download');
     Route::delete('admin/ferramental/retirada/{id}/destroy', [FerramentalRetiradaController::class, 'destroy'])->name('ferramental.retirada.destroy');
     Route::get('admin/ferramental/retirada/bloqueio/contagem/{usuario}', [FerramentalRetiradaController::class, 'bloqueio'])->name('ferramental.retirada.bloqueio');
+    
     /* Ferramental - Requisição */
     Route::get('admin/ferramental/requisicao', [FerramentalRequisicaoController::class, 'index'])->name('ferramental.requisicao.index');
     Route::get('admin/ferramental/requisicao/adicionar', [FerramentalRequisicaoController::class, 'create'])->name('ferramental.requisicao.create');

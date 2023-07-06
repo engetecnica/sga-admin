@@ -69,9 +69,7 @@
                             <select class="form-select" id="nivel" name="nivel">
                                 <option value="">Escolha o Tipo de Usuário</option>
                                 @foreach ($usuario_niveis as $nivel)
-                                @if ($nivel->id >= 3)
                                 <option value="{{ $nivel->id }}" @php if(@$store->vinculo->id_nivel==$nivel->id) echo 'selected' @endphp>{{ $nivel->titulo }}</option>
-                                @endif
                                 @endforeach
                             </select>
                         </div>

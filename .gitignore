@@ -5,7 +5,6 @@
 /storage/*.key
 /storage/debugbar
 /vendor
-.env
 .phpunit.result.cache
 Homestead.json
 Homestead.yaml
@@ -15,4 +14,4 @@ yarn-error.log
 /.idea
 /.vscode
 /docs/
-/.env
+

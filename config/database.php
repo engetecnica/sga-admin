@@ -66,7 +66,7 @@ return [
         'mysql2' => [
             'driver' => 'mysql',
             'url' => env('DATABASE_URL'),
-            'host' => 'localhost',
+            'host' => env('SGA_DB_HOST'),
             'port' => env('DB_PORT', '3306'),
             'database' => env('SGA_DB_DATABASE'),
             'username' => env('SGA_DB_USERNAME'),

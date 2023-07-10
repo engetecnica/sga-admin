@@ -56,7 +56,7 @@
                             <td class="align-middle"><span class="badge badge-{{ $requisicao->situacao->classe }}">{{ $requisicao->situacao->titulo }}</span></td>
                             <td class="d-flex gap-2 align-middle">
                                 <div class="dropdown">
-                                    <button class="btn btn-gradient-danger btn-sm" id="dropdownMenuButton1" data-bs-toggle="dropdown" type="button" aria-expanded="false">
+                                    <button class="btn-sm btn-gradient-danger" id="dropdownMenuButton1" data-bs-toggle="dropdown" type="button" aria-expanded="false">
                                         Selecione <i class="mdi mdi-menu-down"></i>
                                     </button>
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">

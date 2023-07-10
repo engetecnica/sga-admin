@@ -130,46 +130,45 @@
                         <br><br>
                         <h4 class="card-title">ITENS E ATIVOS</h4>
                         @foreach ($ativos as $ativo)
-                            <table class="table-bordered table-striped table-houver table">
-                                <thead class="table-dark">
-                                    <tr>
-                                        <th>ID Item</th>
-                                        <th>Descrição</th>
-                                        <th>Qtde. Solicitada</th>
-                                        <th>Qtde. Liberada</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr class="page-break">
-                                        <td><strong>{{ $ativo->id }}</strong></td>
-                                        <td><strong>{{ $ativo->ativo_externo->titulo }}</strong></td>
-                                        <td><strong>{{ $ativo->quantidade_solicitada }}</strong></td>
-                                        <td><strong>{{ $ativo->quantidade_liberada }}</strong></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <br>
-                            <table class="table-bordered table-striped table-houver table">
-                                <thead class="table-dark">
-                                    <tr>
-                                        <th style="width:10%;">ID Ativo</th>
-                                        <th style="width:40%;">Categoria</th>
-                                        <th style="width:10%;">Código</th>
-                                        <th style="width:40%;">Nome</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($ativos_liberados as $liberado)
-                                        <tr class="page-break">
-                                            <td><strong>{{ $liberado->id }}</strong></td>
-                                            <td><strong>{{ $liberado->ativo->ativo_externo->categoria->relacionamento->titulo }} > {{ $liberado->ativo->ativo_externo->categoria->titulo }}</strong></td>
-                                            <td><strong>{{ $liberado->ativo->patrimonio }}</strong></td>
-                                            <td><strong>{{ $liberado->ativo->ativo_externo->titulo }}</strong></td>
-                                        </tr>
-                                    @endforeach
-
-                                </tbody>
-                            </table>
+                        <table class="table-bordered table-striped table-houver table">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>ID Item</th>
+                                    <th>Descrição</th>
+                                    <th>Qtde. Solicitada</th>
+                                    <th>Qtde. Liberada</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="page-break">
+                                    <td><strong>{{ $ativo->id }}</strong></td>
+                                    <td><strong>{{ $ativo->ativo_externo->titulo }}</strong></td>
+                                    <td><strong>{{ $ativo->quantidade_solicitada }}</strong></td>
+                                    <td><strong>{{ $ativo->quantidade_liberada }}</strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br>
+                        <table class="table-bordered table-striped table-houver table">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th style="width:10%;">ID Ativo</th>
+                                    <th style="width:40%;">Categoria</th>
+                                    <th style="width:10%;">Código</th>
+                                    <th style="width:40%;">Nome</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($ativos_liberados as $liberado)
+                                <tr class="page-break">
+                                    <td><strong>{{ $liberado->id }}</strong></td>
+                                    <td><strong>{{ $liberado->ativo->ativo_externo->categoria->titulo }}</strong></td>
+                                    <td><strong>{{ $liberado->ativo->patrimonio }}</strong></td>
+                                    <td><strong>{{ $liberado->ativo->ativo_externo->titulo }}</strong></td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
                         @endforeach
 
                         <div style="margin-top: 100px;"></div>

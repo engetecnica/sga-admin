@@ -66,6 +66,7 @@
 
                     </div>
 
+
                     <div class="row mt-3">
                         <div class="col-md-2">
                             <label class="form-label" for="patrimonio">Patrimônio</label>
@@ -78,7 +79,7 @@
 
                         <div class="col-md-2">
                             <label class="form-label" for="status">Valor</label>
-                            <input class="form-control money" id="valor" name="valor" type="text" value="{{ $estoque->valor ?? old('valor') }}">
+                            <input class="form-control " id="valor" name="valor" type="text" value="{{ $estoque->valor ?? old('valor') }}">
                         </div>
 
                         <div class="col-md-2">

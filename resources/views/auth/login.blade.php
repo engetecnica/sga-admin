@@ -27,9 +27,9 @@
                         <h4>Olá. Seja bem vindo (a)!</h4>
                         <h6 class="font-weight-light">Para acessar o sistema preencha suas credenciais</h6>
                         @if (session('error'))
-                            <div class="alert alert-danger">
-                                {{ session('error') }}
-                            </div>
+                        <div class="alert alert-danger">
+                            {{ session('error') }}
+                        </div>
                         @endif
 
                         <form class="pt-3" method="POST" action="{{ route('login.custom') }}">
@@ -43,15 +43,12 @@
                             <div class="mt-3">
                                 <button class="btn btn-gradient-primary btn-lg font-weight-medium auth-form-btn" type="submit">ACESSO</button>
                             </div>
-                            <div class="d-flex justify-content-between align-items-center my-2">
-                                <div class="form-check">
-                                    <label class="form-check-label text-muted">
-                                        <input class="form-control form-check-input" name="remember" type="checkbox"> Permanecer Conectado </label>
-                                </div>
-                                <a class="auth-link text-black" href="{{ url('recuperar_senha') }}">Esqueceu a senha?</a>
-                            </div>
+
                         </form>
                     </div>
+                </div>
+                <div class="text-center mt-4">
+                    <a class="auth-link text-black" href="{{ url('recuperar_senha') }}">Esqueceu a senha?</a>
                 </div>
             </div>
         </div>

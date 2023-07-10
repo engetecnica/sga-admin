@@ -133,6 +133,32 @@
     </div>
 </div>
 
+<!-- Modal
+<div class="modal fade" id="calibrarItem" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="calibrarItem" aria-hidden="true" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="calibrarItem">Calibrar Item</h5>
+                <button class="btn-close" data-bs-dismiss="modal" type="button" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">Cancelar</button>
+                <button class="btn btn-warning retirada-assinar-termo" data-tipo="manual" type="button">Enviar Calibração</button>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+@include('components.anexo.form', [
+'path' => 'itenscalibrados',
+'id_item' => 1,
+'id_modulo' => 18,
+])
+
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script src="//cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
 <script src="//stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>

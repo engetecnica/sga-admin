@@ -212,7 +212,7 @@ class AtivoExternoController extends Controller
 
     public function update(Request $request, $id)
     {
-        // dd($request->all());
+
         if (! $save = AtivoExternoEstoque::find($id)) {
             return redirect()->route('ativo.externo.index')->with('fail', 'Problemas para localizar o ativo.');
         }
@@ -222,7 +222,7 @@ class AtivoExternoController extends Controller
 
         $data = $request->all();
         $atualiza['id_obra'] = $request->id_obra;
-        $atualiza['valor'] = str_replace('R$ ', '', $request->valor) ?? 0;
+        $atualiza['valor'] = FuncoesAdaptadas::formata_moeda($request->valor);
         $atualiza['calibracao'] = $request->calibracao;
         $atualiza['status'] = $request->status;
         $save->update($atualiza);
@@ -231,44 +231,6 @@ class AtivoExternoController extends Controller
 
 
     }
-
-    // public function searchAtivoID(Request $request, int $id)
-    // {
-
-    //     if ($request->ajax()) {
-    //         $ativosPesquisar = AtivoExternoEstoque::select('obras.razao_social', 'obras.cnpj', 'obras.codigo_obra', 'ativos_externos_estoque.*')
-    //             ->join('obras', 'obras.id', '=', 'ativos_externos_estoque.id_obra')
-    //             ->where('ativos_externos_estoque.id_ativo_externo', $id)
-    //             ->get();
-
-    //         return DataTables::of($ativosPesquisar)
-    //             ->editColumn('id_obra', function ($row) {
-    //                 return '<span class="badge badge-danger">'.$row->codigo_obra . ' - ' . $row->razao_social . '</span>';
-    //             })
-    //             ->editColumn('patrimonio', function ($row) {
-    //                 return '<span class="badge badge-primary">' . $row->patrimonio  . '</span>';
-    //             })
-    //             ->editColumn('valor', function ($row) {
-    //                 return 'R$ '. $row->valor;
-    //             })
-    //             ->editColumn('calibracao', function($row){
-    //                 return $row->calibracao==1 ? "Sim" : "Não";
-    //             })
-    //             ->editColumn('data_descarte', function ($row) {
-    //                 return ($row->data_descarte) ? Tratamento::FormatarData($row->data_descarte) : '-';
-    //             })
-    //             ->editColumn('created_at', function ($row) {
-    //                 return ($row->created_at) ? Tratamento::FormatarData($row->created_at) : '-';
-    //             })
-    //             ->addColumn('status', function ($row) {
-    //                 $status = Tratamento::getStatusEstoque($row->status);
-    //                 return '<span class="badge badge-'. $status['classe'].'">' . $status['titulo'] . '</span>';
-    //             })
-    //             ->rawColumns(['patrimonio', 'id_obra', 'status'])
-    //             ->make(true);
-    //     }
-
-    // }
 
     public function searchAtivoLista(Request $request){
 
@@ -281,11 +243,7 @@ class AtivoExternoController extends Controller
                 $listaAtivos = AtivoExternoEstoque::where('id_obra', Session::get('obra')['id'])->with('configuracao', 'obra')->get();
             }
 
-            // $listaAtivos = AtivoExterno::select('ativos_configuracoes.titulo AS categoria', 'ativos_externos.*')
-            //     ->join('ativos_configuracoes', 'ativos_configuracoes.id', '=', 'ativos_externos.id_ativo_configuracao')
-            //     ->orderBy('ativos_externos.titulo', 'ASC')
-            //     ->get();
-
+           
             return DataTables::of($listaAtivos)
 
                 ->editColumn('obra', function ($row) {
@@ -298,13 +256,21 @@ class AtivoExternoController extends Controller
                     return $row->configuracao->titulo;
                 })
                 ->editColumn('valor', function ($row) {
-                    return 'R$ ' . number_format($row->valor, 2, ',', '.');
+
+                if ($row->valor > 0) {
+                    return FuncoesAdaptadas::formata_moeda_reverse($row->valor);
+                } else {
+                    return "R$ 0,00";
+                }
                 })
                 ->editColumn('calibracao', function ($row) {
                     if ($row->calibracao == 0) {
                         return '<span class="badge badge-primary">Não</span>';
                     } else {
-                        return '<span class="badge badge-danger">Sim</span>';
+                    return '<span class="badge badge-danger">Sim</span>
+                    <a href="javascript:void(0)" data-id_ativo_externo="' . $row->id . '" id="anexarArquivo"  data-bs-toggle="modal" data-bs-target="#anexarArquivo">
+                        <span class="badge badge-warning ml-1">Calibrar</span>
+                    </a>';
                     }
 
                 })

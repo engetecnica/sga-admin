@@ -246,6 +246,14 @@
         var route = window.location.pathname;
 
 
+        $("#calibrar_item").on('click', function() {
+
+            $("#calibrarItem").show('fade');
+
+        });
+
+
+
         /** Novo ID para o perfil Administrador */
         $("#novo_id").on('change', function() {
 
@@ -524,15 +532,9 @@
         $('.addItem').select2();
 
         $(".money").inputmask('currency', {
-            "autoUnmask": true,
-            radixPoint: ",",
-            groupSeparator: ",",
-            allowMinus: false,
-            prefix: 'R$ ',
-            digits: 2,
-            digitsOptional: false,
-            rightAlign: true,
-            unmaskAsNumber: true
+            prefix: "R$ ",
+            decimal: ",",
+            thousands: "."
         });
 
 
@@ -540,74 +542,68 @@
         $('.cpf').inputmask('999.999.999-99');
         $('.cep').inputmask('99999-999');
         $('.cnpj').inputmask('99.999.999/9999-99');
-        $("#valor_fipe1").inputmask('currency', {
-            "autoUnmask": true,
-            radixPoint: ",",
-            groupSeparator: ",",
-            allowMinus: false,
-            prefix: 'R$ ',
-            digits: 2,
-            digitsOptional: false,
-            rightAlign: true,
-            unmaskAsNumber: true
-        });
-        $("#valor_do_litro").inputmask('currency', {
-            "autoUnmask": true,
-            radixPoint: ",",
-            groupSeparator: ",",
-            allowMinus: false,
-            prefix: 'R$ ',
-            digits: 2,
-            digitsOptional: false,
-            rightAlign: true,
-            unmaskAsNumber: true
-        });
-        $("#valor_total").inputmask('currency', {
-            "autoUnmask": true,
-            radixPoint: ",",
-            groupSeparator: ",",
-            allowMinus: false,
-            prefix: 'R$ ',
-            digits: 2,
-            digitsOptional: false,
-            rightAlign: true,
-            unmaskAsNumber: true
-        });
-        $("#valor_do_servico").inputmask('currency', {
-            "autoUnmask": true,
-            radixPoint: ",",
-            groupSeparator: ",",
-            allowMinus: false,
-            prefix: 'R$ ',
-            digits: 2,
-            digitsOptional: false,
-            rightAlign: true,
-            unmaskAsNumber: true
-        });
-        $("#valor").inputmask('currency', {
-            "autoUnmask": true,
-            radixPoint: ",",
-            groupSeparator: ",",
-            allowMinus: false,
-            prefix: 'R$ ',
-            suffix: '',
-            digits: 2,
-            decimalProtect: true,
-            rightAlign: true,
-            unmaskAsNumber: true
-        });
-        $("#valor_atual").inputmask('currency', {
-            "autoUnmask": true,
-            radixPoint: ",",
-            groupSeparator: ",",
-            allowMinus: false,
-            prefix: 'R$ ',
-            suffix: '',
-            digits: 2,
-            decimalProtect: true,
-            rightAlign: true,
-            unmaskAsNumber: true
-        });
+
+        // $("#valor_fipe1").inputmask('currency', {
+        //     "autoUnmask": true,
+        //     radixPoint: ",",
+        //     groupSeparator: ",",
+        //     allowMinus: false,
+        //     prefix: 'R$ ',
+        //     digits: 2,
+        //     digitsOptional: false,
+        //     rightAlign: true,
+        //     unmaskAsNumber: true
+        // });
+        // $("#valor_do_litro").inputmask('currency', {
+        //     "autoUnmask": true,
+        //     radixPoint: ",",
+        //     groupSeparator: ",",
+        //     allowMinus: false,
+        //     prefix: 'R$ ',
+        //     digits: 2,
+        //     digitsOptional: false,
+        //     rightAlign: true,
+        //     unmaskAsNumber: true
+        // });
+        // $("#valor_total").inputmask('currency', {
+        //     "autoUnmask": true,
+        //     radixPoint: ",",
+        //     groupSeparator: ",",
+        //     allowMinus: false,
+        //     prefix: 'R$ ',
+        //     digits: 2,
+        //     digitsOptional: false,
+        //     rightAlign: true,
+        //     unmaskAsNumber: true
+        // });
+        // $("#valor_do_servico").inputmask('currency', {
+        //     "autoUnmask": true,
+        //     radixPoint: ",",
+        //     groupSeparator: ",",
+        //     allowMinus: false,
+        //     prefix: 'R$ ',
+        //     digits: 2,
+        //     digitsOptional: false,
+        //     rightAlign: true,
+        //     unmaskAsNumber: true
+        // });
+        // $("#valor").inputmask('currency', {
+        //     prefix: "R$ ",
+        //     decimal: ",",
+        //     thousands: "."
+        // });
+        // $("#valor_atual").inputmask('currency', {
+        //     "autoUnmask": true,
+        //     radixPoint: ",",
+        //     groupSeparator: ",",
+        //     allowMinus: false,
+        //     prefix: 'R$ ',
+        //     suffix: '',
+        //     digits: 2,
+        //     decimalProtect: true,
+        //     rightAlign: true,
+        //     unmaskAsNumber: true
+        // });
 
 
 

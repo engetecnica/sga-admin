@@ -6,18 +6,18 @@
 
             <option value="">Selecione uma Categoria</option>
             @if (url()->current() == route('ativo.externo.adicionar'))
-                @foreach ($ativo_configuracoes as $configuracao)
-                    @if ($configuracao->id_relacionamento == 0)
-                        <optgroup label="{{ $configuracao->titulo }}" readonly>
-                        @else
-                            <option value="{{ $configuracao->id }}">{{ $configuracao->titulo }}</option>
-                    @endif
+            @foreach ($ativo_configuracoes as $configuracao)
+            @if ($configuracao->id_relacionamento == 0)
+            <optgroup label="{{ $configuracao->titulo }}" readonly>
+                @else
+                <option value="{{ $configuracao->id }}">{{ $configuracao->titulo }}</option>
+                @endif
                 @endforeach
-            @else
+                @else
                 @foreach ($ativo_configuracoes as $configuracoes)
-                    <option value="{{ $configuracoes->id }}" {{ $ativo->ativo->id_ativo_configuracao == $configuracoes->id ? 'selected' : '' }}>{{ $configuracoes->titulo }}</option>
+                <option value="{{ $configuracoes->id }}" {{ $ativo->ativo->id_ativo_configuracao == $configuracoes->id ? 'selected' : '' }}>{{ $configuracoes->titulo }}</option>
                 @endforeach
-            @endif
+                @endif
         </select>
     </div>
 </div>
@@ -28,22 +28,23 @@
         <select class="form-select select2" id="id_obra" name="id_obra">
             <option value="">Selecione uma Obra</option>
             @if (url()->current() == route('ativo.externo.adicionar'))
-                @foreach ($obras as $obra)
-                    <option value="{{ $obra->id }}">
-                        {{ $obra->codigo_obra }} - {{ $obra->razao_social }}
-                    </option>
-                @endforeach
+            @foreach ($obras as $obra)
+            <option value="{{ $obra->id }}">
+                {{ $obra->codigo_obra }} - {{ $obra->razao_social }}
+            </option>
+            @endforeach
             @else
-                @foreach ($obras as $obra)
-                    <option value="{{ $obra->id }}" {{ $ativo->id_obra == $obra->id ? 'selected' : '' }}>
-                        {{ $obra->codigo_obra }} - {{ $obra->razao_social }}
-                    </option>
-                @endforeach
+            @foreach ($obras as $obra)
+            <option value="{{ $obra->id }}" {{ $ativo->id_obra == $obra->id ? 'selected' : '' }}>
+                {{ $obra->codigo_obra }} - {{ $obra->razao_social }}
+            </option>
+            @endforeach
             @endif
 
         </select>
     </div>
 </div>
+
 
 <div class="row mt-3">
     <div class="col-md-6">
@@ -65,11 +66,11 @@
         <label class="form-label" for="calibracao">Precisa Calibrar?</label>
         <select class="form-select select2" id="calibracao" name="calibracao">
             @if (url()->current() == route('ativo.externo.adicionar'))
-                <option value="1">Sim</option>
-                <option value="0">Não</option>
+            <option value="1">Sim</option>
+            <option value="0">Não</option>
             @else
-                <option value="1">Sim</option>
-                <option value="0" {{ $ativo->calibracao == 0 ? 'selected' : '' }}>Não</option>
+            <option value="1">Sim</option>
+            <option value="0" {{ $ativo->calibracao == 0 ? 'selected' : '' }}>Não</option>
             @endif
         </select>
     </div>

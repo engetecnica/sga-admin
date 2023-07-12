@@ -258,7 +258,7 @@ class AtivoExternoController extends Controller
                 ->editColumn('valor', function ($row) {
 
                 if ($row->valor > 0) {
-                    return FuncoesAdaptadas::formata_moeda_reverse($row->valor ?? 0.00);
+                    return $row->valor;
                 } else {
                     return "R$ 0,00";
                 }
